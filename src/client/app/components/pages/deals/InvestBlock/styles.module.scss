@@ -1,0 +1,70 @@
+.investBlock {
+  width: 320px;
+  background: #fff;
+  border-radius: 7px;
+  position: relative;
+  top: -89px;
+  border: 1px solid rgba(147, 131, 255, 0.2);
+}
+
+.progress {
+  background: rgba(147, 131, 255, 0.2);
+  padding: 16px;
+}
+
+.progressBar {
+  margin: 10px 0;
+  padding: 3px 0;
+  border-radius: 3px;
+}
+
+.progressValues {
+  display: flex;
+  justify-content: space-between;
+}
+
+.progressValue {
+  font-size: 1em;
+  color: #333;
+}
+
+.tokensLeft {
+  font-size: 1em;
+  color: #333;
+}
+
+.info {
+  padding: 16px;
+}
+
+.infoItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.infoItemTitle {
+  font-size: 1.125rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.infoItemValue {
+  font-size: 2.25rem;
+  color: rgb(77, 63, 237);
+  font-weight: 600;
+}
+
+.invest {
+  padding: 12px;
+}
+
+.investButton {
+  background: rgb(77, 63, 237);
+  padding: 24px;
+  width: 100%;
+  color: #fff;
+  font-size: 1rem;
+  border: 0;
+  border-radius: 8px;
+}

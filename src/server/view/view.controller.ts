@@ -31,6 +31,36 @@ export class ViewController {
       );
   }
 
+  @Get('marketplace')
+  public async showMarketplace(@Req() req: Request, @Res() res: Response) {
+    const parsedUrl = parse(req.url, true);
+    const serverSideProps = { dataFromController: '123' };
+
+    await this.viewService
+      .getNextServer()
+      .render(
+        req,
+        res,
+        parsedUrl.pathname,
+        Object.assign(parsedUrl.query, serverSideProps),
+      );
+  }
+
+  @Get('deals/:id')
+  public async showDeal(@Req() req: Request, @Res() res: Response) {
+    const parsedUrl = parse(req.url, true);
+    const serverSideProps = { dataFromController: '123' };
+
+    await this.viewService
+      .getNextServer()
+      .render(
+        req,
+        res,
+        parsedUrl.pathname,
+        Object.assign(parsedUrl.query, serverSideProps),
+      );
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   public async showProfile(@Req() req: Request, @Res() res: Response) {
