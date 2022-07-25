@@ -10,7 +10,7 @@ import {
 
 import { CurrentUser } from '../auth/graphql/gql-auth.decorator';
 import { GqlAuthGuard } from '../auth/graphql/gql-auth.guard';
-import { ThingsService } from '../things/things.service';
+import { AssetsService } from '../assets/assets.service';
 import { User } from '../users/user.entity';
 import { Order } from './order.entity';
 import { OrdersService } from './orders.service';
@@ -19,7 +19,7 @@ import { OrdersService } from './orders.service';
 export class OrdersResolver {
   constructor(
     @Inject(OrdersService) private ordersService: OrdersService,
-    @Inject(ThingsService) private thingsService: ThingsService,
+    @Inject(AssetsService) private assetsService: AssetsService,
   ) {}
 
   @Query((_returns) => [Order])
@@ -29,9 +29,9 @@ export class OrdersResolver {
   }
 
   @ResolveField()
-  thing(@Parent() order: Order) {
-    return this.thingsService.findOne({
-      where: { id: order.thing.id },
+  asset(@Parent() order: Order) {
+    return this.assetsService.findOne({
+      where: { id: order.asset.id },
     });
   }
 
@@ -39,13 +39,13 @@ export class OrdersResolver {
   @UseGuards(GqlAuthGuard)
   createOrder(
     @CurrentUser() user: User,
-    @Args({ name: 'thingName', type: () => String }) thingName: string,
+    @Args({ name: 'assetName', type: () => String }) assetName: string,
     @Args({ name: 'alias', type: () => String }) alias: string,
   ) {
-    return this.ordersService.createFromThingDetails({
+    return this.ordersService.createFromAssetDetails({
       alias: alias,
       user: user,
-      thingName: thingName,
+      assetName: assetName,
     });
   }
 }

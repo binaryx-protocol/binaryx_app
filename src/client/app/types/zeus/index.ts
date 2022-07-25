@@ -22,12 +22,12 @@ export type ValueTypes = {
 	id?:boolean,
 	alias?:boolean,
 	user?:ValueTypes["User"],
-	thing?:ValueTypes["Thing"],
+	asset?:ValueTypes["Asset"],
 	created_at?:boolean,
 	updated_at?:boolean,
 		__typename?: boolean
 }>;
-	["Thing"]: AliasType<{
+	["Asset"]: AliasType<{
 	id?:boolean,
 	name?:boolean,
 	orders?:ValueTypes["Order"],
@@ -38,12 +38,12 @@ export type ValueTypes = {
 	["Query"]: AliasType<{
 	users?:ValueTypes["User"],
 	whoAmI?:ValueTypes["User"],
-	things?:ValueTypes["Thing"],
+	assets?:ValueTypes["Asset"],
 	orders?:ValueTypes["Order"],
 		__typename?: boolean
 }>;
 	["Mutation"]: AliasType<{
-createOrder?: [{	alias:string,	thingName:string},ValueTypes["Order"]],
+createOrder?: [{	alias:string,	assetName:string},ValueTypes["Order"]],
 		__typename?: boolean
 }>
   }
@@ -65,11 +65,11 @@ export type ModelTypes = {
 		id:number,
 	alias:string,
 	user:ModelTypes["User"],
-	thing:ModelTypes["Thing"],
+	asset:ModelTypes["Asset"],
 	created_at:ModelTypes["DateTime"],
 	updated_at:ModelTypes["DateTime"]
 };
-	["Thing"]: {
+	["Asset"]: {
 		id:number,
 	name:string,
 	orders?:ModelTypes["Order"][],
@@ -79,7 +79,7 @@ export type ModelTypes = {
 	["Query"]: {
 		users:ModelTypes["User"][],
 	whoAmI:ModelTypes["User"],
-	things:ModelTypes["Thing"][],
+	assets:ModelTypes["Asset"][],
 	orders:ModelTypes["Order"][]
 };
 	["Mutation"]: {
@@ -109,12 +109,12 @@ export type GraphQLTypes = {
 	id: number,
 	alias: string,
 	user: GraphQLTypes["User"],
-	thing: GraphQLTypes["Thing"],
+	asset: GraphQLTypes["Asset"],
 	created_at: GraphQLTypes["DateTime"],
 	updated_at: GraphQLTypes["DateTime"]
 };
-	["Thing"]: {
-	__typename: "Thing",
+	["Asset"]: {
+	__typename: "Asset",
 	id: number,
 	name: string,
 	orders?: Array<GraphQLTypes["Order"]>,
@@ -125,7 +125,7 @@ export type GraphQLTypes = {
 	__typename: "Query",
 	users: Array<GraphQLTypes["User"]>,
 	whoAmI: GraphQLTypes["User"],
-	things: Array<GraphQLTypes["Thing"]>,
+	assets: Array<GraphQLTypes["Asset"]>,
 	orders: Array<GraphQLTypes["Order"]>
 };
 	["Mutation"]: {
@@ -416,10 +416,10 @@ const traverseToSeekArrays = (parent: string[], a?: any): string => {
     }
   }
   return objectToTree(b);
-};  
+};
 
 
-const buildQuery = (type: string, a?: Record<any, any>) => 
+const buildQuery = (type: string, a?: Record<any, any>) =>
   traverseToSeekArrays([type], a);
 
 
@@ -450,12 +450,12 @@ const inspectVariables = (query: string) => {
 
 export const queryConstruct = (t: 'query' | 'mutation' | 'subscription', tName: string, operationName?: string) => (o: Record<any, any>) =>
   `${t.toLowerCase()}${operationName ? ' ' + operationName : ''}${inspectVariables(buildQuery(tName, o))}`;
-  
+
 
 export const fullChainConstruct = (fn: FetchFunction) => (t: 'query' | 'mutation' | 'subscription', tName: string) => (
   o: Record<any, any>,
   options?: OperationOptions,
-) => fn(queryConstruct(t, tName, options?.operationName)(o), options?.variables).then((r:any) => { 
+) => fn(queryConstruct(t, tName, options?.operationName)(o), options?.variables).then((r:any) => {
   seekForAliases(r)
   return r
 });
@@ -560,7 +560,7 @@ export const apiFetch = (options: fetchOptions) => (query: string, variables: Re
         return response.data;
       });
   };
-  
+
 
 export const apiSubscription = (options: chainOptions) => (
     query: string,
@@ -621,8 +621,8 @@ export const Thunder = (fn: FetchFunction) => <
 ) => <Z extends ValueTypes[R]>(o: Z | ValueTypes[R], ops?: OperationOptions) =>
   fullChainConstruct(fn)(operation, allOperations[operation])(o as any, ops) as Promise<InputType<GraphQLTypes[R], Z>>;
 
-export const Chain = (...options: chainOptions) => Thunder(apiFetch(options));  
-  
+export const Chain = (...options: chainOptions) => Thunder(apiFetch(options));
+
 export const SubscriptionThunder = (fn: SubscriptionFunction) => <
   O extends 'query' | 'mutation',
   R extends keyof ValueTypes = GenericOperation<O>
@@ -648,4 +648,3 @@ export const Zeus = <
   operationName?: string,
 ) => queryConstruct(operation, allOperations[operation], operationName)(o as any);
 export const Selector = <T extends keyof ValueTypes>(key: T) => ZeusSelect<ValueTypes[T]>();
-  

@@ -1,10 +1,10 @@
 import { Inject } from '@nestjs/common';
 import { Console, Command, createSpinner } from 'nestjs-console';
-import { ThingsService } from '../app/things/things.service';
+import { AssetsService } from '../app/assets/assets.service';
 
 @Console()
 export class SeedService {
-  constructor(@Inject(ThingsService) private thingsService: ThingsService) {}
+  constructor(@Inject(AssetsService) private assetsService: AssetsService) {}
 
   @Command({
     command: 'seed',
@@ -15,20 +15,20 @@ export class SeedService {
 
     spin.start('Seeding the DB');
 
-    await this.seedThings();
+    await this.seedAssets();
 
     spin.succeed('Seeding done');
   }
 
-  async seedThings() {
-    const things = [{ name: 'this is a thing you can order' }];
+  async seedAssets() {
+    const assets = [{ name: 'this is a asset you can order' }];
 
-    for (const thingParams of things) {
-      const thing = await this.thingsService.findOne({
-        where: thingParams,
+    for (const assetParams of assets) {
+      const asset = await this.assetsService.findOne({
+        where: assetParams,
       });
-      if (!thing) {
-        await this.thingsService.create(thingParams);
+      if (!asset) {
+        await this.assetsService.create(assetParams);
       }
     }
   }

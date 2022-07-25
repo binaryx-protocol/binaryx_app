@@ -11,7 +11,7 @@ import { Order } from '../orders/order.entity';
 
 @ObjectType()
 @Entity()
-export class Thing {
+export class Asset {
   @Field()
   @PrimaryGeneratedColumn()
   id: number;
@@ -21,7 +21,7 @@ export class Thing {
   name: string;
 
   @Field((_type) => [Order], { nullable: 'items' })
-  @OneToMany((_type) => Order, (order) => order.thing)
+  @OneToMany((_type) => Order, (order) => order.asset)
   orders?: Order[];
 
   @Field()

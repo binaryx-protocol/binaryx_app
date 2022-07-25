@@ -22,12 +22,12 @@ type Order {
   id: Float!
   alias: String!
   user: User!
-  thing: Thing!
+  asset: Asset!
   created_at: DateTime!
   updated_at: DateTime!
 }
 
-type Thing {
+type Asset {
   id: Float!
   name: String!
   orders: [Order]!
@@ -38,10 +38,10 @@ type Thing {
 type Query {
   users: [User!]!
   whoAmI: User!
-  things: [Thing!]!
+  assets: [Asset!]!
   orders: [Order!]!
 }
 
 type Mutation {
-  createOrder(alias: String!, thingName: String!): Order!
+  createOrder(alias: String!, assetName: String!): Order!
 }

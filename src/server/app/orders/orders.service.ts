@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
-import { ThingsService } from '../things/things.service';
+import { AssetsService } from '../assets/assets.service';
 import {
   CreateOrderDto,
-  CreateOrderFromThingDetailsDto,
+  CreateOrderFromAssetDetailsDto,
 } from './dto/create-order.dto';
 import { Order } from './order.entity';
 
@@ -13,7 +13,7 @@ export class OrdersService {
   constructor(
     @InjectRepository(Order)
     private ordersRepository: Repository<Order>,
-    @Inject(ThingsService) private thingsService: ThingsService,
+    @Inject(AssetsService) private assetsService: AssetsService,
   ) {}
 
   create(order: CreateOrderDto) {
@@ -22,13 +22,13 @@ export class OrdersService {
 
   findOne(params: FindOneOptions<Order> = {}) {
     return this.ordersRepository.findOne(
-      Object.assign({ relations: ['user', 'thing'] }, params),
+      Object.assign({ relations: ['user', 'asset'] }, params),
     );
   }
 
   findAll(params: FindManyOptions<Order> = {}) {
     return this.ordersRepository.find(
-      Object.assign({ relations: ['user', 'thing'] }, params),
+      Object.assign({ relations: ['user', 'asset'] }, params),
     );
   }
 
@@ -41,20 +41,20 @@ export class OrdersService {
       order = await this.create({
         alias: conditions.alias,
         user: conditions.user,
-        thing: conditions.thing,
+        asset: conditions.asset,
       });
     }
 
     return order;
   }
 
-  async createFromThingDetails(params: CreateOrderFromThingDetailsDto) {
-    const thing = await this.thingsService.findOne({
-      where: { name: params.thingName },
+  async createFromAssetDetails(params: CreateOrderFromAssetDetailsDto) {
+    const asset = await this.assetsService.findOne({
+      where: { name: params.assetName },
     });
 
     return this.findOrCreateOne({
-      where: { user: params.user, alias: params.alias, thing: thing },
+      where: { user: params.user, alias: params.alias, asset: asset },
     });
   }
 }

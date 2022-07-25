@@ -10,7 +10,7 @@ export const AllTypesProps: Record<string,any> = {
 				arrayRequired:false,
 				required:true
 			},
-			thingName:{
+			assetName:{
 				type:"String",
 				array:false,
 				arrayRequired:false,
@@ -35,11 +35,11 @@ export const ReturnTypes: Record<string,any> = {
 		id:"Float",
 		alias:"String",
 		user:"User",
-		thing:"Thing",
+		asset:"Asset",
 		created_at:"DateTime",
 		updated_at:"DateTime"
 	},
-	Thing:{
+	Asset:{
 		id:"Float",
 		name:"String",
 		orders:"Order",
@@ -49,7 +49,7 @@ export const ReturnTypes: Record<string,any> = {
 	Query:{
 		users:"User",
 		whoAmI:"User",
-		things:"Thing",
+		assets:"Asset",
 		orders:"Order"
 	},
 	Mutation:{

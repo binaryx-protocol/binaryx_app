@@ -5,13 +5,13 @@ import { INestApplication } from '@nestjs/common';
 import { getConnection } from 'typeorm';
 import * as cookieParser from 'cookie-parser';
 
-import { usersFactory, ordersFactory, thingsFactory } from 'test/factories';
+import { usersFactory, ordersFactory, assetsFactory } from 'test/factories';
 import { UsersService } from 'src/server/app/users/users.service';
 import { User } from 'src/server/app/users/user.entity';
 import { Order } from 'src/server/app/orders/order.entity';
 import { OrdersService } from 'src/server/app/orders/orders.service';
 import { JwtAuthService } from 'src/server/app/auth/jwt/jwt-auth.service';
-import { ThingsService } from 'src/server/app/things/things.service';
+import { AssetsService } from 'src/server/app/assets/assets.service';
 import { login } from './utils';
 
 describe('Application', () => {
@@ -19,7 +19,7 @@ describe('Application', () => {
   let authService: JwtAuthService;
   let usersService: UsersService;
   let ordersService: OrdersService;
-  let thingsService: ThingsService;
+  let assetsService: AssetsService;
 
   beforeAll(async () => {
     const moduleFixture = await Test.createTestingModule({
@@ -33,7 +33,7 @@ describe('Application', () => {
     usersService = app.get(UsersService);
     ordersService = app.get(OrdersService);
     authService = app.get(JwtAuthService);
-    thingsService = app.get(ThingsService);
+    assetsService = app.get(AssetsService);
   });
 
   beforeEach(async () => {
@@ -86,11 +86,11 @@ describe('Application', () => {
       describe('when authorized', () => {
         beforeEach(async () => {
           user = await usersService.create(usersFactory.build());
-          const thing = await thingsService.create(thingsFactory.build());
+          const asset = await assetsService.create(assetsFactory.build());
           order = await ordersService.create(
             ordersFactory.build(
               {},
-              { associations: { user: user, thing: thing } },
+              { associations: { user: user, asset: asset } },
             ),
           );
         });

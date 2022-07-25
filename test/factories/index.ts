@@ -1,5 +1,5 @@
 import usersFactory from 'test/factories/user';
 import ordersFactory from 'test/factories/order';
-import thingsFactory from 'test/factories/thing';
+import assetsFactory from 'test/factories/asset';
 
-export { usersFactory, thingsFactory, ordersFactory };
+export { usersFactory, assetsFactory, ordersFactory };

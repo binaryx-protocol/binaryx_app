@@ -55,7 +55,7 @@ GraphQL playground (`query WhoAmI` is JWT-protected)
 - http://localhost:3000/graphql
 ```qgl
 query Public {
-  things {
+  assets {
     id
     name
   }
@@ -80,14 +80,14 @@ query Private {
     id
 
     alias
-    thing {
+    asset {
       name
     }
   }
 }
 
 mutation createOrder {
-  createOrder(alias: "myname", thingName: "this is a thing you can order") {
+  createOrder(alias: "myname", assetName: "this is a asset you can order") {
     id
     alias
   }

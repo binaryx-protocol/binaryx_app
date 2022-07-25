@@ -6,15 +6,15 @@ import { UsersService } from '../users/users.service';
 import { OrdersModule } from './orders.module';
 import { OrdersResolver } from './orders.resolver';
 import { OrdersService } from './orders.service';
-import { usersFactory, thingsFactory, ordersFactory } from 'test/factories';
-import { ThingsModule } from '../things/things.module';
-import { ThingsService } from '../things/things.service';
+import { usersFactory, assetsFactory, ordersFactory } from 'test/factories';
+import { AssetsModule } from '../assets/assets.module';
+import { AssetsService } from '../assets/assets.service';
 
 describe('OrdersResolver', () => {
   let resolver: OrdersResolver;
   let ordersService: OrdersService;
   let usersService: UsersService;
-  let thingsService: ThingsService;
+  let assetsService: AssetsService;
   let moduleRef: TestingModule;
 
   beforeEach(async () => {
@@ -25,14 +25,14 @@ describe('OrdersResolver', () => {
         }),
         OrdersModule,
         UsersModule,
-        ThingsModule,
+        AssetsModule,
       ],
     }).compile();
 
     resolver = moduleRef.get<OrdersResolver>(OrdersResolver);
     ordersService = moduleRef.get<OrdersService>(OrdersService);
     usersService = moduleRef.get<UsersService>(UsersService);
-    thingsService = moduleRef.get<ThingsService>(ThingsService);
+    assetsService = moduleRef.get<AssetsService>(AssetsService);
 
     await getConnection().synchronize(true);
   });
@@ -44,9 +44,9 @@ describe('OrdersResolver', () => {
   describe('orders', () => {
     it('returns orders of user', async () => {
       const user = await usersService.create(usersFactory.build());
-      const thing = await thingsService.create(thingsFactory.build());
+      const asset = await assetsService.create(assetsFactory.build());
       const order = await ordersService.create(
-        ordersFactory.build({}, { associations: { user: user, thing: thing } }),
+        ordersFactory.build({}, { associations: { user: user, asset: asset } }),
       );
 
       const result = await resolver.orders(user);
@@ -56,11 +56,11 @@ describe('OrdersResolver', () => {
 
     it('does not return orders of another user', async () => {
       const anotherUser = await usersService.create(usersFactory.build());
-      const thing = await thingsService.create(thingsFactory.build());
+      const asset = await assetsService.create(assetsFactory.build());
       await ordersService.create(
         ordersFactory.build(
           {},
-          { associations: { user: anotherUser, thing: thing } },
+          { associations: { user: anotherUser, asset: asset } },
         ),
       );
 
@@ -74,20 +74,20 @@ describe('OrdersResolver', () => {
   describe('createOrder', () => {
     it('returns the order', async () => {
       const user = await usersService.create(usersFactory.build());
-      const thing = await thingsService.create(thingsFactory.build());
+      const asset = await assetsService.create(assetsFactory.build());
       const alias = ordersFactory.build().alias;
 
-      const result = await resolver.createOrder(user, thing.name, alias);
+      const result = await resolver.createOrder(user, asset.name, alias);
 
       expect(result).toMatchObject({ alias: alias });
     });
 
     it('creates an order', async () => {
       const user = await usersService.create(usersFactory.build());
-      const thing = await thingsService.create(thingsFactory.build());
+      const asset = await assetsService.create(assetsFactory.build());
       const alias = ordersFactory.build().alias;
 
-      await resolver.createOrder(user, thing.name, alias);
+      await resolver.createOrder(user, asset.name, alias);
 
       const orderCount = (
         await ordersService.findAll({ where: { user: user } })
@@ -97,11 +97,11 @@ describe('OrdersResolver', () => {
 
     it('does not create the same order twice', async () => {
       const user = await usersService.create(usersFactory.build());
-      const thing = await thingsService.create(thingsFactory.build());
+      const asset = await assetsService.create(assetsFactory.build());
       const alias = ordersFactory.build().alias;
 
-      await resolver.createOrder(user, thing.name, alias);
-      await resolver.createOrder(user, thing.name, alias);
+      await resolver.createOrder(user, asset.name, alias);
+      await resolver.createOrder(user, asset.name, alias);
 
       const orderCount = (
         await ordersService.findAll({ where: { user: user } })

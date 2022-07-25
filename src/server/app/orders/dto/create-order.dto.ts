@@ -1,14 +1,14 @@
-import { Thing } from '../../things/thing.entity';
+import { Asset } from '../../assets/asset.entity';
 import { User } from '../../users/user.entity';
 
 export class CreateOrderDto {
   alias: string;
   user: User;
-  thing: Thing;
+  asset: Asset;
 }
 
-export class CreateOrderFromThingDetailsDto {
+export class CreateOrderFromAssetDetailsDto {
   alias: string;
   user: User;
-  thingName: string;
+  assetName: string;
 }
