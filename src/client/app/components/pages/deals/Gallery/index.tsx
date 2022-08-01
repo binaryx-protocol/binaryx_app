@@ -1,7 +1,7 @@
-import s from "./styles.module.scss";
-import { FC } from "react";
-import useDeals from "hooks/useDeals";
-import { useRouter } from "next/router";
+import s from './styles.module.scss';
+import { FC } from 'react';
+import useDeals from 'hooks/useDeals';
+import { useRouter } from 'next/router';
 
 const Gallery: FC = () => {
   const { deals } = useDeals();
@@ -16,7 +16,7 @@ const Gallery: FC = () => {
   return (
     <div className={s.gallery}>
       {item.images.slice(0, 4).map((image, index) => {
-        console.log("image", image);
+        console.log('image', image);
         return (
           <div key={index} className={s.imageWrap}>
             <img
