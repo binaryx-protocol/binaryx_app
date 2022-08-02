@@ -57,6 +57,7 @@
 
 .invest {
   padding: 12px;
+  display: flex;
 }
 
 .investButton {
@@ -67,4 +68,7 @@
   font-size: 1rem;
   border: 0;
   border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center  ;
 }
