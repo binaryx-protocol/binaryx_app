@@ -1,0 +1,22 @@
+.withdraw {
+  background-color: #fafafa;
+  border-radius: 10px;
+  padding: 10px 0 15px 15px;
+
+  font-size: 17px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+  button {
+    width: 100px;
+
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: none;
+
+    color: white;
+    font-size: 15px;
+    background-color: orange;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    cursor: pointer;
+  }
+}
