@@ -24,7 +24,8 @@
     "next.config.js",
     "app",
     "pages",
-    "../server/common"
+    "../server/common",
+    "app/types/globals.d.ts"
   ],
   "exclude": [
     "node_modules"
