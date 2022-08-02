@@ -1,16 +1,17 @@
-import React, { FC, useEffect, useState } from "react";
-import LinearProgress from "@mui/material/LinearProgress";
-import mainContractService from "services/mainContractService";
-import useDeals from "hooks/useDeals";
-import s from "./styles.module.scss";
-import { useRouter } from "next/router";
+import React, { FC, useEffect, useState } from 'react';
+import LinearProgress from '@mui/material/LinearProgress';
+import mainContractService from 'services/mainContractService';
+import useDeals from 'hooks/useDeals';
+import s from './styles.module.scss';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const InvestBlock: FC = () => {
   const { deals } = useDeals();
   const { id } = useRouter().query;
   const item = deals?.find((deal) => deal.id === id);
-  const [totalSupply, setTotalSupply] = useState("0");
-  const [tokensLeft, setTokensLeft] = useState("0");
+  const [totalSupply, setTotalSupply] = useState('0');
+  const [tokensLeft, setTokensLeft] = useState('0');
 
   useEffect(() => {
     fetchTotalSupply();
@@ -33,10 +34,6 @@ const InvestBlock: FC = () => {
     return null;
   }
 
-  function handleInvestClick() {
-    mainContractService.handleInvest();
-  }
-
   const tokensLeftInt = parseInt(tokensLeft);
   const totalSupplyInt = parseInt(totalSupply);
   const tokensLeftPercentage = (tokensLeftInt * 100) / totalSupplyInt;
@@ -46,7 +43,7 @@ const InvestBlock: FC = () => {
     <div className={s.investBlock}>
       <div className={s.progress}>
         <LinearProgress
-          variant="buffer"
+          variant='buffer'
           valueBuffer={100}
           value={progress}
           className={s.progressBar}
@@ -67,9 +64,11 @@ const InvestBlock: FC = () => {
         </div>
       </div>
       <div className={s.invest}>
-        <button className={s.investButton} onClick={handleInvestClick}>
-          INVEST
-        </button>
+        <Link href='/invest'>
+          <a className={s.investButton}>
+            INVEST
+          </a>
+        </Link>
       </div>
     </div>
   );
