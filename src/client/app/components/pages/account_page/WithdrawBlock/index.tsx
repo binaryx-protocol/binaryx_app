@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import s from './styles.module.scss';
 
-interface Props {
+type Props = {
   amountOfMoney: number;
-}
+};
 
 const WithdrawBlock: FC<Props> = (data: Props) => {
   return (

@@ -1,18 +1,18 @@
 import { FC } from 'react';
 import s from './styles.module.scss';
 
-interface Props {
+type Props = {
   imageSrc: string;
   tokens: {
     tokensUserHave: number;
     tokensFullAmount: number;
   };
   boughtHouseLink: string;
-  CoCReturn: number;
+  cocReturn: number;
   currentValue: number;
   currentRentBalance: number;
   totalRentEarned: number;
-}
+};
 
 const OrderBlock: FC<Props> = (data: Props) => {
   const percentageOfTokens =
@@ -31,9 +31,9 @@ const OrderBlock: FC<Props> = (data: Props) => {
           </p>
         </div>
         <div className={s.info}>
-          <div className="cocReturn">
+          <div className="c">
             <p>Your CoC Return</p>
-            <strong>{data.CoCReturn}%</strong>
+            <strong>{data.cocReturn}%</strong>
           </div>
           <div className="currentValue">
             <p>Current Value</p>

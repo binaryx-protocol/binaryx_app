@@ -28,7 +28,7 @@ const Account: NextPage<{ data: string }> = (props) => {
           tokensFullAmount: 8700,
         }}
         boughtHouseLink={'#'}
-        CoCReturn={7.29}
+        cocReturn={7.29}
         currentValue={50}
         currentRentBalance={14}
         totalRentEarned={0.4}
@@ -40,7 +40,7 @@ const Account: NextPage<{ data: string }> = (props) => {
           tokensFullAmount: 8700,
         }}
         boughtHouseLink={'#'}
-        CoCReturn={7.29}
+        cocReturn={7.29}
         currentValue={50}
         currentRentBalance={14}
         totalRentEarned={0.4}
