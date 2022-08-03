@@ -10,7 +10,7 @@ const Account: NextPage<{ data: string }> = (props) => {
 
   return (
     <div className={s.account_page}>
-      <h1>Account Page</h1>
+      <h1 className={s.heading}>Account Page</h1>
 
       <WithdrawBlock amountOfMoney={0.14} />
 

@@ -12,7 +12,7 @@ const WithdrawBlock = (data: Props) => {
         <h2>${data.amountOfMoney}</h2>
       </div>
       <div>
-        <button>Withdraw</button>
+        <button className={s.withdrawBtn}>Withdraw</button>
       </div>
     </section>
   );

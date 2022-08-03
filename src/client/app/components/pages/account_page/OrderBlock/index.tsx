@@ -19,7 +19,7 @@ const OrderBlock = (data: Props) => {
 
   return (
     <section className={s.orders}>
-      <img src={data.imageSrc} alt="order" />
+      <img className={s.boughtHouseImage} src={data.imageSrc} alt="order" />
       <div className={s.boughtHouse}>
         <a href={data.boughtHouseLink}>Bought House</a>
         <div className={s.tokens}>
