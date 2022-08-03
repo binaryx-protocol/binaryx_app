@@ -16,7 +16,6 @@ const Gallery: FC = () => {
   return (
     <div className={s.gallery}>
       {item.images.slice(0, 4).map((image, index) => {
-        console.log('image', image);
         return (
           <div key={index} className={s.imageWrap}>
             <img
