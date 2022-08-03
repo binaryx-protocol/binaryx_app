@@ -2,32 +2,99 @@
   padding: 16px;
 }
 
-.investmentSummary {
-  border: 1px solid rgb(77, 63, 237);
+.container {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+.main {
+  border: 1px solid rgb(25, 118, 210);
   border-radius: 8px;
   padding: 16px;
+  display: flex;
+
+  @media (max-width: 980px) {
+    flex-direction: column;
+  }
+}
+
+.investmentSummaryTitle {
+  margin-top: 12px;
+
+  @media (max-width: 620px) {
+    font-size: 16px;
+    margin-top: 0;
+  }
+}
+
+.assetInfo {
+  display: flex;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+  }
 }
 
 .assetTitle {
   margin: 0;
+  font-size: 16px;
+
+  @media (max-width: 620px) {
+    font-size: 14px;
+  }
+}
+
+.addressLine1 {
+  font-size: 13px;
+
+  @media (max-width: 620px) {
+    font-size: 12px;
+  }
+}
+
+.addressLine2 {
+  font-size: 13px;
+
+  @media (max-width: 620px) {
+    font-size: 12px;
+  }
 }
 
 .imageWrap {
-  padding: 16px 0;
+  padding: 0;
+  margin-right: 16px;
+}
+
+.image {
+  border-radius: 4px;
+
+  @media (max-width: 980px) {
+    width: 120px;
+  }
 }
 
 .info {
   display: flex;
   justify-content: space-between;
-  text-align: right;
+  padding-right: 16px;
+  width: 100%;
+
+  @media (max-width: 980px) {
+    margin-bottom: 16px;
+    padding-right: 0;
+  }
 }
 
 .infoMain {
-
+  //display: flex;
 }
 
 .controls {
-
+  text-align: right;
+  font-size: 13px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .tokenQuantityTitle {
@@ -35,19 +102,106 @@
 }
 
 .tokenQuantityInputWrap {
+  position: relative;
+  font-size: 14px;
+  margin-bottom: 8px;
 
+  @media (max-width: 680px) {
+    font-size: 13px;
+  }
 }
 
 .tokenQuantityInput {
-  width: 100px;
+  width: 116px;
   padding: 8px;
   border-radius: 4px;
   font-size: 1em;
   text-align: center;
+  border: 1px solid #d0d0d0;
+  outline: none;
+
+  @media (max-width: 680px) {
+    font-size: 12px;
+    width: 96px;
+  }
 }
 
 .tokenQuantityButton {
   border: 0;
   background: none;
   font-size: 18px;
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  bottom: 0;
+  cursor: pointer;
+  padding: 8px;
+  line-height: 1;
+  transition: opacity 0.1s linear;
+  opacity: 0.75;
+
+  &:hover {
+    opacity: 1;
+  }
 }
+
+.tokenQuantityButtonRemove {
+  left: 0;
+  font-size: 1.3em;
+  padding-top: 5px;
+  padding-left: 12px;
+}
+
+.tokenQuantityButtonAdd {
+  right: 0;
+  padding-right: 12px;
+}
+
+.orderSummary {
+  background-color: #e8eeff;
+  border-radius: 8px;
+  color: #333;
+  min-width: 320px;
+
+
+  @media (max-width: 620px) {
+    min-width: auto;
+    width: 100%;
+  }
+}
+
+.orderSummaryTitle {
+  padding: 16px;
+  margin: 0;
+  border-bottom: 1px solid rgb(25, 118, 210);
+
+  @media (max-width: 620px) {
+    font-size: 16px;
+  }
+}
+
+.orderTotal {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  font-size: 14px;
+  border-bottom: 1px solid rgb(25, 118, 210);
+}
+
+.orderTotalTitle {
+
+}
+
+.orderTotalValue {
+
+}
+
+.submitWrap {
+  padding: 16px;
+}
+
+.submitWrap .submitButton {
+  width: 100%;
+  padding: 12px;
+}
+
