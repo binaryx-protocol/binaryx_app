@@ -64,7 +64,7 @@ const InvestBlock: FC = () => {
         </div>
       </div>
       <div className={s.invest}>
-        <Link href='/invest'>
+        <Link href={`/invest?assetId=${item.id}`}>
           <a className={s.investButton}>
             INVEST
           </a>

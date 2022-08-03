@@ -44,6 +44,7 @@ const mock: Mock = {
       line2: "",
       progress: 38,
       tokensLeft: 356,
+      tokenPrice: "$50",
       irr: "18.3% IRR",
       coc: "6.6% CoC",
       infoItems: [
@@ -71,6 +72,7 @@ const mock: Mock = {
       line2: "3",
       progress: 73,
       tokensLeft: 247,
+      tokenPrice: "$50",
       irr: "18.3% IRR",
       coc: "6.6% CoC",
       infoItems: [
@@ -98,6 +100,7 @@ const mock: Mock = {
       line2: "",
       progress: 90,
       tokensLeft: 21,
+      tokenPrice: "$50",
       irr: "18.3% IRR",
       coc: "6.6% CoC",
       infoItems: [
@@ -125,6 +128,7 @@ const mock: Mock = {
       line2: "5",
       progress: 100,
       tokensLeft: 0,
+      tokenPrice: "$50",
       irr: "18.3% IRR",
       coc: "6.6% CoC",
       infoItems: [
@@ -152,6 +156,7 @@ const mock: Mock = {
       line2: "5",
       progress: 100,
       tokensLeft: 0,
+      tokenPrice: "$50",
       irr: "18.3% IRR",
       coc: "6.6% CoC",
       infoItems: [
@@ -179,6 +184,7 @@ const mock: Mock = {
       line2: "",
       progress: 38,
       tokensLeft: 356,
+      tokenPrice: "$50",
       irr: "18.3% IRR",
       coc: "6.6% CoC",
       infoItems: [
@@ -207,6 +213,7 @@ const mock: Mock = {
       line2: "",
       progress: 90,
       tokensLeft: 21,
+      tokenPrice: "$50",
       irr: "18.3% IRR",
       coc: "6.6% CoC",
       infoItems: [
@@ -234,6 +241,7 @@ const mock: Mock = {
       line2: "3",
       progress: 73,
       tokensLeft: 247,
+      tokenPrice: "$50",
       irr: "18.3% IRR",
       coc: "6.6% CoC",
       infoItems: [

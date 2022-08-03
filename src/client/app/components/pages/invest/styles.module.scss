@@ -7,3 +7,47 @@
   border-radius: 8px;
   padding: 16px;
 }
+
+.assetTitle {
+  margin: 0;
+}
+
+.imageWrap {
+  padding: 16px 0;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  text-align: right;
+}
+
+.infoMain {
+
+}
+
+.controls {
+
+}
+
+.tokenQuantityTitle {
+  text-align: center;
+}
+
+.tokenQuantityInputWrap {
+
+}
+
+.tokenQuantityInput {
+  width: 100px;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 1em;
+  text-align: center;
+}
+
+.tokenQuantityButton {
+  border: 0;
+  background: none;
+  font-size: 18px;
+}

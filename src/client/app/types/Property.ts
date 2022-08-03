@@ -9,6 +9,7 @@ type Property = {
   line1: string;
   line2: string;
   progress: number;
+  tokenPrice: string;
   tokensLeft: number;
   irr: string;
   coc: string;
