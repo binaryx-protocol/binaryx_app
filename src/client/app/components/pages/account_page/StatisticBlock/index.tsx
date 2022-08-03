@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import s from './styles.module.scss';
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
   totalPropertyValue: number;
 }
 
-const StatisticBlock = (data: Props) => {
+const StatisticBlock: FC<Props> = (data: Props) => {
   return (
     <section className={s.statistics}>
       <div className="current-account-value">

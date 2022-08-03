@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import s from './styles.module.scss';
 
 interface Props {
@@ -13,7 +14,7 @@ interface Props {
   totalRentEarned: number;
 }
 
-const OrderBlock = (data: Props) => {
+const OrderBlock: FC<Props> = (data: Props) => {
   const percentageOfTokens =
     (data.tokens.tokensUserHave * 100) / data.tokens.tokensFullAmount;
 
