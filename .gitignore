@@ -421,5 +421,6 @@ yarn-error.log*
 /contract/target
 /contract/res
 /test
+/contract/neardev
 
 /.idea
