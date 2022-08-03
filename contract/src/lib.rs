@@ -119,7 +119,9 @@ impl Contract {
                     asset_token_mount,
                     token_price
                 );
-                self.buy_asset_tokens(sender_id, U128::from(asset_token_mount));
+
+                self.token.internal_transfer(&env::current_account_id(), &sender_id, asset_token_mount, None);
+                self.investors.insert(&env::signer_account_id());
             }
             _ => (),
         }

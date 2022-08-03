@@ -41,7 +41,7 @@ Call FT add storage deposit
 near call token.$ID storage_deposit '' --accountId andrew.$ID --amount 0.00125
 
 Call FT view balance
-near view token.$ID ft_balance_of '{"account_id": "'andrew.$ID'"}'
+near view asset.$ID ft_balance_of '{"account_id": "'andrew.$ID'"}'
 
 Call FT transfer
 near call token.$ID ft_transfer '{"receiver_id": "'andrew.$ID'", "amount": "19"}' --accountId asset.$ID --amount 0.000000000000000000000001
