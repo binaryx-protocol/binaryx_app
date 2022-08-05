@@ -7,32 +7,32 @@
   background-color: #fafafa;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
 
-  .boughtHouseImage {
-    display: block;
-    width: 160px;
-    height: 90px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  }
+.boughtHouseImage {
+  display: block;
+  width: 160px;
+  height: 90px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .boughtHouse {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 450px;
+}
 
-  .tokens {
-    grid-row: 2;
-  }
+.tokens {
+  grid-row: 2;
+}
 
-  .info {
-    display: flex;
-    width: 250px;
-    gap: 20px;
-    grid-row: 2;
-  }
+.info {
+  display: flex;
+  width: 250px;
+  gap: 20px;
+  grid-row: 2;
 }
 
 .totalRentBalance {
