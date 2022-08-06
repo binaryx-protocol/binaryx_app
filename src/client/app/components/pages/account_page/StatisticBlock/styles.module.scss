@@ -1,0 +1,10 @@
+.statistics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  padding: 10px 15px;
+  line-height: 20px;
+  border-radius: 10px;
+  background-color: #fafafa;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  font-size: 17px;
+}
