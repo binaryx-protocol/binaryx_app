@@ -1,11 +1,22 @@
 .account_page {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 25px;
   width: 80%;
   margin: auto;
 }
 
-.heading {
-  grid-column: 1 / end;
+.mainView {
+  width: 80%;
+  margin: auto;
+}
+
+.topBlock {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-gap: 25px;
+}
+
+.orderSection {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 25px;
 }
