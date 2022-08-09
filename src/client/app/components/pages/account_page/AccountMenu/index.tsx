@@ -3,8 +3,8 @@ import s from './style.module.scss';
 
 const AccountMenu: FC = () => {
   return (
-    <div className={s.accountMenu}>
-      <img src="#" alt="company_logo" className="logo" />
+    <div className={s.sidebarMenu}>
+      <img src="#" alt="company_logo" className={s.logo} />
       <div className={s.menuElement}>
         <a href="#">Assets Overview</a>
       </div>

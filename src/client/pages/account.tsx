@@ -15,7 +15,7 @@ const Account: NextPage<{ data: string }> = (props) => {
       <div className={s.mainView}>
         <h1 className={s.heading}>Account Page</h1>
 
-        <div className={s.topBlock}>
+        <div className={s.statisticSection}>
           <WithdrawBlock amountOfMoney={0.14} />
 
           <StatisticBlock

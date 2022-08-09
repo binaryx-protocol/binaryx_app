@@ -1,16 +1,12 @@
-.account_page {
-  width: 80%;
-  margin: auto;
-}
-
 .mainView {
-  width: 80%;
-  margin: auto;
+  width: 75%;
+  position: relative;
+  left: 300px;
 }
 
-.topBlock {
+.statisticSection {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   grid-gap: 25px;
 }
 
@@ -19,4 +15,5 @@
   flex-direction: column;
   gap: 25px;
   margin-top: 25px;
+  margin-bottom: 25px;
 }
