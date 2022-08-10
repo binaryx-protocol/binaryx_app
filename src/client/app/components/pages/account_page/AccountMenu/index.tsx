@@ -1,19 +1,15 @@
-import { FC } from 'react';
+import { FC, ReactChild } from 'react';
 import s from './style.module.scss';
 
-const AccountMenu: FC = () => {
+type Props = {
+  children: ReactChild | ReactChild[];
+};
+
+const AccountMenu: FC<Props> = (props: Props) => {
   return (
     <div className={s.sidebarMenu}>
       <img src="#" alt="company_logo" className={s.logo} />
-      <div className={s.menuElement}>
-        <a href="#">Assets Overview</a>
-      </div>
-      <div className={s.menuElement}>
-        <a href="#">Marketplace</a>
-      </div>
-      <div className={s.menuElement}>
-        <a href="#">Transaction History</a>
-      </div>
+      {props.children}
     </div>
   );
 };
