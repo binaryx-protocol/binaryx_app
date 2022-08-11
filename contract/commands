@@ -7,12 +7,15 @@ dima.fundament_creator.testnet
 oleg.fundament_creator.testnet
 max.fundament_creator.testnet
 
+binaryx_test_asset1_bbbbbbbbbbbbbbbbbb // testnet
+
 
 Create account:
 
 near create-account andrew.fundament_creator.testnet --masterAccount fundament_creator.testnet
 
 near create-account asset.$ID --masterAccount $ID
+near create-account binaryx_test_asset1 --masterAccount fundament_creator.testnet --initialBalance 2
 
 
 Get State:
@@ -35,10 +38,10 @@ near send andrew.fundament_creator.testnet fundament_creator.testnet 10
 
 
 Call FT contract init
-near call token.$ID new '{"owner_id": "'contract_test.$ID'", "total_supply": "1000000000000000", "metadata": { "spec": "ft-1.0.0", "name": "Example Token Name", "symbol": "EXLT", "decimals": 8 }}' --accountId contract_test.$ID
+near call asset.$ID new '{"owner_id": "'contract_test.$ID'", "total_supply": "1000000000000000", "metadata": { "spec": "ft-1.0.0", "name": "Example Token Name", "symbol": "EXLT", "decimals": 8 }}' --accountId contract_test.$ID
 
 Call FT add storage deposit
-near call token.$ID storage_deposit '' --accountId andrew.$ID --amount 0.00125
+near call asset.$ID storage_deposit '' --accountId andrew.$ID --amount 0.00125
 
 Call FT view balance
 near view asset.$ID ft_balance_of '{"account_id": "'andrew.$ID'"}'

@@ -1,5 +1,5 @@
 export const MAIN_CONTRACT_NAME =
-  process.env.CONTRACT_NAME || "asset.fundament_creator.testnet";
+  process.env.CONTRACT_NAME || "asset.fundament_creator.testnet"; // "binaryx_test_asset1_bbbbbbbbbbbbbbbbbb";
 
 type Params = {
   env: string;

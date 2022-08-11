@@ -4,10 +4,9 @@ import useDeals from "hooks/useDeals";
 import { useRouter } from "next/router";
 
 const Gallery: FC = () => {
-  const { deals } = useDeals();
   const { id } = useRouter().query;
-  const item = deals?.find((deal) => deal.id === id);
-  const imageWidth = window.innerWidth / 4;
+  const item = useDeals({ id: id as string }).deals[0];
+  const imageWidth = typeof window !== "undefined" ? (window?.innerWidth / 4) : 300;
 
   if (!item) {
     return null;
@@ -15,7 +14,7 @@ const Gallery: FC = () => {
 
   return (
     <div className={s.gallery}>
-      {item.images.slice(0, 4).map((image, index) => {
+      {item.images?.images.slice(0, 4).map((image, index) => {
         return (
           <div key={index} className={s.imageWrap}>
             <img

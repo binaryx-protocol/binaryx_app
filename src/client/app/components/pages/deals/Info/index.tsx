@@ -5,9 +5,8 @@ import Tabs from "./Tabs";
 import { useRouter } from "next/router";
 
 const InvestBlock: FC = () => {
-  const { deals } = useDeals();
   const { id } = useRouter().query;
-  const item = deals?.find((deal) => deal.id === id);
+  const item = useDeals({ id: id as string }).deals[0];
 
   if (!item) {
     return null;
@@ -25,7 +24,7 @@ const InvestBlock: FC = () => {
         {item.city}, {item.state} {item.postalCode} {item.country}
       </p>
       <ul className={s.infoItems}>
-        {infoItems.map((infoItem) => (
+        {infoItems?.infoItems.map((infoItem) => (
           <li key={infoItem.type} className={s.infoItem}>
             {infoItem.value}
           </li>

@@ -4,8 +4,29 @@ export class AddAssetsAndOrders1620037951321 implements MigrationInterface {
   name = 'AddAssetsAndOrders1620037951321';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(
-      `CREATE TABLE "asset" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_e7757c5911e20acd09faa22d1ac" PRIMARY KEY ("id"))`,
+    await queryRunner.query(`
+      CREATE TABLE "asset" (
+        "id" SERIAL NOT NULL,
+        "contractId" character varying,
+        "name" character varying NOT NULL,
+        "title" character varying NOT NULL,
+        "country" character varying,
+        "state" character varying,
+        "city" character varying,
+        "postalCode" character varying,
+        "line1" character varying,
+        "line2" character varying,
+        "tokenPrice" character varying,
+        "tokenTotalSupply" integer,
+        "tokensLeft" integer,
+        "coc" character varying,
+        "irr" character varying,
+        "infoItems" jsonb,
+        "images" jsonb,
+        "created_at" TIMESTAMP NOT NULL DEFAULT now(),
+        "updated_at" TIMESTAMP NOT NULL DEFAULT now(),
+        CONSTRAINT "PK_e7757c5911e20acd09faa22d1ac" PRIMARY KEY ("id")
+      )`,
     );
     await queryRunner.query(
       `CREATE TABLE "order" ("id" SERIAL NOT NULL, "alias" character varying NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), "userId" integer, "assetId" integer, CONSTRAINT "PK_1031171c13130102495201e3e20" PRIMARY KEY ("id"))`,

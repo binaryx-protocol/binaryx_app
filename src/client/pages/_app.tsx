@@ -1,15 +1,22 @@
-import { useEffect } from 'react';
-import mainContractService from '../app/services/mainContractService';
+import { FC, useEffect } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
+import AdminMenu from 'components/admin/AdminMenu';
+import { ApolloProvider } from '@apollo/client';
+import client from '../app/apollo-client';
 
-function MyApp({ Component, pageProps }) {
+type Props = {
+  Component: any;
+  pageProps: any;
+};
+
+const MyApp: FC<Props> = ({ Component, pageProps }) => {
   useEffect(() => {
-    console.log("APP INIT");
-    mainContractService.init();
+    console.log('APP INIT');
+    // mainContractService.init();
   }, []);
 
   return (
-    <>
+    <ApolloProvider client={client}>
       <meta name="viewport" content="initial-scale=1, width=device-width" />
       <CssBaseline />
       <link
@@ -17,8 +24,9 @@ function MyApp({ Component, pageProps }) {
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
       />
       <Component {...pageProps} />
-    </>
+      <AdminMenu />
+    </ApolloProvider>
   );
-}
+};
 
 export default MyApp;

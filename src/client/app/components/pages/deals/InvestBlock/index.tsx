@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import LinearProgress from '@mui/material/LinearProgress';
 import mainContractService from 'services/mainContractService';
 import useDeals from 'hooks/useDeals';
@@ -7,37 +7,32 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 const InvestBlock: FC = () => {
-  const { deals } = useDeals();
   const { id } = useRouter().query;
-  const item = deals?.find((deal) => deal.id === id);
-  const [totalSupply, setTotalSupply] = useState('0');
-  const [tokensLeft, setTokensLeft] = useState('0');
+  const item = useDeals({ id: id as string }).deals[0];
 
-  useEffect(() => {
-    fetchTotalSupply();
-    fetchTokensLeft();
-  }, []);
-
-  async function fetchTotalSupply() {
-    const totalSupply = await mainContractService.ft_total_supply();
-    totalSupply && setTotalSupply(totalSupply);
-  }
-
-  async function fetchTokensLeft() {
-    const tokensLeft = await mainContractService.ft_balance_of({
-      account_id: mainContractService.getContractAccountId(),
-    });
-    tokensLeft && setTokensLeft(tokensLeft);
-  }
+  // useEffect(() => {
+  //   fetchTotalSupply();
+  //   fetchTokensLeft();
+  // }, []);
+  //
+  // async function fetchTotalSupply() {
+  //   const totalSupply = await mainContractService.ft_total_supply();
+  //   totalSupply && setTotalSupply(totalSupply);
+  // }
+  //
+  // async function fetchTokensLeft() {
+  //   const tokensLeft = await mainContractService.ft_balance_of({
+  //     account_id: mainContractService.getContractAccountId(),
+  //   });
+  //   tokensLeft && setTokensLeft(tokensLeft);
+  // }
 
   if (!item) {
     return null;
   }
 
-  const tokensLeftInt = parseInt(tokensLeft);
-  const totalSupplyInt = parseInt(totalSupply);
-  const tokensLeftPercentage = (tokensLeftInt * 100) / totalSupplyInt;
-  const progress = 100 - tokensLeftPercentage;
+  const totalSupplyInt = parseInt(item.tokenTotalSupply);
+  const progress = 100 - (item.tokensLeft * 100 / totalSupplyInt);
 
   return (
     <div className={s.investBlock}>
@@ -50,17 +45,17 @@ const InvestBlock: FC = () => {
         />
         <div className={s.progressValues}>
           <span className={s.progressValue}>{progress}%</span>
-          <span className={s.tokensLeft}>{tokensLeft} tokens left</span>
+          <span className={s.tokensLeft}>{item.tokensLeft} tokens left</span>
         </div>
       </div>
       <div className={s.info}>
         <div className={s.infoItem}>
           <span className={s.infoItemTitle}>Projected IRR</span>
-          <span className={s.infoItemValue}>{item.irr}</span>
+          <span className={s.infoItemValue}>{item.irr}%</span>
         </div>
         <div className={s.infoItem}>
-          <span className={s.infoItemTitle}>Projected IRR</span>
-          <span className={s.infoItemValue}>{item.coc}</span>
+          <span className={s.infoItemTitle}>CoC Return</span>
+          <span className={s.infoItemValue}>{item.coc}%</span>
         </div>
       </div>
       <div className={s.invest}>

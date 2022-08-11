@@ -9,13 +9,14 @@ import Gallery from "components/pages/deals/Gallery";
 import { FC } from "react";
 
 const DealPage: FC = () => {
-  const { deals } = useDeals();
   const { id } = useRouter().query;
-  const item = deals?.find((deal) => deal.id === id);
+  const item = useDeals({ id: id as string }).deals[0];
 
   if (!item) {
     return <div>Not found!!!</div>;
   }
+
+  console.log("item", item);
 
   return (
     <div className={s.deal}>

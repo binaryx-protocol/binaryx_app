@@ -12,6 +12,8 @@ import useDeals from "hooks/useDeals";
 import { useRouter } from "next/router";
 
 const Item = ({ item, onClick }) => {
+  const progress = 100 - (item.tokensLeft * 100 / item.tokenTotalSupply);
+
   return (
     <div
       css={css`
@@ -21,7 +23,7 @@ const Item = ({ item, onClick }) => {
       onClick={onClick}
     >
       <img
-        src={item.images?.[0]?.src}
+        src={item.images?.images?.[0]?.src}
         width={420}
         height={300}
         // className={s.image}
@@ -45,7 +47,7 @@ const Item = ({ item, onClick }) => {
             color: var(--secondary);
           `}
         >
-          {item.irr}
+          {item.irr}% IRR
         </span>
       </Typography>
       <Typography
@@ -62,7 +64,7 @@ const Item = ({ item, onClick }) => {
             color: #586280;
           `}
         >
-          {item.coc}
+          {item.coc}% CoC
         </span>
       </Typography>
       <Typography
@@ -75,7 +77,7 @@ const Item = ({ item, onClick }) => {
       </Typography>
       <LinearProgress
         variant="buffer"
-        value={item.progress}
+        value={progress}
         css={css`
           margin: 10px 0;
           padding: 3px 0;
@@ -94,7 +96,7 @@ const Item = ({ item, onClick }) => {
             font-size: 0.65rem;
           `}
         >
-          {item.progress}%
+          {progress}%
         </span>
         <span
           css={css`
@@ -111,7 +113,7 @@ const Item = ({ item, onClick }) => {
 
 const Marketplace = () => {
   const router = useRouter();
-  const { deals } = useDeals();
+  const { deals = [] } = useDeals();
 
   function handleItemClick(item) {
     router.push(`/deals/${item.id}`);
@@ -140,7 +142,7 @@ const Marketplace = () => {
           Marketplace
         </Typography>
         <Grid container spacing={4}>
-          {deals.map((item) => (
+          {deals?.map((item) => (
             <Grid key={item.id} item xs={3}>
               <Item
                 key={item.id}

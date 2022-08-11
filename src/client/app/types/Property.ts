@@ -1,6 +1,6 @@
 type Property = {
   id: string;
-  images: Array<{ src: string }>;
+  name: string;
   title: string;
   country: string;
   state: string;
@@ -8,12 +8,13 @@ type Property = {
   postalCode: number;
   line1: string;
   line2: string;
-  progress: number;
   tokenPrice: string;
   tokensLeft: number;
+  tokenTotalSupply: string;
   irr: string;
   coc: string;
-  infoItems: Array<{ type: string; value: string }>;
+  images: { images: Array<{ src: string }> };
+  infoItems: { infoItems: Array<{ type: string; value: string }> };
 };
 
 export default Property;
