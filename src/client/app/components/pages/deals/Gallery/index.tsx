@@ -1,7 +1,7 @@
-import s from "./styles.module.scss";
-import { FC } from "react";
-import useDeals from "hooks/useDeals";
-import { useRouter } from "next/router";
+import s from './styles.module.scss';
+import { FC } from 'react';
+import useDeals from 'hooks/useDeals';
+import { useRouter } from 'next/router';
 
 const Gallery: FC = () => {
   const { id } = useRouter().query;
