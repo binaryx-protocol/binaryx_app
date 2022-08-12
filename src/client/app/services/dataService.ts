@@ -2,7 +2,7 @@ import mock from "__mocks__/fileMock";
 import Property from "types/Property";
 
 const dataService = {
-  getDeals(): Property[] {
+  getAssets(): Property[] {
     return mock.items || [];
   },
 };

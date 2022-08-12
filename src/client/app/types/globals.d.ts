@@ -1,9 +1,9 @@
-import MainContract from 'src/frontend/contracts/MainContract';
+import AssetContract from 'src/frontend/contracts/AssetContract';
 import UsnContract from 'src/frontend/contracts/UsnContract';
 
 declare global {
   interface Window {
-    mainContract: MainContract;
+    assetContract: AssetContract;
     usnContract: UsnContract;
   }
 }

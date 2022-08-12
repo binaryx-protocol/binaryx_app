@@ -12,7 +12,7 @@ type Props = {
 const MyApp: FC<Props> = ({ Component, pageProps }) => {
   useEffect(() => {
     console.log('APP INIT');
-    // mainContractService.init();
+    // assetContractService.init();
   }, []);
 
   return (

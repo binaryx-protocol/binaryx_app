@@ -9,7 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import capitalize from 'lodash/capitalize';
 import { gql, useMutation } from '@apollo/client';
-import useDeals from '../../../hooks/useDeals';
+import useAssets from '../../../hooks/useAssets';
 import { useRouter } from 'next/router';
 
 type Props = {
@@ -149,10 +149,10 @@ const AssetDialog: FC<Props> = (props) => {
   const [updateAsset] = useMutation(UPDATE_ASSET);
   const [formData, setFormData] = useState<any>({});
   const { id } = useRouter().query;
-  const item = useDeals({
+  const item = useAssets({
     name: formData.name || '',
     id: !formData.name && id ? (id as string) : '',
-  }).deals[0];
+  }).assets[0];
 
   useEffect(() => {
     if (props.update && item) {

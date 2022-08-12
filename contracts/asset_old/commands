@@ -1,0 +1,83 @@
+accounts:
+token.fundament_creator.testnet
+asset.fundament_creator.testnet
+
+andrew.fundament_creator.testnet
+dima.fundament_creator.testnet
+oleg.fundament_creator.testnet
+max.fundament_creator.testnet
+
+binaryx_test_asset1_bbbbbbbbbbbbbbbbbb // testnet
+
+
+Create account:
+
+near create-account andrew.fundament_creator.testnet --masterAccount fundament_creator.testnet
+
+near create-account asset.$ID --masterAccount $ID
+near create-account binaryx_test_asset1 --masterAccount fundament_creator.testnet --initialBalance 2
+
+
+Get State:
+
+near state andrew.fundament_creator.testnet
+
+
+Deploy Contract:
+
+near deploy asset.fundament_creator.testnet --wasmFile res/asset.wasm
+near deploy token.fundament_creator.testnet --wasmFile res/token.wasm
+
+
+Delete Account:
+near delete asset.$ID $ID
+
+
+Send Near Tokens:
+near send andrew.fundament_creator.testnet fundament_creator.testnet 10
+
+
+Call FT contract init
+near call asset.$ID new '{"owner_id": "'contract_test.$ID'", "total_supply": "1000000000000000", "metadata": { "spec": "ft-1.0.0", "name": "Example Token Name", "symbol": "EXLT", "decimals": 8 }}' --accountId contract_test.$ID
+
+Call FT add storage deposit
+near call asset.$ID storage_deposit '' --accountId andrew.$ID --amount 0.00125
+
+Call FT view balance
+near view asset.$ID ft_balance_of '{"account_id": "'andrew.$ID'"}'
+
+Call FT transfer
+near call token.$ID ft_transfer '{"receiver_id": "'andrew.$ID'", "amount": "19"}' --accountId asset.$ID --amount 0.000000000000000000000001
+
+Call FT get total supply
+near view token.$ID ft_total_supply
+
+
+Call Init FT contract (owner asset.$ID)
+near call token.$ID new '{"owner_id": "'asset.$ID'", "total_supply": "1000000000000000", "metadata": { "spec": "ft-1.0.0", "name": "Asset-1 Token", "symbol": "AST1", "decimals": 8 }}' --accountId asset.$ID
+
+Call Init Asset contract
+near call asset.$ID new '{"owner_id": "'$ID'" }' --accountId asset.$ID
+near call asset.$ID new_default_meta '{"owner_id": "'asset.$ID'", "token_total_supply": "10000", "token_price": "5000000000000000000" }' --accountId asset.$ID
+
+
+Call View Investors
+near view asset.$ID get_investors
+
+Call Buy Asset Tokens
+near call asset.$ID buy_asset_tokens '{"amount": "100"}' --accountId andrew.$ID --amount 0.000000000000000000000001
+near call asset.$ID buy_asset_tokens '{"amount": "100"}' --accountId andrew.$ID --amount 0.0255 --gas 100000000000000
+
+
+Call transfer USN to asset with callback of the method buy_asset_tokens
+near call usdn.testnet ft_transfer_call '{"receiver_id": "'asset.$ID'", "amount": "10000000000000000000", "msg": "buy_asset_tokens"}' --accountId andrew.$ID --amount 0.000000000000000000000001 --gas 100000000000000
+
+Call transfer USN
+near call usdn.testnet ft_transfer '{"receiver_id": "'asset.$ID'", "amount": "10000000000000000000"}' --accountId andrew.$ID --amount 0.000000000000000000000001
+
+
+Call buy USN
+near call usdn.testnet buy --accountId fundament_creator.testnet --amount 10 --gas 50000000000000
+
+View USN balance
+near view usdn.testnet ft_balance_of '{"account_id": "'andrew.fundament_creator.testnet'"}'

@@ -76,8 +76,8 @@ export class ViewController {
       );
   }
 
-  @Get('deals/:id')
-  public async showDeal(@Req() req: Request, @Res() res: Response) {
+  @Get('assets/:id')
+  public async showAsset(@Req() req: Request, @Res() res: Response) {
     const parsedUrl = parse(req.url, true);
     const serverSideProps = { dataFromController: '123' };
 

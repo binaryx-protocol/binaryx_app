@@ -1,5 +1,6 @@
 type Property = {
   id: string;
+  contractId: string;
   name: string;
   title: string;
   country: string;
