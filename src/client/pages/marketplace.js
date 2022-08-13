@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import LinearProgress from "@mui/material/LinearProgress";
 
-import useDeals from "hooks/useDeals";
+import useAssets from "hooks/useAssets";
 import { useRouter } from "next/router";
 
 const Item = ({ item, onClick }) => {
@@ -113,10 +113,10 @@ const Item = ({ item, onClick }) => {
 
 const Marketplace = () => {
   const router = useRouter();
-  const { deals = [] } = useDeals();
+  const { assets = [] } = useAssets();
 
   function handleItemClick(item) {
-    router.push(`/deals/${item.id}`);
+    router.push(`/assets/${item.id}`);
   }
 
   return (
@@ -142,7 +142,7 @@ const Marketplace = () => {
           Marketplace
         </Typography>
         <Grid container spacing={4}>
-          {deals?.map((item) => (
+          {assets?.map((item) => (
             <Grid key={item.id} item xs={3}>
               <Item
                 key={item.id}

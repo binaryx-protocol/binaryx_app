@@ -1,12 +1,14 @@
 import { FC, useEffect, useState } from 'react';
 import s from './styles.module.scss';
-import useDeals from 'hooks/useDeals';
+import useAssets from 'hooks/useAssets';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
 import Button from '@mui/material/Button';
-import mainContractService from '../../../services/mainContractService';
+import assetContractService from '../../../services/assetContractService';
 import paymentService from '../../../services/paymentService';
 import formatLongNumber from '../../../utils/formatNumber';
+import Result from './Result';
+import AssetInfo from './AssetInfo';
 
 const USN = 'USN';
 // const NEAR = "NEAR";
@@ -14,10 +16,11 @@ const USN = 'USN';
 const InvestPage: FC = () => {
   const router = useRouter();
   const { assetId = '', signMeta } = router.query;
-  const deal = useDeals({ id: assetId as string }).deals[0];
+  const asset = useAssets({ id: assetId as string }).assets[0];
   const [tokenQuantity, setTokenQuantity] = useState<number | string>(1);
   const [step, setStep] = useState(0);
   const [billingType, setBillingType] = useState('');
+  const orderTotal = (formatLongNumber(asset?.tokenPrice)) * getTokenQuantity();
 
   useEffect(() => {
     if (signMeta === 'success') {
@@ -25,12 +28,10 @@ const InvestPage: FC = () => {
     }
   }, [signMeta]);
 
-  if (!deal) {
-    if (signMeta === 'success') {
-      return renderResultStep();
-    }
+  if (!asset) {
     return <div>Id not found</div>;
   }
+
 
   function handleSubmitButtonClick() {
     switch (step) {
@@ -39,7 +40,9 @@ const InvestPage: FC = () => {
         break;
       case 1:
         paymentService.handleInvest({
-          tokenAmount: tokenQuantity,
+          assetId: asset.id,
+          assetContractId: asset.contractId,
+          tokenAmount: getTokenQuantity(),
           billingType,
         });
         break;
@@ -49,26 +52,21 @@ const InvestPage: FC = () => {
     }
   }
 
+  function getTokenQuantity(qty = tokenQuantity): number {
+    const result = typeof tokenQuantity === "string" ? parseInt(tokenQuantity) : tokenQuantity;
+    if (isNaN(result)) {
+      return 0;
+    }
+
+    return result;
+  }
 
   function renderInitialStep() {
     return (
       <div className={s.info}>
         <div className={s.infoMain}>
           <h3 className={s.investmentSummaryTitle}>Investment Summary</h3>
-          <div className={s.assetInfo}>
-            <div className={s.imageWrap}>
-              <img src={deal.images.images[0]?.src} width={180} className={s.image} />
-            </div>
-            <div>
-              <h3 className={s.assetTitle}>{deal.title}</h3>
-              <div className={s.addressLine1}>
-                {deal.line1} {deal.line2}
-              </div>
-              <div className={s.addressLine2}>
-                {deal.city}, {deal.state} {deal.postalCode} {deal.country}
-              </div>
-            </div>
-          </div>
+          <AssetInfo asset={asset} />
         </div>
         <div className={s.controls}>
           <div className={s.tokenQuantityTitle}>Token Quantity</div>
@@ -81,7 +79,7 @@ const InvestPage: FC = () => {
               )}
               onClick={() =>
                 setTokenQuantity((quantity) => {
-                  const newQuantity = quantity - 1;
+                  const newQuantity = getTokenQuantity(quantity) - 1;
                   return newQuantity > 0 ? newQuantity : 1;
                 })
               }
@@ -94,7 +92,7 @@ const InvestPage: FC = () => {
               value={tokenQuantity}
               onChange={(e) => {
                 const value = parseInt(e.target.value);
-                (isNaN(value) ? "" : value);
+                setTokenQuantity(isNaN(value) ? "" : value);
               }}
             />
             <button
@@ -103,17 +101,18 @@ const InvestPage: FC = () => {
                 s.tokenQuantityButton,
                 s.tokenQuantityButtonAdd,
               )}
-              onClick={() => setTokenQuantity((quantity) => quantity + 1)}
+              onClick={() => setTokenQuantity((quantity) => getTokenQuantity(quantity) + 1)}
             >
               +
             </button>
           </div>
-          <div>${formatLongNumber(deal.tokenPrice)} / Token</div>
-          <div>{deal.tokensLeft} available</div>
+          <div>${formatLongNumber(asset.tokenPrice)} / Token</div>
+          <div>{asset.tokensLeft} available</div>
         </div>
       </div>
     );
   }
+
 
   function renderBillingStep() {
     return (
@@ -146,7 +145,7 @@ const InvestPage: FC = () => {
   function renderResultStep() {
     return (
       <div className={s.resultStep}>
-        Success
+        <Result />
       </div>
     );
   }
@@ -170,6 +169,7 @@ const InvestPage: FC = () => {
     switch (step) {
       case 0:
         text = 'Continue to Payment';
+        disabled = orderTotal === 0 || isNaN(orderTotal);
         break;
       case 1:
         text = 'Pay' + (billingType ? ` With ${billingType}` : '');
@@ -206,7 +206,7 @@ const InvestPage: FC = () => {
             <h3 className={s.orderSummaryTitle}>Order Summary</h3>
             <div className={s.orderTotal}>
               <span className={s.orderTotalTitle}>Order Total</span>
-              <span className={s.orderTotalValue}>$50</span>
+              <span className={s.orderTotalValue}>${isNaN(orderTotal) ? 0 : orderTotal}</span>
             </div>
             {renderButton()}
           </div>

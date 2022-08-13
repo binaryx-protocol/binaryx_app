@@ -412,14 +412,15 @@ cypress/screenshots
 .env.test.local
 .env.production.local
 /frontend/.cache
-/contract/.cache
+
+contracts/*/.cache
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-/contract/target
-/contract/res
+contracts/*/target
+contracts/*/res
 /test
 /contract/neardev
 

@@ -46,6 +46,21 @@ export class ViewController {
       );
   }
 
+  @Get('account/transactions')
+  public async showTransaction(@Req() req: Request, @Res() res: Response) {
+    const parsedUrl = parse(req.url, true);
+    const serverSideProps = { dataFromController: '123' };
+
+    await this.viewService
+      .getNextServer()
+      .render(
+        req,
+        res,
+        parsedUrl.pathname,
+        Object.assign(parsedUrl.query, serverSideProps),
+      );
+  }
+
   @Get('invest')
   public async showInvest(@Req() req: Request, @Res() res: Response) {
     const parsedUrl = parse(req.url, true);
@@ -76,8 +91,8 @@ export class ViewController {
       );
   }
 
-  @Get('deals/:id')
-  public async showDeal(@Req() req: Request, @Res() res: Response) {
+  @Get('assets/:id')
+  public async showAsset(@Req() req: Request, @Res() res: Response) {
     const parsedUrl = parse(req.url, true);
     const serverSideProps = { dataFromController: '123' };
 
