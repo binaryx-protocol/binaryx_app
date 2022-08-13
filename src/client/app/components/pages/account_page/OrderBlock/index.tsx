@@ -31,7 +31,7 @@ const OrderBlock: FC<Props> = (data: Props) => {
           </p>
         </div>
         <div className={s.info}>
-          <div className="c">
+          <div className="cocReturn">
             <p>Your CoC Return</p>
             <strong>{data.cocReturn}%</strong>
           </div>
