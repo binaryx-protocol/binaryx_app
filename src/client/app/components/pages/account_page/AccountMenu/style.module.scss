@@ -1,0 +1,15 @@
+.sidebarMenu {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0 0 20px;
+  height: 100%;
+  width: 250px;
+  background: #fafafa;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.sidebarMenu a {
+  color: black;
+  text-decoration: none;
+  margin-top: 15px;
+}
