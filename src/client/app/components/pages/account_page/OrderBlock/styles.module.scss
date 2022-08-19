@@ -36,5 +36,5 @@
 .totalRentBalance {
   display: flex;
   gap: 20px;
-  place-content: end;
+  flex-direction: row-reverse;
 }

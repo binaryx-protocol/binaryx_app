@@ -1,0 +1,129 @@
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 95px;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+}
+
+.headerWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 80%;
+}
+
+.logo {
+  height: inherit;
+  display: block;
+  height: 60%;
+}
+
+.navLinks {
+  display: flex;
+  justify-content: space-between;
+  width: 600px;
+  margin-left: auto;
+}
+
+.navLinks a {
+  color: black;
+  text-decoration: none;
+  font-size: 18px;
+  opacity: 0.8;
+  transition: 0.3s ease;
+}
+
+.navLinks a:last-child {
+  display: none;
+}
+
+.navLinks a:hover {
+  opacity: 1;
+  color: #5d3fd3;
+}
+
+.btnShowMenu {
+  visibility: hidden;
+}
+
+@media screen and (max-width: 800px) {
+  .navLinks {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: calc(100vh - 90px);
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateY(90px);
+    background-color: #fff;
+  }
+
+  .navLinks a {
+    margin-bottom: 30px;
+    font-size: 20px;
+  }
+
+  .navLinks a:nth-child(1) {
+    display: none;
+  }
+
+  .navLinks a:last-child {
+    display: grid;
+  }
+
+  .viewMarketplace {
+    color: white !important;
+    background-color: #5d3fd3;
+    width: 300px;
+    height: 50px;
+    border-radius: 10px;
+    display: grid;
+    place-content: center;
+    opacity: 1 !important;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .burgerMenuField {
+    display: grid;
+    place-content: center;
+    height: 25px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .burgerShowMenu {
+    background-color: #5d3fd3;
+    width: 30px;
+    height: 4px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .burgerShowMenu::before {
+    content: '';
+    background-color: #5d3fd3;
+    width: 30px;
+    height: 4px;
+    position: absolute;
+    top: 37px;
+  }
+
+  .burgerShowMenu::after {
+    content: '';
+    background-color: #5d3fd3;
+    width: 30px;
+    height: 4px;
+    position: absolute;
+    top: 54px;
+  }
+}
