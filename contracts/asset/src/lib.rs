@@ -1,17 +1,43 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::collections::UnorderedSet;
+use near_sdk::collections::{LookupMap, UnorderedSet, Vector};
 use near_sdk::json_types::U128;
-use near_sdk::{
-    assert_self, env, ext_contract, log, near_bindgen, AccountId, Balance, PanicOnDefault, Promise,
-    PromiseOrValue, PromiseResult,
-};
+use near_sdk::{assert_self, env, ext_contract, log, near_bindgen, AccountId, Balance, PanicOnDefault, Promise, PromiseOrValue, PromiseResult, Timestamp};
 use std::convert::{From, TryFrom};
 
 use near_contract_standards::fungible_token::metadata::{FungibleTokenMetadata, FungibleTokenMetadataProvider, FT_METADATA_SPEC};
 use near_contract_standards::fungible_token::FungibleToken;
 use near_sdk::collections::LazyOption;
+use near_sdk::env::block_timestamp;
 
 const TOKEN_DEFAULT_PRICE: U128 = U128(50000000000000000000);
+
+#[near_bindgen]
+#[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]
+pub struct Asset {
+    name: String,
+    address: String,
+}
+
+#[near_bindgen]
+#[derive(BorshSerialize, BorshStorageKey)]
+pub enum DateRange {
+    From(Timestamp),
+    To(Timestamp),
+}
+
+type APR = u16;
+type AprWithingDateRange = (DateRange::From, DateRange::To, APR);
+
+type TokenAmount = u32;
+type TokenAmountWithingDateRange = (DateRange::From, DateRange::To, TokenAmount);
+
+#[near_bindgen]
+#[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]
+pub struct AccountTrackingData {
+    accumulated_revenue: u128,
+    accumulated_revenue_last_updated: Timestamp,
+    token_amount_withing_date_ranges: Vector<TokenAmountWithingDateRange>
+}
 
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]
@@ -20,6 +46,10 @@ pub struct Contract {
     token: FungibleToken,
     token_metadata: LazyOption<FungibleTokenMetadata>,
     token_price: U128,
+    asset: Asset,
+    apr_within_date_ranges: Vector<AprWithingDateRange>,
+    accounts_tracking_data: LookupMap<AccountId, AccountTrackingData>,
+
 }
 
 // const DATA_IMAGE_SVG_NEAR_ICON: &str = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 288 288'%3E%3Cg id='l' data-name='l'%3E%3Cpath d='M187.58,79.81l-30.1,44.69a3.2,3.2,0,0,0,4.75,4.2L191.86,103a1.2,1.2,0,0,1,2,.91v80.46a1.2,1.2,0,0,1-2.12.77L102.18,77.93A15.35,15.35,0,0,0,90.47,72.5H87.34A15.34,15.34,0,0,0,72,87.84V201.16A15.34,15.34,0,0,0,87.34,216.5h0a15.35,15.35,0,0,0,13.08-7.31l30.1-44.69a3.2,3.2,0,0,0-4.75-4.2L96.14,186a1.2,1.2,0,0,1-2-.91V104.61a1.2,1.2,0,0,1,2.12-.77l89.55,107.23a15.35,15.35,0,0,0,11.71,5.43h3.13A15.34,15.34,0,0,0,216,201.16V87.84A15.34,15.34,0,0,0,200.66,72.5h0A15.35,15.35,0,0,0,187.58,79.81Z'/%3E%3C/g%3E%3C/svg%3E";
@@ -32,6 +62,7 @@ impl Contract {
         owner_id: AccountId,
         token_total_supply: U128,
         token_price: U128,
+        asset: Asset,
     ) -> Self {
         Self::new(
             owner_id,
@@ -46,6 +77,7 @@ impl Contract {
                 reference_hash: None,
                 decimals: 0,
             },
+            asset,
         )
     }
 
@@ -55,6 +87,7 @@ impl Contract {
         token_total_supply: U128,
         token_price: U128,
         token_metadata: FungibleTokenMetadata,
+        asset: Asset,
     ) -> Self {
         assert!(!env::state_exists(), "Already initialized");
 
@@ -63,6 +96,8 @@ impl Contract {
             token: FungibleToken::new(b"a".to_vec()),
             token_metadata: LazyOption::new(b"m".to_vec(), Some(&token_metadata)),
             token_price,
+            asset,
+            apr_within_date_ranges: Vector::new(b"apr".to_vec()),
         };
 
         this.token.internal_register_account(&owner_id);
@@ -108,7 +143,7 @@ impl Contract {
     pub fn ft_on_transfer(&mut self, sender_id: AccountId, amount: String, msg: String) -> String {
         match msg.as_str() {
             "buy_asset_tokens" => {
-                // assert_eq!(env::predecessor_account_id(), AccountId::from_str("usdn.testnet").unwrap(), "Accepting only USN token");
+                assert_eq!(env::predecessor_account_id(), AccountId::from_str("usdn.testnet").unwrap(), "Accepting only USN token");
                 if self.token.accounts.get(&sender_id).is_none() {
                     self.token.internal_register_account(&sender_id);
                 };
@@ -120,8 +155,8 @@ impl Contract {
                     }
                 };
                 let token_price: u128 = self.token_price().into();
-                let token_price = token_price / 1000000000000000000;
-                let amount_usd = amount / 1000000000000000000;
+                let token_price = token_price / 1*(10**18);
+                let amount_usd = amount / 1*(10**18);
                 let asset_token_mount = amount_usd / token_price;
                 log!(
                     "Buy asset tokens! amount_usd: {}, asset_token_amount: {}, token_price: {}",
@@ -136,6 +171,41 @@ impl Contract {
         }
 
         String::from("0")
+    }
+
+    pub fn add_apr_within_date_range(&mut self, time_from: Timestamp, time_to: Timestamp, apr: APR) {
+        assert_self();
+        self.apr_within_date_ranges.push(&(time_from, time_to, apr));
+    }
+
+    pub fn get_apr_by_timestamp(&self, timestamp: Timestamp) -> APR {
+        for (time_from, time_to, apr) in self.apr_within_date_ranges.iter() {
+            if timestamp > time_from && timestamp < time_to {
+                return apr;
+            }
+        }
+        APR::from(0)
+    }
+
+    pub fn calculate_available_rewards(&self, account_id: AccountId) -> uint32 {
+        let current_timestamp = block_timestamp();
+        let account_tracking_data = self.accounts_tracking_data.get(&account_id);
+        if account_tracking_data.is_none() {
+            return 0;
+        }
+
+        let account_tracking_data = account_tracking_data.unwrap();
+        let accumulated_revenue_last_updated = account_tracking_data.accumulated_revenue_last_updated;
+        let apr = self.get_apr_by_timestamp(accumulated_revenue_last_updated);
+        let tokens = self.ft_balance_of(account_id);
+        let tokens_total_value = tokens * self.token_price;
+        let annual_revenue = tokens_total_value * apr / 100;
+        let nanoseconds_in_year = 31536000 * 1_000_000_000;
+        let timeframe_to_calculate = current_timestamp - accumulated_revenue_last_updated;
+        let timeframe_percentage = timeframe_to_calculate * 100 / nanoseconds_in_year;
+        let timeframe_revenue = annual_revenue * timeframe_percentage / 100;
+
+        return account_tracking_data.accumulated_revenue + timeframe_revenue;
     }
 
     #[private]

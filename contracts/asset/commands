@@ -1,6 +1,7 @@
 accounts:
 token.fundament_creator.testnet
 asset.fundament_creator.testnet
+main.fundament_creator.testnet
 
 andrew.fundament_creator.testnet
 dima.fundament_creator.testnet
@@ -26,6 +27,7 @@ near state andrew.fundament_creator.testnet
 Deploy Contract:
 
 near deploy asset.fundament_creator.testnet --wasmFile res/asset.wasm
+near deploy main.fundament_creator.testnet --wasmFile res/main.wasm
 near deploy token.fundament_creator.testnet --wasmFile res/token.wasm
 
 
@@ -60,6 +62,14 @@ Call Init Asset contract
 near call asset.$ID new '{"owner_id": "'$ID'" }' --accountId asset.$ID
 near call asset.$ID new_default_meta '{"owner_id": "'asset.$ID'", "token_total_supply": "10000", "token_price": "5000000000000000000" }' --accountId asset.$ID
 
+Call Init Main contract
+near call main.$ID new '{"owner_id": "'$ID'" }' --accountId $ID
+
+Call Add Asset on Main contract
+near call main.$ID add_asset '{"asset_account_id": "'asset.$ID'", "asset_status": "'Active'" }' --accountId $ID
+
+Call View Assets on Main contract
+near view main.$ID get_asset_addresses
 
 Call View Investors
 near view asset.$ID get_investors

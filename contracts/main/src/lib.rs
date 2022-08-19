@@ -1,123 +1,132 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::collections::UnorderedSet;
-use near_sdk::json_types::U128;
-use near_sdk::{
-    assert_self, env, ext_contract, log, near_bindgen, AccountId, Balance, PanicOnDefault, Promise,
-    PromiseOrValue, PromiseResult,
-};
-use std::convert::{From, TryFrom};
-
-use near_contract_standards::fungible_token::metadata::{FungibleTokenMetadata, FungibleTokenMetadataProvider, FT_METADATA_SPEC};
-use near_contract_standards::fungible_token::FungibleToken;
-use near_sdk::collections::LazyOption;
+use near_sdk::collections::{UnorderedMap, UnorderedSet, Vector};
+use near_sdk::{env, near_bindgen, AccountId, PanicOnDefault, BorshStorageKey, require, assert_self, log};
+use near_sdk::serde::{Serialize, Deserialize};
 
 pub mod external;
+
 pub use crate::external::*;
+
+type AssetAccountId = AccountId;
+
+#[derive(BorshStorageKey, BorshSerialize)]
+pub enum StorageKeys {
+    Assets,
+    AssetOwners { account_hash: Vec<u8> },
+}
+
+#[derive(Serialize, Deserialize, BorshDeserialize, BorshSerialize)]
+#[serde(crate = "near_sdk::serde")]
+pub enum Status {
+    Active,
+    Inactive,
+    Undefined,
+}
+
+impl Status {
+    pub fn get_from_string(value: String) -> Status {
+        match value.as_str() {
+            "Active" => Status::Active,
+            "Inactive" => Status::Inactive,
+            _ => Status::Undefined
+        }
+    }
+}
+
+#[near_bindgen]
+#[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]
+// #[derive(Serialize, Deserialize, BorshDeserialize, BorshSerialize, PanicOnDefault)]
+// #[serde(crate = "near_sdk::serde")]
+pub struct Asset {
+    status: Status,
+    owners: UnorderedSet<AccountId>,
+}
 
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]
 pub struct Contract {
     owner_id: AccountId,
-    asset_contracts: UnorderedSet<AccountId>,
+    assets: UnorderedMap<AssetAccountId, Asset>,
 }
 
 #[near_bindgen]
 impl Contract {
-
     #[init]
     pub fn new(
         owner_id: AccountId,
     ) -> Self {
         assert!(!env::state_exists(), "Already initialized");
 
-        let mut this = Self {
+        let this = Self {
             owner_id: owner_id.clone(),
-            asset_contracts: UnorderedSet::new(b"u")
+            assets: UnorderedMap::new(StorageKeys::Assets),
         };
 
         this
     }
 
-    pub fn set_token_price(&mut self, token_price: U128) {
-        assert_self();
-        self.token_price = token_price;
+    pub fn add_asset(&mut self, asset_account_id: AccountId, asset_status: String) {
+        assert_eq!(env::signer_account_id(), self.owner_id, "Only owner can add assets");
+        let asset = Asset {
+            status: Status::get_from_string(asset_status),
+            owners: UnorderedSet::new(StorageKeys::AssetOwners { account_hash: env::sha256(&asset_account_id.as_bytes()) }),
+        };
+        self.assets.insert(&asset_account_id, &asset);
     }
 
-    pub fn token_price(&self) -> U128 {
-        self.token_price
+    pub fn add_owner_to_asset(&mut self, asset_id: AssetAccountId, owner_id: AccountId) {
+        let asset = self.assets.get(&asset_id);
+        require!(&asset.is_some(), "Asset not found");
+        let mut asset = asset.unwrap();
+        asset.owners.insert(&owner_id);
+        self.assets.insert(&asset_id, &asset);
+        // log!("Owners {}", asset.owners.iter().find(|o| o == &owner_id).unwrap_or(owner_id));
     }
 
-    #[private]
-    pub fn buy_asset_tokens(&mut self, receiver_id: AccountId, amount: U128) {
-        // self.register_account(receiver_id.clone());
-        self.ft_transfer(receiver_id, amount, None);
+    pub fn get_asset_addresses(&self) -> Vec<AssetAccountId> {
+        self.assets.keys_as_vector().to_vec()
     }
 
-    pub fn ft_on_transfer(&mut self, sender_id: AccountId, amount: String, msg: String) -> String {
-        match msg.as_str() {
-            "buy_asset_tokens" => {
-                // assert_eq!(env::predecessor_account_id(), AccountId::from_str("usdn.testnet").unwrap(), "Accepting only USN token");
-                // if self.token.accounts.get(&sender_id).is_none() {
-                //     self.token.internal_register_account(&sender_id);
-                // };
-                let amount = match amount.parse::<u128>() {
-                    Ok(i) => i,
-                    Err(_e) => {
-                        log!("Error parsing amount {}", amount);
-                        0
-                    }
-                };
-                let token_price: u128 = self.token_price().into();
-                let token_price = token_price / 1000000000000000000;
-                let amount_usd = amount / 1000000000000000000;
-                let asset_token_mount = amount_usd / token_price;
-                log!(
-                    "Buy asset tokens! amount_usd: {}, asset_token_amount: {}, token_price: {}",
-                    amount_usd,
-                    asset_token_mount,
-                    token_price
-                );
 
-                self.token.internal_transfer(&env::current_account_id(), &sender_id, asset_token_mount, None);
+    pub fn get_asset_status(&self, asset_id: AssetAccountId) -> Status {
+        let asset = self.assets.get(&asset_id);
+        require!(asset.is_some(), "Asset not found");
+        let asset = asset.unwrap();
 
-            }
-            _ => (),
-        }
-
-        String::from("0")
+        asset.status
     }
 
-    pub fn transfer_asset_token(&mut self, &receiver_id: AccountId, amount: u128) -> Promise {
-        // asset::ext(self)
 
-        // Create a promise to call HelloNEAR.set_greeting(message:string)
-        hello_near::ext(self.hello_account.clone())
-            .with_static_gas(Gas(5*TGAS))
-            .set_greeting(new_greeting)
-            .then( // Create a callback change_greeting_callback
-                   Self::ext(env::current_account_id())
-                       .with_static_gas(Gas(5*TGAS))
-                       .change_greeting_callback()
-            )
+    pub fn set_asset_status(&mut self, asset_id: AssetAccountId, status: Status) {
+        let asset = self.assets.get(&asset_id);
+        require!(asset.is_some(), "Asset not found");
+        let mut asset = asset.unwrap();
+        asset.status = status;
+        self.assets.insert(&asset_id, &asset);
     }
 
-    #[private]
-    pub fn callback_after_transfer(&mut self) -> bool {
-        match env::promise_result(0) {
-            PromiseResult::NotReady => {
-                unreachable!()
-            }
-            PromiseResult::Successful(_) => {
-                // log!("Investor added {}", &env::signer_account_id());
-                // New account created and reward transferred successfully.
-                true
-            }
-            PromiseResult::Failed => {
-                // Weren't able to create the new account,
-                //   reward money has been returned to this contract.
-                false
+    pub fn get_all_owners(&self) -> Vec<AccountId> {
+        let mut owners: Vec<AccountId> = Vec::new();
+        for (_, asset) in self.assets.iter() {
+            for owner in asset.owners.iter() {
+                owners.push(owner);
             }
         }
+
+        owners
     }
 
+    pub fn get_assets_by_owner(&self, account_id: AccountId) -> Vec<AssetAccountId> {
+        let mut assets: Vec<AssetAccountId> = Vec::new();
+        for (asset_account_id, asset) in self.assets.iter() {
+            for owner in asset.owners.iter() {
+                if owner == account_id {
+                    assets.push(asset_account_id.clone());
+                }
+            }
+        }
+
+        assets
+    }
 }
+
