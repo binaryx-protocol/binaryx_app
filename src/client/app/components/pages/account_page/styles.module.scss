@@ -24,3 +24,20 @@
   margin-top: 25px;
   margin-bottom: 25px;
 }
+
+.header {
+  display: flex;
+  min-height: 96px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.accountId {
+  display: flex;
+  align-items: center;
+}
+
+.logoutButton {
+  margin-left: 12px;
+  cursor: pointer;
+}

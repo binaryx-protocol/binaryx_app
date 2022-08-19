@@ -8,7 +8,8 @@ type Props = {
 const AccountMenu: FC<Props> = (props: Props) => {
   return (
     <div className={s.sidebarMenu}>
-      <img src="#" alt="company_logo" className={s.logo} />
+      <img src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg" alt="logo" className={s.logo} />
+
       {props.children}
     </div>
   );

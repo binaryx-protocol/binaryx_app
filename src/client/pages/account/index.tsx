@@ -1,25 +1,56 @@
-import React from 'react';
+import s from 'components/pages/account_page/styles.module.scss';
+import { useEffect, useState } from 'react';
 import { NextPage } from 'next';
-import s from '../../app/components/pages/account_page/styles.module.scss';
 import WithdrawBlock from 'components/pages/account_page/WithdrawBlock';
 import StatisticBlock from 'components/pages/account_page/StatisticBlock';
 import OrderBlock from 'components/pages/account_page/OrderBlock';
 import AccountMenu from 'components/pages/account_page/AccountMenu';
 import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
+import mainContractService from 'services/mainContractService';
+import LogoutIcon from '@mui/icons-material/Logout';
+
+async function init() {
+  await mainContractService.init();
+  if (!mainContractService.isSignedIn()) {
+    console.log("!isSignedIn", window.mainContract);
+    mainContractService.requestSignIn();
+  }
+}
 
 const Account: NextPage<{ data: string }> = (props) => {
   const { data } = props;
+  const [accountId, setAccountId] = useState('');
+
+  useEffect(() => {
+    init().then(() => {
+      setAccountId(mainContractService.getAccountId() || '');
+    });
+  }, []);
+
+  if (!accountId) {
+    return <div>Signing in...</div>
+  }
 
   return (
     <div className={s.account_page}>
       <AccountMenu>
         <MenuElement link={'#'} body={'Assets Overview'} />
-        <MenuElement link={'#'} body={'Marketplace'} />
+        <MenuElement link="/marketplace" body={'Marketplace'} />
         <MenuElement link={'#'} body={'Transaction History'} />
       </AccountMenu>
 
       <div className={s.mainView}>
-        <h1 className={s.heading}>Account Page</h1>
+        <header className={s.header}>
+          <div className={s.accountId}>
+            {accountId}{' '}
+            <LogoutIcon
+              className={s.logoutButton}
+              role="button"
+              onClick={() => mainContractService.signOut()}
+            />
+          </div>
+        </header>
+        <h1 className={s.heading}>Account</h1>
 
         <div className={s.statisticSection}>
           <WithdrawBlock amountOfMoney={0.14} />

@@ -16,6 +16,7 @@ Create account:
 near create-account andrew.fundament_creator.testnet --masterAccount fundament_creator.testnet
 
 near create-account asset.$ID --masterAccount $ID
+near create-account main.$ID --masterAccount $ID
 near create-account binaryx_test_asset1 --masterAccount fundament_creator.testnet --initialBalance 2
 
 
@@ -67,6 +68,10 @@ near call main.$ID new '{"owner_id": "'$ID'" }' --accountId $ID
 
 Call Add Asset on Main contract
 near call main.$ID add_asset '{"asset_account_id": "'asset.$ID'", "asset_status": "'Active'" }' --accountId $ID
+
+Call Add Asset Owner on Main contract
+near call main.$ID add_asset_owner '{"owner_account_id":"'$ID'","asset_account_id":"'asset.$ID'"}' --accountId $ID
+
 
 Call View Assets on Main contract
 near view main.$ID get_asset_addresses

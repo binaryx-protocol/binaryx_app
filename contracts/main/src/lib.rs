@@ -1,5 +1,6 @@
+use std::convert::TryInto;
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::collections::{UnorderedMap, UnorderedSet, Vector};
+use near_sdk::collections::{LookupMap, UnorderedMap, UnorderedSet};
 use near_sdk::{env, near_bindgen, AccountId, PanicOnDefault, BorshStorageKey, require, assert_self, log};
 use near_sdk::serde::{Serialize, Deserialize};
 
@@ -12,7 +13,8 @@ type AssetAccountId = AccountId;
 #[derive(BorshStorageKey, BorshSerialize)]
 pub enum StorageKeys {
     Assets,
-    AssetOwners { account_hash: Vec<u8> },
+    AssetOwners,
+    AccountAssets { account_hash: Vec<u8> },
 }
 
 #[derive(Serialize, Deserialize, BorshDeserialize, BorshSerialize)]
@@ -23,30 +25,29 @@ pub enum Status {
     Undefined,
 }
 
-impl Status {
-    pub fn get_from_string(value: String) -> Status {
-        match value.as_str() {
-            "Active" => Status::Active,
-            "Inactive" => Status::Inactive,
-            _ => Status::Undefined
-        }
-    }
-}
+// impl Status {
+//     pub fn get_from_string(value: String) -> Status {
+//         match value.as_str() {
+//             "Active" => Status::Active,
+//             "Inactive" => Status::Inactive,
+//             _ => Status::Undefined
+//         }
+//     }
+// }
 
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]
-// #[derive(Serialize, Deserialize, BorshDeserialize, BorshSerialize, PanicOnDefault)]
-// #[serde(crate = "near_sdk::serde")]
 pub struct Asset {
     status: Status,
-    owners: UnorderedSet<AccountId>,
 }
+
 
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]
 pub struct Contract {
     owner_id: AccountId,
     assets: UnorderedMap<AssetAccountId, Asset>,
+    asset_owners: LookupMap<AccountId, UnorderedSet<AssetAccountId>>
 }
 
 #[near_bindgen]
@@ -60,33 +61,23 @@ impl Contract {
         let this = Self {
             owner_id: owner_id.clone(),
             assets: UnorderedMap::new(StorageKeys::Assets),
+            asset_owners: LookupMap::new(StorageKeys::AssetOwners)
         };
 
         this
     }
 
-    pub fn add_asset(&mut self, asset_account_id: AccountId, asset_status: String) {
+    pub fn add_asset(&mut self, asset_account_id: AccountId, asset_status: Status) {
         assert_eq!(env::signer_account_id(), self.owner_id, "Only owner can add assets");
         let asset = Asset {
-            status: Status::get_from_string(asset_status),
-            owners: UnorderedSet::new(StorageKeys::AssetOwners { account_hash: env::sha256(&asset_account_id.as_bytes()) }),
+            status: asset_status,
         };
         self.assets.insert(&asset_account_id, &asset);
-    }
-
-    pub fn add_owner_to_asset(&mut self, asset_id: AssetAccountId, owner_id: AccountId) {
-        let asset = self.assets.get(&asset_id);
-        require!(&asset.is_some(), "Asset not found");
-        let mut asset = asset.unwrap();
-        asset.owners.insert(&owner_id);
-        self.assets.insert(&asset_id, &asset);
-        // log!("Owners {}", asset.owners.iter().find(|o| o == &owner_id).unwrap_or(owner_id));
     }
 
     pub fn get_asset_addresses(&self) -> Vec<AssetAccountId> {
         self.assets.keys_as_vector().to_vec()
     }
-
 
     pub fn get_asset_status(&self, asset_id: AssetAccountId) -> Status {
         let asset = self.assets.get(&asset_id);
@@ -96,7 +87,6 @@ impl Contract {
         asset.status
     }
 
-
     pub fn set_asset_status(&mut self, asset_id: AssetAccountId, status: Status) {
         let asset = self.assets.get(&asset_id);
         require!(asset.is_some(), "Asset not found");
@@ -105,28 +95,48 @@ impl Contract {
         self.assets.insert(&asset_id, &asset);
     }
 
-    pub fn get_all_owners(&self) -> Vec<AccountId> {
-        let mut owners: Vec<AccountId> = Vec::new();
-        for (_, asset) in self.assets.iter() {
-            for owner in asset.owners.iter() {
-                owners.push(owner);
+    pub fn add_asset_owner(&mut self, owner_account_id: AccountId, asset_account_id: AssetAccountId) {
+        let account_assets = self.asset_owners.get(&owner_account_id);
+
+        match account_assets {
+            Some(mut assets) => {
+                assets.insert(&asset_account_id);
+                self.asset_owners.insert(&owner_account_id, &assets);
+            }
+            None => {
+                let mut assets = UnorderedSet::new(StorageKeys::AccountAssets { account_hash: env::sha256(owner_account_id.as_bytes()) });
+                &assets.insert(&asset_account_id);
+                self.asset_owners.insert(&owner_account_id, &assets);
             }
         }
-
-        owners
     }
 
-    pub fn get_assets_by_owner(&self, account_id: AccountId) -> Vec<AssetAccountId> {
-        let mut assets: Vec<AssetAccountId> = Vec::new();
-        for (asset_account_id, asset) in self.assets.iter() {
-            for owner in asset.owners.iter() {
-                if owner == account_id {
-                    assets.push(asset_account_id.clone());
-                }
+    pub fn remove_asset_owner(&mut self, owner_account_id: AccountId, asset_account_id: AssetAccountId) {
+        let account_assets = self.asset_owners.get(&owner_account_id);
+
+        match account_assets {
+            Some(mut assets) => {
+                assets.remove(&asset_account_id);
+                self.asset_owners.insert(&owner_account_id, &assets);
+            }
+            None => {}
+        }
+    }
+
+    pub fn get_account_assets(&self, account_id: AccountId) -> Vec<AssetAccountId> {
+        let result = self.asset_owners.get(&account_id);
+
+        match result {
+            Some(assets) => {
+                let values = assets.to_vec();
+                log!("Found asset owner {}, - len {}", account_id, values.len());
+                values
+            }
+            None => {
+                log!("Not found asset owner {}", account_id);
+                vec![AccountId::from((&"test".to_string()).parse().unwrap())]
             }
         }
-
-        assets
     }
 }
 

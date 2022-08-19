@@ -12,13 +12,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 80%;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  align-items: center;
 }
 
 .logo {
-  height: inherit;
-  display: block;
-  height: 60%;
+  max-width: 180px;
 }
 
 .navLinks {
