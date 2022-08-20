@@ -134,7 +134,7 @@ impl Contract {
             }
             None => {
                 log!("Not found asset owner {}", account_id);
-                vec![AccountId::from((&"test".to_string()).parse().unwrap())]
+                vec![]
             }
         }
     }
