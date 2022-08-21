@@ -1,9 +1,12 @@
 import Property from 'types/Property';
 import { gql, useQuery } from '@apollo/client';
+import AssetContract from '../contracts/AssetContract';
+import { useEffect } from 'react';
 
 type Options = {
   id?: string;
   name?: string;
+  contractId?: string;
 };
 
 const GET_ASSETS = gql`
@@ -35,14 +38,14 @@ function useAssets(options?: Options): {
   loading: boolean;
   error: any;
 } {
-  const { id, name } = options || {};
+  const { id, name, contractId } = options || {};
   const { loading, error, data } = useQuery<{ assets: Property[] }>(GET_ASSETS);
 
   const assetsResult: Property[] = (
-    id === undefined && name === undefined
+    id === undefined && name === undefined && contractId === undefined
       ? data?.assets
       : data?.assets?.filter(
-          (asset) => asset.id?.toString() === id || asset.name === name,
+          (asset) => asset.id?.toString() === id || asset.name === name || asset.contractId === contractId,
         )
   ) || [];
 

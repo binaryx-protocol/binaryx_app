@@ -7,7 +7,8 @@ const CONTRACT_KEY = 'mainContract';
 const mainContractService = {
   async init() {
     if (!window.mainContract) {
-      window.mainContract = await MainContract.new("main.fundament_creator.testnet");
+      // window.mainContract = await MainContract.new("main.fundament_creator.testnet");
+      window.mainContract = await MainContract.new("dev-1660992653251-73267872066366");
     }
 
     return window.mainContract;
@@ -39,29 +40,10 @@ const mainContractService = {
     return MAIN_CONTRACT_NAME;
   },
 
-  async ft_total_supply(): Promise<string> {
+  async get_account_assets({ account_id }: { account_id: string }): Promise<string[]> {
     const mainContract = await this.getContract(CONTRACT_KEY);
 
-    return mainContract.contract.ft_total_supply();
-  },
-
-  async ft_balance_of({ account_id }: { account_id: string }): Promise<string> {
-    const mainContract = await this.getContract(CONTRACT_KEY);
-
-    return mainContract.contract.ft_balance_of({ account_id });
-  },
-
-  async storage_balance_of({ account_id }: { account_id: string }): Promise<string> {
-    const mainContract = await this.getContract(CONTRACT_KEY);
-
-    return mainContract.contract.storage_balance_of({ account_id });
-  },
-
-  async token_price(): Promise<number> {
-    const mainContract = await this.getContract(CONTRACT_KEY);
-    const result = await mainContract.contract.token_price();
-
-    return typeof result === "number" ? result : (result && parseInt(result));
+    return mainContract.contract.get_account_assets({ account_id });
   },
 };
 

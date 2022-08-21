@@ -16,6 +16,6 @@ type AssetAccountId = AccountId;
 // Validator interface, for cross-contract calls
 #[ext_contract(main_contract)]
 trait Main {
-    fn add_asset_owner(&mut self, owner_account_id: AccountId, asset_account_id: AssetAccountId);
-    fn remove_asset_owner(&mut self, owner_account_id: AccountId, asset_account_id: AssetAccountId);
+    fn add_asset_investor(&mut self, investor_account_id: AccountId, asset_account_id: AssetAccountId, token_amount: U128);
+    fn remove_asset_investor(&mut self, investor_account_id: AccountId, asset_account_id: AssetAccountId);
 }

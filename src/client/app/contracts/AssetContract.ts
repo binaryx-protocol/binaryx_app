@@ -18,7 +18,10 @@ class AssetContract extends Contract {
       return contract;
     }
 
-    return await AssetContract.new(contractName);
+    contract = await AssetContract.new(contractName);
+    AssetContract.instances[contractName] = contract;
+
+    return contract;
   }
 
   // ft_total_supply(): Promise<string> {

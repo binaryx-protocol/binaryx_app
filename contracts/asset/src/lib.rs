@@ -40,15 +40,24 @@ pub use crate::external::*;
 
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]
+pub struct OldContract {
+    owner_id: AccountId,
+    token: FungibleToken,
+    token_metadata: LazyOption<FungibleTokenMetadata>,
+    token_price: U128
+}
+
+#[near_bindgen]
+#[derive(BorshDeserialize, BorshSerialize, PanicOnDefault)]
 pub struct Contract {
     owner_id: AccountId,
     token: FungibleToken,
     token_metadata: LazyOption<FungibleTokenMetadata>,
     token_price: U128,
+    main_contract_id: AccountId
     // asset: Asset,
     // apr_within_date_ranges: Vector<AprWithingDateRange>,
     // accounts_tracking_data: LookupMap<AccountId, AccountTrackingData>,
-
 }
 
 #[derive(BorshStorageKey, BorshSerialize)]
@@ -67,10 +76,12 @@ impl Contract {
         owner_id: AccountId,
         token_total_supply: U128,
         token_price: U128,
+        main_contract_id: AccountId
         // asset: Asset,
     ) -> Self {
         Self::new(
             owner_id,
+            main_contract_id,
             token_total_supply,
             token_price,
             FungibleTokenMetadata {
@@ -89,6 +100,7 @@ impl Contract {
     #[init]
     pub fn new(
         owner_id: AccountId,
+        main_contract_id: AccountId,
         token_total_supply: U128,
         token_price: U128,
         token_metadata: FungibleTokenMetadata,
@@ -100,6 +112,7 @@ impl Contract {
 
         let mut this = Self {
             owner_id: owner_id.clone(),
+            main_contract_id,
             token: FungibleToken::new(b"a".to_vec()),
             token_metadata: LazyOption::new(b"m".to_vec(), Some(&token_metadata)),
             token_price,
@@ -120,6 +133,19 @@ impl Contract {
         this
     }
 
+    #[private]
+    #[init(ignore_state)]
+    pub fn migrate() -> Self {
+        let old_state: OldContract = env::state_read().expect("failed");
+        Self {
+            owner_id: old_state.owner_id,
+            main_contract_id: AccountId::from("main.fundament_creator.testnet".to_string().parse().unwrap()),
+            token: old_state.token,
+            token_metadata: old_state.token_metadata,
+            token_price: old_state.token_price,
+        }
+    }
+
     // pub fn update_state(&mut self) {
     //     let apr_within_date_ranges: Vector<AprWithingDateRange> = Vector::new(StorageKeys::AprWithingDateRanges);
     //     self.apr_within_date_ranges = apr_within_date_ranges;
@@ -137,6 +163,14 @@ impl Contract {
             decimals: 0,
         };
         self.token_metadata = LazyOption::new(b"m".to_vec(), Some(&token_metadata));
+    }
+
+    pub fn set_main_contract_id(&mut self, main_contract_id: AccountId) {
+        self.main_contract_id = main_contract_id;
+    }
+
+    pub fn get_main_contract_id(&self) -> &AccountId {
+        &self.main_contract_id
     }
 
     pub fn set_token_price(&mut self, token_price: U128) {
@@ -180,10 +214,9 @@ impl Contract {
                 );
 
                 self.token.internal_transfer(&env::current_account_id(), &sender_id, asset_token_mount, None);
-                let main_contract_id = AccountId::try_from("main.fundament_creator.testnet".to_string()).unwrap();
-                main_contract::ext(main_contract_id)
+                main_contract::ext(self.main_contract_id.clone())
                     .with_static_gas(Gas(10*TGAS))
-                    .add_asset_owner(sender_id, env::current_account_id());
+                    .add_asset_investor(sender_id, env::current_account_id(), U128::from(asset_token_mount));
             }
             _ => (),
         }
