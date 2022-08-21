@@ -1,12 +1,42 @@
 .gallery {
   display: flex;
+  gap: 10px;
 }
 
 .imageWrap {
   width: 100%;
+  overflow: hidden;
 }
 
 .image {
   width: 100%;
   height: 270px;
+  cursor: pointer;
+}
+
+.carousel {
+  background-color: #fafafa;
+}
+
+.buttonBack {
+  position: absolute;
+  top: 50vh;
+  left: 20px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.buttonNext {
+  position: absolute;
+  top: 50vh;
+  right: 20px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.closeIcon {
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  border-radius: 10px;
+  font-size: 30px;
 }
