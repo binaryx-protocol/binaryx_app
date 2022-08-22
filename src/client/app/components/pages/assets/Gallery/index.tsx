@@ -1,5 +1,5 @@
 import s from './styles.module.scss';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import useAssets from 'hooks/useAssets';
 import { useRouter } from 'next/router';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -11,6 +11,7 @@ import {
   Slide,
   ButtonBack,
   ButtonNext,
+  Image,
 } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 
@@ -26,14 +27,11 @@ const Gallery: FC = () => {
   const displayIsShow = isFullWidth ? 'block' : 'none';
   const styleForArrows = {
     display: displayIsShow,
-    background: '#fafafa',
-    border: 'none',
-    borderRadius: '10px',
   };
 
   const toggleFullWidth = () => setIsFullWidth(!isFullWidth);
-
-  const toggleCurrentSlide = (index: number) => setCurrentSlide(index);
+  const toggleCurrentSlide = (indexOfSlide: number) =>
+    setCurrentSlide(indexOfSlide);
 
   if (!item) {
     return null;
@@ -41,46 +39,52 @@ const Gallery: FC = () => {
 
   return (
     <>
-      <CarouselProvider
-        naturalSlideWidth={100}
-        naturalSlideHeight={125}
-        totalSlides={item.images?.images.length}
-        currentSlide={currentSlide}
-        className={s.carousel}
-      >
-        <Slider
-          style={{
-            display: displayIsShow,
-            width: '80vw',
-            margin: '0 auto',
-            top: '40px',
-          }}
+      {isFullWidth ? (
+        <CarouselProvider
+          className={s.carouselProvider}
+          naturalSlideWidth={100}
+          naturalSlideHeight={60}
+          totalSlides={item.images?.images.length}
+          currentSlide={currentSlide}
         >
-          {item.images?.images.slice(0, 4).map((image, index) => {
-            return (
-              <Slide index={index} key={index}>
-                <img
-                  className={s.imageFullWidth}
-                  src={image.src}
-                  width={'100%'}
-                  onClick={() => toggleCurrentSlide(index)}
-                />
-              </Slide>
-            );
-          })}
-        </Slider>
-        <ButtonBack style={styleForArrows} className={s.buttonBack}>
-          <ArrowBackIosIcon />
-        </ButtonBack>
-        <ButtonNext style={styleForArrows} className={s.buttonNext}>
-          <ArrowForwardIosIcon />
-        </ButtonNext>
-        <CloseIcon
-          className={s.closeIcon}
-          onClick={toggleFullWidth}
-          style={{ display: displayIsShow }}
-        />
-      </CarouselProvider>
+          <Slider
+            style={{
+              display: displayIsShow,
+              width: '80vw',
+              margin: 'auto',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              borderRadius: '10px',
+              boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
+            }}
+          >
+            {item.images?.images.slice(0, 4).map((image, index) => {
+              return (
+                <Slide index={index} key={index}>
+                  <Image
+                    src={image.src}
+                    onClick={() => toggleCurrentSlide(index)}
+                    hasMasterSpinner={false}
+                  />
+                </Slide>
+              );
+            })}
+          </Slider>
+          <ButtonBack style={styleForArrows} className={s.buttonBack}>
+            <ArrowBackIosIcon />
+          </ButtonBack>
+          <ButtonNext style={styleForArrows} className={s.buttonNext}>
+            <ArrowForwardIosIcon />
+          </ButtonNext>
+          <CloseIcon
+            className={s.closeIcon}
+            onClick={toggleFullWidth}
+            style={{ display: displayIsShow }}
+          />
+        </CarouselProvider>
+      ) : (
+        ''
+      )}
 
       <div className={s.gallery}>
         {item.images?.images.slice(0, 4).map((image, index) => {
