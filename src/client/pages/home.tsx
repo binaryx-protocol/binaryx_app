@@ -16,7 +16,7 @@ const Home: NextPage<{ data: string }> = (props) => {
         <div className={s.headerWrapper}>
           <img src="#" alt="company_logo" className={s.logo} />
           <nav className={`${s.navLinks} ${showMenu ? '' : s.hidden} `}>
-            <MenuElement link={'#'} body={'Marketplace'} />
+            <MenuElement link={'/marketplace'} body={'Marketplace'} />
             <MenuElement link={'#'} body={'About us'} />
             <MenuElement link={'#'} body={'Learn'} />
             <MenuElement link={'#'} body={'Blog'} />
