@@ -208,11 +208,23 @@ impl Contract {
     }
 
     pub fn add_apr_within_date_range(&mut self, asset_account_id: &AssetAccountId, time_from: Timestamp, time_to: Timestamp, apr: APR) {
-        assert_self();
         if let Some(mut asset) = self.assets.get(asset_account_id) {
             asset.apr_within_date_ranges.push(&(time_from, time_to, apr));
             self.assets.insert(&asset_account_id, &asset);
+        } else {
+            log!("Asset not found, cannot add APR");
         }
+    }
+
+    pub fn get_asset_aprs(&self, asset_account_id: &AssetAccountId) -> Vec<AprWithingDateRange> {
+        let asset = self.assets.get(asset_account_id);
+        if asset.is_none() {
+            log!("Empty APRs");
+            return vec![];
+        }
+        let asset = asset.unwrap();
+
+        return asset.apr_within_date_ranges.to_vec();
     }
 
     pub fn get_apr_by_timestamp(&self, asset_account_id: &AssetAccountId, timestamp: &Timestamp) -> APR {
@@ -237,18 +249,30 @@ impl Contract {
         if account_tracking_data.is_none() {
             return 0;
         }
-
         let account_tracking_data = account_tracking_data.unwrap();
         let accumulated_revenue_last_updated = account_tracking_data.accumulated_revenue_last_updated;
-        let apr = self.get_apr_by_timestamp(asset_account_id, &accumulated_revenue_last_updated);
+        let apr = self.get_apr_by_timestamp(asset_account_id, &current_timestamp);
         let tokens = self.get_token_balance(investor_account_id, asset_account_id);
         let token_price = self.get_token_price(asset_account_id);
-        let tokens_total_value: u128 = u128::from(tokens) * u128::from(token_price);
-        let annual_revenue = tokens_total_value * u128::from(apr) / 100;
+        let tokens_total_value: u128 = (u128::from(tokens)) * u128::from(token_price);
+        let annual_revenue = (tokens_total_value / 1_000_000_000_000_000_000) * u128::from(apr / 1_000_000_000_000_000_000) / 100;
         let nanoseconds_in_year: u128 = 31536000 * 1_000_000_000;
         let timeframe_to_calculate: u128 = u128::from(current_timestamp) - u128::from(accumulated_revenue_last_updated);
-        let timeframe_percentage = timeframe_to_calculate * 100 / nanoseconds_in_year;
+        let timeframe_percentage: u128 = timeframe_to_calculate * 100 * 1_000_000_000_000_000_000 / nanoseconds_in_year;
         let timeframe_revenue = annual_revenue * timeframe_percentage / 100;
+        log!("Account tracking data accumulated_revenue : {} accumulated_revenue_last_updated: {}", account_tracking_data.accumulated_revenue, account_tracking_data.accumulated_revenue_last_updated);
+        log!("APR: {}", apr);
+        log!("tokens: {}", tokens);
+        log!("token_price: {}", token_price);
+        log!("tokens_total_value: {}", tokens_total_value);
+        log!("annual_revenue: {}", annual_revenue);
+        log!("nanoseconds_in_year: {}", nanoseconds_in_year);
+        log!("timeframe_to_calculate: {}", timeframe_to_calculate);
+        log!("timeframe_percentage: {}", timeframe_percentage);
+        log!("timeframe_revenue: {}", timeframe_revenue);
+
+        // nanoseconds_in_year = 100
+        // timeframe_to_calculate = x
 
         return account_tracking_data.accumulated_revenue + timeframe_revenue;
     }

@@ -21,6 +21,12 @@ const OrderBlock: FC<Props> = ({ asset, accountId }) => {
     setTokenBalance(balance);
   }
 
+  // async function fetchApr() {
+  //   const assetContract = await AssetContract.getInstance(asset.contractId)
+  //   const balance = await assetContract.contract.ft_balance_of({ account_id: accountId });
+  //   setTokenBalance(balance);
+  // }
+
   console.log("tokenBalance", tokenBalance);
 
   return (
@@ -34,8 +40,8 @@ const OrderBlock: FC<Props> = ({ asset, accountId }) => {
       boughtHouseLink={'#'}
       cocReturn={parseFloat(asset.coc)}
       currentValue={parseFloat(asset.tokenPrice) / 10**18}
-      currentRentBalance={14}
-      totalRentEarned={0.4}
+      currentRentBalance={"N/A"}
+      totalRentEarned={"N/A"}
     />
   );
 };
