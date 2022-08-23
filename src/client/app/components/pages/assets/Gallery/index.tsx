@@ -46,41 +46,43 @@ const Gallery: FC = () => {
           naturalSlideHeight={60}
           totalSlides={item.images?.images.length}
           currentSlide={currentSlide}
+          disableAnimation={true}
         >
+          <div className={s.imageFullWidthContol}>
+            <CloseIcon
+              className={s.closeIcon}
+              onClick={toggleFullWidth}
+              style={{ display: displayIsShow }}
+            />
+            <ButtonBack style={styleForArrows} className={s.buttonBack}>
+              <ArrowBackIosIcon className={s.arrowBack} />
+            </ButtonBack>
+          </div>
           <Slider
+            id="mySlider"
             style={{
               display: displayIsShow,
-              width: '80vw',
+              width: '100%',
               margin: 'auto',
-              top: '50%',
-              transform: 'translateY(-50%)',
               borderRadius: '10px',
               boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
             }}
           >
-            {item.images?.images.slice(0, 4).map((image, index) => {
+            {item.images?.images.map((image, index) => {
               return (
                 <Slide index={index} key={index}>
                   <Image
                     src={image.src}
-                    onClick={() => toggleCurrentSlide(index)}
                     hasMasterSpinner={false}
+                    style={{ borderRadius: '10px' }}
                   />
                 </Slide>
               );
             })}
           </Slider>
-          <ButtonBack style={styleForArrows} className={s.buttonBack}>
-            <ArrowBackIosIcon />
-          </ButtonBack>
           <ButtonNext style={styleForArrows} className={s.buttonNext}>
-            <ArrowForwardIosIcon />
+            <ArrowForwardIosIcon className={s.arrowForward} />
           </ButtonNext>
-          <CloseIcon
-            className={s.closeIcon}
-            onClick={toggleFullWidth}
-            style={{ display: displayIsShow }}
-          />
         </CarouselProvider>
       ) : (
         ''

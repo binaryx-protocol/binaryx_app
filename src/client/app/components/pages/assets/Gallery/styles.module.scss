@@ -14,6 +14,7 @@
 }
 
 .carouselProvider {
+  display: flex;
   height: 100%;
   position: absolute;
   top: 0;
@@ -23,29 +24,34 @@
   background-color: #fafafa;
 }
 
-.buttonBack {
-  position: absolute;
-  top: 50vh;
-  left: 20px;
-  border: none; 
-  background-color: #fafafa;
-  border-radius: 10px; 
+.imageFullWidthContol {
+  display: flex;
+  flex-direction: column;
 }
 
 .buttonNext {
-  position: absolute;
-  top: 50vh;
-  right: 20px;
-  border: none; 
-  background-color: #fafafa;
-  border-radius: 10px; 
+  height: 100vh;
+  border: none;
+  background: #fafafa;
+  width: 70px;
+}
+
+.buttonBack {
+  height: 100vh;
+  border: none;
+  background: #fafafa;
+  width: 65px;
+  padding: 0;
+  padding-bottom: 80px;
+}
+
+.arrowForward, .arrowBack {
+  font-size: 30px;
 }
 
 .closeIcon {
   cursor: pointer;
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  border-radius: 10px;
+  margin: auto;
+  height: 80px;
   font-size: 30px;
 }
