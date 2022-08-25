@@ -1,5 +1,5 @@
 import s from './styles.module.scss';
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import useAssets from 'hooks/useAssets';
 import { useRouter } from 'next/router';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -25,6 +25,7 @@ const Gallery: FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const displayIsShow = isFullWidth ? 'block' : 'none';
+
   const styleForArrows = {
     display: displayIsShow,
   };
@@ -32,6 +33,13 @@ const Gallery: FC = () => {
   const toggleFullWidth = () => setIsFullWidth(!isFullWidth);
   const toggleCurrentSlide = (indexOfSlide: number) =>
     setCurrentSlide(indexOfSlide);
+
+  useEffect(() => {
+    const slider = document.getElementById('slider');
+    if (slider) {
+      slider?.focus();
+    }
+  }, [isFullWidth]);
 
   if (!item) {
     return null;
@@ -59,7 +67,11 @@ const Gallery: FC = () => {
             </ButtonBack>
           </div>
           <Slider
-            id="mySlider"
+            id="slider"
+            className={s.slider}
+            onKeyUp={(e) => {
+              if (e.key === 'Escape') toggleFullWidth();
+            }}
             style={{
               display: displayIsShow,
               width: '100%',
@@ -87,7 +99,6 @@ const Gallery: FC = () => {
       ) : (
         ''
       )}
-
       <div className={s.gallery}>
         {item.images?.images.slice(0, 4).map((image, index) => {
           return (

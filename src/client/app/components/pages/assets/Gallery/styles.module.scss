@@ -24,6 +24,10 @@
   background-color: #fafafa;
 }
 
+.slider:focus {
+  outline: none;
+}
+
 .imageFullWidthContol {
   display: flex;
   flex-direction: column;
