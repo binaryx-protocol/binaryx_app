@@ -1,13 +1,13 @@
-import React from "react";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import TabDetails from "./TabDetails";
-import TabFinancials from "./TabFinancials";
-import TabDocuments from "./TabDocuments";
-import TabBuyingProcess from "./TabBuyingProcess";
-import TabMarket from "./TabMarket";
+import React from 'react';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import TabDetails from './TabDetails';
+import TabFinancials from './TabFinancials';
+import TabDocuments from './TabDocuments';
+import TabBuyingProcess from './TabBuyingProcess';
+import TabMarket from './TabMarket';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -43,8 +43,8 @@ export default function BasicTabs() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+    <Box sx={{ width: '100%' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -65,7 +65,126 @@ export default function BasicTabs() {
         <TabDetails />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <TabFinancials />
+        <TabFinancials
+          items={[
+            {
+              item: {
+                value: `$${0}`,
+                title: 'Total Investment Value',
+              },
+            },
+            {
+              item: {
+                value: `$${0}`,
+                title: 'Underlying asset price',
+              },
+            },
+            {
+              item: {
+                value: `$${0}`,
+                title: 'Closing costs',
+              },
+            },
+            {
+              item: {
+                value: `$${0}`,
+                title: 'Upfront LLC Fees',
+              },
+            },
+            {
+              item: {
+                value: `$${0}`,
+                title: 'Initial maintenance reserve',
+              },
+            },
+            {
+              item: {
+                value: `$${0}`,
+                title: 'Binaryx AI listing fee',
+              },
+            },
+          ]}
+        />
+        <TabFinancials
+          items={[
+            {
+              item: {
+                value: `${0}%`,
+                title: 'Total returns (IRR)',
+              },
+            },
+            {
+              item: {
+                value: `${0}%`,
+                title: 'Projected Appreciation',
+              },
+            },
+            {
+              item: {
+                value: `${0}%`,
+                title: 'Cash on Cash return',
+              },
+            },
+            {
+              item: {
+                value: `${0}%`,
+                title: 'Cap Rate',
+              },
+            },
+          ]}
+        />
+        <TabFinancials
+          items={[
+            {
+              item: {
+                value: `$${0}`,
+                title: 'Annual gross rents',
+              },
+            },
+            {
+              item: {
+                value: `$${0}`,
+                title: 'Property taxes',
+              },
+            },
+            {
+              item: {
+                value: `$${0}`,
+                title: 'Homeowners insurance',
+              },
+            },
+            {
+              item: {
+                value: `$${0}`,
+                title: 'Property management',
+              },
+            },
+            {
+              item: {
+                value: `$${0}`,
+                title: 'Utilities',
+              },
+            },
+            {
+              item: {
+                value: `$${0}`,
+                title: 'Annual LLC administration and filing fees',
+              },
+            },
+            {
+              item: {
+                value: `$${0}`,
+                title: 'Annual cash flow',
+              },
+            },
+            {
+              item: {
+                value: `$${0}`,
+                title: 'Monthly cash flow',
+              },
+            },
+          ]}
+        />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <TabDocuments />
