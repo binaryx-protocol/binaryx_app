@@ -1,14 +1,8 @@
-import React, { useState } from 'react';
 import { NextPage } from 'next';
-import Navigation from 'components/navigation';
-import s from '../app/components/navigation/styles.module.scss';
-import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
 
 const Home: NextPage<{ data: string }> = (props) => {
   const { data } = props;
 
-  const [showMenu, setShowMenu] = useState(false);
-  const toggleMenu = () => setShowMenu(!showMenu);
 
   return (
     <div>
@@ -33,7 +27,6 @@ const Home: NextPage<{ data: string }> = (props) => {
           </div>
         </div>
       </Navigation>
-
       <h1>Hello from NextJS! - Home</h1>
       {data}
     </div>

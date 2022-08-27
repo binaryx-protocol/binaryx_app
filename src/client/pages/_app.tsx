@@ -3,6 +3,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import AdminMenu from 'components/admin/AdminMenu';
 import { ApolloProvider } from '@apollo/client';
 import client from '../app/apollo-client';
+import Navigation from '../app/components/navigation';
 
 type Props = {
   Component: any;
@@ -23,6 +24,7 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
         rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
       />
+      <Navigation />
       <Component {...pageProps} />
       <AdminMenu />
     </ApolloProvider>

@@ -3,6 +3,14 @@ token.fundament_creator.testnet
 asset.fundament_creator.testnet
 main.fundament_creator.testnet
 
+Asset-dev
+dev-1660962987021-49143350978631
+
+Main-dev
+dev-1660992653251-73267872066366
+
+
+
 andrew.fundament_creator.testnet
 dima.fundament_creator.testnet
 oleg.fundament_creator.testnet
@@ -16,6 +24,7 @@ Create account:
 near create-account andrew.fundament_creator.testnet --masterAccount fundament_creator.testnet
 
 near create-account asset.$ID --masterAccount $ID
+near create-account main.$ID --masterAccount $ID
 near create-account binaryx_test_asset1 --masterAccount fundament_creator.testnet --initialBalance 2
 
 
@@ -66,10 +75,18 @@ Call Init Main contract
 near call main.$ID new '{"owner_id": "'$ID'" }' --accountId $ID
 
 Call Add Asset on Main contract
-near call main.$ID add_asset '{"asset_account_id": "'asset.$ID'", "asset_status": "'Active'" }' --accountId $ID
+near call $MAIN_ID add_asset '{"asset_account_id": "'$ASSET_ID'", "asset_status": "'Active'", "token_price": 5000000000000000000 }' --accountId $ID
+
+Call Add Asset Owner on Main contract
+near call main.$ID add_asset_owner '{"owner_account_id":"'$ID'","asset_account_id":"'asset.$ID'"}' --accountId $ID
+
 
 Call View Assets on Main contract
 near view main.$ID get_asset_addresses
+
+Call add_apr_within_date_range on Main contract
+near call $MAIN_ID add_apr_within_date_range '{"asset_account_id": "'$ASSET_ID'", "time_from": 1657440966000000000, "time_to": 1662797766000000000}' --accountId $ID
+
 
 Call View Investors
 near view asset.$ID get_investors

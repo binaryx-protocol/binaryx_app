@@ -1,57 +1,48 @@
-import { FC } from 'react';
-import s from './styles.module.scss';
+import { FC, useEffect, useState } from 'react';
+import Property from 'types/Property';
+import OrderBlockView from './OrderBlockView';
+import AssetContract from '../../../../contracts/AssetContract';
 
 type Props = {
-  imageSrc: string;
-  tokens: {
-    tokensUserHave: number;
-    tokensFullAmount: number;
-  };
-  boughtHouseLink: string;
-  cocReturn: number;
-  currentValue: number;
-  currentRentBalance: number;
-  totalRentEarned: number;
+  asset: Property;
+  accountId: string;
 };
 
-const OrderBlock: FC<Props> = (data: Props) => {
-  const percentageOfTokens =
-    (data.tokens.tokensUserHave * 100) / data.tokens.tokensFullAmount;
+const OrderBlock: FC<Props> = ({ asset, accountId }) => {
+  const [tokenBalance, setTokenBalance] = useState("");
+
+  useEffect(() => {
+    fetchTokensLeft();
+  }, []);
+
+  async function fetchTokensLeft() {
+    const assetContract = await AssetContract.getInstance(asset.contractId)
+    const balance = await assetContract.contract.ft_balance_of({ account_id: accountId });
+    setTokenBalance(balance);
+  }
+
+  // async function fetchApr() {
+  //   const assetContract = await AssetContract.getInstance(asset.contractId)
+  //   const balance = await assetContract.contract.ft_balance_of({ account_id: accountId });
+  //   setTokenBalance(balance);
+  // }
+
+  console.log("tokenBalance", tokenBalance);
 
   return (
-    <section className={s.orders}>
-      <img className={s.boughtHouseImage} src={data.imageSrc} alt="order" />
-      <div className={s.boughtHouse}>
-        <a href={data.boughtHouseLink}>Bought House</a>
-        <div className={s.tokens}>
-          <p>Tokens</p>
-          <p>
-            <strong>{data.tokens.tokensUserHave}</strong> of{' '}
-            {data.tokens.tokensFullAmount} ({percentageOfTokens.toFixed(2)})
-          </p>
-        </div>
-        <div className={s.info}>
-          <div className="cocReturn">
-            <p>Your CoC Return</p>
-            <strong>{data.cocReturn}%</strong>
-          </div>
-          <div className="currentValue">
-            <p>Current Value</p>
-            <strong>${data.currentValue}</strong>
-          </div>
-        </div>
-      </div>
-      <div className={s.totalRentBalance}>
-        <div className="currentRentBalance">
-          <p>Current Rent Balance</p>
-          <strong>${data.currentRentBalance}</strong>
-        </div>
-        <div className="totalRent">
-          <p>Total Rent Earned</p>
-          <strong>${data.totalRentEarned}</strong>
-        </div>
-      </div>
-    </section>
+    <OrderBlockView
+      title={asset.title}
+      imageSrc={asset.images.images?.[0]?.src}
+      tokens={{
+        tokensUserHave: tokenBalance ? parseInt(tokenBalance) : 0,
+        tokensFullAmount: parseInt(asset.tokenTotalSupply),
+      }}
+      boughtHouseLink={'#'}
+      cocReturn={parseFloat(asset.coc)}
+      currentValue={parseFloat(asset.tokenPrice) / 10**18}
+      currentRentBalance={"N/A"}
+      totalRentEarned={"N/A"}
+    />
   );
 };
 
