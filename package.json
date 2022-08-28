@@ -46,7 +46,7 @@
     "cookie-parser": "^1.4.5",
     "google-auth-library": "^7.0.4",
     "graphql": "^15.5.0",
-    "graphql-tools": "^7.0.3",
+    "graphql-tools": "^8.3.4",
     "graphql-type-json": "^0.3.2",
     "lodash": "^4.17.21",
     "near-api-js": "^0.45.1",
