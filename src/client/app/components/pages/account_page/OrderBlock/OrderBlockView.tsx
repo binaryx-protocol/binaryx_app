@@ -12,8 +12,8 @@ type Props = {
   boughtHouseLink: string;
   cocReturn: number;
   currentValue: number;
-  currentRentBalance: number;
-  totalRentEarned: number;
+  currentRentBalance: number | string;
+  totalRentEarned: number | string;
 };
 
 const OrderBlockView: FC<Props> = (data) => {
@@ -33,22 +33,22 @@ const OrderBlockView: FC<Props> = (data) => {
           </p>
         </div>
         <div className={s.info}>
-          <div className="cocReturn">
+          <div className={s.cocReturn}>
             <p>Your CoC Return</p>
             <strong>{data.cocReturn}%</strong>
           </div>
-          <div className="currentValue">
+          <div className={s.currentValue}>
             <p>Current Value</p>
             <strong>${data.currentValue}</strong>
           </div>
         </div>
       </div>
       <div className={s.totalRentBalance}>
-        <div className="currentRentBalance">
+        <div className={s.currentRentBalance}>
           <p>Current Rent Balance</p>
           <strong>${data.currentRentBalance}</strong>
         </div>
-        <div className="totalRent">
+        <div className={s.totalRent}>
           <p>Total Rent Earned</p>
           <strong>${data.totalRentEarned}</strong>
         </div>

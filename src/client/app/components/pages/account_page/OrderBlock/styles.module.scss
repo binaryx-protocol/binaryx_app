@@ -3,16 +3,18 @@
   grid-template-columns: 200px 1fr 1fr;
   align-items: center;
   padding: 15px 25px 15px 15px;
-  background-color: #fafafa;
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px) saturate(2);
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 }
 
 .boughtHouseImage {
   width: 160px;
   height: 90px;
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 15px;
+  border: none;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 

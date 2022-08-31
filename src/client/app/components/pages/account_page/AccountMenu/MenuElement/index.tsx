@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import Link from "next/Link";
+import Link from 'next/Link';
 
 type Props = {
   link: string;
@@ -10,9 +10,7 @@ type Props = {
 const MenuElement: FC<Props> = (props: Props) => {
   return (
     <Link href={props.link}>
-      <a className={props.className}>
-        {props.body}
-      </a>
+      <a className={props.className}>{props.body}</a>
     </Link>
   );
 };

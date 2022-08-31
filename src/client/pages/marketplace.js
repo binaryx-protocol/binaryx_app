@@ -1,24 +1,29 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import React from "react";
+import React from 'react';
 /** @jsx jsx */
-import { css, jsx } from "@emotion/react";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import LinearProgress from "@mui/material/LinearProgress";
+import { css, jsx } from '@emotion/react';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import LinearProgress from '@mui/material/LinearProgress';
 
-import useAssets from "hooks/useAssets";
-import { useRouter } from "next/router";
+import useAssets from 'hooks/useAssets';
+import { useRouter } from 'next/router';
 
 const Item = ({ item, onClick }) => {
-  const progress = 100 - (item.tokensLeft * 100 / item.tokenTotalSupply);
+  const progress = 100 - (item.tokensLeft * 100) / item.tokenTotalSupply;
 
   return (
     <div
       css={css`
         color: #262b38;
         cursor: pointer;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 16px;
+        border-radius: 15px;
+        backdrop-filter: blur(10px) saturate(2);
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
       `}
       onClick={onClick}
     >
@@ -29,7 +34,8 @@ const Item = ({ item, onClick }) => {
         // className={s.image}
         css={css`
           max-width: 100%;
-          border-radius: 7px 7px 0 0;
+          border-radius: 5px;
+          box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
         `}
       />
       <Typography
@@ -123,9 +129,13 @@ const Marketplace = () => {
     <div
       css={css`
         padding: 32px;
-        background-color: #e8eeff;
+        background: linear-gradient(
+          253.14deg,
+          rgba(37, 122, 215, 0.05) 65.26%,
+          rgba(1, 248, 235, 0.05) 93.3%
+        );
         font-size: 24px;
-        border-radius: 4px;
+        height: calc(100vh - 95px);
       `}
     >
       <Container maxWidth="xl">

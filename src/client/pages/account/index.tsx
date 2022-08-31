@@ -32,15 +32,19 @@ const Account: NextPage<{ data: string }> = (props) => {
       const accountId = mainContractService.getAccountId() || '';
       setAccountId(accountId);
       fetchAssets({ accountId }).then((assetsContractIds) => {
-        fetchRewards({ accountId, assetContractId: assetsContractIds[0] })
+        fetchRewards({ accountId, assetContractId: assetsContractIds[0] });
         setInterval(() => {
-          fetchRewards({ accountId, assetContractId: assetsContractIds[0] })
+          fetchRewards({ accountId, assetContractId: assetsContractIds[0] });
         }, 2000);
       });
     });
   }, []);
 
-  async function fetchAssets({ accountId }: { accountId: string }): Promise<string[]> {
+  async function fetchAssets({
+    accountId,
+  }: {
+    accountId: string;
+  }): Promise<string[]> {
     const assetsContractIds =
       (await mainContractService.get_account_assets({
         account_id: accountId,
@@ -57,11 +61,10 @@ const Account: NextPage<{ data: string }> = (props) => {
     accountId: string;
     assetContractId: string;
   }) {
-    const rewards =
-      (await mainContractService.calculate_available_rewards({
-        account_id: accountId,
-        asset_contract_id: assetContractId,
-      }));
+    const rewards = await mainContractService.calculate_available_rewards({
+      account_id: accountId,
+      asset_contract_id: assetContractId,
+    });
     setRewardsAmount(rewards);
   }
 
@@ -91,13 +94,13 @@ const Account: NextPage<{ data: string }> = (props) => {
         <h1 className={s.heading}>Account</h1>
 
         <div className={s.statisticSection}>
-          <WithdrawBlock amountOfMoney={rewardsAmount / 1000000000000000000 } />
+          <WithdrawBlock amountOfMoney={rewardsAmount / 1000000000000000000} />
 
           <StatisticBlock
-            currentAccountValue={"N/A"}
-            totalRentEarned={"N/A"}
+            currentAccountValue={'N/A'}
+            totalRentEarned={'N/A'}
             propertiesEarned={assetContractIds.length}
-            totalPropertyValue={"N/A"}
+            totalPropertyValue={'N/A'}
           />
         </div>
 
