@@ -1,13 +1,13 @@
-import React from "react";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import TabDetails from "./TabDetails";
-import TabFinancials from "./TabFinancials";
-import TabDocuments from "./TabDocuments";
-import TabBuyingProcess from "./TabBuyingProcess";
-import TabMarket from "./TabMarket";
+import React from 'react';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import TabDetails from './TabDetails';
+import TabFinancials from './TabFinancials';
+import TabDocuments from './TabDocuments';
+import TabBuyingProcess from './TabBuyingProcess';
+import TabMarket from './TabMarket';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -43,8 +43,8 @@ export default function BasicTabs() {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
-      <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+    <Box sx={{ width: '100%' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
           value={value}
           onChange={handleChange}
