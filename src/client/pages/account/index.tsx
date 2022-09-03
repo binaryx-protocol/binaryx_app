@@ -8,7 +8,7 @@ import AccountMenu from 'components/pages/account_page/AccountMenu';
 import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
 import mainContractService from 'services/mainContractService';
 import LogoutIcon from '@mui/icons-material/Logout';
-import useAssets from '../../app/hooks/useAssets';
+import useAssets from 'hooks/useAssets';
 
 async function init() {
   await mainContractService.init();
@@ -21,6 +21,7 @@ const Account: NextPage<{ data: string }> = (props) => {
   const { data } = props;
   const [accountId, setAccountId] = useState('');
   const [rewardsAmount, setRewardsAmount] = useState(0);
+  const [totalRentEarned, setTotalRentEarned] = useState(0);
   const [assetContractIds, setAssetContractIds] = useState<string[]>([]);
   const allAssets = useAssets().assets;
   const myAssets = allAssets.filter((asset) =>
@@ -33,9 +34,7 @@ const Account: NextPage<{ data: string }> = (props) => {
       setAccountId(accountId);
       fetchAssets({ accountId }).then((assetsContractIds) => {
         fetchRewards({ accountId, assetContractId: assetsContractIds[0] });
-        setInterval(() => {
-          fetchRewards({ accountId, assetContractId: assetsContractIds[0] });
-        }, 2000);
+        fetchTotalRentEarned({ accountId });
       });
     });
   }, []);
@@ -56,16 +55,29 @@ const Account: NextPage<{ data: string }> = (props) => {
 
   async function fetchRewards({
     accountId,
-    assetContractId,
   }: {
     accountId: string;
     assetContractId: string;
   }) {
-    const rewards = await mainContractService.calculate_available_rewards({
-      account_id: accountId,
-      asset_contract_id: assetContractId,
-    });
+    const rewards = await mainContractService.calculate_available_total_rewards(
+      {
+        account_id: accountId,
+      },
+    );
     setRewardsAmount(rewards);
+  }
+
+  async function fetchTotalRentEarned({
+    accountId,
+  }: {
+    accountId: string;
+  }) {
+    const totalRentEarned = await mainContractService.get_total_rent_earned(
+      {
+        account_id: accountId,
+      },
+    );
+    setTotalRentEarned(totalRentEarned);
   }
 
   if (!accountId) {
@@ -94,11 +106,11 @@ const Account: NextPage<{ data: string }> = (props) => {
         <h1 className={s.heading}>Account</h1>
 
         <div className={s.statisticSection}>
-          <WithdrawBlock amountOfMoney={rewardsAmount / 1000000000000000000} />
+          <WithdrawBlock amountOfMoney={rewardsAmount / 10 ** 18} />
 
           <StatisticBlock
             currentAccountValue={'N/A'}
-            totalRentEarned={'N/A'}
+            totalRentEarned={(totalRentEarned / 10 ** 18).toFixed(3)}
             propertiesEarned={assetContractIds.length}
             totalPropertyValue={'N/A'}
           />
