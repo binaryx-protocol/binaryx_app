@@ -152,7 +152,7 @@ const Marketplace = () => {
         </Typography>
         <Grid container spacing={4}>
           {assets?.map((item) => (
-            <Grid key={item.id} item xs={3}>
+            <Grid key={item.id} item xl={3} sm={4} xs={6} >
               <Item
                 key={item.id}
                 item={item}
