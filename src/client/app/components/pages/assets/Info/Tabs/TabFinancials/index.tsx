@@ -90,7 +90,7 @@ const TabFinancials: FC = () => {
         ]}
       />
     </div>
-  )
-}
+  );
+};
 
 export default TabFinancials;
