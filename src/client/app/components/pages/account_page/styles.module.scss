@@ -2,8 +2,9 @@
   display: grid;
   grid-template-columns: 250px 1fr;
   height: 100vh;
-  background: linear-gradient(253.14deg, rgba(134, 115, 255, 0.6) 13.68%, rgba(0, 125, 197, 0.6) 44.28%, rgba(37, 122, 215, 0.6) 65.26%);
-
+  background: linear-gradient(253.14deg,
+      rgba(37, 122, 215, 0.05) 65.26%,
+      rgba(1, 248, 235, 0.05) 93.3%);
 }
 
 .mainView {

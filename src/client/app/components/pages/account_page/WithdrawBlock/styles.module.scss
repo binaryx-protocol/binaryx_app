@@ -17,9 +17,9 @@
   width: 125px;
   height: 45px;
   font-size: 18px;
-  background-color: rgba(0, 174, 255, 0.2);
-  color: #1e1e1e;
-  border: 1px solid white;
+  background: transparent;
+  border: 1px solid #333;
+  color: #333;
   border-radius: 15px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
   cursor: pointer;
@@ -27,8 +27,7 @@
 }
 
 .withdrawBtn:hover {
-  color: white;
-  background-color: rgba(0, 174, 255, 0.9);
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-  transform: translate(0px, 2px) scale(1.05);
+  background:rgba(37, 122, 215, 0.1) 65.26%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  transform: scale(1.1);
 }

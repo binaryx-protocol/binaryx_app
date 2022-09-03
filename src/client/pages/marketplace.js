@@ -29,9 +29,8 @@ const Item = ({ item, onClick }) => {
     >
       <img
         src={item.images?.images?.[0]?.src}
-        width={420}
+        width={350}
         height={300}
-        // className={s.image}
         css={css`
           max-width: 100%;
           border-radius: 5px;

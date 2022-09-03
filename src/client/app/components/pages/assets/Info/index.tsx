@@ -1,8 +1,8 @@
-import s from "./styles.module.scss";
-import React, { FC } from "react";
-import useAssets from "hooks/useAssets";
-import Tabs from "./Tabs";
-import { useRouter } from "next/router";
+import s from './styles.module.scss';
+import React, { FC } from 'react';
+import useAssets from 'hooks/useAssets';
+import Tabs from './Tabs';
+import { useRouter } from 'next/router';
 
 const InvestBlock: FC = () => {
   const { id } = useRouter().query;

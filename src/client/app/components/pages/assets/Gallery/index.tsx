@@ -30,7 +30,10 @@ const Gallery: FC = () => {
     display: displayIsShow,
   };
 
-  const toggleFullWidth = () => setIsFullWidth(!isFullWidth);
+  const toggleFullWidth = () => {
+    setIsFullWidth(!isFullWidth);
+    document.body.style.overflow = !isFullWidth ? 'hidden' : '';
+  };
   const toggleCurrentSlide = (indexOfSlide: number) =>
     setCurrentSlide(indexOfSlide);
 
@@ -76,8 +79,8 @@ const Gallery: FC = () => {
               display: displayIsShow,
               width: '100%',
               margin: 'auto',
-              borderRadius: '10px',
-              boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
+              borderRadius: '15px',
+              boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
             }}
           >
             {item.images?.images.map((image, index) => {
