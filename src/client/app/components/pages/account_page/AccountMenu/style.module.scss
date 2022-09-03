@@ -16,7 +16,7 @@
 }
 
 .sidebarMenu a::before {
-  content: "";
+  //content: "";
   width: 20px;
   height: 3px;
   position: absolute;
@@ -26,13 +26,23 @@
   border-radius: 15px;
 }
 
+
 .sidebarMenu a:hover::before {
   width: 50px;
 }
 
 .sidebarMenu a:hover {
-  color: rgb(0, 174, 255);
-  transform: scale(1.15) translate(15px);
+  transform: scale(1.1) translate(5px);
+}
+
+.sidebarMenu .logoLink {
+  &:before {
+    content: none;
+    display: none;
+  }
+  &:hover {
+    transform: none;
+  }
 }
 
 .logo {

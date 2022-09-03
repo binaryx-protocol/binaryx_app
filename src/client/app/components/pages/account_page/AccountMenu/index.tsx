@@ -1,6 +1,6 @@
 import { FC, ReactChild } from 'react';
-import OrderBlock from '../OrderBlock';
 import s from './style.module.scss';
+import Link from 'next/link';
 
 type Props = {
   children: ReactChild | ReactChild[];
@@ -9,11 +9,15 @@ type Props = {
 const AccountMenu: FC<Props> = (props: Props) => {
   return (
     <div className={s.sidebarMenu}>
-      <img
-        src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg"
-        alt="logo"
-        className={s.logo}
-      />
+      <Link href="/marketplace">
+        <a className={s.logoLink}>
+          <img
+            src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg"
+            alt="logo"
+            className={s.logo}
+          />
+        </a>
+      </Link>
       {props.children}
     </div>
   );
