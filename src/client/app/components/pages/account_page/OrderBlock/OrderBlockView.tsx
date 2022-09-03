@@ -12,8 +12,8 @@ type Props = {
   boughtHouseLink: string;
   cocReturn: number;
   currentValue: number;
-  currentRentBalance: number;
-  totalRentEarned: number;
+  currentRentBalance: string | number;
+  totalRentEarned: string | number;
 };
 
 const OrderBlockView: FC<Props> = (data) => {
