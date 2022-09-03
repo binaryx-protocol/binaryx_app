@@ -1,23 +1,21 @@
 .header {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   height: 95px;
   position: sticky;
   top: 0;
-  background-color: #fff;
-}
-
-.headerWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px) saturate(2);
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
 }
 
 .container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .logo {
@@ -32,10 +30,9 @@
 }
 
 .navLinks a {
-  color: black;
+  color: #1e1e1e;
   text-decoration: none;
-  font-size: 18px;
-  opacity: 0.8;
+  font-size: 1.1em;
   transition: 0.3s ease;
 }
 
@@ -44,12 +41,11 @@
 }
 
 .navLinks a:hover {
-  opacity: 1;
-  color: #5d3fd3;
+  color: rgba(1, 155, 186, 1);
 }
 
 .btnShowMenu {
-  visibility: hidden;
+  display: none;
 }
 
 @media screen and (max-width: 800px) {
@@ -60,11 +56,12 @@
     align-items: center;
     width: 100%;
     height: calc(100vh - 90px);
-    position: absolute;
+    position: fixed;
     top: 0;
     right: 0;
+    z-index: 1;
     transform: translateY(90px);
-    background-color: #fff;
+    background: white;
   }
 
   .navLinks a {
@@ -81,15 +78,21 @@
   }
 
   .viewMarketplace {
-    color: white !important;
-    background-color: #5d3fd3;
-    width: 300px;
-    height: 50px;
-    border-radius: 10px;
     display: grid;
     place-content: center;
-    opacity: 1 !important;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    width: 300px;
+    height: 50px;
+    border-radius: 15px;
+    color: #1e1e1e !important;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    border: 1px solid #fff;
+    background: linear-gradient(85.42deg, rgba(0, 174, 255, 0.8) 8.17%, rgba(0, 255, 238, 0.8) 103.39%);
+  }
+
+  .viewMarketplace:hover {
+    background-color: rgba(0, 174, 255, 0.9);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    transform: translate(0px, 2px) scale(1.05);
   }
 
   .hidden {
@@ -105,7 +108,7 @@
   }
 
   .burgerShowMenu {
-    background-color: #5d3fd3;
+    background-color: rgba(1, 155, 186, 1);
     width: 30px;
     height: 4px;
     border: none;
@@ -114,7 +117,7 @@
 
   .burgerShowMenu::before {
     content: '';
-    background-color: #5d3fd3;
+    background-color: rgba(1, 155, 186, 1);
     width: 30px;
     height: 4px;
     position: absolute;
@@ -123,7 +126,7 @@
 
   .burgerShowMenu::after {
     content: '';
-    background-color: #5d3fd3;
+    background-color: rgba(1, 155, 186, 1);
     width: 30px;
     height: 4px;
     position: absolute;

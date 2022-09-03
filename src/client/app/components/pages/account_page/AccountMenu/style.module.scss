@@ -1,17 +1,38 @@
 .sidebarMenu {
   display: flex;
   flex-direction: column;
-  padding: 20px 0 0 20px;
-  height: 100%;
-  width: 250px;
-  background: #fafafa;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 20px 0 0 25px;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px) saturate(2);
 }
 
 .sidebarMenu a {
-  color: black;
+  color: #1e1e1e;
   text-decoration: none;
-  margin-top: 15px;
+  margin-top: 25px;
+  font-size: 17px;
+  transition: .2s ease;
+  width: fit-content;
+}
+
+.sidebarMenu a::before {
+  content: "";
+  width: 20px;
+  height: 3px;
+  position: absolute;
+  margin-top: 25px;
+  transition: all .3s ease;
+  background-color: rgb(0, 174, 255);
+  border-radius: 15px;
+}
+
+.sidebarMenu a:hover::before {
+  width: 50px;
+}
+
+.sidebarMenu a:hover {
+  color: rgb(0, 174, 255);
+  transform: scale(1.15) translate(15px);
 }
 
 .logo {

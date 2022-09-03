@@ -1,19 +1,33 @@
 .withdraw {
-  background-color: #fafafa;
-  border-radius: 10px;
-  padding: 10px 15px;
-  font-size: 17px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 15px;
+  padding: 10px 20px;
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px) saturate(2);
+}
+
+.withdrawBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .withdrawBtn {
-  width: 100px;
-  padding: 8px 10px;
-  border-radius: 10px;
-  border: none;
-  color: white;
-  font-size: 15px;
-  background-color: orange;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  width: 125px;
+  height: 45px;
+  font-size: 18px;
+  background: transparent;
+  border: 1px solid #333;
+  color: #333;
+  border-radius: 15px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
   cursor: pointer;
+  transition: all .3s ease;
+}
+
+.withdrawBtn:hover {
+  background:rgba(37, 122, 215, 0.1) 65.26%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  transform: scale(1.1);
 }

@@ -2,10 +2,10 @@ import { FC } from 'react';
 import s from './styles.module.scss';
 
 type Props = {
-  currentAccountValue: number;
-  totalRentEarned: number;
-  propertiesEarned: number;
-  totalPropertyValue: number;
+  currentAccountValue: number | string;
+  totalRentEarned: number | string;
+  propertiesEarned: number | string;
+  totalPropertyValue: number | string;
 };
 
 const StatisticBlock: FC<Props> = (data: Props) => {

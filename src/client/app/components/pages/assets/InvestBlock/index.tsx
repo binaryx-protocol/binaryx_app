@@ -32,13 +32,13 @@ const InvestBlock: FC = () => {
   }
 
   const totalSupplyInt = parseInt(item.tokenTotalSupply);
-  const progress = 100 - (item.tokensLeft * 100 / totalSupplyInt);
+  const progress = 100 - (item.tokensLeft * 100) / totalSupplyInt;
 
   return (
     <div className={s.investBlock}>
       <div className={s.progress}>
         <LinearProgress
-          variant='buffer'
+          variant="buffer"
           valueBuffer={100}
           value={progress}
           className={s.progressBar}
@@ -60,9 +60,7 @@ const InvestBlock: FC = () => {
       </div>
       <div className={s.invest}>
         <Link href={`/invest?assetId=${item.id}`}>
-          <a className={s.investButton}>
-            INVEST
-          </a>
+          <a className={s.investButton}>INVEST</a>
         </Link>
       </div>
     </div>

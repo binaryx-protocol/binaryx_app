@@ -1,21 +1,27 @@
 .investBlock {
   width: 320px;
-  background: #fff;
-  border-radius: 7px;
-  position: relative;
-  top: -89px;
-  border: 1px solid rgba(147, 131, 255, 0.2);
+  border-radius: 15px;
+  position: sticky;
+  top: 110px;
+  margin-top: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px) saturate(5);
+  box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+  border: 1px solid rgb(34 34 34 / 20%);
 }
 
 .progress {
-  background: rgba(147, 131, 255, 0.2);
+  background: rgba(176, 208, 235, 0.3) 65.26%;
+  border-bottom: 1px solid rgb(34 34 34 / 20%);
   padding: 16px;
+  border-radius: 15px 15px 0 0;
 }
 
 .progressBar {
   margin: 10px 0;
   padding: 3px 0;
   border-radius: 3px;
+  background-color: rgba(0, 174, 255, 0.8);
 }
 
 .progressValues {
@@ -51,24 +57,32 @@
 
 .infoItemValue {
   font-size: 2.25rem;
-  color: rgb(77, 63, 237);
+  color: #333;
   font-weight: 600;
 }
 
 .invest {
   padding: 12px;
-  display: flex;
 }
 
 .investButton {
-  background: rgb(77, 63, 237);
+  background: transparent;
+  //border: 1px solid #333;
   padding: 24px;
   width: 100%;
-  color: #fff;
-  font-size: 1rem;
-  border: 0;
-  border-radius: 8px;
+  color: #333;
+  font-size: 1.1rem;
+  border-radius: 15px;
   text-decoration: none;
   display: inline-block;
-  text-align: center  ;
+  text-align: center;
+  transition: all .3s ease;
+  background: linear-gradient(85.42deg, rgba(0, 174, 255, 0.8) 8.17%, rgba(0, 255, 238, 0.8) 103.39%);
+  backdrop-filter: blur(4px);
+}
+
+.investButton:hover {
+  transform: scale(1.02);
+  box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+  //background:rgba(37, 122, 215, 0.1) 65.26%;
 }
