@@ -8,7 +8,7 @@
 }
 
 .main {
-  border: 1px solid rgb(25, 118, 210);
+  border: 1px solid #d0d0d0;
   border-radius: 8px;
   padding: 16px;
   display: flex;
@@ -112,7 +112,7 @@
 }
 
 .orderSummary {
-  background-color: #e8eeff;
+  background-color: rgba(176, 208, 235, 0.3);
   border-radius: 8px;
   color: #333;
   min-width: 320px;
@@ -127,7 +127,7 @@
 .orderSummaryTitle {
   padding: 16px;
   margin: 0;
-  border-bottom: 1px solid rgb(25, 118, 210);
+  border-bottom: 1px solid #d0d0d0;
 
   @media (max-width: 620px) {
     font-size: 16px;
@@ -139,7 +139,7 @@
   justify-content: space-between;
   padding: 16px;
   font-size: 14px;
-  border-bottom: 1px solid rgb(25, 118, 210);
+  border-bottom: 1px solid #d0d0d0;
 }
 
 .orderTotalTitle {
@@ -175,11 +175,11 @@
   flex-direction: column;
   width: 196px;
   height: 196px;
-  border: 1px solid #ccc;
+  border: 1px solid #d0d0d0;
   border-radius: 4px;
   margin-right: 12px;
   text-align: center;
-  box-shadow: inset 0 0 100px 3px rgb(25 118 210 / 20%);
+  box-shadow: inset 0 0 100px 3px rgba(176, 208, 235, 0.3);
   transition: box-shadow 0.1s;
   cursor: pointer;
 
