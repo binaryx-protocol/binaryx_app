@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&display=swap');
+
+.block {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+  place-items: center;
+  align-items: center;
+  height: 100vh;
+  color: #1e1e1e;
+  border-bottom: 1px solid #1e1e1e;
+  font-family: 'Manrope', sans-serif;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 500px;
+  height: 328px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 300;
+  color: inherit;
+}
+
+.weAreHere {
+  color: rgba(1, 155, 186, 1);
+  font-size: 18px;
+  line-height: 25px;
+  text-transform: uppercase;
+}
+
+.btnWaitlist {
+  color: inherit;
+  border: 1px solid rgba(34, 34, 34, 1);
+  background-color: transparent;
+  font-size: 20px;
+  font-weight: 300;
+  font-family: inherit;
+  line-height: 20px;
+  position: relative;
+  top: 58px;
+  padding: 20px 50px;
+  cursor: pointer;
+}
+
+.imageBlock {
+  height: 80%;
+  width: clamp(45ch, 50%, 75ch);
+  border: 1px solid;
+}
