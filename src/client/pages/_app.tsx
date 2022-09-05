@@ -4,7 +4,7 @@ import AdminMenu from 'components/admin/AdminMenu';
 import { ApolloProvider } from '@apollo/client';
 import client from '../app/apollo-client';
 import { createTheme, ThemeProvider } from '@mui/material';
-import Home from './landing-page/home';
+import Home from './home';
 import Navigation from 'components/navigation';
 
 type Props = {
@@ -35,9 +35,13 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
         />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&display=swap"
+        />
         {/* <Navigation /> */}
-        <Home data={''} />
-        {/* <Component {...pageProps} /> */}
+        {/* <Home data={''} /> */}
+        <Component {...pageProps} />
         <AdminMenu />
       </ThemeProvider>
     </ApolloProvider>

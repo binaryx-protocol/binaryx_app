@@ -14,7 +14,7 @@ const LandingNav: FC = () => {
           className={s.logo}
         />
         <nav className={s.navLinks}>
-          <MenuElement link={'/'} body={'Home'} />
+          <MenuElement link={'/home'} body={'Home'} />
           <MenuElement link={'#'} body={'About'} />
           <MenuElement link={'#'} body={'Learn'} />
           <MenuElement link={'#'} body={'More'} />
@@ -26,24 +26,28 @@ const LandingNav: FC = () => {
             src={'https://cdn-icons-png.flaticon.com/512/5968/5968898.png'}
             alt={'discord'}
             className={s.navSocialImage}
+            width={25}
           />
           <NavSocialImage
             link={'#'}
             src={'https://cdn-icons-png.flaticon.com/512/733/733635.png'}
             alt={'twitter'}
             className={s.navSocialImage}
+            width={25}
           />
           <NavSocialImage
             link={'#'}
             src={'https://cdn-icons-png.flaticon.com/512/61/61109.png'}
             alt={'linkedIn'}
             className={s.navSocialImage}
+            width={25}
           />
           <NavSocialImage
             link={'#'}
             src={'https://cdn-icons-png.flaticon.com/512/2111/2111710.png'}
             alt={'telegram'}
             className={s.navSocialImage}
+            width={25}
           />
         </nav>
       </Container>
