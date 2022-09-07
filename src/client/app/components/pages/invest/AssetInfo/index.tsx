@@ -3,7 +3,7 @@ import { FC, useEffect, useState } from 'react';
 import paymentService from '../../../../services/paymentService';
 import usnContractService from '../../../../services/usnContractService';
 import { useRouter } from 'next/router';
-import Link from 'next/Link';
+import Link from 'next/link';
 import classNames from 'classnames';
 import Button from '@mui/material/Button';
 import useAssets from '../../../../hooks/useAssets';

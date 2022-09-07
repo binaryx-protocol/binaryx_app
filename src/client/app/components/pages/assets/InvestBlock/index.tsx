@@ -4,7 +4,7 @@ import assetContractService from 'services/assetContractService';
 import useAssets from 'hooks/useAssets';
 import s from './styles.module.scss';
 import { useRouter } from 'next/router';
-import Link from 'next/Link';
+import Link from 'next/link';
 
 const InvestBlock: FC = () => {
   const { id } = useRouter().query;
