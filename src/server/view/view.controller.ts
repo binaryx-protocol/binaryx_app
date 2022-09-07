@@ -31,7 +31,7 @@ export class ViewController {
       );
   }
 
-  @Get('home')
+  @Get('/home')
   public async showHome(@Req() req: Request, @Res() res: Response) {
     const parsedUrl = parse(req.url, true);
     const serverSideProps = { dataFromController: '123' };
