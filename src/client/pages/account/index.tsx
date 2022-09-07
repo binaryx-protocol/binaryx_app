@@ -67,16 +67,10 @@ const Account: NextPage<{ data: string }> = (props) => {
     setRewardsAmount(rewards);
   }
 
-  async function fetchTotalRentEarned({
-    accountId,
-  }: {
-    accountId: string;
-  }) {
-    const totalRentEarned = await mainContractService.get_total_rent_earned(
-      {
-        account_id: accountId,
-      },
-    );
+  async function fetchTotalRentEarned({ accountId }: { accountId: string }) {
+    const totalRentEarned = await mainContractService.get_total_rent_earned({
+      account_id: accountId,
+    });
     setTotalRentEarned(totalRentEarned);
   }
 

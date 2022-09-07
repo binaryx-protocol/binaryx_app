@@ -1,0 +1,48 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 95px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px) saturate(2);
+  font-family: "Manrope", sans-serif;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
+  padding: 0;
+}
+
+.logo {
+  max-width: 180px;
+}
+
+.navLinks {
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
+}
+
+.navLinks a {
+  color: #1e1e1e;
+  text-decoration: none;
+  font-size: 1.1em;
+  transition: 0.3s ease;
+}
+
+.navLinks a:hover {
+  color: rgba(1, 155, 186, 1);
+}
+
+.navSocial {
+  display: flex;
+  justify-content: space-between;
+  width: 170px;  
+}

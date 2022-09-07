@@ -1,0 +1,43 @@
+.teamBlock {
+  height: 420px;
+  width: 250px;
+}
+
+.person {
+  display: block;
+  width: 100%;
+  height: 290px;
+}
+
+.personDescription {
+  border: 1px solid #f8f9fa;
+  border-radius: 7.5px;
+  padding: 10px 20px;
+  background: transparent;
+  backdrop-filter: blur(10px);
+}
+
+.personName {
+  display: block;
+  font-size: 20px;
+}
+
+.personPosition {
+  color: #aaaaaa;
+}
+
+.socialLinkBlock {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.socialLinkImage {
+  width: 15px;
+  filter: invert(100%);
+  cursor: pointer;
+}
+
+.socialLink {
+  color: #019bba;
+}

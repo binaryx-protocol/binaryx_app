@@ -1,10 +1,11 @@
 import { FC, useEffect } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-import AdminMenu from 'components/admin/AdminMenu';
+// import AdminMenu from 'components/admin/AdminMenu';
 import { ApolloProvider } from '@apollo/client';
 import client from '../app/apollo-client';
-import Navigation from '../app/components/navigation';
 import { createTheme, ThemeProvider } from '@mui/material';
+// import Home from './home';
+// import Navigation from 'components/navigation';
 
 type Props = {
   Component: any;
@@ -14,7 +15,7 @@ type Props = {
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#00AEFF",
+      main: '#00AEFF',
     },
   },
 });
@@ -28,15 +29,20 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        {/*<meta name="viewport" content="initial-scale=1, width=device-width" />*/}
         <CssBaseline />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
         />
-        <Navigation />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&display=swap"
+        />
+        {/* <Navigation /> */}
+        {/* <Home data={''} /> */}
         <Component {...pageProps} />
-        <AdminMenu />
+        {/*<AdminMenu />*/}
       </ThemeProvider>
     </ApolloProvider>
   );
