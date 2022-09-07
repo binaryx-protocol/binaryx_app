@@ -49,7 +49,7 @@ const HomePageTemp: FC = () => {
 
   return (
     <div className={s.siteWrap}>
-      <Navigation />
+      <Navigation hideSocial={true} />
       <main className={s.hero}>
         <div className={s.heroWrapper}>
           <main className={s.heroInfo}>

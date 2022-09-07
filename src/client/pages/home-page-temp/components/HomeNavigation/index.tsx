@@ -4,7 +4,11 @@ import s from './styles.module.scss';
 import { Container } from '@mui/material';
 import NavSocialImage from '../NavSocialImage';
 
-const LandingNav: FC = () => {
+type Props = {
+  hideSocial?: boolean
+}
+
+const LandingNav: FC<Props> = ({ hideSocial }) => {
   return (
     <header className={s.header}>
       <Container maxWidth="xl" className={s.container}>
@@ -20,36 +24,38 @@ const LandingNav: FC = () => {
           <MenuElement link={'#'} body={'More'} />
           <MenuElement link={'#'} body={'Company'} />
         </nav> */}
-        <nav className={s.navSocial}>
-          <NavSocialImage
-            link={'https://discord.gg/kJqgYh7G9G'}
-            src={'https://cdn-icons-png.flaticon.com/512/5968/5968898.png'}
-            alt={'discord'}
-            className={s.navSocialImage}
-            width={25}
-          />
-          <NavSocialImage
-            link={'https://twitter.com/realBinaryx'}
-            src={'https://cdn-icons-png.flaticon.com/512/733/733635.png'}
-            alt={'twitter'}
-            className={s.navSocialImage}
-            width={25}
-          />
-          <NavSocialImage
-            link={'https://www.linkedin.com/company/realbinaryx/'}
-            src={'https://cdn-icons-png.flaticon.com/512/61/61109.png'}
-            alt={'linkedIn'}
-            className={s.navSocialImage}
-            width={25}
-          />
-          <NavSocialImage
-            link={'https://t.me/binaryxnews'}
-            src={'https://cdn-icons-png.flaticon.com/512/2111/2111710.png'}
-            alt={'telegram'}
-            className={s.navSocialImage}
-            width={25}
-          />
-        </nav>
+        {!hideSocial && (
+          <nav className={s.navSocial}>
+            <NavSocialImage
+              link={'https://discord.gg/kJqgYh7G9G'}
+              src={'https://cdn-icons-png.flaticon.com/512/5968/5968898.png'}
+              alt={'discord'}
+              className={s.navSocialImage}
+              width={25}
+            />
+            <NavSocialImage
+              link={'https://twitter.com/realBinaryx'}
+              src={'https://cdn-icons-png.flaticon.com/512/733/733635.png'}
+              alt={'twitter'}
+              className={s.navSocialImage}
+              width={25}
+            />
+            <NavSocialImage
+              link={'https://www.linkedin.com/company/realbinaryx/'}
+              src={'https://cdn-icons-png.flaticon.com/512/61/61109.png'}
+              alt={'linkedIn'}
+              className={s.navSocialImage}
+              width={25}
+            />
+            <NavSocialImage
+              link={'https://t.me/binaryxnews'}
+              src={'https://cdn-icons-png.flaticon.com/512/2111/2111710.png'}
+              alt={'telegram'}
+              className={s.navSocialImage}
+              width={25}
+            />
+          </nav>
+        )}
       </Container>
     </header>
   );
