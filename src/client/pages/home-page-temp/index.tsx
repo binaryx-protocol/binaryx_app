@@ -48,7 +48,7 @@ const HomePageTemp: FC = () => {
   // }, []);
 
   return (
-    <>
+    <div className={s.siteWrap}>
       <Navigation />
       <main className={s.hero}>
         <div className={s.heroWrapper}>
@@ -58,13 +58,13 @@ const HomePageTemp: FC = () => {
               Community-Powered Real Estate Marketplace
             </h1>
             <div className={s.infoSection}>
-              <Link className={s.btnCommingSoon}>Join our community</Link>
+              <div className={s.btnCommingSoon}>Coming soon...</div>
             </div>
           </main>
         </div>
         <div className={s.containerAnimation} ref={container}></div>
       </main>
-    </>
+    </div>
   );
 };
 

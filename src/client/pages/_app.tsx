@@ -1,11 +1,11 @@
 import { FC, useEffect } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-import AdminMenu from 'components/admin/AdminMenu';
+// import AdminMenu from 'components/admin/AdminMenu';
 import { ApolloProvider } from '@apollo/client';
 import client from '../app/apollo-client';
 import { createTheme, ThemeProvider } from '@mui/material';
-import Home from './home';
-import Navigation from 'components/navigation';
+// import Home from './home';
+// import Navigation from 'components/navigation';
 
 type Props = {
   Component: any;
@@ -29,7 +29,7 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme}>
-        <meta name="viewport" content="initial-scale=1, width=device-width" />
+        {/*<meta name="viewport" content="initial-scale=1, width=device-width" />*/}
         <CssBaseline />
         <link
           rel="stylesheet"
@@ -42,7 +42,7 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
         {/* <Navigation /> */}
         {/* <Home data={''} /> */}
         <Component {...pageProps} />
-        <AdminMenu />
+        {/*<AdminMenu />*/}
       </ThemeProvider>
     </ApolloProvider>
   );

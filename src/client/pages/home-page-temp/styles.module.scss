@@ -1,5 +1,11 @@
 @import "../../app/styles/globalVariables.scss";
 
+.siteWrap {
+  @media (max-width: 1024px) {
+    padding: 24px;
+  }
+}
+
 .containerAnimation {
   position: fixed;
   z-index: -1;
@@ -23,6 +29,10 @@
   justify-content: center;
   margin: auto;
   height: 100vh;
+
+  @media (max-width: 1024px) {
+    padding-top: 210px;
+  }
 }
 
 .companyTitle {
@@ -50,5 +60,5 @@
   font-weight: 500;
   text-decoration: none;
   margin-top: 60px;
-  cursor: pointer;
+  //cursor: pointer;
 }

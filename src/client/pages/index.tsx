@@ -1,11 +1,10 @@
 import { NextPage } from 'next';
 import HomePageTemp from './home-page-temp';
 
-const Home: NextPage<{ data: string }> = (props) => {
-  const { data } = props;
+const Home: NextPage<{ data: string }> = () => {
   return (
     <>
-      <HomePageTemp /> {data}
+      <HomePageTemp />
     </>
   );
 };
