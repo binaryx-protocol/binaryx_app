@@ -10,7 +10,7 @@ type Props = {
     tokensFullAmount: number;
   };
   boughtHouseLink: string;
-  cocReturn: number;
+  cocReturn: number | string;
   currentValue: number;
   currentRentBalance: number | string;
   totalRentEarned: number | string;

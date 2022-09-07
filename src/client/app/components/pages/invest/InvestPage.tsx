@@ -20,7 +20,7 @@ const InvestPage: FC = () => {
   const [tokenQuantity, setTokenQuantity] = useState<number | string>(1);
   const [step, setStep] = useState(0);
   const [billingType, setBillingType] = useState('');
-  const orderTotal = (formatLongNumber(asset?.tokenPrice)) * getTokenQuantity();
+  const orderTotal = (formatLongNumber(asset?.tokenPrice) as any) * getTokenQuantity();
 
   useEffect(() => {
     if (signMeta === 'success') {

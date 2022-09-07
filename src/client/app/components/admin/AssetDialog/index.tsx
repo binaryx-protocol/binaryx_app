@@ -232,7 +232,7 @@ const AssetDialog: FC<Props> = (props) => {
       console.error(error);
     }
 
-    setFormData((formData) => {
+    setFormData((formData: any) => {
       return {
         ...formData,
         [name]: value,

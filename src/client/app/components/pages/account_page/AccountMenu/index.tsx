@@ -1,6 +1,6 @@
 import { FC, ReactChild } from 'react';
 import s from './style.module.scss';
-import Link from 'next/link';
+import Link from 'next/Link';
 
 type Props = {
   children: ReactChild | ReactChild[];
