@@ -16,7 +16,22 @@ export class ViewController {
       .render(req, res, parsedUrl.pathname, parsedUrl.query);
   }
 
-  @Get('home')
+  @Get('/')
+  public async showHomeTemp(@Req() req: Request, @Res() res: Response) {
+    const parsedUrl = parse(req.url, true);
+    const serverSideProps = { dataFromController: '123' };
+
+    await this.viewService
+      .getNextServer()
+      .render(
+        req,
+        res,
+        parsedUrl.pathname,
+        Object.assign(parsedUrl.query, serverSideProps),
+      );
+  }
+
+  @Get('/home')
   public async showHome(@Req() req: Request, @Res() res: Response) {
     const parsedUrl = parse(req.url, true);
     const serverSideProps = { dataFromController: '123' };
