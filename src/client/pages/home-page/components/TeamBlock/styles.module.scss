@@ -6,15 +6,18 @@
 .person {
   display: block;
   width: 100%;
-  height: 290px;
+  background: linear-gradient(180deg, rgba(0, 255, 238, 0) 57.81%, rgba(0, 174, 255, 0.1805) 100%);
 }
 
 .personDescription {
-  border: 1px solid #f8f9fa;
-  border-radius: 7.5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 150px;
+  border-radius: 0 0 7.5px 7.5px;
   padding: 10px 20px;
-  background: transparent;
-  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(100px);
 }
 
 .personName {
@@ -29,11 +32,12 @@
 .socialLinkBlock {
   display: flex;
   align-items: center;
-  margin-top: 30px;
+  margin-top: auto;
 }
 
 .socialLinkImage {
   width: 15px;
+  margin-right: 3px;
   filter: invert(100%);
   cursor: pointer;
 }
