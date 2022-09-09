@@ -20,7 +20,7 @@ const TeamBlock: FC<Props> = ({
   socialLinkImage,
   socialLink,
   socialUserName,
-}: Props) => (
+}) => (
   <div className={s.teamBlock}>
     <img className={s.person} src={imgSrc} alt={imgAlt} />
     <div className={s.personDescription}>

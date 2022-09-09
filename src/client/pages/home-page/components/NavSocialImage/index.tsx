@@ -9,7 +9,7 @@ type Props = {
   width: number;
 };
 
-const NavSocialImage: FC<Props> = (props: Props) => (
+const NavSocialImage: FC<Props> = (props) => (
   <Link>
     <a href={props.link}>
       <img

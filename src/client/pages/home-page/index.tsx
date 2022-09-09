@@ -11,6 +11,16 @@ import BackgroundVisuals from './components/BackgroundVisuals';
 const HomePage: FC = () => {
   const container = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    lottie.loadAnimation({
+      container: container.current as any,
+      renderer: 'svg',
+      loop: false,
+      autoplay: true,
+      animationData: require('../home-page-temp/animations/B1.json'),
+    });
+  }, []);
+
   //! This useEffect implements changing animation on scroll
   // useEffect(() => {
   //   const animDuration = 1000;
@@ -48,7 +58,7 @@ const HomePage: FC = () => {
       <Navigation />
       <main className={s.heroPage}>
         <div className={s.heroPageWrapper}>
-          <main className={s.heroPageInfo}>
+          <section className={s.heroPageInfo}>
             <h1 className={s.companyTitle}>
               <span>
                 <b style={{ color: 'rgba(0, 180, 204, 1)' }}>Binaryx</b>
@@ -65,7 +75,7 @@ const HomePage: FC = () => {
                 Join our community
               </button>
             </div>
-          </main>
+          </section>
           <SectionElement heading="Change Expensive Asset Value In Real Estate">
             <p className={s.description}>
               There is still needed a huge amount and knowledge to join a real
@@ -89,21 +99,15 @@ const HomePage: FC = () => {
             </p>
           </SectionElement>
         </div>
-        <div className={s.webAssets}>
+        <main className={s.webAssets}>
           <div className={s.webAssetsWrapper}>
-            <main className={s.assets}>
+            <section className={s.assets}>
               <h1 className={s.assetsTitle}>
                 Welcome to the era of WEB3 assets
               </h1>
-              <img
-                className={s.assetsProperty}
-                style={{ border: '1px solid white' }}
-                src="#"
-                alt="#"
-              />
               <BackgroundVisuals top={'50%'} />
-            </main>
-            <main className={s.ourTeam}>
+            </section>
+            <section className={s.ourTeam}>
               <h1 className={s.ourTeamTitle}>Our Team</h1>
               <div className={s.teamGallery}>
                 <TeamBlock
@@ -156,7 +160,7 @@ const HomePage: FC = () => {
                 />
                 <BackgroundVisuals top={'20%'} />
               </div>
-            </main>
+            </section>
             <main className={s.joinWaitlist}>
               <div className={s.topSection}>
                 <h2 className={s.joinWaitlistTitle}>Join Waitlist:</h2>
@@ -179,8 +183,8 @@ const HomePage: FC = () => {
               <BackgroundVisuals top={'10%'} />
             </main>
           </div>
-        </div>
-        <div className={s.footerSection}>
+        </main>
+        <main className={s.footerSection}>
           <div className={s.footerWrapper}>
             <footer className={s.footer}>
               <h1 className={s.footerHeading}>Let's Keep in Touch With:</h1>
@@ -192,21 +196,21 @@ const HomePage: FC = () => {
                   }
                   alt={'discord'}
                   className={s.footerNavSocialImage}
-                  width={46}
+                  width={40}
                 />
                 <NavSocialImage
                   link={'https://twitter.com/realBinaryx'}
                   src={'https://cdn-icons-png.flaticon.com/512/733/733635.png'}
                   alt={'twitter'}
                   className={s.footerNavSocialImage}
-                  width={46}
+                  width={40}
                 />
                 <NavSocialImage
                   link={'https://www.linkedin.com/company/realbinaryx/'}
                   src={'https://cdn-icons-png.flaticon.com/512/61/61109.png'}
                   alt={'linkedIn'}
                   className={s.footerNavSocialImage}
-                  width={46}
+                  width={40}
                 />
                 <NavSocialImage
                   link={'https://t.me/binaryxnews'}
@@ -215,7 +219,7 @@ const HomePage: FC = () => {
                   }
                   alt={'telegram'}
                   className={s.footerNavSocialImage}
-                  width={46}
+                  width={40}
                 />
               </nav>
             </footer>
@@ -223,7 +227,7 @@ const HomePage: FC = () => {
               <img
                 src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg"
                 alt="company_logo"
-                className={s.footerLogo}
+                width={180}
               />
               <div className={s.footerLinks}>
                 <MenuElement link={'#'} body={'Privacy Policy'} />
@@ -234,7 +238,7 @@ const HomePage: FC = () => {
               </span>
             </nav>
           </div>
-        </div>
+        </main>
       </main>
     </>
   );

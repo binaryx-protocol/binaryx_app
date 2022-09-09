@@ -1,32 +1,24 @@
-.ellipseViolet {
+.ellipseViolet, .ellipseBlue, .ellipseCyan {
   height: 200px;
   width: 200px;
   position: absolute;
   z-index: -1;
-  left: 70%;
+}
 
+.ellipseViolet {
+  left: 70%;
   background: #6F63BC;
   filter: blur(150px);
 }
 
 .ellipseBlue {
-  height: 200px;
-  width: 200px;
-  position: absolute;
-  z-index: -1;
   left: 50%;
-
   background: rgba(42, 135, 220, 1);
   filter: blur(200px);
 }
 
 .ellipseCyan {
-  height: 200px;
-  width: 200px;
-  position: absolute;
-  z-index: -1;
   left: 30%;
-
   background: #1EBAD2;
   filter: blur(170px);
 }
