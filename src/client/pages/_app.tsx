@@ -4,6 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ApolloProvider } from '@apollo/client';
 import client from '../app/apollo-client';
 import { createTheme, ThemeProvider } from '@mui/material';
+import '../app/styles/globalVariables.css';
 // import Home from './home';
 // import Navigation from 'components/navigation';
 

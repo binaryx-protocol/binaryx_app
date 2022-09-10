@@ -1,5 +1,3 @@
-@import "../../app/styles/globalVariables.scss";
-
 .siteWrap {
   @media (max-width: 1024px) {
     padding: 24px;
@@ -14,12 +12,12 @@
 }
 
 .hero {
-  color: $font-color_base;
+  color: var(--font-color_base);
   font-family: 'Manrope', sans-serif;
 }
 
 .heroWrapper {
-  max-width: $max-width;
+  max-width: var(--max-width);
   margin: auto;
 }
 
@@ -37,7 +35,7 @@
 
 .companyTitle {
   color: inherit;
-  font-size: $font-size_big;
+  font-size: var(--font-size_big);
   font-weight: 400;
   width: 720px;
   margin: 0;
@@ -54,7 +52,7 @@
 }
 
 .btnCommingSoon {
-  color: $font-color_base;
+  color: var(--font-color_base);
   font-size: 20px;
   font-family: inherit;
   font-weight: 500;

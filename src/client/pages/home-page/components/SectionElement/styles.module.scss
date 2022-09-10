@@ -1,5 +1,3 @@
-@import "../../../../app/styles/globalVariables.scss";
-
 .block {
   display: flex;
   align-items: center;
@@ -16,14 +14,14 @@
 }
 
 .title {
-  font-size: $font-size_medium;
+  font-size: var(--font-size_medium);
   font-weight: 300;
   color: inherit;
 }
 
 .weAreHere {
-  color: $font-color_blue;
-  font-size: $font-size_small;
+  color: var(--font-color_blue);
+  font-size: var(--font-size_small);
   text-transform: uppercase;
 }
 
@@ -33,7 +31,7 @@
   justify-content: center;
   width: 260px;
   color: inherit;
-  border: 1px solid $border-color_dark;
+  border: 1px solid var(--border-color_dark);
   border-radius: 7px;
   background-color: transparent;
   font-size: 20px;

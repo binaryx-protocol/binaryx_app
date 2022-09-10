@@ -1,5 +1,3 @@
-@import "../../app/styles/globalVariables.scss";
-
 .containerAnimation {
   position: fixed;
   z-index: -1;
@@ -8,12 +6,12 @@
 }
 
 .heroPage {
-  color: $font-color_base;
+  color: var(--font-color_base);
   font-family: 'Manrope', sans-serif;
 }
 
 .heroPageWrapper {
-  max-width: $max-width;
+  max-width: var(--max-width);
   margin: auto;
 }
 
@@ -33,13 +31,13 @@
   display: flex;
   flex-direction: column;
   color: inherit;
-  font-size: $font-size_big;
+  font-size: var(--font-size_big);
   font-weight: 300;
   width: 720px;
 }
 
 .hint {
-  color: $font-color_blue;
+  color: var(--font-color_blue);
 }
 
 .infoSection {
@@ -51,7 +49,7 @@
   width: 260px;
   border: none;
   border-radius: 7px;
-  color: $font-color_base;
+  color: var(--font-color_base);
   font-size: 20px;
   font-family: inherit;
   font-weight: 500;
@@ -76,12 +74,12 @@
 }
 
 .webAssets {
-  background: $background-color_dark;
-  color: $font-color_white;
+  background: var(--background-color_dark);
+  color: var(--font-color_white);
 }
 
 .webAssetsWrapper {
-  max-width: $max-width;
+  max-width: var(--max-width);
   margin: auto;
 }
 
@@ -93,7 +91,7 @@
 
 .assetsTitle {
   color: inherit;
-  font-size: $font-size_medium;
+  font-size: var(--font-size_medium);
   padding-top: 56px;
   text-align: center;
   margin: 0;
@@ -112,8 +110,8 @@
 }
 
 .ourTeamTitle {
-  color: $font-color_white;
-  font-size: $font-size_medium;
+  color: var(--font-color_white);
+  font-size: var(--font-size_medium);
   font-weight: 300;
   text-align: center;
   padding-bottom: 56px;
@@ -160,7 +158,7 @@
   background: rgba(255, 255, 255, 0.1);
   padding-left: 16px;
   font-size: 20px;
-  color: $font-color_white;
+  color: var(--font-color_white);
   letter-spacing: 0.0125em;
   backdrop-filter: blur(100px);
 }
@@ -194,7 +192,7 @@
 }
 
 .footerHeading {
-  font-size: $font-size_medium;
+  font-size: var(--font-size_medium);
   font-weight: 300;
   color: inherit;
   background: linear-gradient(253.14deg, #8673FF 13.68%, #007DC5 44.28%, #257AD7 65.26%, #01F8EB 93.3%);
@@ -204,7 +202,7 @@
 }
 
 .footerWrapper {
-  max-width: $max-width;
+  max-width: var(--max-width);
   margin: auto;
 }
 
@@ -235,11 +233,11 @@
 .footerLinks {
   text-decoration: underline;
   width: 230px;
-  font-size: $font-size_small-extra;
+  font-size: var(--font-size_small-extra);
 }
 
 .footerLinks a {
-  color: $font-color_gray-dark;
+  color: var(--font-color_gray-dark);
 }
 
 .binaryx {
