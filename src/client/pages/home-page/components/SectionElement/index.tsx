@@ -7,7 +7,7 @@ type Props = {
 };
 
 const SectionElement: FC<Props> = ({ heading, children }) => (
-  <main className={s.block}>
+  <section className={s.block}>
     <div className={s.description}>
       <p className={s.weAreHere}>We are here to:</p>
       <h2 className={s.title}>{heading}</h2>
@@ -16,7 +16,7 @@ const SectionElement: FC<Props> = ({ heading, children }) => (
         Join waitlist
       </button>
     </div>
-  </main>
+  </section>
 );
 
 export default SectionElement;
