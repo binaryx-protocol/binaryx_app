@@ -1,5 +1,5 @@
 .containerAnimation {
-  position: fixed;
+  position: sticky;
   z-index: -1;
   width: 100%;
   height: 100%;
@@ -80,67 +80,106 @@
 }
 
 .webAssetBlock {
-  height: 100%;
-  width: 100%;
+  display: grid;
+  grid-gap: 30px;
+}
+
+.webAssetsLegend {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(7px);
+  border-radius: 7px;
+  font-size: 18px;
+  font-weight: 300;
+}
+
+.webAssetsLegend li {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  width: 80%;
+  margin-bottom: 20px;
 }
 
 .purchasingPropertyTokens,
-.propertyTokenization {
+.propertyTokenization,
+.claimingRewards,
+.binaryxMarketplace {
   display: grid;
-  width: fit-content;
   place-content: center;
-  grid-gap: 15px;
   padding: 25px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05));
   border-radius: 7px;
+  backdrop-filter: blur(5px);
 }
 
 .propertyTokenization {
   grid-template-columns: 1fr 1fr;
-  height: 200px;
-  width: 400px;
+  grid-column: 1/2;
 }
 
 .propertyTokenization div {
   place-self: center;
   background: linear-gradient(180deg, #0097F1 0%, rgba(0, 151, 241, 0) 100%),
     linear-gradient(0deg, rgba(31, 80, 115, 0.5), rgba(31, 80, 115, 0.5));
-  border-radius: 7px;
-  border-image-source: linear-gradient(180deg, #0097F1 0%, rgba(0, 151, 241, 0) 100%);
+}
+
+.propertyTokenization::before,
+.purchasingPropertyTokens::before,
+.claimingRewards::before {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 
 .propertyTokenization::before {
   content: "1";
-  position: absolute;
-}
-
-.purchasingPropertyTokens {
-  height: 350px;
-  grid-template-columns: 1fr 1fr 1fr;
 }
 
 .purchasingPropertyTokens::before {
   content: "2";
-  position: absolute;
+}
+
+.claimingRewards::before {
+  content: "3";
+}
+
+.purchasingPropertyTokens {
+  place-content: space-between;
+  grid-column: 3;
+  grid-row: 1/3;
 }
 
 .purchasingPropertyTokens div {
-  border-radius: 7px;
+  background: linear-gradient(0deg, rgba(61, 27, 99, 0.5), rgba(61, 27, 99, 0.5)),
+    linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
 }
 
-.purchasingPropertyTokens div:first-child {
-  grid-column: 2/4;
+.purchasingPropertyTokens div:nth-child(2) {
+  grid-column: 1/2;
 }
 
 .purchasingPropertyTokens div:last-child {
   grid-column: 3/4;
 }
 
-.purchasingPropertyTokens div {
-  background: linear-gradient(0deg, rgba(61, 27, 99, 0.5), rgba(61, 27, 99, 0.5)),
-    linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
-  border-image-source: linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
+.claimingRewards {
+  display: block;
+  grid-row: 3;
+  grid-column: 1/4;
+}
+
+.claimingRewards div {
+  background: linear-gradient(180deg, #00B5DD 0%, rgba(0, 181, 221, 0) 100%),
+    linear-gradient(0deg, rgba(31, 91, 88, 0.5), rgba(31, 91, 88, 0.5));
+}
+
+.binaryxMarketplace {
+  background: rgba(31, 91, 88, 0.5);
+  border-radius: 10px;
+  grid-row: 2;
+  grid-column: 2;
+  place-self: center;
+  width: 250px;
 }
 
 .webAssetsWrapper {
@@ -149,7 +188,6 @@
 }
 
 .assets {
-  height: 700px;
   position: relative;
   z-index: 1;
 }
@@ -159,7 +197,6 @@
   font-size: var(--font-size_medium);
   padding-top: 56px;
   text-align: center;
-  margin: 0;
 }
 
 .assetsProperty {

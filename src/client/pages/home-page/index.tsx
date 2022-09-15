@@ -8,9 +8,11 @@ import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
 import lottie from 'lottie-web';
 import BackgroundVisuals from './components/BackgroundVisuals';
 import anim1 from './animations/B1.json';
-import anim2 from './animations/B2.json';
-import anim3 from './animations/B3.json';
-import anim4 from './animations/B4.json';
+// import anim2 from './animations/B2.json';
+// import anim3 from './animations/B3.json';
+// import anim4 from './animations/B4.json';
+import WebAssetBlock from './components/WebAssetSection/WebAssetBlock';
+import WebAssetCard from './components/WebAssetSection/WebAssetCard';
 
 const HomePage: FC = () => {
   const container = useRef<HTMLDivElement>(null);
@@ -18,7 +20,7 @@ const HomePage: FC = () => {
   useEffect(() => {
     const anim = lottie.loadAnimation({
       container: container.current as any,
-      renderer: 'canvas',
+      renderer: 'svg',
       loop: false,
       autoplay: false,
       animationData: anim1,
@@ -57,8 +59,8 @@ const HomePage: FC = () => {
     <>
       <Navigation />
       <main className={s.heroPage}>
+        <div className={s.containerAnimation} ref={container} />
         <div className={s.heroPageWrapper}>
-          <div className={s.containerAnimation} ref={container}></div>
           <section className={s.heroPageInfo}>
             <h1 className={s.companyTitle}>
               <span>
@@ -108,6 +110,42 @@ const HomePage: FC = () => {
           <section className={s.assets}>
             <h1 className={s.assetsTitle}>Welcome to the era of WEB3 assets</h1>
             <BackgroundVisuals top={'50%'} />
+            <div className={s.webAssetBlock}>
+              <div className={s.webAssetsLegend}>
+                <ol>
+                  <li>Property Tokenization</li>
+                  <li>Purchasing Property Tokens</li>
+                  <li>Claiming Rewards from Rent</li>
+                </ol>
+              </div>
+              <WebAssetBlock className={s.binaryxMarketplace}>
+                <WebAssetCard
+                  imageSrc={''}
+                  imageDescription={'BINARYX MARKETPLACE'}
+                />
+              </WebAssetBlock>
+              <WebAssetBlock className={s.propertyTokenization}>
+                <WebAssetCard imageSrc={''} imageDescription={'Property'} />
+                <WebAssetCard
+                  imageSrc={'#'}
+                  imageDescription={'Property Tokens'}
+                />
+              </WebAssetBlock>
+              <WebAssetBlock className={s.purchasingPropertyTokens}>
+                <WebAssetCard
+                  imageSrc={'#'}
+                  imageDescription={'Property Taken'}
+                />
+                <WebAssetCard imageSrc={'#'} imageDescription={'Stablecoins'} />
+                <WebAssetCard imageSrc={'#'} imageDescription={'Users'} />
+              </WebAssetBlock>
+              <WebAssetBlock className={s.claimingRewards}>
+                <WebAssetCard
+                  imageSrc={'#'}
+                  imageDescription={'Property Rent'}
+                />
+              </WebAssetBlock>
+            </div>
           </section>
           <section className={s.ourTeam}>
             <h1 className={s.ourTeamTitle}>Our Team</h1>
