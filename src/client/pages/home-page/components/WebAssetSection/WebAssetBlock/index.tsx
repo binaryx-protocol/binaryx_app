@@ -1,4 +1,5 @@
 import { FC, ReactChild } from 'react';
+import s from './styles.module.scss';
 
 type WebAssetBlock = {
   className?: string;
@@ -6,7 +7,11 @@ type WebAssetBlock = {
 };
 
 const WebAssetBlock: FC<WebAssetBlock> = ({ className, children }) => {
-  return <div className={className}>{children}</div>;
+  return (
+    <div className={`${s.defaultStyle} ${className} ${s.isShow}`}>
+      {children}
+    </div>
+  );
 };
 
 export default WebAssetBlock;

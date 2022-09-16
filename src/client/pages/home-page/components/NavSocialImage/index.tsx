@@ -10,15 +10,13 @@ type Props = {
 };
 
 const NavSocialImage: FC<Props> = (props) => (
-  <Link>
-    <a href={props.link}>
-      <img
-        width={props.width}
-        src={props.src}
-        alt={props.alt}
-        className={props.className}
-      />
-    </a>
+  <Link href={props.link}>
+    <img
+      width={props.width}
+      src={props.src}
+      alt={props.alt}
+      className={props.className}
+    />
   </Link>
 );
 

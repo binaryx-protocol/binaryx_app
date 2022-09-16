@@ -1,0 +1,22 @@
+.defaultStyle {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05));
+  border-radius: 7px;
+  backdrop-filter: blur(5px);
+  opacity: 0;
+}
+
+.isShow {
+  animation: webAssetShow 1s ease forwards;
+}
+
+@keyframes webAssetShow {
+  from {
+    translate: 0 30px;
+  }
+
+  to {
+    translate: 0 0;
+    opacity: 1;
+  }
+}

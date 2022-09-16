@@ -55,6 +55,29 @@ const HomePage: FC = () => {
     };
   });
 
+  useEffect(() => {
+    const webAssets = document.querySelectorAll('.styles_isShow__g-Dv6');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setTimeout(() => {
+            entry.target.classList.toggle(
+              'styles_isShow__g-Dv6',
+              entry.isIntersecting,
+            );
+          }, 400);
+          if (entry.isIntersecting) observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.1,
+      },
+    );
+
+    webAssets.forEach((elem) => observer.observe(elem));
+  }, []);
+
   return (
     <>
       <Navigation />
@@ -111,17 +134,15 @@ const HomePage: FC = () => {
             <h1 className={s.assetsTitle}>Welcome to the era of WEB3 assets</h1>
             <BackgroundVisuals top={'50%'} />
             <div className={s.webAssetBlock}>
-              <div className={s.webAssetsLegend}>
-                <ol>
-                  <li>Property Tokenization</li>
-                  <li>Purchasing Property Tokens</li>
-                  <li>Claiming Rewards from Rent</li>
-                </ol>
-              </div>
+              <WebAssetBlock className={s.webAssetsLegend}>
+                <p>1. Property Tokenization</p>
+                <p>2. Purchasing Property Tokens</p>
+                <p>3. Claiming Rewards from Rent</p>
+              </WebAssetBlock>
               <WebAssetBlock className={s.binaryxMarketplace}>
                 <WebAssetCard
                   imageSrc={''}
-                  imageDescription={'BINARYX MARKETPLACE'}
+                  imageDescription={'Binaryx Marketplace'}
                 />
               </WebAssetBlock>
               <WebAssetBlock className={s.propertyTokenization}>

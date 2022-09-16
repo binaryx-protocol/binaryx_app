@@ -82,21 +82,37 @@
 .webAssetBlock {
   display: grid;
   grid-gap: 30px;
+  font-family: 'Manrope', sans-serif;
 }
 
 .webAssetsLegend {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(7px);
-  border-radius: 7px;
-  font-size: 18px;
+  font-size: var(--font-size_small);
   font-weight: 300;
 }
 
-.webAssetsLegend li {
+.webAssetsLegend p {
+  display: flex;
+  align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   width: 80%;
-  margin-bottom: 20px;
+  padding-left: 20px;
+  margin: 0;
+  height: 45px;
+}
+
+.webAssetsLegend p:first-child {
+  background: linear-gradient(90deg, rgba(0, 174, 255, 0.3) 0%, rgba(30, 54, 71, 0) 100%);
+  border-radius: 7px 0 0 0;
+}
+
+.webAssetsLegend p:nth-child(2) {
+  background: linear-gradient(90deg, rgba(159, 67, 255, 0.3) 0%, rgba(120, 0, 255, 0) 100%);
+}
+
+.webAssetsLegend p:last-child {
+  background: linear-gradient(90deg, rgba(0, 255, 238, 0.3) 0%, rgba(0, 174, 255, 0) 100%);
+  border: none;
+  border-radius: 0 0 0 7px;
 }
 
 .purchasingPropertyTokens,
@@ -106,10 +122,6 @@
   display: grid;
   place-content: center;
   padding: 25px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05));
-  border-radius: 7px;
-  backdrop-filter: blur(5px);
 }
 
 .propertyTokenization {
@@ -123,9 +135,7 @@
     linear-gradient(0deg, rgba(31, 80, 115, 0.5), rgba(31, 80, 115, 0.5));
 }
 
-.propertyTokenization::before,
-.purchasingPropertyTokens::before,
-.claimingRewards::before {
+.webAssetBlock *::before {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -154,6 +164,10 @@
     linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
 }
 
+.purchasingPropertyTokens div:first-child {
+  translate: 70%;
+}
+
 .purchasingPropertyTokens div:nth-child(2) {
   grid-column: 1/2;
 }
@@ -164,22 +178,23 @@
 
 .claimingRewards {
   display: block;
-  grid-row: 3;
   grid-column: 1/4;
 }
 
 .claimingRewards div {
-  background: linear-gradient(180deg, #00B5DD 0%, rgba(0, 181, 221, 0) 100%),
-    linear-gradient(0deg, rgba(31, 91, 88, 0.5), rgba(31, 91, 88, 0.5));
+  width: 200px;
+  background: rgba(31, 91, 88, 0.5);  
 }
 
 .binaryxMarketplace {
-  background: rgba(31, 91, 88, 0.5);
-  border-radius: 10px;
+  background-color: rgba(31, 91, 88, 0.5) !important;
+  border-radius: 10px !important;
+  font-weight: 500;
   grid-row: 2;
   grid-column: 2;
   place-self: center;
   width: 250px;
+  text-transform: uppercase;
 }
 
 .webAssetsWrapper {
