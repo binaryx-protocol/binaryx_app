@@ -82,8 +82,8 @@ const HomePage: FC = () => {
     <>
       <Navigation />
       <main className={s.heroPage}>
-        <div className={s.containerAnimation} ref={container} />
-        <div className={s.heroPageWrapper}>
+        {/* <div className={s.containerAnimation} ref={container} /> */}
+        <div className={s.wrapper}>
           <section className={s.heroPageInfo}>
             <h1 className={s.companyTitle}>
               <span>
@@ -104,7 +104,7 @@ const HomePage: FC = () => {
           </section>
         </div>
       </main>
-      <main className={s.companyGoals}>
+      <main className={s.wrapper}>
         <SectionElement heading="Change Expensive Asset Value In Real Estate">
           <p className={s.description}>
             There is still needed a huge amount and knowledge to join a real
@@ -129,10 +129,10 @@ const HomePage: FC = () => {
         </SectionElement>
       </main>
       <main className={s.webAssets}>
-        <div className={s.webAssetsWrapper}>
+        <div className={s.wrapper}>
           <section className={s.assets}>
-            <h1 className={s.assetsTitle}>Welcome to the era of WEB3 assets</h1>
-            <BackgroundVisuals top={'50%'} />
+            <h1 className={s.assetsTitle}>Welcome To The Era Of WEB3 Assets</h1>
+            {/* <BackgroundVisuals top={'50%'} /> */}
             <div className={s.webAssetBlock}>
               <WebAssetBlock className={s.webAssetsLegend}>
                 <p>1. Property Tokenization</p>
@@ -219,7 +219,7 @@ const HomePage: FC = () => {
                 socialLink={'#'}
                 socialUserName={'andriy_makaveli'}
               />
-              <BackgroundVisuals top={'20%'} />
+              {/* <BackgroundVisuals top={'40%'} /> */}
             </div>
           </section>
           <main className={s.joinWaitlist}>
@@ -239,14 +239,18 @@ const HomePage: FC = () => {
                 <button type="submit" className={s.btnSend}>
                   Send
                 </button>
+                <label className={s.privacyPolicy}>
+                  <input type="checkbox" />
+                  <span>Agree to the Privacy Policy and Terms of Service</span>
+                </label>
               </form>
             </div>
-            <BackgroundVisuals top={'10%'} />
+            {/* <BackgroundVisuals top={'10%'} /> */}
           </main>
         </div>
       </main>
       <main className={s.footerSection}>
-        <div className={s.footerWrapper}>
+        <div className={s.wrapper}>
           <footer className={s.footer}>
             <h1 className={s.footerHeading}>Let's Keep in Touch With:</h1>
             <nav className={s.footerNavSocial}>

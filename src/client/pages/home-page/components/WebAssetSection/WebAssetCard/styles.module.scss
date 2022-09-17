@@ -8,3 +8,15 @@
   height: 120px;
   border-radius: 7px;
 }
+
+.webAssetCard p {
+  margin: 0;
+}
+
+@media screen and (max-width: 414px) {
+  .webAssetCard {
+    width: 110px;
+    height: 95px;
+    font-size: 12px;
+  }
+}

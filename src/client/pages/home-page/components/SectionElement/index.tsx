@@ -12,10 +12,10 @@ const SectionElement: FC<Props> = ({ heading, children }) => (
       <p className={s.weAreHere}>We are here to:</p>
       <h2 className={s.title}>{heading}</h2>
       {children}
-      <button type="submit" className={s.btnWaitlist}>
-        Join waitlist
-      </button>
     </div>
+    <button type="submit" className={s.btnWaitlist}>
+      Join waitlist
+    </button>
   </section>
 );
 

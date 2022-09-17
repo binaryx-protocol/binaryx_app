@@ -11,8 +11,8 @@
   font-family: 'Manrope', sans-serif;
 }
 
-.heroPageWrapper {
-  max-width: var(--max-width);
+.wrapper {
+  max-width: var(--max-width-desktop);
   margin: auto;
 }
 
@@ -67,11 +67,6 @@
 .description {
   color: inherit;
   font-weight: 400;
-}
-
-.companyGoals {
-  max-width: var(--max-width);
-  margin: auto;
 }
 
 .webAssets {
@@ -183,7 +178,7 @@
 
 .claimingRewards div {
   width: 200px;
-  background: rgba(31, 91, 88, 0.5);  
+  background: rgba(31, 91, 88, 0.5);
 }
 
 .binaryxMarketplace {
@@ -195,11 +190,6 @@
   place-self: center;
   width: 250px;
   text-transform: uppercase;
-}
-
-.webAssetsWrapper {
-  max-width: var(--max-width);
-  margin: auto;
 }
 
 .assets {
@@ -222,14 +212,10 @@
   height: 530px;
 }
 
-.ourTeam {
-  height: 700px;
-}
-
 .ourTeamTitle {
   color: var(--font-color_white);
   font-size: var(--font-size_medium);
-  font-weight: 300;
+  font-weight: 400;
   text-align: center;
   padding-bottom: 56px;
 }
@@ -268,6 +254,18 @@
   grid-gap: 20px;
 }
 
+.privacyPolicy {
+  grid-row: 2;
+  font-weight: 300;
+  font-size: 12px;
+  text-align: center;
+  color: var(--font-color_gray-dark);
+}
+
+.privacyPolicy span {
+  padding-left: 5px;
+}
+
 .input {
   height: 60px;
   border-radius: 7px;
@@ -302,10 +300,8 @@
 }
 
 .footerSection {
-  height: 320px;
   position: relative;
   z-index: 1;
-  background-color: white;
 }
 
 .footerHeading {
@@ -316,11 +312,6 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-
-.footerWrapper {
-  max-width: var(--max-width);
-  margin: auto;
 }
 
 .footer {
@@ -359,4 +350,157 @@
 
 .binaryx {
   font-size: 14px;
+}
+
+@media screen and (max-width: 414px) {
+  .heroPageInfo {
+    justify-content: space-between;
+  }
+
+  .companyTitle {
+    font-size: 25px;
+  }
+
+  .infoSection {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    height: 120px;
+    position: relative;
+    bottom: 80px;
+  }
+
+  .btnJoinWaitlist {
+    height: 60px;
+    width: 100%;
+    font-size: 18px;
+  }
+
+  .joinCommunity {
+    height: 60px;
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .wrapper {
+    max-width: var(--max-width-mobile);
+  }
+
+  .assetsTitle {
+    font-size: 24px;
+    font-weight: 300;
+  }
+
+  .purchasingPropertyTokens,
+  .propertyTokenization,
+  .claimingRewards,
+  .binaryxMarketplace {
+    padding: 15px;
+  }
+
+  .webAssetsLegend {
+    display: none;
+  }
+
+  .webAssetBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .binaryxMarketplace {
+    width: 100%;
+  }
+
+  .binaryxMarketplace p {
+    font-size: 14px;
+  }
+
+  .purchasingPropertyTokens {
+    grid-gap: 10px;
+  }
+
+  .purchasingPropertyTokens div:first-child {
+    translate: 60%;
+  }
+
+  .claimingRewards div {
+    margin: auto;
+  }
+
+  .ourTeam {
+    height: fit-content;
+  }
+
+  .teamGallery {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .ourTeamTitle {
+    padding-bottom: 0;
+  }
+
+  .topSection {
+    flex-direction: column;
+  }
+
+  .joinWaitlistTitle {
+    font-size: 24px;
+    font-weight: 300;
+  }
+
+  .formSection {
+    display: flex;
+    flex-direction: column;
+    grid-gap: 15px;
+    width: 100%;
+  }
+
+  .privacyPolicy {
+    margin-bottom: 30px;
+  }
+
+  .formSection input {
+    font-size: 16px;
+  }
+
+  .btnSend {
+    width: 100%;
+    font-size: 18px;
+  }
+
+  .footer {
+    flex-direction: column;
+    padding: 40px 0;
+  }
+
+  .footerHeading {
+    font-size: 24px;
+  }
+
+  .footerNavSocial {
+    width: 80%;
+    margin-top: 20px;
+  }
+
+  .footerNavSocial img {
+    width: 32px;
+  }
+
+  .footerLinks {
+    width: 200px;
+    margin: 20px 0;
+  }
+
+  .footerBottomSection {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .footerBottomSection a {
+    font-size: 10px;
+  }
 }

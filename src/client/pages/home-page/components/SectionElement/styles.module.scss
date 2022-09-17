@@ -1,6 +1,7 @@
 .block {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
   height: 100vh;
   color: #1e1e1e;
 }
@@ -10,7 +11,6 @@
   flex-direction: column;
   justify-content: space-between;
   width: 500px;
-  height: 328px;
 }
 
 .title {
@@ -43,8 +43,31 @@
   top: 100px;
 }
 
-.imageBlock {
-  height: 512px;
-  width: clamp(45ch, 50%, 75ch);
-}
+@media screen and (max-width: 414px) {
+  .block {
+    height: calc(100vh - 65px);
+  }
 
+  .weAreHere {
+    font-size: 16px;
+  }
+
+  .title {
+    font-size: 24px;
+    margin: 0;
+  }
+
+  .btnWaitlist {
+    position: static;
+    align-self: center;
+    width: 100%;
+    font-size: 18px;
+    margin-bottom: 35px;
+  }
+
+  .description {
+    font-size: 14px;
+    width: 100%;
+    margin-bottom: auto;
+  }
+}

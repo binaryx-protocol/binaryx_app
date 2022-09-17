@@ -15,8 +15,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1200px;
-  width: 100%;
+  max-width: var(--max-width-desktop);
   padding: 0;
 }
 
@@ -45,4 +44,22 @@
   display: flex;
   justify-content: space-between;
   width: 170px;  
+}
+
+@media screen and (max-width: 414px) {
+  .header {
+    height: 70px;
+  }
+  
+  .container {
+    max-width: var(--max-width-mobile);
+  }
+
+  .logo {
+    max-width: 150px;
+  }
+
+  .navSocial {
+    display: none;
+  }
 }
