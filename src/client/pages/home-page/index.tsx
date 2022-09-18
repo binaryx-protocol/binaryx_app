@@ -8,7 +8,7 @@ import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
 import lottie from 'lottie-web';
 import BackgroundVisuals from './components/BackgroundVisuals';
 import anim1 from './animations/B1.json';
-// import anim2 from './animations/B2.json';
+import anim2 from './animations/B2.json';
 // import anim3 from './animations/B3.json';
 // import anim4 from './animations/B4.json';
 import WebAssetBlock from './components/WebAssetSection/WebAssetBlock';
@@ -16,26 +16,9 @@ import WebAssetCard from './components/WebAssetSection/WebAssetCard';
 
 const HomePage: FC = () => {
   const container = useRef<HTMLDivElement>(null);
+  const container1 = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const anim = lottie.loadAnimation({
-      container: container.current as any,
-      renderer: 'svg',
-      loop: false,
-      autoplay: false,
-      animationData: anim1,
-    });
-
-    // const main = document.body.querySelectorAll('main');
-
-    // const observer = new IntersectionObserver((entries) => {
-    //   entries.forEach((entry) => {});
-    // });
-
-    // main.forEach((elem) => {
-    //   observer.observe(elem);
-    // });
-
+  const useAnimation = (anim) => {
     const animDuration = 1000;
     const animateBodyMoving = (duration: number) => {
       const scrollPosition = window.scrollY;
@@ -53,36 +36,66 @@ const HomePage: FC = () => {
       anim.destroy();
       document.removeEventListener('scroll', onScroll);
     };
+  };
+
+  useEffect(() => {
+    const anim = lottie.loadAnimation({
+      container: container.current as any,
+      renderer: 'svg',
+      loop: false,
+      autoplay: false,
+      animationData: anim1,
+      rendererSettings: {
+        preserveAspectRatio: 'xMidYMid meet',
+      },
+    });
+    useAnimation(anim);
   });
 
   useEffect(() => {
     const webAssets = document.querySelectorAll('.styles_isShow__g-Dv6');
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          setTimeout(() => {
-            entry.target.classList.toggle(
-              'styles_isShow__g-Dv6',
-              entry.isIntersecting,
-            );
-          }, 400);
-          if (entry.isIntersecting) observer.unobserve(entry.target);
-        });
-      },
-      {
-        threshold: 0.1,
-      },
+    const observer = new IntersectionObserver((entries) =>
+      entries.forEach((entry) => {
+        setTimeout(() => {
+          entry.target.classList.toggle(
+            'styles_isShow__g-Dv6',
+            entry.isIntersecting,
+          );
+        }, 600);
+        if (entry.isIntersecting) observer.unobserve(entry.target);
+      }),
     );
 
     webAssets.forEach((elem) => observer.observe(elem));
   }, []);
 
+  useEffect(() => {
+    const newAnim = document.getElementById('change');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const anim = lottie.loadAnimation({
+            container: container1.current as any,
+            renderer: 'svg',
+            loop: false,
+            autoplay: false,
+            animationData: anim2,
+          });
+          useAnimation(anim);
+        }
+      });
+    });
+
+    observer.observe(newAnim);
+  });
+
   return (
     <>
       <Navigation />
       <main className={s.heroPage}>
-        {/* <div className={s.containerAnimation} ref={container} /> */}
+        <div className={s.containerAnimation} ref={container} />
         <div className={s.wrapper}>
           <section className={s.heroPageInfo}>
             <h1 className={s.companyTitle}>
@@ -105,7 +118,11 @@ const HomePage: FC = () => {
         </div>
       </main>
       <main className={s.wrapper}>
-        <SectionElement heading="Change Expensive Asset Value In Real Estate">
+        <div className={s.containerAnimation} ref={container1} />
+        <SectionElement
+          id="change"
+          heading="Change Expensive Asset Value In Real Estate"
+        >
           <p className={s.description}>
             There is still needed a huge amount and knowledge to join a real
             estate market. With Binaryx and DeFi you will be able to: Buy a real
