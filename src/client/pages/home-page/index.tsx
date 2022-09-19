@@ -20,16 +20,18 @@ const HomePage: FC = () => {
 
   const useAnimation = (anim) => {
     const animDuration = 1000;
+
     const animateBodyMoving = (duration: number) => {
       const scrollPosition = window.scrollY;
       const maxFrames = anim.totalFrames;
-      const frame = (maxFrames / 1000) * (scrollPosition / (duration / 1000));
+      const frame = (maxFrames / 100) * (scrollPosition / (duration / 100));
       anim.goToAndStop(frame, true);
     };
 
     const onScroll = () => {
       animateBodyMoving(animDuration);
     };
+
     document.addEventListener('scroll', onScroll);
 
     return () => {
@@ -118,7 +120,7 @@ const HomePage: FC = () => {
         </div>
       </main>
       <main className={s.wrapper}>
-        <div className={s.containerAnimation} ref={container1} />
+        {/* <div className={s.containerAnimation} ref={container1} /> */}
         <SectionElement
           id="change"
           heading="Change Expensive Asset Value In Real Estate"
@@ -148,41 +150,58 @@ const HomePage: FC = () => {
       <main className={s.webAssets}>
         <div className={s.wrapper}>
           <section className={s.assets}>
-            <h1 className={s.assetsTitle}>Welcome To The Era Of WEB3 Assets</h1>
-            {/* <BackgroundVisuals top={'50%'} /> */}
+            <h1 className={`${s.assetsTitle} ${s.assetsWeb3Mobile}`}>
+              Welcome To The Era Of WEB3 Assets
+            </h1>
+            <BackgroundVisuals top={'50%'} />
             <div className={s.webAssetBlock}>
-              <WebAssetBlock className={s.webAssetsLegend}>
-                <p>1. Property Tokenization</p>
-                <p>2. Purchasing Property Tokens</p>
-                <p>3. Claiming Rewards from Rent</p>
-              </WebAssetBlock>
-              <WebAssetBlock className={s.binaryxMarketplace}>
-                <WebAssetCard
-                  imageSrc={''}
-                  imageDescription={'Binaryx Marketplace'}
-                />
-              </WebAssetBlock>
-              <WebAssetBlock className={s.propertyTokenization}>
-                <WebAssetCard imageSrc={''} imageDescription={'Property'} />
-                <WebAssetCard
-                  imageSrc={'#'}
-                  imageDescription={'Property Tokens'}
-                />
-              </WebAssetBlock>
-              <WebAssetBlock className={s.purchasingPropertyTokens}>
-                <WebAssetCard
-                  imageSrc={'#'}
-                  imageDescription={'Property Taken'}
-                />
-                <WebAssetCard imageSrc={'#'} imageDescription={'Stablecoins'} />
-                <WebAssetCard imageSrc={'#'} imageDescription={'Users'} />
-              </WebAssetBlock>
-              <WebAssetBlock className={s.claimingRewards}>
-                <WebAssetCard
-                  imageSrc={'#'}
-                  imageDescription={'Property Rent'}
-                />
-              </WebAssetBlock>
+              <img
+                className={`${s.assetsWeb3Desktop} ${s.isShow}`}
+                src={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_desktop.svg'
+                }
+              />
+              {/* <img
+                className={s.assetsWeb3Mobile}
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_mobile.svg"
+              /> */}
+              <div className={s.assetsWeb3Mobile}>
+                <WebAssetBlock className={s.webAssetsLegend}>
+                  <p>1. Property Tokenization</p>
+                  <p>2. Purchasing Property Tokens</p>
+                  <p>3. Claiming Rewards from Rent</p>
+                </WebAssetBlock>
+                <WebAssetBlock className={s.binaryxMarketplace}>
+                  <WebAssetCard
+                    imageSrc={''}
+                    imageDescription={'Binaryx Marketplace'}
+                  />
+                </WebAssetBlock>
+                <WebAssetBlock className={s.propertyTokenization}>
+                  <WebAssetCard imageSrc={''} imageDescription={'Property'} />
+                  <WebAssetCard
+                    imageSrc={'#'}
+                    imageDescription={'Property Tokens'}
+                  />
+                </WebAssetBlock>
+                <WebAssetBlock className={s.purchasingPropertyTokens}>
+                  <WebAssetCard
+                    imageSrc={'#'}
+                    imageDescription={'Property Taken'}
+                  />
+                  <WebAssetCard
+                    imageSrc={'#'}
+                    imageDescription={'Stablecoins'}
+                  />
+                  <WebAssetCard imageSrc={'#'} imageDescription={'Users'} />
+                </WebAssetBlock>
+                <WebAssetBlock className={s.claimingRewards}>
+                  <WebAssetCard
+                    imageSrc={'#'}
+                    imageDescription={'Property Rent'}
+                  />
+                </WebAssetBlock>
+              </div>
             </div>
           </section>
           <section className={s.ourTeam}>
