@@ -17,86 +17,91 @@ import WebAssetCard from './components/WebAssetSection/WebAssetCard';
 const HomePage: FC = () => {
   const container = useRef<HTMLDivElement>(null);
   const container1 = useRef<HTMLDivElement>(null);
+  const animations = useRef([]);
+  const section1Ref = useRef<HTMLDivElement>(null);
+  const section2Ref = useRef<HTMLDivElement>(null);
+  const sections = [section1Ref.current, section2Ref.current];
 
-  const useAnimation = (anim) => {
-    const animDuration = 1000;
-
-    const animateBodyMoving = (duration: number) => {
-      const scrollPosition = window.scrollY;
-      const maxFrames = anim.totalFrames;
-      const frame = (maxFrames / 100) * (scrollPosition / (duration / 100));
-      anim.goToAndStop(frame, true);
-    };
-
-    const onScroll = () => {
-      animateBodyMoving(animDuration);
-    };
-
-    document.addEventListener('scroll', onScroll);
-
-    return () => {
-      anim.destroy();
-      document.removeEventListener('scroll', onScroll);
-    };
-  };
-
-  useEffect(() => {
-    const anim = lottie.loadAnimation({
-      container: container.current as any,
+  const initAnimation = ({ animationData, container, autoplay }) => {
+    return lottie.loadAnimation({
+      container,
       renderer: 'svg',
       loop: false,
-      autoplay: false,
-      animationData: anim1,
+      autoplay,
+      animationData,
       rendererSettings: {
         preserveAspectRatio: 'xMidYMid meet',
       },
     });
-    useAnimation(anim);
-  });
+  };
+
+  const getCurrentAnimation = () => {
+    for (const [index, section] of sections.entries() as any) {
+      const scrollPosition = window.scrollY - (section?.offsetTop - 95);
+      if (scrollPosition > 0 && scrollPosition < section.clientHeight) {
+        return index;
+      }
+    }
+  };
+
+  const playAnimation = (animationIndex: number) => {
+    const animation = animations.current[animationIndex];
+    const section = sections[animationIndex];
+
+    if (section) {
+      const scrollPosition = window.scrollY - (section?.offsetTop - 95);
+      const scrollPercent = (scrollPosition * 100) / section?.clientHeight;
+
+      const maxFrames = animation.totalFrames;
+      const frame = (maxFrames * scrollPercent) / 100;
+
+      animation.goToAndStop(frame, true);
+    }
+  };
 
   useEffect(() => {
-    const webAssets = document.querySelectorAll('.styles_isShow__g-Dv6');
-
-    const observer = new IntersectionObserver((entries) =>
-      entries.forEach((entry) => {
-        setTimeout(() => {
-          entry.target.classList.toggle(
-            'styles_isShow__g-Dv6',
-            entry.isIntersecting,
-          );
-        }, 600);
-        if (entry.isIntersecting) observer.unobserve(entry.target);
-      }),
-    );
-
-    webAssets.forEach((elem) => observer.observe(elem));
-  }, []);
-
-  useEffect(() => {
-    const newAnim = document.getElementById('change');
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const anim = lottie.loadAnimation({
-            container: container1.current as any,
-            renderer: 'svg',
-            loop: false,
-            autoplay: false,
-            animationData: anim2,
-          });
-          useAnimation(anim);
-        }
-      });
+    animations.current[0] = initAnimation({
+      animationData: anim1,
+      container: container.current,
+      autoplay: true,
     });
 
-    observer.observe(newAnim);
-  });
+    animations.current[1] = initAnimation({
+      animationData: anim2,
+      container: container1.current,
+      autoplay: false,
+    });
+
+    document.addEventListener('scroll', () => {
+      const currentAnimation = getCurrentAnimation();
+      console.log(currentAnimation);
+
+      playAnimation(currentAnimation);
+    });
+  }, []);
+
+  // useEffect(() => {
+  //   const webAssets = document.querySelectorAll('.styles_isShow__g-Dv6');
+
+  //   const observer = new IntersectionObserver((entries) =>
+  //     entries.forEach((entry) => {
+  //       setTimeout(() => {
+  //         entry.target.classList.toggle(
+  //           'styles_isShow__g-Dv6',
+  //           entry.isIntersecting,
+  //         );
+  //       }, 600);
+  //       if (entry.isIntersecting) observer.unobserve(entry.target);
+  //     }),
+  //   );
+
+  //   webAssets.forEach((elem) => observer.observe(elem));
+  // }, []);
 
   return (
     <>
       <Navigation />
-      <main className={s.heroPage}>
+      <main className={s.heroPage} ref={section1Ref}>
         <div className={s.containerAnimation} ref={container} />
         <div className={s.wrapper}>
           <section className={s.heroPageInfo}>
@@ -119,12 +124,9 @@ const HomePage: FC = () => {
           </section>
         </div>
       </main>
-      <main className={s.wrapper}>
-        {/* <div className={s.containerAnimation} ref={container1} /> */}
-        <SectionElement
-          id="change"
-          heading="Change Expensive Asset Value In Real Estate"
-        >
+      <main className={s.wrapper} ref={section2Ref}>
+        <div className={s.containerAnimation} ref={container1} />
+        <SectionElement heading="Change Expensive Asset Value In Real Estate">
           <p className={s.description}>
             There is still needed a huge amount and knowledge to join a real
             estate market. With Binaryx and DeFi you will be able to: Buy a real
@@ -156,7 +158,7 @@ const HomePage: FC = () => {
             <BackgroundVisuals top={'50%'} />
             <div className={s.webAssetBlock}>
               <img
-                className={`${s.assetsWeb3Desktop} ${s.isShow}`}
+                className={`${s.assetsWeb3Desktop}`}
                 src={
                   'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_desktop.svg'
                 }
