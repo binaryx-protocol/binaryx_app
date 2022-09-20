@@ -9,18 +9,22 @@ import lottie from 'lottie-web';
 import BackgroundVisuals from './components/BackgroundVisuals';
 import anim1 from './animations/B1.json';
 import anim2 from './animations/B2.json';
-// import anim3 from './animations/B3.json';
-// import anim4 from './animations/B4.json';
+import anim3 from './animations/B3.json';
+import anim4 from './animations/B4.json';
 import WebAssetBlock from './components/WebAssetSection/WebAssetBlock';
 import WebAssetCard from './components/WebAssetSection/WebAssetCard';
 
 const HomePage: FC = () => {
-  const container = useRef<HTMLDivElement>(null);
+  const container0 = useRef<HTMLDivElement>(null);
   const container1 = useRef<HTMLDivElement>(null);
+  const container2 = useRef<HTMLDivElement>(null);
+  const container3 = useRef<HTMLDivElement>(null);
   const animations = useRef([]);
   const section1Ref = useRef<HTMLDivElement>(null);
   const section2Ref = useRef<HTMLDivElement>(null);
-  const sections = [section1Ref.current, section2Ref.current];
+  const section3Ref = useRef<HTMLDivElement>(null);
+  const section4Ref = useRef<HTMLDivElement>(null);
+  const getSections = () => [section1Ref.current, section2Ref.current, section3Ref.current, section4Ref.current];
 
   const initAnimation = ({ animationData, container, autoplay }) => {
     return lottie.loadAnimation({
@@ -35,50 +39,101 @@ const HomePage: FC = () => {
     });
   };
 
-  const getCurrentAnimation = () => {
-    for (const [index, section] of sections.entries() as any) {
+  const getCurrentSection = () => {
+    if (typeof window === 'undefined') {
+      return 0;
+    }
+
+    if (window.scrollY <= 5) {
+      return 0;
+    }
+
+    // let result =
+
+    for (const [index, section] of getSections().entries() as any) {
       const scrollPosition = window.scrollY - (section?.offsetTop - 95);
       if (scrollPosition > 0 && scrollPosition < section.clientHeight) {
-        return index;
+        if (index === 3) {
+          return 3;
+        }
+        return index + 1;
       }
     }
+
+    return 3;
   };
 
   const playAnimation = (animationIndex: number) => {
-    const animation = animations.current[animationIndex];
-    const section = sections[animationIndex];
+    if (animationIndex === 0) {
+      return;
+    }
+    console.log("playanimation start " + animationIndex);
 
-    if (section) {
-      const scrollPosition = window.scrollY - (section?.offsetTop - 95);
-      const scrollPercent = (scrollPosition * 100) / section?.clientHeight;
+    const animation = animations.current[animationIndex];
+    const section = getSections()[animationIndex - 1];
+    let offsetTop = section?.offsetTop;
+    let height = section?.clientHeight;
+
+    if (section && animation) {
+      const scrollPosition = window.scrollY - (offsetTop - 95);
+      const scrollPercent = (scrollPosition * 100) / height;
 
       const maxFrames = animation.totalFrames;
-      const frame = (maxFrames * scrollPercent) / 100;
+      let frame = (maxFrames * scrollPercent) / 100;
+
+      if (frame > maxFrames) {
+        frame = maxFrames;
+      }
 
       animation.goToAndStop(frame, true);
+
+      console.log("playanimation " + animationIndex, frame, maxFrames, scrollPosition, scrollPercent);
     }
   };
 
   useEffect(() => {
     animations.current[0] = initAnimation({
       animationData: anim1,
-      container: container.current,
+      container: container0.current,
       autoplay: true,
     });
-
     animations.current[1] = initAnimation({
       animationData: anim2,
       container: container1.current,
       autoplay: false,
     });
+    animations.current[2] = initAnimation({
+      animationData: anim3,
+      container: container2.current,
+      autoplay: false,
+    });
+    animations.current[3] = initAnimation({
+      animationData: anim4,
+      container: container3.current,
+      autoplay: false,
+    });
 
     document.addEventListener('scroll', () => {
-      const currentAnimation = getCurrentAnimation();
-      console.log(currentAnimation);
+      const currentSection = getCurrentSection();
+      console.log("currentSection", currentSection);
+      updateContainerStyles();
 
-      playAnimation(currentAnimation);
+      playAnimation(currentSection);
     });
+
+    updateContainerStyles();
   }, []);
+
+  function updateContainerStyles() {
+    const currentSection = getCurrentSection();
+
+    if (container0.current) {
+      container0.current.style.display = currentSection === 0 ? "block" : "none";
+      container1.current.style.display = currentSection === 1 ? "block" : "none";
+      container2.current.style.display = currentSection === 2 ? "block" : "none";
+      container3.current.style.display = currentSection === 3 ? "block" : "none";
+    }
+  }
 
   // useEffect(() => {
   //   const webAssets = document.querySelectorAll('.styles_isShow__g-Dv6');
@@ -98,56 +153,65 @@ const HomePage: FC = () => {
   //   webAssets.forEach((elem) => observer.observe(elem));
   // }, []);
 
+
   return (
     <>
       <Navigation />
-      <main className={s.heroPage} ref={section1Ref}>
-        <div className={s.containerAnimation} ref={container} />
-        <div className={s.wrapper}>
-          <section className={s.heroPageInfo}>
-            <h1 className={s.companyTitle}>
-              <span>
-                <b style={{ color: 'rgba(0, 180, 204, 1)' }}>Binaryx</b>
-              </span>
-              <span>Community-Powered</span>
-              <span>Real Estate Marketplace</span>
-            </h1>
-            <p className={s.hint}>{/* Technology based */}</p>
-            <div className={s.infoSection}>
-              <button type="submit" className={s.btnJoinWaitlist}>
-                Join waitlist
-              </button>
-              <button type="submit" className={s.joinCommunity}>
-                Join our community
-              </button>
-            </div>
-          </section>
+      <main className={s.heroPage}>
+        <div  id="section1" ref={section1Ref}>
+          <div className={s.containerAnimation} ref={container0} />
+          <div className={s.containerAnimation} ref={container1} />
+          <div className={s.containerAnimation} ref={container2} />
+          <div className={s.containerAnimation} ref={container3} />
+          <div className={s.wrapper}>
+            <section className={s.heroPageInfo}>
+              <h1 className={s.companyTitle}>
+                <span>
+                  <b style={{ color: 'rgba(0, 180, 204, 1)' }}>Binaryx</b>
+                </span>
+                <span>Community-Powered</span>
+                <span>Real Estate Marketplace</span>
+              </h1>
+              <p className={s.hint}>{/* Technology based */}</p>
+              <div className={s.infoSection}>
+                <button type="submit" className={s.btnJoinWaitlist}>
+                  Join waitlist
+                </button>
+                <button type="submit" className={s.joinCommunity}>
+                  Join our community
+                </button>
+              </div>
+            </section>
+          </div>
         </div>
-      </main>
-      <main className={s.wrapper} ref={section2Ref}>
-        <div className={s.containerAnimation} ref={container1} />
-        <SectionElement heading="Change Expensive Asset Value In Real Estate">
-          <p className={s.description}>
-            There is still needed a huge amount and knowledge to join a real
-            estate market. With Binaryx and DeFi you will be able to: Buy a real
-            tokenized estate with only 50$ till unlimited Have a way how to
-            deversificate your investments and risks And many more
-          </p>
-        </SectionElement>
-        <SectionElement heading="Liquidity In The Illiquid Market">
-          <p className={s.description}>
-            The second problem is a lack of liquidity in the real estate market
-            in traditional finance In DeFi you will be able to sell your
-            property fast, secure, and profitable
-          </p>
-        </SectionElement>
-        <SectionElement heading="Boost Economy">
-          <p className={s.description}>
-            Increasing assets ownership transferring speed with web3
-            technologies Increasing assets ownership transferring speed with
-            web3 technologies
-          </p>
-        </SectionElement>
+        <div id="section2" ref={section2Ref} className={s.wrapper}>
+          <SectionElement heading="Change Expensive Asset Value In Real Estate">
+            <p className={s.description}>
+              There is still needed a huge amount and knowledge to join a real
+              estate market. With Binaryx and DeFi you will be able to: Buy a real
+              tokenized estate with only 50$ till unlimited Have a way how to
+              deversificate your investments and risks And many more
+            </p>
+          </SectionElement>
+        </div>
+        <div id="section3" ref={section3Ref} className={s.wrapper}>
+          <SectionElement heading="Liquidity In The Illiquid Market">
+            <p className={s.description}>
+              The second problem is a lack of liquidity in the real estate market
+              in traditional finance In DeFi you will be able to sell your
+              property fast, secure, and profitable
+            </p>
+          </SectionElement>
+        </div>
+        <div id="section4" ref={section4Ref} className={s.wrapper}>
+          <SectionElement heading="Boost Economy">
+            <p className={s.description}>
+              Increasing assets ownership transferring speed with web3
+              technologies Increasing assets ownership transferring speed with
+              web3 technologies
+            </p>
+          </SectionElement>
+        </div>
       </main>
       <main className={s.webAssets}>
         <div className={s.wrapper}>
