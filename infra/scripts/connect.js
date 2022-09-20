@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const {connectString, replaceShell} = require("./utils/misc");
-const {servers} = require("./servers");
+const {connectString, replaceShell} = require("../libs/misc");
+const {servers} = require("../src/servers");
 
 async function main(argv){
     const TARGET_SERVER_NAME = argv[2]

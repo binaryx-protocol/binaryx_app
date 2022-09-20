@@ -93,9 +93,8 @@ async function loginAndStopImage(config, server){
 }
 
 async function waitForHealthyRemotely(config, server, { url, delay, logLines, expectedStatus = 200 } = {}){
-    await runRemotelyAsync(server, `while [[ "$(curl -s -o /dev/null -L -w ''%{http_code}'' ${url})" != "${expectedStatus}" ]]; do echo "Waiting for ${url}" && sleep ${delay} && sudo docker logs ${config.containerName} | tail -n ${logLines}; done`)
+    await runRemotely(server, `while [[ "$(curl -s -o /dev/null -L -w ''%{http_code}'' ${url})" != "${expectedStatus}" ]]; do echo "Waiting for ${url}" && sleep ${delay} && sudo docker logs ${config.containerName} | tail -n ${logLines}; done`)
 }
-
 
 async function hasGitChanges(){
     const result = await runSync('git status --porcelain')

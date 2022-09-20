@@ -20,4 +20,4 @@ runcmd:
 - chkconfig docker on
 - systemctl enable docker
 
-- mkdir /home/ec2-user/.aws/ && echo -e "[binaryx]\naws_access_key_id = XXXXXXX\naws_secret_access_key = XXXXXXX" > /home/ec2-user/.aws/credentials
+- mkdir /home/ec2-user/.aws/ && echo -e "[default]\naws_access_key_id = XXXXXXX\naws_secret_access_key = XXXXXXX" > /home/ec2-user/.aws/credentials
