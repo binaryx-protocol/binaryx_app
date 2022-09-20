@@ -1,0 +1,21 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+runcmd:
+- yum install -y docker
+- apt-get -y install docker
+
+- yum install -y awscli
+- apt-get -y install awscli
+
+- yum install -y htop
+- apt-get -y install htop
+
+- yum install -y mc
+- apt-get -y install mc
+
+- service docker start
+- chkconfig docker on
+- systemctl enable docker
+
+- mkdir /home/ec2-user/.aws/ && echo -e "[binaryx]\naws_access_key_id = XXXXXXX\naws_secret_access_key = XXXXXXX" > /home/ec2-user/.aws/credentials

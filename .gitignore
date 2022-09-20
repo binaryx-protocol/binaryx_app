@@ -425,3 +425,7 @@ contracts/*/res
 contracts/*/neardev
 
 /.idea
+
+# Ruslan's stuff
+.hf.yml
+gitignored
