@@ -143,7 +143,7 @@ async function getNextVersion(config){
 }
 
 async function releaseDocker(imageTag, config){
-    await runAsync(`sudo docker build -t "${config.repositoryName}:${imageTag}" .`)
+    await runAsync(`sudo docker build -t "${config.repositoryName}:${imageTag}" -f ${config.dockerFile} .`)
     await runAsync(`aws ecr get-login-password --region ${config.region} --profile ${config.profile} | sudo docker login --username AWS --password-stdin ${config.accountId}`)
     await runAsync(`sudo docker tag ${config.repositoryName}:${imageTag} ${config.accountId}/${config.repositoryName}:${imageTag}`)
     await runAsync(`sudo docker push ${config.accountId}/${config.repositoryName}:${imageTag}`)
