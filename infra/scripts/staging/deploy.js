@@ -21,6 +21,7 @@ async function main(argv){
         await deployScalableImage(config, servers['i2'], imageTag, '.i2_app_env')
     } catch (e) {
         console.log(config, { text: `i1: deploy -> critical error: ${e.toString()}. ${sign}` })
+        console.log('e', e)
     }
 }
 

@@ -9,7 +9,9 @@ COPY package.json yarn.lock ./
 RUN yarn install
 
 COPY . /app
-COPY .env.example /app/.env
+
+# env is passing from /home/ec2-user/shared/...
+# COPY .env.example /app/.env
 
 RUN yarn build
 
