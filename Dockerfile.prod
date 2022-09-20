@@ -15,4 +15,6 @@ COPY . /app
 
 RUN yarn build
 
-CMD yarn start:prod
+ENTRYPOINT ["scripts/docker_setup_init_prod.sh"]
+
+# CMD yarn start:prod
