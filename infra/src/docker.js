@@ -5,9 +5,8 @@ const {loginAndStopImage, runRemotely, waitForHealthyRemotely,color, machineUser
 const getDockerRunCmdScalableVersion = (config, repositoryTag, envFileName) => `
 sudo docker run -it -d --rm\\
       -p 80:3000\\
-      -v /home/ec2-user/shared:/shared \\
-      -e DEBUG_ENV_FILE=/home/ec2-user/shared/${envFileName}\\
-      --env-file /home/ec2-user/shared/${envFileName}\\
+      -v /home/ec2-user/shared/${envFileName}:/shared/.env \\
+      -e DEBUG_ENV_FILE=${envFileName}\\
       --ulimit nofile=65535:65535 --name ${config.containerName}\\
       ${config.accountId}/${config.repositoryName}:${repositoryTag}
     `
