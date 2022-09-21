@@ -1,6 +1,8 @@
 "use strict";
 
 const {loginAndStopImage, runRemotely, waitForHealthyRemotely,color, machineUserAndId} = require("../libs/misc");
+const {config} = require("./config");
+const {servers} = require("./servers");
 
 const getDockerRunCmdScalableVersion = (config, repositoryTag, envFileName) => `
 sudo docker run -it -d --rm\\
@@ -31,8 +33,22 @@ const getSign = async (imageTag) => {
     return `(${imageTag} by ${me})`
 }
 
+async function deployStaging(imageTag){
+
+
+    const sign = await getSign(imageTag)
+
+    try {
+        await deployScalableImage(config, servers['i2'], imageTag, '.i2_app_env')
+    } catch (e) {
+        console.log(config, { text: `i1: deploy -> critical error: ${e.toString()}. ${sign}` })
+        console.log('e', e)
+    }
+}
+
 module.exports = {
     getDockerRunCmdScalableVersion,
     deployScalableImage,
     getSign,
+    deployStaging,
 };
