@@ -9,8 +9,12 @@ COPY package.json yarn.lock ./
 RUN yarn install
 
 COPY . /app
-COPY .env.example /app/.env
+
+# env is passing from /home/ec2-user/shared/...
+# COPY .env.example /app/.env
 
 RUN yarn build
 
-CMD yarn start:prod
+ENTRYPOINT ["scripts/docker_setup_init_prod.sh"]
+
+# CMD yarn start:prod

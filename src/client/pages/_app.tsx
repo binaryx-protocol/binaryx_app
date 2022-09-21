@@ -1,6 +1,6 @@
-import { FC, useEffect } from 'react';
+import {FC, useEffect, useState} from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-// import AdminMenu from 'components/admin/AdminMenu';
+import AdminMenu from 'components/admin/AdminMenu';
 import { ApolloProvider } from '@apollo/client';
 import client from '../app/apollo-client';
 import { createTheme, ThemeProvider } from '@mui/material';
@@ -21,10 +21,20 @@ const theme = createTheme({
 });
 
 const MyApp: FC<Props> = ({ Component, pageProps }) => {
+  const [showAdminMenu, setShowAdminMenu] = useState(false)
+
   useEffect(() => {
     console.log('APP INIT');
     // assetContractService.init();
+    if (typeof window !== 'undefined') {
+      // @ts-ignore
+      window.admin = () => {
+        setShowAdminMenu((v) => !v)
+      }
+    }
   }, []);
+
+
 
   return (
     <ApolloProvider client={client}>
@@ -42,7 +52,9 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
         {/* <Navigation /> */}
         {/* <Home data={''} /> */}
         <Component {...pageProps} />
-        {/*<AdminMenu />*/}
+        {
+          showAdminMenu && <AdminMenu />
+        }
       </ThemeProvider>
     </ApolloProvider>
   );
