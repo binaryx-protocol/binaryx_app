@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   height: 95px;
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 3;
   background-color: rgba(255, 255, 255, 0.95);
@@ -43,14 +43,14 @@
 .navSocial {
   display: flex;
   justify-content: space-between;
-  width: 170px;  
+  width: 170px;
 }
 
 @media screen and (max-width: 414px) {
   .header {
     height: 70px;
   }
-  
+
   .container {
     max-width: var(--max-width-mobile);
   }
