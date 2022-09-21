@@ -5,7 +5,7 @@ const {config} = require("../../src/config");
 const {deployStaging} = require("../../src/docker");
 
 async function  main() {
-    const { imageTag } = autoReleaseDocker(config)
+    const { imageTag } = await autoReleaseDocker(config)
     await deployStaging(imageTag)
 }
 
