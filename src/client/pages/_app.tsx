@@ -6,6 +6,9 @@ import client from '../app/apollo-client';
 import { createTheme, ThemeProvider } from '@mui/material';
 // import Home from './home';
 // import Navigation from 'components/navigation';
+import {Provider, useSetAtom, useAtomValue} from "jotai";
+import * as metaMaskModel from "../app/models/metaMaskModel";
+import {$onAccountsConnectOrDisconnect, $onChainIdChange, $onIsConnectedChange} from "../app/models/metaMaskModel";
 
 type Props = {
   Component: any;
@@ -22,6 +25,12 @@ const theme = createTheme({
 
 const MyApp: FC<Props> = ({ Component, pageProps }) => {
   const [showAdminMenu, setShowAdminMenu] = useState(false)
+  const $metaMaskState = useAtomValue(metaMaskModel.$metaMaskState)
+  const $onAccountsConnectOrDisconnect = useSetAtom(metaMaskModel.$onAccountsConnectOrDisconnect)
+  const $onChainIdChange = useSetAtom(metaMaskModel.$onChainIdChange)
+  const $onIsConnectedChange = useSetAtom(metaMaskModel.$onIsConnectedChange)
+
+  console.log('$metaMaskState', $metaMaskState)
 
   useEffect(() => {
     console.log('APP INIT');
@@ -38,34 +47,18 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
     if (typeof window !== 'undefined') {
       const main = async () => {
         const ethereum = window.ethereum
-        console.log('window.ethereum', ethereum)
-        console.log('ethereum.isConnected()', ethereum.isConnected())
-        ethereum.on('accountsChanged', (accounts) => {
-          // Handle the new accounts, or lack thereof.
-          // "accounts" will always be an array, but it can be empty.
-          console.log('accountsChanged', accounts)
-          // window.location.reload();
-        });
+        $onIsConnectedChange(ethereum.isConnected())
+        ethereum.on('accountsChanged', $onAccountsConnectOrDisconnect);
+        ethereum.on('chainChanged', $onChainIdChange);
 
-        ethereum.on('chainChanged', (chainId) => {
-          // Handle the new chain.
-          // Correctly handling chain changes can be complicated.
-          // We recommend reloading the page unless you have good reason not to.
-          console.log('chainId', chainId)
-          // window.location.reload();
-        });
+        ethereum.request({ method: 'eth_chainId' })
+            .then($onChainIdChange)
 
-        ethereum
-            .request({ method: 'eth_accounts' })
-            .then((accounts) => {
-              console.log('eth_accounts', accounts)
-            })
+        ethereum.request({ method: 'eth_accounts' })
+            .then($onAccountsConnectOrDisconnect)
 
-        ethereum
-            .request({ method: 'eth_requestAccounts' })
-            .then((accounts) => {
-              console.log('eth_requestAccounts', accounts)
-            })
+        ethereum.request({ method: 'eth_requestAccounts' })
+            .then($onAccountsConnectOrDisconnect)
             .catch((err) => {
               if (err.code === 4001) {
                 // EIP-1193 userRejectedRequest error
@@ -81,26 +74,28 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
   }, []);
 
   return (
-    <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
-        {/*<meta name="viewport" content="initial-scale=1, width=device-width" />*/}
-        <CssBaseline />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&display=swap"
-        />
-        {/* <Navigation /> */}
-        {/* <Home data={''} /> */}
-        <Component {...pageProps} />
-        {
-          showAdminMenu && <AdminMenu />
-        }
-      </ThemeProvider>
-    </ApolloProvider>
+      <Provider>
+        <ApolloProvider client={client}>
+          <ThemeProvider theme={theme}>
+            {/*<meta name="viewport" content="initial-scale=1, width=device-width" />*/}
+            <CssBaseline />
+            <link
+                rel="stylesheet"
+                href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+            />
+            <link
+                rel="stylesheet"
+                href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&display=swap"
+            />
+            {/* <Navigation /> */}
+            {/* <Home data={''} /> */}
+            <Component {...pageProps} />
+            {
+                showAdminMenu && <AdminMenu />
+            }
+          </ThemeProvider>
+        </ApolloProvider>
+      </Provider>
   );
 };
 

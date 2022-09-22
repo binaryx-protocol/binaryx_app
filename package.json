@@ -48,6 +48,7 @@
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.3",
     "graphql-type-json": "^0.3.2",
+    "jotai": "^1.8.4",
     "lodash": "^4.17.21",
     "lottie-web": "^5.9.6",
     "near-api-js": "^0.45.1",

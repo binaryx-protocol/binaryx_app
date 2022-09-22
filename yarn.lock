@@ -6903,6 +6903,11 @@ jkroso-type@1:
   resolved "https://registry.npmjs.org/jkroso-type/-/jkroso-type-1.1.1.tgz"
   integrity sha512-zZgay+fPG6PgMUrpyFADmQmvLo39+AZa7Gc5pZhev2RhDxwANEq2etwD8d0e6rTg5NkwOIlQmaEmns3draC6Ng==
 
+jotai@^1.8.4:
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/jotai/-/jotai-1.8.4.tgz#e188bff3cc790c758d25646f6f5daf9854c98eef"
+  integrity sha512-bkHDHNxm7bU4+bJL4z96fTlJYN34UDRTu3ghEajJrDepayON9YEaxPrXr7xhLnIRntoFC6eDYYhMNA/ilbj2RQ==
+
 js-sha256@^0.9.0:
   version "0.9.0"
   resolved "https://registry.npmjs.org/js-sha256/-/js-sha256-0.9.0.tgz"
