@@ -21,6 +21,8 @@
 
 .personName {
   font-size: 20px;
+  color: var(--font-color_white);
+  font-weight: 500;
 }
 
 .personPosition {
@@ -45,7 +47,12 @@
 }
 
 @media screen and (max-width: 414px) {
+  .teamBlock {
+    width: 260px;
+    margin: 0 10px;
+  }
+
   .person {
-    // width: auto;
+    width: inherit;
   }
 }

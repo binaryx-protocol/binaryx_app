@@ -14,6 +14,7 @@ import anim4 from './animations/B4.json';
 import WebAssetBlock from './components/WebAssetSection/WebAssetBlock';
 import WebAssetCard from './components/WebAssetSection/WebAssetCard';
 import classNames from 'classnames';
+import DescriptionBlock from './components/DescriptionBlock';
 
 const HomePage: FC = () => {
   const container0 = useRef<HTMLDivElement>(null);
@@ -86,8 +87,8 @@ const HomePage: FC = () => {
 
     const animation = animations.current[animationIndex];
     const section = getSections()[animationIndex - 1];
-    let offsetTop = section?.offsetTop;
-    let height = section?.clientHeight;
+    const offsetTop = section?.offsetTop;
+    const height = section?.clientHeight;
 
     if (section && animation) {
       const scrollPosition = window.scrollY - (offsetTop - 95);
@@ -112,35 +113,34 @@ const HomePage: FC = () => {
     }
   };
 
-
   useEffect(() => {
-    document.body.style.overflow = "hidden";
-    document.body.style.height = "100%";
-    document.body.parentElement.style.overflow = "hidden";
-    document.body.parentElement.style.height = "100%";
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100%';
+    document.body.parentElement.style.overflow = 'hidden';
+    document.body.parentElement.style.height = '100%';
     // document.html.style.overflow = "hidden";
     // setTimeout(() => {
-      animations.current[0] = initAnimation({
-        animationData: anim1,
-        container: document.getElementById("animationContainer0"),
-        autoplay: true,
-      });
+    animations.current[0] = initAnimation({
+      animationData: anim1,
+      container: document.getElementById('animationContainer0'),
+      autoplay: true,
+    });
 
-      animations.current[1] = initAnimation({
-        animationData: anim2,
-        container: document.getElementById("animationContainer1"),
-        autoplay: false,
-      });
-      animations.current[2] = initAnimation({
-        animationData: anim3,
-        container: document.getElementById("animationContainer2"),
-        autoplay: false,
-      });
-      animations.current[3] = initAnimation({
-        animationData: anim4,
-        container: document.getElementById("animationContainer3"),
-        autoplay: false,
-      });
+    animations.current[1] = initAnimation({
+      animationData: anim2,
+      container: document.getElementById('animationContainer1'),
+      autoplay: false,
+    });
+    animations.current[2] = initAnimation({
+      animationData: anim3,
+      container: document.getElementById('animationContainer2'),
+      autoplay: false,
+    });
+    animations.current[3] = initAnimation({
+      animationData: anim4,
+      container: document.getElementById('animationContainer3'),
+      autoplay: false,
+    });
     // }, 100);
 
     document.addEventListener('scroll', (event) => {
@@ -184,17 +184,15 @@ const HomePage: FC = () => {
           updateContainerStylesV2(nextSection);
           currentSectionRef.current = nextSection;
           const animation = animations.current[nextSection];
-          const nextValue =
-            nextSection === 1 && direction === 'up' ? 1000 : 0;
+          const nextValue = nextSection === 1 && direction === 'up' ? 1000 : 0;
           animation?.goToAndPlay(nextValue);
           console.log('nextSection', nextSection);
           const isBgAnimationActive = nextSection !== 0;
           setIsBgOverlayActive(() => isBgAnimationActive);
           setIsBgOverlayDark(() => nextSection >= 4);
         },
-        afterRender: () => {
-
-        }
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        afterRender: () => {},
       });
     });
     // }, 1000);
@@ -378,7 +376,10 @@ const HomePage: FC = () => {
                       imageSrc={'#'}
                       imageDescription={'Property Taken'}
                     />
-                    <WebAssetCard imageSrc={'#'} imageDescription={'Stablecoins'} />
+                    <WebAssetCard
+                      imageSrc={'#'}
+                      imageDescription={'Stablecoins'}
+                    />
                     <WebAssetCard imageSrc={'#'} imageDescription={'Users'} />
                   </WebAssetBlock>
                   <WebAssetBlock className={s.claimingRewards}>
@@ -389,6 +390,96 @@ const HomePage: FC = () => {
                   </WebAssetBlock>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+        <section
+          className={classNames(s.timeline, s.section, s.wrapper, 'section')}
+        >
+          <div className={s.timelineSeparatorTr} />
+          <ul className={s.timelineSeparatorLine}>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+          <div className={s.timelineGrid}>
+            <div className={s.timelineHeaders}>
+              <h1 className={s.timelineTitle}>Timeline</h1>
+              <h3>Product</h3>
+              <h3>Marketing</h3>
+              <h3>Organization</h3>
+            </div>
+            <div className={s.timelineColumn}>
+              <DescriptionBlock year={'2022'}>
+                <li>MVP Building</li>
+              </DescriptionBlock>
+              <DescriptionBlock>
+                <li>– Socials launch</li>
+                <li>– First 750 members onboarded</li>
+              </DescriptionBlock>
+              <DescriptionBlock>
+                <li>Legal set up</li>
+              </DescriptionBlock>
+            </div>
+            <div className={s.timelineColumn}>
+              <DescriptionBlock year={'Q1 2023'}>
+                <li>Binaryx marketplace pre-launch on Testnet v1, v2</li>
+              </DescriptionBlock>
+              <DescriptionBlock>
+                <li>&gt; 5k members onboarded</li>
+                <li>&gt; 2k KYC done</li>
+              </DescriptionBlock>
+              <DescriptionBlock>
+                <li>Seed round</li>
+              </DescriptionBlock>
+            </div>
+            <div className={s.timelineColumn}>
+              <DescriptionBlock year={'Q2 2023'}>
+                <li>Testnet v3 launch</li>
+              </DescriptionBlock>
+              <DescriptionBlock>
+                <li>– Academy launch</li>
+                <li>– Ambassador program launch</li>
+              </DescriptionBlock>
+              <DescriptionBlock>
+                <li>IDO</li>
+              </DescriptionBlock>
+            </div>
+            <div className={s.timelineColumn}>
+              <DescriptionBlock year={'Q3 2023'}>
+                <li>Binaryx marketplace official launch</li>
+              </DescriptionBlock>
+              <DescriptionBlock>
+                <li>– Airdrop for the first academy graduates</li>
+                <li>– Staking program</li>
+                <li>&gt; 70k members onboarded</li>
+                <li>&gt; 7k $aBNRX holders</li>
+              </DescriptionBlock>
+              <DescriptionBlock>
+                <li>– Token launch </li>
+                <li>– DAO launch</li>
+              </DescriptionBlock>
+            </div>
+            <div className={s.timelineColumn}>
+              <DescriptionBlock year="Q4 2023">
+                <li>1 st Smart contact audit</li>
+              </DescriptionBlock>
+              <DescriptionBlock>
+                <li>Referral program launch</li>
+                <li>200k members onboarded</li>
+                <li>&gt; 20k $aBNRX holders</li>
+              </DescriptionBlock>
+            </div>
+            <div className={s.timelineColumn}>
+              <DescriptionBlock year="2024">
+                <li>Other DeFi services launch The secondary market</li>
+              </DescriptionBlock>
+              <DescriptionBlock>
+                <li>&gt; 100k $aBRX holders</li>
+              </DescriptionBlock>
             </div>
           </div>
         </section>
@@ -477,7 +568,9 @@ const HomePage: FC = () => {
                   </button>
                   <label className={s.privacyPolicy}>
                     <input type="checkbox" />
-                    <span>Agree to the Privacy Policy and Terms of Service</span>
+                    <span>
+                      Agree to the Privacy Policy and Terms of Service
+                    </span>
                   </label>
                 </form>
               </div>
@@ -500,7 +593,9 @@ const HomePage: FC = () => {
                   />
                   <NavSocialImage
                     link={'https://twitter.com/realBinaryx'}
-                    src={'https://cdn-icons-png.flaticon.com/512/733/733635.png'}
+                    src={
+                      'https://cdn-icons-png.flaticon.com/512/733/733635.png'
+                    }
                     alt={'twitter'}
                     className={s.footerNavSocialImage}
                     width={40}
@@ -554,13 +649,28 @@ const HomePage: FC = () => {
         <div className={s.bgOverlayItem2} />
         <div className={s.bgOverlayItem3} />
       </div>
-      <div className={s.containerAnimation} ref={container0} id="animationContainer0" />
-      <div className={s.containerAnimation} ref={container1} id="animationContainer1" />
-      <div className={s.containerAnimation} ref={container2} id="animationContainer2" />
-      <div className={s.containerAnimation} ref={container3} id="animationContainer3" />
+      <div
+        className={s.containerAnimation}
+        ref={container0}
+        id="animationContainer0"
+      />
+      <div
+        className={s.containerAnimation}
+        ref={container1}
+        id="animationContainer1"
+      />
+      <div
+        className={s.containerAnimation}
+        ref={container2}
+        id="animationContainer2"
+      />
+      <div
+        className={s.containerAnimation}
+        ref={container3}
+        id="animationContainer3"
+      />
     </>
   );
 };
-
 
 export default HomePage;

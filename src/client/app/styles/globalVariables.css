@@ -14,7 +14,9 @@
 
   --border-color_dark: #1e1e1e;
   --border-color_white: #f8f9fa;
+  --border-radius_default: 7px;
 
-  --max-width-desktop: 1200px;
-  --max-width-mobile: 280px;
+  --max-width_desktop: 1200px;
+  --max-width_mobile: 280px;
+  
 }
