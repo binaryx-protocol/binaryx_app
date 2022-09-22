@@ -36,6 +36,7 @@ const HomePage: FC = () => {
   const [isBgOverlayDark, setIsBgOverlayDark] = useState(false);
 
   const initAnimation = ({ animationData, container, autoplay }) => {
+    const isDesktop = window.innerWidth > 768;
     return lottie.loadAnimation({
       container,
       renderer: 'canvas',
@@ -44,7 +45,7 @@ const HomePage: FC = () => {
       animationData,
       rendererSettings: {
         // preserveAspectRatio: 'xMidYMid meet',
-        preserveAspectRatio: 'xMaxYMax meet',
+        preserveAspectRatio: isDesktop ? 'xMaxYMax meet' : 'xMaxYMid slice',
       },
     });
   };
@@ -154,36 +155,36 @@ const HomePage: FC = () => {
   }, []);
 
   useEffect(() => {
-    setTimeout(() => {
-      import('fullpage.js').then((module) => {
-        const fullpage = module.default;
+    // setTimeout(() => {
+    import('fullpage.js').then((module) => {
+      const fullpage = module.default;
 
-        new fullpage('#main', {
-          //options here
-          autoScrolling: true,
-          scrollHorizontally: true,
-          scrollingSpeed: 1500,
-          fitToSectionDelay: 0,
-          css3: true,
-          // normalScrollElements: "#sectionWaitlist, #sectionTeam",
-          onLeave: (origin, _, direction) => {
-            console.log('origin', origin);
-            const nextSection =
-              direction === 'down' ? origin.index + 1 : origin.index - 1;
-            updateContainerStylesV2(nextSection);
-            currentSectionRef.current = nextSection;
-            const animation = animations.current[nextSection];
-            const nextValue =
-              nextSection === 1 && direction === 'up' ? 1000 : 0;
-            animation?.goToAndPlay(nextValue);
-            console.log('nextSection', nextSection);
-            const isBgAnimationActive = nextSection !== 0;
-            setIsBgOverlayActive(() => isBgAnimationActive);
-            setIsBgOverlayDark(() => nextSection >= 4);
-          },
-        });
+      new fullpage('#main', {
+        //options here
+        autoScrolling: true,
+        scrollHorizontally: true,
+        scrollingSpeed: 1500,
+        fitToSectionDelay: 0,
+        css3: true,
+        // normalScrollElements: "#sectionWaitlist, #sectionTeam",
+        onLeave: (origin, _, direction) => {
+          console.log('origin', origin);
+          const nextSection =
+            direction === 'down' ? origin.index + 1 : origin.index - 1;
+          updateContainerStylesV2(nextSection);
+          currentSectionRef.current = nextSection;
+          const animation = animations.current[nextSection];
+          const nextValue =
+            nextSection === 1 && direction === 'up' ? 1000 : 0;
+          animation?.goToAndPlay(nextValue);
+          console.log('nextSection', nextSection);
+          const isBgAnimationActive = nextSection !== 0;
+          setIsBgOverlayActive(() => isBgAnimationActive);
+          setIsBgOverlayDark(() => nextSection >= 4);
+        },
       });
-    }, 1000);
+    });
+    // }, 1000);
   }, []);
 
   function handleSectionScroll() {
