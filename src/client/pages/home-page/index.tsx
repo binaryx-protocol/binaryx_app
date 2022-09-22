@@ -112,27 +112,36 @@ const HomePage: FC = () => {
     }
   };
 
+
   useEffect(() => {
-    animations.current[0] = initAnimation({
-      animationData: anim1,
-      container: container0.current,
-      autoplay: true,
-    });
-    animations.current[1] = initAnimation({
-      animationData: anim2,
-      container: container1.current,
-      autoplay: false,
-    });
-    animations.current[2] = initAnimation({
-      animationData: anim3,
-      container: container2.current,
-      autoplay: false,
-    });
-    animations.current[3] = initAnimation({
-      animationData: anim4,
-      container: container3.current,
-      autoplay: false,
-    });
+    document.body.style.overflow = "hidden";
+    document.body.style.height = "100%";
+    document.body.parentElement.style.overflow = "hidden";
+    document.body.parentElement.style.height = "100%";
+    // document.html.style.overflow = "hidden";
+    // setTimeout(() => {
+      animations.current[0] = initAnimation({
+        animationData: anim1,
+        container: document.getElementById("animationContainer0"),
+        autoplay: true,
+      });
+
+      animations.current[1] = initAnimation({
+        animationData: anim2,
+        container: document.getElementById("animationContainer1"),
+        autoplay: false,
+      });
+      animations.current[2] = initAnimation({
+        animationData: anim3,
+        container: document.getElementById("animationContainer2"),
+        autoplay: false,
+      });
+      animations.current[3] = initAnimation({
+        animationData: anim4,
+        container: document.getElementById("animationContainer3"),
+        autoplay: false,
+      });
+    // }, 100);
 
     document.addEventListener('scroll', (event) => {
       event.preventDefault();
@@ -166,6 +175,7 @@ const HomePage: FC = () => {
         scrollingSpeed: 1500,
         fitToSectionDelay: 0,
         css3: true,
+        fitToSection: false,
         // normalScrollElements: "#sectionWaitlist, #sectionTeam",
         onLeave: (origin, _, direction) => {
           console.log('origin', origin);
@@ -182,6 +192,9 @@ const HomePage: FC = () => {
           setIsBgOverlayActive(() => isBgAnimationActive);
           setIsBgOverlayDark(() => nextSection >= 4);
         },
+        afterRender: () => {
+
+        }
       });
     });
     // }, 1000);
@@ -242,20 +255,6 @@ const HomePage: FC = () => {
   return (
     <>
       <Navigation />
-      <div
-        className={classNames(s.bgOverlay, {
-          [s.bgOverlayActive]: isBgOverlayActive,
-          [s.bgOverlayDark]: isBgOverlayDark,
-        })}
-      >
-        <div className={s.bgOverlayItem1} />
-        <div className={s.bgOverlayItem2} />
-        <div className={s.bgOverlayItem3} />
-      </div>
-      <div className={s.containerAnimation} ref={container0} />
-      <div className={s.containerAnimation} ref={container1} />
-      <div className={s.containerAnimation} ref={container2} />
-      <div className={s.containerAnimation} ref={container3} />
 
       <main id="main" className={s.heroPage}>
         <div
@@ -544,6 +543,21 @@ const HomePage: FC = () => {
           </div>
         </section>
       </main>
+
+      <div
+        className={classNames(s.bgOverlay, {
+          [s.bgOverlayActive]: isBgOverlayActive,
+          [s.bgOverlayDark]: isBgOverlayDark,
+        })}
+      >
+        <div className={s.bgOverlayItem1} />
+        <div className={s.bgOverlayItem2} />
+        <div className={s.bgOverlayItem3} />
+      </div>
+      <div className={s.containerAnimation} ref={container0} id="animationContainer0" />
+      <div className={s.containerAnimation} ref={container1} id="animationContainer1" />
+      <div className={s.containerAnimation} ref={container2} id="animationContainer2" />
+      <div className={s.containerAnimation} ref={container3} id="animationContainer3" />
     </>
   );
 };

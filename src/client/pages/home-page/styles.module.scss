@@ -1,3 +1,9 @@
+//body {
+//  overflow: hidden;
+//  height: 100%;
+//}
+
+
 .section {
   outline: none;
   * {
@@ -14,7 +20,7 @@
 
   @media (max-width: 768px) {
     //width: auto;
-    transform: scale(0.75);
+    transform: scale(0.85);
     height: 110vh;
     width: 160%;
     left: -20%;
@@ -125,6 +131,10 @@
   flex-direction: column;
   justify-content: center;
   height: 100vh;
+
+  @media (max-width: 768px) {
+    padding-top: 100px;
+  }
 }
 
 .companyTitle {
@@ -366,15 +376,18 @@
 }
 
 .joinWaitlist {
-  //padding-top: 260px;
+
 }
 
 .joinWaitlistContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  //position: relative;
   min-height: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: row;
+  }
 }
 
 .joinWaitlistTitle {
@@ -471,6 +484,10 @@
   width: 100%;
   max-width: var(--max-width-desktop);
   margin: auto;
+
+  @media (max-width: 768px) {
+    padding: 18px 0;
+  }
 }
 
 .footerNavSocial,
