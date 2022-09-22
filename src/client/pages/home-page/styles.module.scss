@@ -166,6 +166,18 @@
 .webAssets {
   //background: var(--background-color_dark);
   color: var(--font-color_white);
+  min-height: 100%;
+}
+
+.webAssetsContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.webAssetsContainerInner {
 }
 
 .assetsWeb3Desktop, .assetsWeb3Mobile {
@@ -316,6 +328,18 @@
   height: 530px;
 }
 
+.ourTeam {
+  min-height: 100%;
+}
+
+.ourTeamContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .ourTeamTitle {
   color: var(--font-color_white);
   font-size: var(--font-size_medium);
@@ -333,21 +357,28 @@
 }
 
 .joinWaitlist {
+  //padding-top: 260px;
+}
+
+.joinWaitlistContainer {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  position: relative;
-  z-index: 1;
-  height: 350px;
-  padding-top: 260px;
+  //position: relative;
+  min-height: 100%;
 }
 
 .joinWaitlistTitle {
   font-size: 42px;
   font-weight: 300;
+  color: #FFF;
 }
 
 .topSection {
+  padding: 124px 0 62px;
+}
+
+.topSectionContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -420,23 +451,17 @@
 }
 
 .footer {
+  background: #FFF;
+}
+
+.footerContainer {
+  padding: 70px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 70px 0;
-  border-bottom: 1px solid rgba(214, 214, 214, 1);
-
-  &:before {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    height: 100%;
-    background: #FFF;
-    z-index: -6;
-    margin-top: 210px;
-  }
+  width: 100%;
+  max-width: var(--max-width-desktop);
+  margin: auto;
 }
 
 .footerNavSocial,
@@ -453,6 +478,16 @@
 .footerBottomSection {
   align-items: center;
   padding: 60px 0;
+  background: #FFF;
+}
+
+.footerBottomSectionContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: var(--max-width-desktop);
+  margin: auto;
 }
 
 .footerLinks {
