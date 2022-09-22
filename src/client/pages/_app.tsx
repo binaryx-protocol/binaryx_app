@@ -8,7 +8,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 // import Navigation from 'components/navigation';
 import {Provider, useSetAtom, useAtomValue} from "jotai";
 import * as metaMaskModel from "../app/models/metaMaskModel";
-import {$onAccountsConnectOrDisconnect, $onChainIdChange, $onIsConnectedChange} from "../app/models/metaMaskModel";
+import * as featureFlagsModel from "../app/models/featureFlagsModel";
 
 type Props = {
   Component: any;
@@ -25,6 +25,7 @@ const theme = createTheme({
 
 const MyApp: FC<Props> = ({ Component, pageProps }) => {
   const [showAdminMenu, setShowAdminMenu] = useState(false)
+  const $featureFlags = useAtomValue(featureFlagsModel.$featureFlags)
   const $metaMaskState = useAtomValue(metaMaskModel.$metaMaskState)
   const $onAccountsConnectOrDisconnect = useSetAtom(metaMaskModel.$onAccountsConnectOrDisconnect)
   const $onChainIdChange = useSetAtom(metaMaskModel.$onChainIdChange)
@@ -92,6 +93,11 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
             <Component {...pageProps} />
             {
                 showAdminMenu && <AdminMenu />
+            }
+            {
+              $featureFlags.FF_MM
+                  ? JSON.stringify($metaMaskState)
+                  :  null
             }
           </ThemeProvider>
         </ApolloProvider>
