@@ -5,8 +5,6 @@ import { ApolloProvider } from '@apollo/client';
 import client from '../app/apollo-client';
 import { createTheme, ThemeProvider } from '@mui/material';
 import '../app/styles/globalVariables.css';
-// import Home from './home';
-// import Navigation from 'components/navigation';
 
 type Props = {
   Component: any;
@@ -22,6 +20,8 @@ const theme = createTheme({
 });
 
 const MyApp: FC<Props> = ({ Component, pageProps }) => {
+  const includeHubSpotTrackingScript = process.env.NODE_ENV === "production"
+
   useEffect(() => {
     console.log('APP INIT');
     // assetContractService.init();
@@ -45,6 +45,7 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
         <Component {...pageProps} />
         {/*<AdminMenu />*/}
       </ThemeProvider>
+      {includeHubSpotTrackingScript && <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/22710849.js" />}
     </ApolloProvider>
   );
 };

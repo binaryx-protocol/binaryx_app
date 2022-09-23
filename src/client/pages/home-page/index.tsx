@@ -15,6 +15,7 @@ import WebAssetBlock from './components/WebAssetSection/WebAssetBlock';
 import WebAssetCard from './components/WebAssetSection/WebAssetCard';
 import classNames from 'classnames';
 import DescriptionBlock from './components/DescriptionBlock';
+import getCookie from 'utils/getCookie';
 
 const HomePage: FC = () => {
   const container0 = useRef<HTMLDivElement>(null);
@@ -168,7 +169,7 @@ const HomePage: FC = () => {
     import('fullpage.js').then((module) => {
       const fullpage = module.default;
 
-      new fullpage('#main', {
+      window.fullpageObject = new fullpage('#main', {
         //options here
         autoScrolling: true,
         scrollHorizontally: true,
@@ -176,23 +177,20 @@ const HomePage: FC = () => {
         fitToSectionDelay: 0,
         css3: true,
         fitToSection: false,
+        // anchors: [],
         // normalScrollElements: "#sectionWaitlist, #sectionTeam",
-        onLeave: (origin, _, direction) => {
-          console.log('origin', origin);
-          const nextSection =
-            direction === 'down' ? origin.index + 1 : origin.index - 1;
+        onLeave: (origin, destination, direction) => {
+          const nextSection = destination.index;
           updateContainerStylesV2(nextSection);
           currentSectionRef.current = nextSection;
           const animation = animations.current[nextSection];
-          const nextValue = nextSection === 1 && direction === 'up' ? 1000 : 0;
+          const nextValue = [1, 2, 3].includes(nextSection) && direction === 'up' ? 1100 : 0;
           animation?.goToAndPlay(nextValue);
           console.log('nextSection', nextSection);
           const isBgAnimationActive = nextSection !== 0;
           setIsBgOverlayActive(() => isBgAnimationActive);
           setIsBgOverlayDark(() => nextSection >= 4);
         },
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        afterRender: () => {},
       });
     });
     // }, 1000);
@@ -232,6 +230,82 @@ const HomePage: FC = () => {
     }
   }
 
+  function handleFormSubmit(event) {
+    event.preventDefault();
+    const [name, email] = event.target || [];
+
+    if (!name?.value || !email?.value) {
+      alert('Please fill the form before submission');
+
+      return;
+    }
+
+    // let xhr = new XMLHttpRequest();
+    // let url =
+    //   'https://api.hsforms.com/submissions/v3/integration/submit/22710849/33113d53-079c-4c14-ab02-84409352b055';
+
+    let data = {
+      submittedAt: Date.now(),
+      fields: [
+        {
+          objectTypeId: '0-1',
+          name: 'email',
+          value: email.value,
+        },
+        {
+          objectTypeId: '0-1',
+          name: 'firstname',
+          value: name.value,
+        },
+      ],
+      context: {
+        hutk: getCookie('hubspotutk'),
+        pageUri: window.location.origin,
+        pageName: 'Binaryx Landing Page',
+      },
+      legalConsentOptions: {
+        // Include this object when GDPR options are enabled
+        consent: {
+          consentToProcess: true,
+          text: 'I agree to allow Binaryx LTD to store and process my personal data.',
+          communications: [
+            {
+              value: true,
+              subscriptionTypeId: 999,
+              text: 'I agree to receive marketing communications from Binaryx LTD.',
+            },
+          ],
+        },
+      },
+    };
+
+    // let final_data = JSON.stringify(data);
+    //
+    // xhr.open('POST', url);
+    // xhr.setRequestHeader('Content-Type', 'application/json');
+    //
+    // xhr.onreadystatechange = function () {
+    //   if (xhr.status !== 200) {
+    //
+    //   }
+    // };
+    //
+    // xhr.send(final_data);
+
+
+    fetch('https://api.hsforms.com/submissions/v3/integration/submit/22710849/33113d53-079c-4c14-ab02-84409352b055', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    }).then(() => {
+      alert("Thanks for submitting! We will get back to you soon");
+    }).catch((error) => {
+      alert(error);
+    })
+  }
+
   // useEffect(() => {
   //   const webAssets = document.querySelectorAll('.styles_isShow__g-Dv6');
 
@@ -253,7 +327,36 @@ const HomePage: FC = () => {
   return (
     <>
       <Navigation />
-
+      <div
+        className={classNames(s.bgOverlay, {
+          [s.bgOverlayActive]: isBgOverlayActive,
+          [s.bgOverlayDark]: isBgOverlayDark,
+        })}
+      >
+        <div className={s.bgOverlayItem1} />
+        <div className={s.bgOverlayItem2} />
+        <div className={s.bgOverlayItem3} />
+      </div>
+      <div
+        className={s.containerAnimation}
+        ref={container0}
+        id="animationContainer0"
+      />
+      <div
+        className={s.containerAnimation}
+        ref={container1}
+        id="animationContainer1"
+      />
+      <div
+        className={s.containerAnimation}
+        ref={container2}
+        id="animationContainer2"
+      />
+      <div
+        className={s.containerAnimation}
+        ref={container3}
+        id="animationContainer3"
+      />
       <main id="main" className={s.heroPage}>
         <div
           id="section1"
@@ -269,11 +372,12 @@ const HomePage: FC = () => {
                   </b>
                 </span>
                 <span>Community-Powered</span>
-                <span>Real Estate Marketplace</span>
+                <span>Real Estate Tokenization Platform</span>
               </h1>
               <p className={s.hint}>{/* Technology based */}</p>
               <div className={s.infoSection}>
-                <button type="submit" className={s.btnJoinWaitlist}>
+
+                <button onClick={() => window.fullpageObject.moveTo(document.querySelectorAll(".section").length)} className={s.btnJoinWaitlist}>
                   Join waitlist
                 </button>
                 <button type="submit" className={s.joinCommunity}>
@@ -291,7 +395,7 @@ const HomePage: FC = () => {
           <SectionElement heading="Expensive asset value already in past">
             <p className={s.description}>
               With Binaryx Protocol you will be able to buy a real tokenized
-              estate with only 50$ till unlimited.
+              estate with only $50 till unlimited.
               <br />
               Buy, trade and sell your property fast, secure, and profitable at
               anytime
@@ -459,7 +563,7 @@ const HomePage: FC = () => {
                 <li>&gt; 7k $aBNRX holders</li>
               </DescriptionBlock>
               <DescriptionBlock>
-                <li>– Token launch </li>
+                <li>– Token launch</li>
                 <li>– DAO launch</li>
               </DescriptionBlock>
             </div>
@@ -552,7 +656,7 @@ const HomePage: FC = () => {
             <div className={classNames(s.topSection)}>
               <div className={classNames(s.wrapper, s.topSectionContainer)}>
                 <h2 className={s.joinWaitlistTitle}>Join Waitlist:</h2>
-                <form className={s.formSection}>
+                <form id="waitlist-form" className={s.formSection} onSubmit={handleFormSubmit}>
                   <input
                     type="text"
                     className={s.input}
@@ -567,7 +671,7 @@ const HomePage: FC = () => {
                     Send
                   </button>
                   <label className={s.privacyPolicy}>
-                    <input type="checkbox" />
+                    <input type="checkbox" defaultChecked={true} />
                     <span>
                       Agree to the Privacy Policy and Terms of Service
                     </span>
@@ -638,37 +742,6 @@ const HomePage: FC = () => {
           </div>
         </section>
       </main>
-
-      <div
-        className={classNames(s.bgOverlay, {
-          [s.bgOverlayActive]: isBgOverlayActive,
-          [s.bgOverlayDark]: isBgOverlayDark,
-        })}
-      >
-        <div className={s.bgOverlayItem1} />
-        <div className={s.bgOverlayItem2} />
-        <div className={s.bgOverlayItem3} />
-      </div>
-      <div
-        className={s.containerAnimation}
-        ref={container0}
-        id="animationContainer0"
-      />
-      <div
-        className={s.containerAnimation}
-        ref={container1}
-        id="animationContainer1"
-      />
-      <div
-        className={s.containerAnimation}
-        ref={container2}
-        id="animationContainer2"
-      />
-      <div
-        className={s.containerAnimation}
-        ref={container3}
-        id="animationContainer3"
-      />
     </>
   );
 };

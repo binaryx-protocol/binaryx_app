@@ -174,7 +174,7 @@
   font-size: 16px;
   font-weight: 500;
   background-color: transparent;
-  cursor: pointer;
+  cursor: default;
 }
 
 .description {
@@ -390,8 +390,8 @@
   content: "";
   position: absolute;
   top: -19px;
-  width: 0; 
-  height: 0; 
+  width: 0;
+  height: 0;
   border-top: 20px solid transparent;
   border-bottom: 20px solid transparent;
   border-left: 20px solid #008E85;
