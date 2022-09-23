@@ -1,0 +1,22 @@
+:root {
+  --font-size_big: 64px;
+  --font-size_medium: 36px;
+  --font-size_small: 18px;
+  --font-size_small-extra: 14px;
+
+  --font-color_base: rgba(34, 34, 34, 1);
+  --font-color_blue: rgba(1, 155, 186, 1);
+  --font-color_white: rgb(248, 249, 250, 1);
+  --font-color_gray: rgba(170, 170, 170, 1);
+  --font-color_gray-dark: rgba(144, 144, 144, 1);
+
+  --background-color_dark: rgba(27, 27, 27, 1);
+
+  --border-color_dark: #1e1e1e;
+  --border-color_white: #f8f9fa;
+  --border-radius_default: 7px;
+
+  --max-width_desktop: 1200px;
+  --max-width_mobile: 320px;
+
+}

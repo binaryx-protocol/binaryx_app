@@ -2,7 +2,6 @@ import Navigation from './components/HomeNavigation';
 import { FC, useEffect, useRef } from 'react';
 import s from './styles.module.scss';
 import lottie, { LottiePlayer } from 'lottie-web';
-import { Link } from '@mui/material';
 
 const HomePageTemp: FC = () => {
   const container = useRef<HTMLDivElement>(null);

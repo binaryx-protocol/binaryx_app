@@ -1,10 +1,11 @@
 import { NextPage } from 'next';
-import HomePageTemp from './home-page-temp';
+import HomePage from './home-page';
 
-const Home: NextPage<{ data: string }> = () => {
+const Home: NextPage<{ data: string }> = (props) => {
+  const { data } = props;
   return (
     <>
-      <HomePageTemp />
+      <HomePage /> {data}
     </>
   );
 };

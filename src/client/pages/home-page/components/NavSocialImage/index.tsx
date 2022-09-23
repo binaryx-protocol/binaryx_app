@@ -1,4 +1,3 @@
-import { Link } from '@mui/material';
 import { FC } from 'react';
 
 type Props = {
@@ -9,17 +8,15 @@ type Props = {
   width: number;
 };
 
-const NavSocialImage: FC<Props> = (props: Props) => (
-  <Link>
-    <a href={props.link}>
-      <img
-        width={props.width}
-        src={props.src}
-        alt={props.alt}
-        className={props.className}
-      />
-    </a>
-  </Link>
+const NavSocialImage: FC<Props> = (props) => (
+  <a href={props.link} target="_blank">
+    <img
+      width={props.width}
+      src={props.src}
+      alt={props.alt}
+      className={props.className}
+    />
+  </a>
 );
 
 export default NavSocialImage;
