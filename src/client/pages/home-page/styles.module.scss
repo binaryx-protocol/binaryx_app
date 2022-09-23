@@ -150,6 +150,7 @@
 
   @media (max-width: 748px) {
     padding-top: 100px;
+    height: 90vh;
   }
 }
 
@@ -213,11 +214,14 @@
 }
 
 .webAssetsContainer {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 748px) {
+    min-height: 90vh;
+  }
 }
 
 .webAssetsContainerInner {}
@@ -377,6 +381,10 @@
   position: relative;
   height: 100vh;
   color: white;
+
+  @media (max-width: 748px) {
+    height: 90vh;
+  }
 }
 
 .timelineTitle {
@@ -428,6 +436,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 748px) {
+    min-height: 90vh;
+  }
 }
 
 .timelineGrid {
@@ -463,6 +475,10 @@
   align-items: center;
   flex-direction: column;
   min-height: 100vh;
+
+  @media (max-width: 748px) {
+    min-height: 90vh;
+  }
 }
 
 .ourTeamTitle {
