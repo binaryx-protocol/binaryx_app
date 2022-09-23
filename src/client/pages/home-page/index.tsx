@@ -338,7 +338,7 @@ const HomePage: FC = () => {
 
   return (
     <>
-      <Navigation />
+      <Navigation isDark={isBgOverlayDark} />
       <div
         className={classNames(s.bgOverlay, {
           [s.bgOverlayActive]: isBgOverlayActive,

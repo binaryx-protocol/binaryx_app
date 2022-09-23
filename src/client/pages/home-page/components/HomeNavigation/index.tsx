@@ -1,15 +1,19 @@
 import { FC } from 'react';
-import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
 import s from './styles.module.scss';
 import { Container } from '@mui/material';
 import NavSocialImage from '../NavSocialImage';
+import classNames from 'classnames';
 
-const LandingNav: FC = () => {
+type Props = {
+  isDark?: boolean;
+}
+
+const LandingNav: FC<Props> = ({ isDark }) => {
   return (
-    <header className={s.header}>
+    <header className={classNames(s.header, { [s.headerDark]: isDark })}>
       <Container maxWidth="xl" className={s.container}>
         <img
-          src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg"
+          src={`https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_${isDark ? 'white' : 'black'}_horizontal.svg`}
           alt="company_logo"
           className={s.logo}
         />
