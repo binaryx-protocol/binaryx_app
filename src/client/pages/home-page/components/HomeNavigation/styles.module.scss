@@ -33,6 +33,7 @@
   max-width: 180px;
   opacity: 0;
   transition: opacity 1s;
+  cursor: pointer;
 
   &:nth-child(2) {
     margin-left: -180px;

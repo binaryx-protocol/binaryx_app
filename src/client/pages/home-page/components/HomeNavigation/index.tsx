@@ -8,11 +8,12 @@ type Props = {
   isDark?: boolean;
 };
 
+
 const LandingNav: FC<Props> = ({ isDark }) => {
   return (
     <header className={classNames(s.header, { [s.headerDark]: isDark })}>
       <Container maxWidth="xl" className={s.container}>
-        <div>
+        <div className={s.logoWrap} onClick={() => window.fullpageObject.moveTo(1)}>
           <img
             src={`https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_white_horizontal.svg`}
             alt="company_logo"

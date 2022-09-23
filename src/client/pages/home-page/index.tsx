@@ -776,6 +776,7 @@ const HomePage: FC = () => {
                   src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg"
                   alt="company_logo"
                   width={180}
+                  onClick={() => window.fullpageObject.moveTo(0)}
                 />
                 <div className={s.footerLinks}>
                   <MenuElement link={'#'} body={'Privacy Policy'} />
