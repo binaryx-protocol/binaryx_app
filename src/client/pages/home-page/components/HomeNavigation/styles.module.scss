@@ -15,6 +15,10 @@
 
 .headerDark {
   background-color: var(--background-color_dark);
+
+  .navSocial img {
+    filter: invert(100%)
+  }
 }
 
 .container {
