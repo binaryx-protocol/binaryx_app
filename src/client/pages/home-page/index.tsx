@@ -177,7 +177,7 @@ const HomePage: FC = () => {
     import('fullpage.js').then((module) => {
       const fullpage = module.default;
 
-      window.fullpageObject = new fullpage('#main', {
+      (window as any).fullpageObject = new fullpage('#main', {
         //options here
         autoScrolling: true,
         scrollHorizontally: true,
@@ -323,7 +323,7 @@ const HomePage: FC = () => {
   }
 
   function handleJoinWaitListButtonClick() {
-    window.fullpageObject.moveTo(document.querySelectorAll('.section').length);
+    (window as any).fullpageObject.moveTo(document.querySelectorAll('.section').length);
   }
 
   // useEffect(() => {
@@ -776,7 +776,7 @@ const HomePage: FC = () => {
                   src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg"
                   alt="company_logo"
                   width={180}
-                  onClick={() => window.fullpageObject.moveTo(0)}
+                  onClick={() => (window as any).fullpageObject.moveTo(0)}
                 />
                 <div className={s.footerLinks}>
                   <MenuElement link={'#'} body={'Privacy Policy'} />
