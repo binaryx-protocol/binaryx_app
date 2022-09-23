@@ -4,10 +4,10 @@
 declare global {
     // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
     interface Window {
-        dataLayer: Record<string, unknown>[]
-        fbq?: (...args: unknown) => void
-        _learnq?: unknown[]
-        ethereum?: unknown
+        // dataLayer: Record<string, unknown>[]
+        // fbq?: (...args: unknown) => void
+        // _learnq?: unknown[]
+        ethereum?: any
     }
 }
 

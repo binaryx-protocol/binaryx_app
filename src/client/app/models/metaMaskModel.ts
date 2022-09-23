@@ -7,6 +7,7 @@ const KNOWN_CHAINS = {
     '0x4': 'Rinkeby',
     '0x5': 'Goerli',
     '0x2a': 'Kovan',
+    '0x66eeb': 'Arbitrum (Rinkeby)',
 }
 
 type TKnownChainId = keyof typeof KNOWN_CHAINS
@@ -60,5 +61,28 @@ export const $onBrowserInit = atom(
                     console.error(err);
                 }
             });
+
+        const chain = {
+            chainId: `0x${Number(421611).toString(16)}`,
+            blockExplorerUrls: ['https://rinkeby-explorer.arbitrum.io/#/'],
+            chainName: 'Arbitrum Rinkeby',
+            // iconUrls: [],
+            nativeCurrency: {
+                name: 'ETH',
+                symbol: 'ETH',
+                decimals: 18
+            },
+            rpcUrls: ['https://rinkeby.arbitrum.io/rpc']
+        }
+
+        ethereum.request({ method: 'wallet_addEthereumChain', params: [chain] })
+            .then((args) => {
+                console.log('wallet_addEthereumChain', args)
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+
+        // TODO handle connect & disconnect
     }
 )
