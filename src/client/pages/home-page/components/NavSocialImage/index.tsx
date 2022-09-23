@@ -1,4 +1,3 @@
-import { Link } from '@mui/material';
 import { FC } from 'react';
 
 type Props = {
@@ -10,14 +9,14 @@ type Props = {
 };
 
 const NavSocialImage: FC<Props> = (props) => (
-  <Link href={props.link}>
+  <a href={props.link} target="_blank">
     <img
       width={props.width}
       src={props.src}
       alt={props.alt}
       className={props.className}
     />
-  </Link>
+  </a>
 );
 
 export default NavSocialImage;

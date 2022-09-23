@@ -557,7 +557,7 @@ const HomePage: FC = () => {
               <h1 className={s.timelineTitle}>Timeline</h1>
               <h3>Product</h3>
               <h3>Marketing</h3>
-              <h3>Organization</h3>
+              {/*<h3>Organization</h3>*/}
             </div>
             <div className={s.timelineColumn}>
               <DescriptionBlock year={'2022'}>
@@ -567,9 +567,9 @@ const HomePage: FC = () => {
                 <li>– Socials launch</li>
                 <li>– First 750 members onboarded</li>
               </DescriptionBlock>
-              <DescriptionBlock>
-                <li>Legal set up</li>
-              </DescriptionBlock>
+              {/*<DescriptionBlock>*/}
+              {/*  <li>Legal set up</li>*/}
+              {/*</DescriptionBlock>*/}
             </div>
             <div className={s.timelineColumn}>
               <DescriptionBlock year={'Q1 2023'}>
@@ -579,9 +579,9 @@ const HomePage: FC = () => {
                 <li>&gt; 5k members onboarded</li>
                 <li>&gt; 2k KYC done</li>
               </DescriptionBlock>
-              <DescriptionBlock>
-                <li>Seed round</li>
-              </DescriptionBlock>
+              {/*<DescriptionBlock>*/}
+              {/*  <li>Seed round</li>*/}
+              {/*</DescriptionBlock>*/}
             </div>
             <div className={s.timelineColumn}>
               <DescriptionBlock year={'Q2 2023'}>
@@ -591,9 +591,9 @@ const HomePage: FC = () => {
                 <li>– Academy launch</li>
                 <li>– Ambassador program launch</li>
               </DescriptionBlock>
-              <DescriptionBlock>
-                <li>IDO</li>
-              </DescriptionBlock>
+              {/*<DescriptionBlock>*/}
+              {/*  <li>IDO</li>*/}
+              {/*</DescriptionBlock>*/}
             </div>
             <div className={s.timelineColumn}>
               <DescriptionBlock year={'Q3 2023'}>
@@ -605,10 +605,10 @@ const HomePage: FC = () => {
                 <li>&gt; 70k members onboarded</li>
                 <li>&gt; 7k $aBNRX holders</li>
               </DescriptionBlock>
-              <DescriptionBlock>
-                <li>– Token launch</li>
-                <li>– DAO launch</li>
-              </DescriptionBlock>
+              {/*<DescriptionBlock>*/}
+              {/*  <li>– Token launch</li>*/}
+              {/*  <li>– DAO launch</li>*/}
+              {/*</DescriptionBlock>*/}
             </div>
             <div className={s.timelineColumn}>
               <DescriptionBlock year="Q4 2023">
