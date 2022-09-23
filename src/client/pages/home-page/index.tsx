@@ -147,7 +147,7 @@ const HomePage: FC = () => {
 
     initAnimations();
 
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       lottie.destroy();
       initAnimations();
     });
@@ -192,16 +192,17 @@ const HomePage: FC = () => {
           updateContainerStylesV2(nextSection);
           currentSectionRef.current = nextSection;
           const animation = animations.current[nextSection];
-          const nextValue = [1, 2, 3].includes(nextSection) && direction === 'up' ? 1100 : 0;
+          const nextValue =
+            [1, 2, 3].includes(nextSection) && direction === 'up' ? 1100 : 0;
           animation?.goToAndPlay(nextValue);
           console.log('nextSection', nextSection);
           setIsBgOverlayActive(() => nextSection !== 0);
-          setIsBgAnimationActive(() => nextSection !== 4)
+          setIsBgAnimationActive(() => nextSection !== 4);
           setIsBgOverlayDark(() => nextSection >= 4);
         },
         afterLoad: () => {
-          document.querySelector(".fp-watermark")?.remove();
-        }
+          document.querySelector('.fp-watermark')?.remove();
+        },
       });
     });
     // }, 1000);
@@ -255,7 +256,7 @@ const HomePage: FC = () => {
     // let url =
     //   'https://api.hsforms.com/submissions/v3/integration/submit/22710849/33113d53-079c-4c14-ab02-84409352b055';
 
-    let data = {
+    const data = {
       submittedAt: Date.now(),
       fields: [
         {
@@ -303,22 +304,26 @@ const HomePage: FC = () => {
     //
     // xhr.send(final_data);
 
-
-    fetch('https://api.hsforms.com/submissions/v3/integration/submit/22710849/33113d53-079c-4c14-ab02-84409352b055', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
+    fetch(
+      'https://api.hsforms.com/submissions/v3/integration/submit/22710849/33113d53-079c-4c14-ab02-84409352b055',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       },
-      body: JSON.stringify(data)
-    }).then(() => {
-      alert("Thanks for submitting! We will get back to you soon");
-    }).catch((error) => {
-      alert(error);
-    })
+    )
+      .then(() => {
+        alert('Thanks for submitting! We will get back to you soon');
+      })
+      .catch((error) => {
+        alert(error);
+      });
   }
 
   function handleJoinWaitListButtonClick() {
-    window.fullpageObject.moveTo(document.querySelectorAll(".section").length);
+    window.fullpageObject.moveTo(document.querySelectorAll('.section').length);
   }
 
   // useEffect(() => {
@@ -348,9 +353,21 @@ const HomePage: FC = () => {
           [s.bgOverlayDark]: isBgOverlayDark,
         })}
       >
-        <div className={classNames(s.bgOverlayItem, s.bgOverlayItem1, { [s.bgOverlayItemActive]: isBgAnimationActive })} />
-        <div className={classNames(s.bgOverlayItem, s.bgOverlayItem2, { [s.bgOverlayItemActive]: isBgAnimationActive })} />
-        <div className={classNames(s.bgOverlayItem, s.bgOverlayItem3, { [s.bgOverlayItemActive]: isBgAnimationActive })} />
+        <div
+          className={classNames(s.bgOverlayItem, s.bgOverlayItem1, {
+            [s.bgOverlayItemActive]: isBgAnimationActive,
+          })}
+        />
+        <div
+          className={classNames(s.bgOverlayItem, s.bgOverlayItem2, {
+            [s.bgOverlayItemActive]: isBgAnimationActive,
+          })}
+        />
+        <div
+          className={classNames(s.bgOverlayItem, s.bgOverlayItem3, {
+            [s.bgOverlayItemActive]: isBgAnimationActive,
+          })}
+        />
       </div>
       <div
         className={s.containerAnimation}
@@ -387,11 +404,16 @@ const HomePage: FC = () => {
                   </b>
                 </span>
                 <span className={s.companySubTitle}>Community-Powered</span>
-                <span className={s.companySubTitle}>Real Estate Tokenization Platform</span>
+                <span className={s.companySubTitle}>
+                  Real Estate Tokenization Platform
+                </span>
               </h1>
               <p className={s.hint}>{/* Technology based */}</p>
               <div className={s.infoSection}>
-                <button onClick={handleJoinWaitListButtonClick} className={s.btnJoinWaitlist}>
+                <button
+                  onClick={handleJoinWaitListButtonClick}
+                  className={s.btnJoinWaitlist}
+                >
                   Join waitlist
                 </button>
                 <button type="submit" className={s.joinCommunity}>
@@ -406,7 +428,10 @@ const HomePage: FC = () => {
           ref={section2Ref}
           className={classNames(s.wrapper, s.section, 'section')}
         >
-          <SectionElement heading="Expensive asset value already in past" onButtonClick={handleJoinWaitListButtonClick}>
+          <SectionElement
+            heading="Expensive asset value already in past"
+            onButtonClick={handleJoinWaitListButtonClick}
+          >
             <p className={s.description}>
               With Binaryx Protocol you will be able to buy a real tokenized
               estate with only $50 till unlimited.
@@ -421,7 +446,10 @@ const HomePage: FC = () => {
           ref={section3Ref}
           className={classNames(s.wrapper, s.section, 'section')}
         >
-          <SectionElement heading="The next generation DeFi experience with Real Yield" onButtonClick={handleJoinWaitListButtonClick}>
+          <SectionElement
+            heading="The next generation DeFi experience with Real Yield"
+            onButtonClick={handleJoinWaitListButtonClick}
+          >
             <p className={s.description}>
               Use your property tokens to borrow and keep earning the highest
               yield available at the same time
@@ -515,16 +543,16 @@ const HomePage: FC = () => {
         <section
           className={classNames(s.timeline, s.section, s.wrapper, 'section')}
         >
-          <div className={s.timelineSeparatorTr} />
-          <ul className={s.timelineSeparatorLine}>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
           <div className={s.timelineGrid}>
+            <div className={s.timelineSeparatorTr} />
+            <ul className={s.timelineSeparatorLine}>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
             <div className={s.timelineHeaders}>
               <h1 className={s.timelineTitle}>Timeline</h1>
               <h3>Product</h3>
@@ -671,7 +699,11 @@ const HomePage: FC = () => {
             <div className={classNames(s.topSection)}>
               <div className={classNames(s.wrapper, s.topSectionContainer)}>
                 <h2 className={s.joinWaitlistTitle}>Join Waitlist:</h2>
-                <form id="waitlist-form" className={s.formSection} onSubmit={handleFormSubmit}>
+                <form
+                  id="waitlist-form"
+                  className={s.formSection}
+                  onSubmit={handleFormSubmit}
+                >
                   <input
                     type="text"
                     className={s.input}

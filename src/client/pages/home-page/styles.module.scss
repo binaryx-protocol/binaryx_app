@@ -6,6 +6,7 @@
 
 .section {
   outline: none;
+
   * {
     outline: none;
   }
@@ -18,7 +19,7 @@
   height: 100%;
   top: 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: 748px) {
     //width: auto;
     transform: scale(0.85);
     height: 110vh;
@@ -93,9 +94,11 @@
   0% {
     transform: translate(0, 0);
   }
+
   50% {
     transform: translate(-150px, 140px);
   }
+
   100% {
     transform: translate(0, 0);
   }
@@ -105,9 +108,11 @@
   0% {
     transform: translate(0, 0);
   }
+
   50% {
     transform: translate(-180px, 180px);
   }
+
   100% {
     transform: translate(0, 0);
   }
@@ -117,9 +122,11 @@
   0% {
     transform: translate(0, 0);
   }
+
   50% {
     transform: translate(-250px, 250px);
   }
+
   100% {
     transform: translate(0, 0);
   }
@@ -141,7 +148,7 @@
   justify-content: center;
   height: 100vh;
 
-  @media (max-width: 768px) {
+  @media (max-width: 748px) {
     padding-top: 100px;
   }
 }
@@ -157,7 +164,7 @@
 .companySubTitle {
   font-size: 54px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 748px) {
     font-size: 21px;
   }
 }
@@ -213,10 +220,10 @@
   align-items: center;
 }
 
-.webAssetsContainerInner {
-}
+.webAssetsContainerInner {}
 
-.assetsWeb3Desktop, .assetsWeb3Mobile {
+.assetsWeb3Desktop,
+.assetsWeb3Mobile {
   place-self: center;
   margin: 60px 0;
   max-width: 100%;
@@ -366,7 +373,6 @@
 
 .timeline {
   display: flex;
-  justify-content: center;
   align-items: center;
   position: relative;
   height: 100vh;
@@ -380,21 +386,23 @@
 }
 
 .timelineSeparatorTr {
-  width: 100%;
   height: 2px;
   background: linear-gradient(90deg, #01DDDC -0.99%, rgba(1, 221, 220, 0) 100%);
-  position: absolute;
-  top: 280px;
+  position: relative;
+  top: 130px;
+  grid-column: 1/8;
 }
 
 .timelineSeparatorLine {
   display: grid;
-  grid-template-columns: repeat(6, 172px);
-  position: absolute;
+  grid-template-columns: repeat(6, 170px);
+  position: relative;
   list-style: none;
-  top: 255px;
-  left: 182px;
+  top: 120px;
+  left: 160px;
   padding: 0;
+  margin: 0;
+  grid-column: 1/8;
 }
 
 .timelineSeparatorLine li {
@@ -424,11 +432,11 @@
 
 .timelineGrid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-gap: 20px;
+  grid-gap: 0 20px;
 }
 
-.timelineColumn, .timelineHeaders {
+.timelineColumn,
+.timelineHeaders {
   display: grid;
   grid-template-rows: 140px 80px 160px 80px;
   grid-gap: 15px;
@@ -462,7 +470,6 @@
   font-size: var(--font-size_medium);
   font-weight: 400;
   text-align: center;
-  padding-bottom: 56px;
 }
 
 .teamGallery {
@@ -477,9 +484,7 @@
   justify-content: center;
   min-height: 100%;
 
-  @media (max-width: 768px) {
-
-  }
+  @media (max-width: 748px) {}
 }
 
 .joinWaitlistTitle {
@@ -491,7 +496,7 @@
 .topSection {
   padding: 124px 0 62px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 748px) {
     padding: 24px 0;
   }
 }
@@ -501,7 +506,7 @@
   justify-content: space-between;
   align-items: center;
 
-  @media (max-width: 768px) {
+  @media (max-width: 748px) {
     flex-direction: column;
   }
 }
@@ -585,7 +590,7 @@
   max-width: var(--max-width_desktop);
   margin: auto;
 
-  @media (max-width: 768px) {
+  @media (max-width: 748px) {
     padding: 18px 0;
     flex-direction: column;
     justify-content: center;
@@ -663,7 +668,7 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 748px) {
   .heroPageInfo {
     justify-content: space-between;
   }
@@ -716,6 +721,7 @@
   .assetsWeb3Mobile {
     display: block;
     margin: 0;
+    max-height: 78vh;
   }
 
   .assetsWeb3Desktop {
@@ -749,14 +755,44 @@
     margin: auto;
   }
 
-  .ourTeam {
-    height: fit-content;
+  .timelineGrid {
+    grid-template-columns: repeat(6, 160px);
+    margin-top: 100px;
+  }
+
+  .timelineSeparatorTr {
+    top: 90px;
+  }
+
+  .timelineSeparatorTr::before {
+    display: none;
+  }
+
+  .timelineSeparatorLine {
+    grid-template-columns: repeat(6, 180px);
+    top: 80px;
+    left: 0;
+  }
+
+  .timelineColumn {
+    grid-gap: 40px;
+    grid-template-rows: 75px 80px 160px 80px;
+  }
+
+  .timelineTitle {
+    margin: -30px 0 0 0;
+  }
+
+  .timelineHeaders {
+    position: absolute;
+    grid-template-rows: 100px 105px 187px;
   }
 
   .teamGallery {
     overflow-x: scroll;
     overflow-y: hidden;
     align-items: center;
+    gap: 12px;
   }
 
   .timeline {

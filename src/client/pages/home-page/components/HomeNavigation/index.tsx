@@ -6,14 +6,16 @@ import classNames from 'classnames';
 
 type Props = {
   isDark?: boolean;
-}
+};
 
 const LandingNav: FC<Props> = ({ isDark }) => {
   return (
     <header className={classNames(s.header, { [s.headerDark]: isDark })}>
       <Container maxWidth="xl" className={s.container}>
         <img
-          src={`https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_${isDark ? 'white' : 'black'}_horizontal.svg`}
+          src={`https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_${
+            isDark ? 'white' : 'black'
+          }_horizontal.svg`}
           alt="company_logo"
           className={s.logo}
         />
