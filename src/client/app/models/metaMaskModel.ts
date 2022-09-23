@@ -83,6 +83,24 @@ export const $onBrowserInit = atom(
                 console.error(err);
             });
 
+        const token = {
+            type: 'ERC20',
+            options: {
+                address: '0x4e8C6307AF6fC893D76dfAD9198bcE29601Db057',
+                symbol: 'BNRX',
+                decimals: 18,
+                image: '',
+            },
+        }
+
+        ethereum.request({ method: 'wallet_watchAsset', params: token })
+            .then((args) => {
+                console.log('wallet_watchAsset', args)
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+
         // TODO handle connect & disconnect
     }
 )
