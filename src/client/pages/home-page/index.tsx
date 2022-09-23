@@ -11,8 +11,8 @@ import anim1 from './animations/B1.json';
 import anim2 from './animations/B2.json';
 import anim3 from './animations/B3.json';
 import anim4 from './animations/B4.json';
-import WebAssetBlock from './components/WebAssetSection/WebAssetBlock';
-import WebAssetCard from './components/WebAssetSection/WebAssetCard';
+// import WebAssetBlock from './components/WebAssetSection/WebAssetBlock';
+// import WebAssetCard from './components/WebAssetSection/WebAssetCard';
 import classNames from 'classnames';
 import DescriptionBlock from './components/DescriptionBlock';
 import getCookie from 'utils/getCookie';
@@ -35,6 +35,7 @@ const HomePage: FC = () => {
   ];
   const currentSectionRef = useRef(0);
   const [isBgOverlayActive, setIsBgOverlayActive] = useState(false);
+  const [isBgAnimationActive, setIsBgAnimationActive] = useState(false);
   const [isBgOverlayDark, setIsBgOverlayDark] = useState(false);
 
   const initAnimation = ({ animationData, container, autoplay }) => {
@@ -114,13 +115,7 @@ const HomePage: FC = () => {
     }
   };
 
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    document.body.style.height = '100%';
-    document.body.parentElement.style.overflow = 'hidden';
-    document.body.parentElement.style.height = '100%';
-    // document.html.style.overflow = "hidden";
-    // setTimeout(() => {
+  function initAnimations() {
     animations.current[0] = initAnimation({
       animationData: anim1,
       container: document.getElementById('animationContainer0'),
@@ -142,7 +137,20 @@ const HomePage: FC = () => {
       container: document.getElementById('animationContainer3'),
       autoplay: false,
     });
-    // }, 100);
+  }
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100%';
+    document.body.parentElement.style.overflow = 'hidden';
+    document.body.parentElement.style.height = '100%';
+
+    initAnimations();
+
+    window.addEventListener("resize", () => {
+      lottie.destroy();
+      initAnimations();
+    });
 
     document.addEventListener('scroll', (event) => {
       event.preventDefault();
@@ -187,8 +195,8 @@ const HomePage: FC = () => {
           const nextValue = [1, 2, 3].includes(nextSection) && direction === 'up' ? 1100 : 0;
           animation?.goToAndPlay(nextValue);
           console.log('nextSection', nextSection);
-          const isBgAnimationActive = nextSection !== 0;
-          setIsBgOverlayActive(() => isBgAnimationActive);
+          setIsBgOverlayActive(() => nextSection !== 0);
+          setIsBgAnimationActive(() => nextSection !== 4)
           setIsBgOverlayDark(() => nextSection >= 4);
         },
       });
@@ -306,6 +314,10 @@ const HomePage: FC = () => {
     })
   }
 
+  function handleJoinWaitListButtonClick() {
+    window.fullpageObject.moveTo(document.querySelectorAll(".section").length);
+  }
+
   // useEffect(() => {
   //   const webAssets = document.querySelectorAll('.styles_isShow__g-Dv6');
 
@@ -333,9 +345,9 @@ const HomePage: FC = () => {
           [s.bgOverlayDark]: isBgOverlayDark,
         })}
       >
-        <div className={s.bgOverlayItem1} />
-        <div className={s.bgOverlayItem2} />
-        <div className={s.bgOverlayItem3} />
+        <div className={classNames(s.bgOverlayItem, s.bgOverlayItem1, { [s.bgOverlayItemActive]: isBgAnimationActive })} />
+        <div className={classNames(s.bgOverlayItem, s.bgOverlayItem2, { [s.bgOverlayItemActive]: isBgAnimationActive })} />
+        <div className={classNames(s.bgOverlayItem, s.bgOverlayItem3, { [s.bgOverlayItemActive]: isBgAnimationActive })} />
       </div>
       <div
         className={s.containerAnimation}
@@ -371,13 +383,12 @@ const HomePage: FC = () => {
                     Binaryx Protocol
                   </b>
                 </span>
-                <span>Community-Powered</span>
-                <span>Real Estate Tokenization Platform</span>
+                <span className={s.companySubTitle}>Community-Powered</span>
+                <span className={s.companySubTitle}>Real Estate Tokenization Platform</span>
               </h1>
               <p className={s.hint}>{/* Technology based */}</p>
               <div className={s.infoSection}>
-
-                <button onClick={() => window.fullpageObject.moveTo(document.querySelectorAll(".section").length)} className={s.btnJoinWaitlist}>
+                <button onClick={handleJoinWaitListButtonClick} className={s.btnJoinWaitlist}>
                   Join waitlist
                 </button>
                 <button type="submit" className={s.joinCommunity}>
@@ -392,7 +403,7 @@ const HomePage: FC = () => {
           ref={section2Ref}
           className={classNames(s.wrapper, s.section, 'section')}
         >
-          <SectionElement heading="Expensive asset value already in past">
+          <SectionElement heading="Expensive asset value already in past" onButtonClick={handleJoinWaitListButtonClick}>
             <p className={s.description}>
               With Binaryx Protocol you will be able to buy a real tokenized
               estate with only $50 till unlimited.
@@ -407,7 +418,7 @@ const HomePage: FC = () => {
           ref={section3Ref}
           className={classNames(s.wrapper, s.section, 'section')}
         >
-          <SectionElement heading="The next generation DeFi experience with Real Yield">
+          <SectionElement heading="The next generation DeFi experience with Real Yield" onButtonClick={handleJoinWaitListButtonClick}>
             <p className={s.description}>
               Use your property tokens to borrow and keep earning the highest
               yield available at the same time
@@ -422,6 +433,7 @@ const HomePage: FC = () => {
           <SectionElement
             heading="Boost Economy and scale Web3"
             preTitle="WE ARE HERE TO:"
+            onButtonClick={handleJoinWaitListButtonClick}
           >
             <p className={s.description}>
               Increasing assets ownership transferring speed with web3
@@ -452,47 +464,47 @@ const HomePage: FC = () => {
                     'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_desktop.svg'
                   }
                 />
-                {/* <img
-                    className={s.assetsWeb3Mobile}
-                    src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_mobile.svg"
-                  /> */}
-                <div className={s.assetsWeb3Mobile}>
-                  <WebAssetBlock className={s.webAssetsLegend}>
-                    <p>1. Property Tokenization</p>
-                    <p>2. Purchasing Property Tokens</p>
-                    <p>3. Claiming Rewards from Rent</p>
-                  </WebAssetBlock>
-                  <WebAssetBlock className={s.binaryxMarketplace}>
-                    <WebAssetCard
-                      imageSrc={''}
-                      imageDescription={'Binaryx Marketplace'}
-                    />
-                  </WebAssetBlock>
-                  <WebAssetBlock className={s.propertyTokenization}>
-                    <WebAssetCard imageSrc={''} imageDescription={'Property'} />
-                    <WebAssetCard
-                      imageSrc={'#'}
-                      imageDescription={'Property Tokens'}
-                    />
-                  </WebAssetBlock>
-                  <WebAssetBlock className={s.purchasingPropertyTokens}>
-                    <WebAssetCard
-                      imageSrc={'#'}
-                      imageDescription={'Property Taken'}
-                    />
-                    <WebAssetCard
-                      imageSrc={'#'}
-                      imageDescription={'Stablecoins'}
-                    />
-                    <WebAssetCard imageSrc={'#'} imageDescription={'Users'} />
-                  </WebAssetBlock>
-                  <WebAssetBlock className={s.claimingRewards}>
-                    <WebAssetCard
-                      imageSrc={'#'}
-                      imageDescription={'Property Rent'}
-                    />
-                  </WebAssetBlock>
-                </div>
+                <img
+                  className={s.assetsWeb3Mobile}
+                  src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_mobile4.png"
+                />
+                {/*<div className={s.assetsWeb3Mobile}>*/}
+                {/*  <WebAssetBlock className={s.webAssetsLegend}>*/}
+                {/*    <p>1. Property Tokenization</p>*/}
+                {/*    <p>2. Purchasing Property Tokens</p>*/}
+                {/*    <p>3. Claiming Rewards from Rent</p>*/}
+                {/*  </WebAssetBlock>*/}
+                {/*  <WebAssetBlock className={s.binaryxMarketplace}>*/}
+                {/*    <WebAssetCard*/}
+                {/*      imageSrc={''}*/}
+                {/*      imageDescription={'Binaryx Marketplace'}*/}
+                {/*    />*/}
+                {/*  </WebAssetBlock>*/}
+                {/*  <WebAssetBlock className={s.propertyTokenization}>*/}
+                {/*    <WebAssetCard imageSrc={''} imageDescription={'Property'} />*/}
+                {/*    <WebAssetCard*/}
+                {/*      imageSrc={'#'}*/}
+                {/*      imageDescription={'Property Tokens'}*/}
+                {/*    />*/}
+                {/*  </WebAssetBlock>*/}
+                {/*  <WebAssetBlock className={s.purchasingPropertyTokens}>*/}
+                {/*    <WebAssetCard*/}
+                {/*      imageSrc={'#'}*/}
+                {/*      imageDescription={'Property Taken'}*/}
+                {/*    />*/}
+                {/*    <WebAssetCard*/}
+                {/*      imageSrc={'#'}*/}
+                {/*      imageDescription={'Stablecoins'}*/}
+                {/*    />*/}
+                {/*    <WebAssetCard imageSrc={'#'} imageDescription={'Users'} />*/}
+                {/*  </WebAssetBlock>*/}
+                {/*  <WebAssetBlock className={s.claimingRewards}>*/}
+                {/*    <WebAssetCard*/}
+                {/*      imageSrc={'#'}*/}
+                {/*      imageDescription={'Property Rent'}*/}
+                {/*    />*/}
+                {/*  </WebAssetBlock>*/}
+                {/*</div>*/}
               </div>
             </div>
           </div>

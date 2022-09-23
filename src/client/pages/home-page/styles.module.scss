@@ -47,6 +47,11 @@
   background-color: #1B1B1B;
 }
 
+.bgOverlayItem {
+  opacity: 0;
+  transition: opacity 1s;
+}
+
 .bgOverlayItem1 {
   width: 355px;
   height: 355px;
@@ -78,6 +83,10 @@
   right: 476px;
   top: 257px;
   animation: bgOverlayAnimate3 3s infinite;
+}
+
+.bgOverlayItemActive {
+  opacity: 1;
 }
 
 @keyframes bgOverlayAnimate1 {
@@ -143,6 +152,14 @@
   color: inherit;
   font-size: var(--font-size_big);
   font-weight: 300;
+}
+
+.companySubTitle {
+  font-size: 54px;
+
+  @media (max-width: 768px) {
+    font-size: 21px;
+  }
 }
 
 .hint {
@@ -605,7 +622,7 @@
   font-size: 14px;
 }
 
-@media screen and (max-width: 414px) {
+@media screen and (max-width: 768px) {
   .heroPageInfo {
     justify-content: space-between;
   }
