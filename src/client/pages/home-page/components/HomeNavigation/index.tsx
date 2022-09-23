@@ -12,13 +12,18 @@ const LandingNav: FC<Props> = ({ isDark }) => {
   return (
     <header className={classNames(s.header, { [s.headerDark]: isDark })}>
       <Container maxWidth="xl" className={s.container}>
-        <img
-          src={`https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_${
-            isDark ? 'white' : 'black'
-          }_horizontal.svg`}
-          alt="company_logo"
-          className={s.logo}
-        />
+        <div>
+          <img
+            src={`https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_white_horizontal.svg`}
+            alt="company_logo"
+            className={classNames(s.logo, { [s.logoActive]: isDark })}
+          />
+          <img
+            src={`https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg`}
+            alt="company_logo"
+            className={classNames(s.logo, { [s.logoActive]: !isDark })}
+          />
+        </div>
         {/* <nav className={s.navLinks}>
           <MenuElement link={'/home'} body={'Home'} />
           <MenuElement link={'#'} body={'About'} />

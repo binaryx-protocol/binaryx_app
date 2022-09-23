@@ -31,6 +31,16 @@
 
 .logo {
   max-width: 180px;
+  opacity: 0;
+  transition: opacity 1s;
+
+  &:nth-child(2) {
+    margin-left: -180px;
+  }
+}
+
+.logoActive {
+  opacity: 1;
 }
 
 .navLinks {
@@ -67,6 +77,10 @@
 
   .logo {
     max-width: 150px;
+
+    &:nth-child(2) {
+      margin-left: -150px;
+    }
   }
 
   .navSocial {
