@@ -1,6 +1,6 @@
-import { FC, useEffect } from 'react';
+import {FC, useEffect, useState} from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-// import AdminMenu from 'components/admin/AdminMenu';
+import AdminMenu from 'components/admin/AdminMenu';
 import { ApolloProvider } from '@apollo/client';
 import client from '../app/apollo-client';
 import { createTheme, ThemeProvider } from '@mui/material';
@@ -20,11 +20,18 @@ const theme = createTheme({
 });
 
 const MyApp: FC<Props> = ({ Component, pageProps }) => {
+  const [showAdminMenu, setShowAdminMenu] = useState(false)
   const includeHubSpotTrackingScript = process.env.NODE_ENV === "production"
 
   useEffect(() => {
     console.log('APP INIT');
     // assetContractService.init();
+    if (typeof window !== 'undefined') {
+      // @ts-ignore
+      window.admin = () => {
+        setShowAdminMenu((v) => !v)
+      }
+    }
   }, []);
 
   return (
@@ -43,7 +50,9 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
         {/* <Navigation /> */}
         {/* <Home data={''} /> */}
         <Component {...pageProps} />
-        {/*<AdminMenu />*/}
+        {
+          showAdminMenu && <AdminMenu />
+        }
       </ThemeProvider>
       {includeHubSpotTrackingScript && <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/22710849.js" />}
     </ApolloProvider>
