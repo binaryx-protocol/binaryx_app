@@ -395,7 +395,7 @@ const HomePage: FC = () => {
               <h1 className={s.companyTitle}>
                 <span>
                   <b style={{ color: 'rgba(0, 180, 204, 1)' }}>
-                    Binaryx Protocol
+                    Binaryx
                   </b>
                 </span>
                 <span className={s.companySubTitle}>Community-Powered</span>
@@ -638,7 +638,7 @@ const HomePage: FC = () => {
                     'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/oleg_kurchenko.png'
                   }
                   personName={'Oleg Kurchenko'}
-                  personPosition={'Chief executive producer'}
+                  personPosition={'Chief Executive Officer'}
                   socialLinkImage={
                     'https://cdn-icons-png.flaticon.com/512/61/61109.png'
                   }
