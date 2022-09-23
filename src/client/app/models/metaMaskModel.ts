@@ -102,5 +102,7 @@ export const $onBrowserInit = atom(
             });
 
         // TODO handle connect & disconnect
+        // TODO handle https://docs.metamask.io/guide/rpc-api.html#unrestricted-methods wallet_registerOnboarding
+        // TODO wallet_switchEthereumChain https://docs.metamask.io/guide/rpc-api.html#usage-with-wallet-switchethereumchain
     }
 )
