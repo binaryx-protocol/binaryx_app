@@ -199,6 +199,9 @@ const HomePage: FC = () => {
           setIsBgAnimationActive(() => nextSection !== 4)
           setIsBgOverlayDark(() => nextSection >= 4);
         },
+        afterLoad: () => {
+          document.querySelector(".fp-watermark")?.remove();
+        }
       });
     });
     // }, 1000);
