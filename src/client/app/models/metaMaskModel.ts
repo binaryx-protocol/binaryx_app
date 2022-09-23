@@ -23,38 +23,42 @@ export const $metaMaskState = atom<TMetaMaskState>({
     isConnected: null,
 })
 
-export const $onAccountsConnectOrDisconnect = atom(
+export const $onBrowserInit = atom(
     null,
-    (get, set, accounts: TAccountAddress[]) => {
-        console.log('$onAccountsConnectOrDisconnect', accounts)
-        const prevState = get($metaMaskState)
-        set(
-            $metaMaskState,
-            { ...prevState, accounts }
-        )
-    },
-)
+    (get, set) => {
+        const update = (object: Partial<TMetaMaskState>) => {
+            const prevState = get($metaMaskState)
+            set(
+                $metaMaskState,
+                { ...prevState, ...object }
+            )
+        }
+        const ethereum = window.ethereum
 
-export const $onChainIdChange = atom(
-    null,
-    (get, set, chainId: TKnownChainId) => {
-        console.log('$onChainIdChange', chainId)
-        const prevState = get($metaMaskState)
-        set(
-            $metaMaskState,
-            { ...prevState, chainId }
-        )
-    },
-)
+        update({ isConnected: ethereum.isConnected() })
 
-export const $onIsConnectedChange = atom(
-    null,
-    (get, set, isConnected: boolean) => {
-        console.log('$onIsConnectedChange', isConnected)
-        const prevState = get($metaMaskState)
-        set(
-            $metaMaskState,
-            { ...prevState, isConnected }
-        )
-    },
+        const onAccountsConnectOrDisconnect = (accounts: TAccountAddress[]) => update({ accounts })
+        const onChainIdChange = (chainId: TKnownChainId) => update({ chainId })
+
+        ethereum.on('accountsChanged', onAccountsConnectOrDisconnect);
+        ethereum.on('chainChanged', onChainIdChange);
+
+        ethereum.request({ method: 'eth_chainId' })
+            .then(onChainIdChange)
+
+        ethereum.request({ method: 'eth_accounts' })
+            .then(onAccountsConnectOrDisconnect)
+
+        ethereum.request({ method: 'eth_requestAccounts' })
+            .then(onAccountsConnectOrDisconnect)
+            .catch((err) => {
+                if (err.code === 4001) {
+                    // EIP-1193 userRejectedRequest error
+                    // If this happens, the user rejected the connection request.
+                    console.log('Please connect to MetaMask.');
+                } else {
+                    console.error(err);
+                }
+            });
+    }
 )

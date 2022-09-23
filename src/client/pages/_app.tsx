@@ -27,9 +27,7 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
   const [showAdminMenu, setShowAdminMenu] = useState(false)
   const $featureFlags = useAtomValue(featureFlagsModel.$featureFlags)
   const $metaMaskState = useAtomValue(metaMaskModel.$metaMaskState)
-  const $onAccountsConnectOrDisconnect = useSetAtom(metaMaskModel.$onAccountsConnectOrDisconnect)
-  const $onChainIdChange = useSetAtom(metaMaskModel.$onChainIdChange)
-  const $onIsConnectedChange = useSetAtom(metaMaskModel.$onIsConnectedChange)
+  const $onBrowserInit = useSetAtom(metaMaskModel.$onBrowserInit)
 
   console.log('$metaMaskState', $metaMaskState)
 
@@ -46,33 +44,13 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const main = async () => {
-        const ethereum = window.ethereum
-        $onIsConnectedChange(ethereum.isConnected())
-        ethereum.on('accountsChanged', $onAccountsConnectOrDisconnect);
-        ethereum.on('chainChanged', $onChainIdChange);
-
-        ethereum.request({ method: 'eth_chainId' })
-            .then($onChainIdChange)
-
-        ethereum.request({ method: 'eth_accounts' })
-            .then($onAccountsConnectOrDisconnect)
-
-        ethereum.request({ method: 'eth_requestAccounts' })
-            .then($onAccountsConnectOrDisconnect)
-            .catch((err) => {
-              if (err.code === 4001) {
-                // EIP-1193 userRejectedRequest error
-                // If this happens, the user rejected the connection request.
-                console.log('Please connect to MetaMask.');
-              } else {
-                console.error(err);
-              }
-            });
-      };
-      main()
+      $onBrowserInit()
     }
   }, []);
+
+  const onWalletConnectClick = () => {
+
+  }
 
   return (
       <Provider>
@@ -96,7 +74,10 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
             }
             {
               $featureFlags.FF_MM
-                  ? JSON.stringify($metaMaskState)
+                  ? <>
+                    {JSON.stringify($metaMaskState)}
+                    <button onClick={onWalletConnectClick}>Connect Wallet</button>
+                  </>
                   :  null
             }
           </ThemeProvider>
