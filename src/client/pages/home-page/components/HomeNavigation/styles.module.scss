@@ -21,7 +21,7 @@
   }
 }
 
-.container {
+.header .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -72,7 +72,7 @@
     height: 70px;
   }
 
-  .container {
+  .header .container {
     max-width: var(--max-width_mobile);
   }
 
