@@ -101,6 +101,15 @@ export const $onBrowserInit = atom(
                 console.error(err);
             });
 
+        // NOTE: more docs at https://ethereum.org/en/developers/docs/apis/json-rpc/#web3_clientversion
+        // ethereum.request({ method: 'web3_clientVersion' })
+        //     .then((args) => {
+        //         console.log('web3_clientVersion', args)
+        //     })
+        //     .catch((err) => {
+        //         console.error(err);
+        //     });
+
         // TODO handle connect & disconnect
         // TODO handle https://docs.metamask.io/guide/rpc-api.html#unrestricted-methods wallet_registerOnboarding
         // TODO wallet_switchEthereumChain https://docs.metamask.io/guide/rpc-api.html#usage-with-wallet-switchethereumchain
