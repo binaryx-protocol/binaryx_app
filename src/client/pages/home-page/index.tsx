@@ -147,11 +147,6 @@ const HomePage: FC = () => {
 
     initAnimations();
 
-    window.addEventListener('resize', () => {
-      lottie.destroy();
-      initAnimations();
-    });
-
     document.addEventListener('scroll', (event) => {
       event.preventDefault();
       event.stopPropagation();
@@ -405,7 +400,7 @@ const HomePage: FC = () => {
                 </span>
                 <span className={s.companySubTitle}>Community-Powered</span>
                 <span className={s.companySubTitle}>
-                  Real Estate Tokenization Platform
+                  Real Estate Tokenization Protocol
                 </span>
               </h1>
               <p className={s.hint}>{/* Technology based */}</p>
