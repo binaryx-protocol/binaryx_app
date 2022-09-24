@@ -390,33 +390,31 @@ const HomePage: FC = () => {
         <div
           id="section1"
           ref={section1Ref}
-          className={classNames('section', s.section)}
+          className={classNames(s.wrapper, 'section', s.section)}
         >
-          <div className={s.wrapper}>
-            <section className={s.heroPageInfo}>
-              <h1 className={s.companyTitle}>
-                <span>
-                  <b style={{ color: 'rgba(0, 180, 204, 1)' }}>Binaryx</b>
-                </span>
-                <span className={s.companySubTitle}>Community-Powered</span>
-                <span className={s.companySubTitle}>
-                  Real Estate Tokenization Protocol
-                </span>
-              </h1>
-              <p className={s.hint}>{/* Technology based */}</p>
-              <div className={s.infoSection}>
-                <button
-                  onClick={handleJoinWaitListButtonClick}
-                  className={s.btnJoinWaitlist}
-                >
-                  Join waitlist
-                </button>
-                <button type="submit" className={s.joinCommunity}>
-                  Join our community
-                </button>
-              </div>
-            </section>
-          </div>
+          <section className={s.heroPageInfo}>
+            <h1 className={s.companyTitle}>
+              <span>
+                <b style={{ color: 'rgba(0, 180, 204, 1)' }}>Binaryx</b>
+              </span>
+              <span className={s.companySubTitle}>Community-Powered</span>
+              <span className={s.companySubTitle}>
+                Real Estate Tokenization Protocol
+              </span>
+            </h1>
+            <p className={s.hint}>{/* Technology based */}</p>
+            <div className={s.infoSection}>
+              <button
+                onClick={handleJoinWaitListButtonClick}
+                className={s.btnJoinWaitlist}
+              >
+                Join waitlist
+              </button>
+              <button type="submit" className={s.joinCommunity}>
+                Join our community
+              </button>
+            </div>
+          </section>
         </div>
         <div
           id="section2"
@@ -481,62 +479,62 @@ const HomePage: FC = () => {
           )}
         >
           <div className={s.webAssetsContainer}>
-            <div className={s.webAssetsContainerInner}>
-              <h1 className={classNames(s.assetsTitle, s.assetsWeb3Mobile)}>
-                Welcome to the Era of Web3 assets
-              </h1>
-              <BackgroundVisuals top={'50%'} />
-              <div className={s.webAssetBlock}>
-                <img
-                  className={`${s.assetsWeb3Desktop}`}
-                  src={
-                    'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_desktop.svg'
-                  }
-                />
-                <img
-                  className={s.assetsWeb3Mobile}
-                  src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_mobile4.png"
-                />
-                {/*<div className={s.assetsWeb3Mobile}>*/}
-                {/*  <WebAssetBlock className={s.webAssetsLegend}>*/}
-                {/*    <p>1. Property Tokenization</p>*/}
-                {/*    <p>2. Purchasing Property Tokens</p>*/}
-                {/*    <p>3. Claiming Rewards from Rent</p>*/}
-                {/*  </WebAssetBlock>*/}
-                {/*  <WebAssetBlock className={s.binaryxMarketplace}>*/}
-                {/*    <WebAssetCard*/}
-                {/*      imageSrc={''}*/}
-                {/*      imageDescription={'Binaryx Marketplace'}*/}
-                {/*    />*/}
-                {/*  </WebAssetBlock>*/}
-                {/*  <WebAssetBlock className={s.propertyTokenization}>*/}
-                {/*    <WebAssetCard imageSrc={''} imageDescription={'Property'} />*/}
-                {/*    <WebAssetCard*/}
-                {/*      imageSrc={'#'}*/}
-                {/*      imageDescription={'Property Tokens'}*/}
-                {/*    />*/}
-                {/*  </WebAssetBlock>*/}
-                {/*  <WebAssetBlock className={s.purchasingPropertyTokens}>*/}
-                {/*    <WebAssetCard*/}
-                {/*      imageSrc={'#'}*/}
-                {/*      imageDescription={'Property Taken'}*/}
-                {/*    />*/}
-                {/*    <WebAssetCard*/}
-                {/*      imageSrc={'#'}*/}
-                {/*      imageDescription={'Stablecoins'}*/}
-                {/*    />*/}
-                {/*    <WebAssetCard imageSrc={'#'} imageDescription={'Users'} />*/}
-                {/*  </WebAssetBlock>*/}
-                {/*  <WebAssetBlock className={s.claimingRewards}>*/}
-                {/*    <WebAssetCard*/}
-                {/*      imageSrc={'#'}*/}
-                {/*      imageDescription={'Property Rent'}*/}
-                {/*    />*/}
-                {/*  </WebAssetBlock>*/}
-                {/*</div>*/}
-              </div>
+            {/* <div className={s.webAssetsContainerInner}> */}
+            <h1 className={classNames(s.assetsTitle)}>
+              Welcome to the Era of Web3 assets
+            </h1>
+            <BackgroundVisuals top={'50%'} />
+            <div className={s.webAssetBlock}>
+              <img
+                className={`${s.assetsWeb3Desktop}`}
+                src={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_desktop.svg'
+                }
+              />
+              <img
+                className={s.assetsWeb3Mobile}
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_mobile4.png"
+              />
+              {/*<div className={s.assetsWeb3Mobile}>*/}
+              {/*  <WebAssetBlock className={s.webAssetsLegend}>*/}
+              {/*    <p>1. Property Tokenization</p>*/}
+              {/*    <p>2. Purchasing Property Tokens</p>*/}
+              {/*    <p>3. Claiming Rewards from Rent</p>*/}
+              {/*  </WebAssetBlock>*/}
+              {/*  <WebAssetBlock className={s.binaryxMarketplace}>*/}
+              {/*    <WebAssetCard*/}
+              {/*      imageSrc={''}*/}
+              {/*      imageDescription={'Binaryx Marketplace'}*/}
+              {/*    />*/}
+              {/*  </WebAssetBlock>*/}
+              {/*  <WebAssetBlock className={s.propertyTokenization}>*/}
+              {/*    <WebAssetCard imageSrc={''} imageDescription={'Property'} />*/}
+              {/*    <WebAssetCard*/}
+              {/*      imageSrc={'#'}*/}
+              {/*      imageDescription={'Property Tokens'}*/}
+              {/*    />*/}
+              {/*  </WebAssetBlock>*/}
+              {/*  <WebAssetBlock className={s.purchasingPropertyTokens}>*/}
+              {/*    <WebAssetCard*/}
+              {/*      imageSrc={'#'}*/}
+              {/*      imageDescription={'Property Taken'}*/}
+              {/*    />*/}
+              {/*    <WebAssetCard*/}
+              {/*      imageSrc={'#'}*/}
+              {/*      imageDescription={'Stablecoins'}*/}
+              {/*    />*/}
+              {/*    <WebAssetCard imageSrc={'#'} imageDescription={'Users'} />*/}
+              {/*  </WebAssetBlock>*/}
+              {/*  <WebAssetBlock className={s.claimingRewards}>*/}
+              {/*    <WebAssetCard*/}
+              {/*      imageSrc={'#'}*/}
+              {/*      imageDescription={'Property Rent'}*/}
+              {/*    />*/}
+              {/*  </WebAssetBlock>*/}
+              {/*</div>*/}
             </div>
           </div>
+          {/* </div> */}
         </section>
         <section
           className={classNames(s.timeline, s.section, s.wrapper, 'section')}
@@ -765,29 +763,29 @@ const HomePage: FC = () => {
                   />
                 </nav>
               </div>
-            </footer>
-            <nav className={s.footerBottomSection}>
-              <div
-                className={classNames(
-                  s.footerBottomSectionContainer,
-                  s.wrapper,
-                )}
-              >
-                <img
-                  src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg"
-                  alt="company_logo"
-                  width={180}
-                  onClick={() => (window as any).fullpageObject.moveTo(0)}
-                />
-                <div className={s.footerLinks}>
-                  <MenuElement link={'#'} body={'Privacy Policy'} />
-                  <MenuElement link={'#'} body={'Terms of service'} />
+              <nav className={s.footerBottomSection}>
+                <div
+                  className={classNames(
+                    s.footerBottomSectionContainer,
+                    s.wrapper,
+                  )}
+                >
+                  <img
+                    src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg"
+                    alt="company_logo"
+                    width={180}
+                    onClick={() => (window as any).fullpageObject.moveTo(0)}
+                  />
+                  <div className={s.footerLinks}>
+                    <MenuElement link={'#'} body={'Privacy Policy'} />
+                    <MenuElement link={'#'} body={'Terms of service'} />
+                  </div>
+                  <span className={s.binaryx}>
+                    ©Binaryx. All rights reserved 2022
+                  </span>
                 </div>
-                <span className={s.binaryx}>
-                  ©Binaryx. All rights reserved 2022
-                </span>
-              </div>
-            </nav>
+              </nav>
+            </footer>
           </div>
         </section>
       </main>

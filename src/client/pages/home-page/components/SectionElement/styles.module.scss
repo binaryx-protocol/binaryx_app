@@ -22,7 +22,6 @@
 }
 
 .btnWaitlist {
-  place-items: center;
   max-width: 260px;
   min-height: 60px;
   border: 1px solid var(--border-color_dark);
@@ -52,7 +51,7 @@
   }
 
   .btnWaitlist {
-    top: -20px;
+    top: -50%;
     max-width: 100%;
     font-size: 18px;
   }

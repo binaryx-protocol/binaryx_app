@@ -2,8 +2,6 @@
 //  overflow: hidden;
 //  height: 100%;
 //}
-
-
 .section {
   outline: none;
 
@@ -149,9 +147,7 @@
 }
 
 .companyTitle {
-  display: flex;
-  flex-direction: column;
-  color: inherit;
+  display: grid;
   font-size: var(--font-size_big);
   font-weight: 300;
 }
@@ -212,8 +208,7 @@
   min-height: 100vh;
 
   @media (max-width: 768px) {
-    place-content: unset;
-    align-items: flex-end;
+    place-content: flex-end;
   }
 }
 
@@ -344,6 +339,7 @@
 }
 
 .assetsTitle {
+  display: none;
   color: inherit;
   font-size: var(--font-size_medium);
   // padding-top: 56px;
@@ -481,9 +477,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 100%;
-
-  @media (max-width: 768px) {}
 }
 
 .joinWaitlistTitle {
@@ -493,7 +486,7 @@
 }
 
 .topSection {
-  padding: 124px 0 62px;
+  padding: 62px 0 124px;
 
   @media (max-width: 768px) {
     padding: 0;
@@ -623,14 +616,13 @@
 
 .footerBottomSection {
   padding: 60px 0;
-  background: #FFF;
 }
 
 .footerBottomSectionContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 100vh;
 
   @media (max-width: 768px) {
     flex-wrap: wrap;
@@ -697,6 +689,7 @@
   }
 
   .assetsTitle {
+    display: block;
     font-size: 24px;
     font-weight: 300;
   }
@@ -714,9 +707,8 @@
 
   .assetsWeb3Mobile {
     display: block;
-    margin: 0 0 15px 0;
-    max-height: 78vh;
-    place-self: center;
+    margin: 0 auto 15px;
+    max-height: calc(100vh - 50vw);
   }
 
   .assetsWeb3Desktop {
