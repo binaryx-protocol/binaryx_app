@@ -633,59 +633,57 @@ const HomePage: FC = () => {
           className={classNames(s.section, s.ourTeam, 'section')}
         >
           <div className={s.ourTeamContainer}>
-            <div className={s.ourTeamContainerInner}>
-              <h1 className={s.ourTeamTitle}>Our Team</h1>
-              <div className={classNames(s.teamGallery, s.wrapper)}>
-                <TeamBlock
-                  imgSrc={
-                    'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/oleg_kurchenko.png'
-                  }
-                  personName={'Oleg Kurchenko'}
-                  personPosition={'Chief Executive Officer'}
-                  socialLinkImage={
-                    'https://cdn-icons-png.flaticon.com/512/61/61109.png'
-                  }
-                  socialLink={'#'}
-                  socialUserName={'oleg_kurchenko'}
-                />
-                <TeamBlock
-                  imgSrc={
-                    'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/dmytro_zeleniy.png'
-                  }
-                  personName={'Dmytro Zeleniy'}
-                  personPosition={'Chief Technical Officer'}
-                  socialLinkImage={
-                    'https://cdn-icons-png.flaticon.com/512/61/61109.png'
-                  }
-                  socialLink={'#'}
-                  socialUserName={'dmytro_zeleniy'}
-                />
-                <TeamBlock
-                  imgSrc={
-                    'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/dmytro_lizanets.png'
-                  }
-                  personName={'Dmytro Lizanets'}
-                  personPosition={'Chief Marketing Officer'}
-                  socialLinkImage={
-                    'https://cdn-icons-png.flaticon.com/512/61/61109.png'
-                  }
-                  socialLink={'#'}
-                  socialUserName={'dmytro_lizanets'}
-                />
-                <TeamBlock
-                  imgSrc={
-                    'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/andriy_makaveli.png'
-                  }
-                  personName={'Andriy Makaveli'}
-                  personPosition={'Chief Business Development Officer'}
-                  socialLinkImage={
-                    'https://cdn-icons-png.flaticon.com/512/61/61109.png'
-                  }
-                  socialLink={'#'}
-                  socialUserName={'andriy_makaveli'}
-                />
-                {/* <BackgroundVisuals top={'40%'} /> */}
-              </div>
+            <h1 className={s.ourTeamTitle}>Our Team</h1>
+            <div className={classNames(s.teamGallery, s.wrapper)}>
+              <TeamBlock
+                imgSrc={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/oleg_kurchenko.png'
+                }
+                personName={'Oleg Kurchenko'}
+                personPosition={'Chief Executive Officer'}
+                socialLinkImage={
+                  'https://cdn-icons-png.flaticon.com/512/61/61109.png'
+                }
+                socialLink={'#'}
+                socialUserName={'oleg_kurchenko'}
+              />
+              <TeamBlock
+                imgSrc={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/dmytro_zeleniy.png'
+                }
+                personName={'Dmytro Zeleniy'}
+                personPosition={'Chief Technical Officer'}
+                socialLinkImage={
+                  'https://cdn-icons-png.flaticon.com/512/61/61109.png'
+                }
+                socialLink={'#'}
+                socialUserName={'dmytro_zeleniy'}
+              />
+              <TeamBlock
+                imgSrc={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/dmytro_lizanets.png'
+                }
+                personName={'Dmytro Lizanets'}
+                personPosition={'Chief Marketing Officer'}
+                socialLinkImage={
+                  'https://cdn-icons-png.flaticon.com/512/61/61109.png'
+                }
+                socialLink={'#'}
+                socialUserName={'dmytro_lizanets'}
+              />
+              <TeamBlock
+                imgSrc={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/andriy_makaveli.png'
+                }
+                personName={'Andriy Makaveli'}
+                personPosition={'Chief Business Development Officer'}
+                socialLinkImage={
+                  'https://cdn-icons-png.flaticon.com/512/61/61109.png'
+                }
+                socialLink={'#'}
+                socialUserName={'andriy_makaveli'}
+              />
+              {/* <BackgroundVisuals top={'40%'} /> */}
             </div>
           </div>
         </section>

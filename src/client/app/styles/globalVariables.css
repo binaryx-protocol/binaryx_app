@@ -17,6 +17,6 @@
   --border-radius_default: 7px;
 
   --max-width_desktop: 1200px;
-  --max-width_mobile: 90vw;
+  --max-width_mobile: 320px;
 
 }

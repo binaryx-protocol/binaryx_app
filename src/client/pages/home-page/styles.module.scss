@@ -143,9 +143,8 @@
 }
 
 .heroPageInfo {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  place-content: center flex-start;
   height: 100vh;
 }
 
@@ -204,13 +203,18 @@
 .webAssets {
   //background: var(--background-color_dark);
   color: var(--font-color_white);
-  min-height: 100%;
+  // min-height: 100%;
 }
 
 .webAssetsContainer {
   display: grid;
+  place-content: center;
   min-height: 100vh;
-  place-items: center;
+
+  @media (max-width: 768px) {
+    place-content: unset;
+    align-items: flex-end;
+  }
 }
 
 .assetsWeb3Mobile {
@@ -342,7 +346,7 @@
 .assetsTitle {
   color: inherit;
   font-size: var(--font-size_medium);
-  padding-top: 56px;
+  // padding-top: 56px;
   text-align: center;
 }
 
@@ -358,7 +362,7 @@
   display: grid;
   place-items: center;
   // position: relative;
-  height: 100vh;
+  min-height: 100vh;
   color: white;
 
   // @media (max-width: 768px) {
@@ -445,15 +449,13 @@
   font-size: 14px;
 }
 
-.ourTeam {
-  min-height: 100%;
-}
+// .ourTeam {
+//   min-height: 100%;
+// }
 
 .ourTeamContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  display: grid; 
+  place-content: center;
   min-height: 100vh;
 
   // @media (max-width: 768px) {
@@ -466,6 +468,7 @@
   font-size: var(--font-size_medium);
   font-weight: 400;
   text-align: center;
+  margin: 30px 0 0 0;
 }
 
 .teamGallery {
@@ -642,17 +645,18 @@
 .footerLinks a {
   font-size: var(--font-size_small-extra);
   color: var(--font-color_gray-dark);
-  // @media (max-width: 768px) {
-  //   position: relative;
 
-  //   &:nth-child(1) {
-  //     top: 4px;
-  //   }
+  @media (max-width: 768px) {
+    position: relative;
 
-  //   &:nth-child(2) {
-  //     top: 32px;
-  //   }
-  // }
+    &:nth-child(1) {
+      top: 4px;
+    }
+
+    &:nth-child(2) {
+      top: 32px;
+    }
+  }
 }
 
 .binaryx {
@@ -662,19 +666,18 @@
 @media screen and (max-width: 768px) {
   .heroPageInfo {
     display: grid;
-    place-content: space-around;
+    place-content: space-between;
   }
 
   .companyTitle {
     font-size: 25px;
+    position: relative;
+    top: 70px;
   }
 
   .infoSection {
     flex-direction: column;
     min-height: 120px;
-    width: 100%;
-    position: relative;
-    bottom: -50px;
   }
 
   .btnJoinWaitlist {

@@ -1,26 +1,24 @@
 .block {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+  display: grid;
+  place-content: center flex-start;
   min-height: 100vh;
   color: #1e1e1e;
 }
 
 .infoBlock {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  width: 500px;
+  max-width: 500px;
 }
 
 .title {
   font-size: var(--font-size_medium);
   font-weight: 300;
   color: inherit;
+  margin: 10px 0;
 }
 
 .weAreHere {
   color: var(--font-color_blue);
+  margin: 0;
 }
 
 .btnWaitlist {
@@ -40,8 +38,7 @@
 
 @media screen and (max-width: 768px) {
   .block {
-    justify-content: space-between;
-    padding-top: 100px;
+    place-content: space-between;
   }
 
   .weAreHere {
@@ -55,14 +52,13 @@
   }
 
   .btnWaitlist {
+    top: -20px;
     max-width: 100%;
     font-size: 18px;
-    top: 0;
-    margin-bottom: 40px;
   }
 
   .infoBlock {
+    margin-top: 85px;
     font-size: 14px;
-    width: 100%;
   }
 }
