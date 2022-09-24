@@ -14,7 +14,8 @@
 }
 
 .headerDark {
-  background-color: var(--background-color_dark);
+  background-color: rgba(0, 0, 0, .75);
+  backdrop-filter: blur(10px);
 
   .navSocial img {
     filter: invert(100%)
@@ -65,6 +66,16 @@
   display: flex;
   justify-content: space-between;
   width: 170px;
+}
+
+.navSocial a {
+  opacity: .8;
+  transition: all .3s ease;
+}
+
+.navSocial a:hover {
+  opacity: 1;
+  scale: 1.1;
 }
 
 @media screen and (max-width: 768px) {

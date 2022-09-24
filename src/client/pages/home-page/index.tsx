@@ -318,7 +318,9 @@ const HomePage: FC = () => {
   }
 
   function handleJoinWaitListButtonClick() {
-    (window as any).fullpageObject.moveTo(document.querySelectorAll('.section').length);
+    (window as any).fullpageObject.moveTo(
+      document.querySelectorAll('.section').length,
+    );
   }
 
   // useEffect(() => {
@@ -394,9 +396,7 @@ const HomePage: FC = () => {
             <section className={s.heroPageInfo}>
               <h1 className={s.companyTitle}>
                 <span>
-                  <b style={{ color: 'rgba(0, 180, 204, 1)' }}>
-                    Binaryx
-                  </b>
+                  <b style={{ color: 'rgba(0, 180, 204, 1)' }}>Binaryx</b>
                 </span>
                 <span className={s.companySubTitle}>Community-Powered</span>
                 <span className={s.companySubTitle}>
@@ -424,15 +424,15 @@ const HomePage: FC = () => {
           className={classNames(s.wrapper, s.section, 'section')}
         >
           <SectionElement
-            heading="Expensive asset value already in past"
+            heading="Change Expensive Asset Value In Real Estate"
+            preTitle="WE ARE HERE TO:"
             onButtonClick={handleJoinWaitListButtonClick}
           >
             <p className={s.description}>
-              With Binaryx Protocol you will be able to buy a real tokenized
-              estate with only $50 till unlimited.
-              <br />
-              Buy, trade and sell your property fast, secure, and profitable at
-              anytime
+              There is still needed a huge amount and knowledge to join a real
+              estate market. With Binaryx and DeFi you will be able to: Buy a
+              real tokenized estate with only 50$ till unlimited Have a way how
+              to deversificate your investments and risks. And many more.
             </p>
           </SectionElement>
         </div>
@@ -442,12 +442,14 @@ const HomePage: FC = () => {
           className={classNames(s.wrapper, s.section, 'section')}
         >
           <SectionElement
-            heading="The next generation DeFi experience with Real Yield"
+            heading="Add Liquidity In The Illiquid Market"
+            preTitle="WE ARE HERE TO:"
             onButtonClick={handleJoinWaitListButtonClick}
           >
             <p className={s.description}>
-              Use your property tokens to borrow and keep earning the highest
-              yield available at the same time
+              The second problem is a lack of liquidity in the real estate
+              market in traditional finance In DeFi you will be able to sell
+              your property fast, secure, and profitable.
             </p>
           </SectionElement>
         </div>
@@ -457,13 +459,14 @@ const HomePage: FC = () => {
           className={classNames(s.wrapper, s.section, 'section')}
         >
           <SectionElement
-            heading="Boost Economy and scale Web3"
+            heading="Boost Economy"
             preTitle="WE ARE HERE TO:"
             onButtonClick={handleJoinWaitListButtonClick}
           >
             <p className={s.description}>
               Increasing assets ownership transferring speed with web3
-              infrastracture
+              technologies Increasing assets ownership transferring speed with
+              web3 technologies.
             </p>
           </SectionElement>
         </div>
@@ -479,7 +482,7 @@ const HomePage: FC = () => {
         >
           <div className={s.webAssetsContainer}>
             <div className={s.webAssetsContainerInner}>
-              <h1 className={`${s.assetsTitle} ${s.assetsWeb3Mobile}`}>
+              <h1 className={classNames(s.assetsTitle, s.assetsWeb3Mobile)}>
                 Welcome to the Era of Web3 assets
               </h1>
               <BackgroundVisuals top={'50%'} />
@@ -722,10 +725,10 @@ const HomePage: FC = () => {
               </div>
             </div>
             {/* <BackgroundVisuals top={'10%'} /> */}
-            {/*</section>*/}
+            {/* </section> */}
             {/*<section className={classNames(s.section, s.footerSection, "section")}>*/}
             <footer className={s.footer}>
-              <div className={s.footerContainer}>
+              <div className={classNames(s.footerContainer, s.wrapper)}>
                 <h1 className={s.footerHeading}>Let's Keep in Touch With:</h1>
                 <nav className={s.footerNavSocial}>
                   <NavSocialImage
@@ -766,7 +769,12 @@ const HomePage: FC = () => {
               </div>
             </footer>
             <nav className={s.footerBottomSection}>
-              <div className={s.footerBottomSectionContainer}>
+              <div
+                className={classNames(
+                  s.footerBottomSectionContainer,
+                  s.wrapper,
+                )}
+              >
                 <img
                   src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg"
                   alt="company_logo"

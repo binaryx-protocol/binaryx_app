@@ -19,7 +19,7 @@
   height: 100%;
   top: 0;
 
-  @media (max-width: 748px) {
+  @media (max-width: 768px) {
     //width: auto;
     transform: scale(0.85);
     height: 110vh;
@@ -147,11 +147,6 @@
   flex-direction: column;
   justify-content: center;
   height: 100vh;
-
-  @media (max-width: 748px) {
-    padding-top: 100px;
-    height: 90vh;
-  }
 }
 
 .companyTitle {
@@ -165,7 +160,7 @@
 .companySubTitle {
   font-size: 54px;
 
-  @media (max-width: 748px) {
+  @media (max-width: 768px) {
     font-size: 21px;
   }
 }
@@ -203,8 +198,7 @@
 }
 
 .description {
-  color: inherit;
-  font-weight: 400;
+  margin: 5px 0 0 0;
 }
 
 .webAssets {
@@ -214,23 +208,9 @@
 }
 
 .webAssetsContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  @media (max-width: 748px) {
-    min-height: 90vh;
-  }
-}
-
-.webAssetsContainerInner {}
-
-.assetsWeb3Desktop,
-.assetsWeb3Mobile {
-  place-self: center;
-  margin: 60px 0;
-  max-width: 100%;
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
 }
 
 .assetsWeb3Mobile {
@@ -239,7 +219,6 @@
 
 .webAssetBlock {
   display: grid;
-  grid-gap: 30px;
   font-family: 'Manrope', sans-serif;
 }
 
@@ -376,15 +355,15 @@
 }
 
 .timeline {
-  display: flex;
-  align-items: center;
-  position: relative;
+  display: grid;
+  place-items: center;
+  // position: relative;
   height: 100vh;
   color: white;
 
-  @media (max-width: 748px) {
-    height: 90vh;
-  }
+  // @media (max-width: 768px) {
+  //   height: 90vh;
+  // }
 }
 
 .timelineTitle {
@@ -437,7 +416,7 @@
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 748px) {
+  @media (max-width: 768px) {
     min-height: 90vh;
   }
 }
@@ -450,7 +429,8 @@
 .timelineColumn,
 .timelineHeaders {
   display: grid;
-  grid-template-rows: 140px 80px 160px 80px;
+  // grid-template-rows: 140px 80px 160px 80px;
+  grid-template-rows: 140px 80px 160px;
   grid-gap: 15px;
   width: 150px;
 }
@@ -476,9 +456,9 @@
   flex-direction: column;
   min-height: 100vh;
 
-  @media (max-width: 748px) {
-    min-height: 90vh;
-  }
+  // @media (max-width: 768px) {
+  //   min-height: 90vh;
+  // }
 }
 
 .ourTeamTitle {
@@ -500,7 +480,7 @@
   justify-content: center;
   min-height: 100%;
 
-  @media (max-width: 748px) {}
+  @media (max-width: 768px) {}
 }
 
 .joinWaitlistTitle {
@@ -512,8 +492,8 @@
 .topSection {
   padding: 124px 0 62px;
 
-  @media (max-width: 748px) {
-    padding: 24px 0;
+  @media (max-width: 768px) {
+    padding: 0;
   }
 }
 
@@ -522,7 +502,7 @@
   justify-content: space-between;
   align-items: center;
 
-  @media (max-width: 748px) {
+  @media (max-width: 768px) {
     flex-direction: column;
   }
 }
@@ -572,7 +552,7 @@
   font-size: 20px;
   border: none;
   border-radius: var(--border-radius_default);
-  color: inherit;
+  color: var(--font-color_white);
   cursor: pointer;
   background: linear-gradient(85.42deg, rgba(0, 174, 255, 0.5) 8.17%, rgba(0, 255, 238, 0.5) 103.39%);
   backdrop-filter: blur(10px);
@@ -603,10 +583,8 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: var(--max-width_desktop);
-  margin: auto;
 
-  @media (max-width: 748px) {
+  @media (max-width: 768px) {
     padding: 18px 0;
     flex-direction: column;
     justify-content: center;
@@ -619,7 +597,7 @@
   display: flex;
   justify-content: space-between;
 
-  @media (max-width: 748px) {
+  @media (max-width: 768px) {
     max-width: 100px;
     flex-wrap: wrap;
     justify-content: flex-end;
@@ -630,15 +608,19 @@
   width: 326px;
 }
 
+.footerNavSocial a {
+  opacity: .8;
+  transition: all .3s ease;
+}
+
+.footerNavSocial a:hover {
+  opacity: 1;
+  scale: 1.1;
+}
+
 .footerBottomSection {
-  align-items: center;
   padding: 60px 0;
   background: #FFF;
-
-  @media (max-width: 748px) {
-    width: 100%;
-    max-width: none;
-  }
 }
 
 .footerBottomSectionContainer {
@@ -646,10 +628,8 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: var(--max-width_desktop);
-  margin: auto;
 
-  @media (max-width: 748px) {
+  @media (max-width: 768px) {
     flex-wrap: wrap;
   }
 }
@@ -657,36 +637,32 @@
 .footerLinks {
   text-decoration: underline;
   width: 230px;
-  font-size: var(--font-size_small-extra);
 }
 
 .footerLinks a {
+  font-size: var(--font-size_small-extra);
   color: var(--font-color_gray-dark);
+  // @media (max-width: 768px) {
+  //   position: relative;
 
-  @media (max-width: 748px) {
-    position: relative;
+  //   &:nth-child(1) {
+  //     top: 4px;
+  //   }
 
-    &:nth-child(1) {
-      top: 4px;
-    }
-
-    &:nth-child(2) {
-      top: 32px;
-    }
-  }
+  //   &:nth-child(2) {
+  //     top: 32px;
+  //   }
+  // }
 }
 
 .binaryx {
   font-size: 14px;
-
-  @media (max-width: 748px) {
-    font-size: 10px;
-  }
 }
 
-@media screen and (max-width: 748px) {
+@media screen and (max-width: 768px) {
   .heroPageInfo {
-    justify-content: space-between;
+    display: grid;
+    place-content: space-around;
   }
 
   .companyTitle {
@@ -695,22 +671,21 @@
 
   .infoSection {
     flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    height: 120px;
+    min-height: 120px;
+    width: 100%;
     position: relative;
-    bottom: 80px;
+    bottom: -50px;
   }
 
   .btnJoinWaitlist {
     height: 60px;
-    width: 100%;
-    font-size: 18px;
+    font-size: var(--font-size_small);
+    width: inherit;
   }
 
   .joinCommunity {
     height: 60px;
-    width: 100%;
+    width: inherit;
     font-size: 16px;
   }
 
@@ -738,6 +713,7 @@
     display: block;
     margin: 0;
     max-height: 78vh;
+    place-self: center;
   }
 
   .assetsWeb3Desktop {
@@ -745,11 +721,11 @@
     opacity: 0;
   }
 
-  .webAssetBlock {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-  }
+  // .webAssetBlock {
+  //   display: flex;
+  //   flex-direction: column;
+  //   gap: 25px;
+  // }
 
   .binaryxMarketplace {
     width: 100%;
@@ -773,7 +749,7 @@
 
   .timelineGrid {
     grid-template-columns: repeat(6, 160px);
-    margin-top: 100px;
+    // margin-top: 100px;
     grid-gap: 0 10px;
   }
 
@@ -793,7 +769,8 @@
 
   .timelineColumn {
     grid-gap: 40px;
-    grid-template-rows: 75px 80px 160px 80px;
+    // grid-template-rows: 75px 80px 160px 80px;
+    grid-template-rows: 75px 80px 160px;
   }
 
   .timelineTitle {
@@ -806,9 +783,7 @@
   }
 
   .teamGallery {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    align-items: center;
+    overflow: scroll hidden;
     gap: 12px;
   }
 
@@ -816,13 +791,13 @@
     overflow-y: scroll;
   }
 
-  .ourTeamTitle {
-    padding-bottom: 0;
-  }
+  // .ourTeamTitle {
+  //   padding-bottom: 0;
+  // }
 
-  .topSection {
-    flex-direction: column;
-  }
+  // .topSection {
+  //   flex-direction: column;
+  // }
 
   .joinWaitlistTitle {
     font-size: 24px;
@@ -840,6 +815,10 @@
     margin-bottom: 30px;
   }
 
+  .binaryx {
+    font-size: 10px;
+  }
+
   .formSection input {
     font-size: 16px;
   }
@@ -850,8 +829,7 @@
   }
 
   .footer {
-    flex-direction: column;
-    padding: 40px 0;
+    padding: 0;
   }
 
   .footerHeading {
@@ -877,6 +855,7 @@
   .footerBottomSection {
     flex-direction: column;
     padding: 20px;
+    max-width: none;
   }
 
   .footerBottomSection a {

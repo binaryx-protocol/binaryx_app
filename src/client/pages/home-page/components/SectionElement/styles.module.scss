@@ -2,11 +2,11 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   color: #1e1e1e;
 }
 
-.description {
+.infoBlock {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -21,23 +21,18 @@
 
 .weAreHere {
   color: var(--font-color_blue);
-  font-size: var(--font-size_small);
-  text-transform: uppercase;
 }
 
 .btnWaitlist {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 260px;
-  color: inherit;
+  place-items: center;
+  max-width: 260px;
+  min-height: 60px;
   border: 1px solid var(--border-color_dark);
-  border-radius: 7px;
+  border-radius: var(--border-radius_default);
   background-color: transparent;
   font-size: 20px;
   font-weight: 500;
   font-family: inherit;
-  padding: 20px 0;
   cursor: pointer;
   position: relative;
   top: 100px;
@@ -45,11 +40,13 @@
 
 @media screen and (max-width: 768px) {
   .block {
+    justify-content: space-between;
     padding-top: 100px;
   }
 
   .weAreHere {
     font-size: 16px;
+    margin: 0 0 5px 0;
   }
 
   .title {
@@ -58,16 +55,14 @@
   }
 
   .btnWaitlist {
-    position: static;
-    align-self: center;
-    width: 100%;
+    max-width: 100%;
     font-size: 18px;
-    margin-bottom: 35px;
+    top: 0;
+    margin-bottom: 40px;
   }
 
-  .description {
+  .infoBlock {
     font-size: 14px;
     width: 100%;
-    margin-bottom: auto;
   }
 }
