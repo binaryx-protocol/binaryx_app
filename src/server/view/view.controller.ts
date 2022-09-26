@@ -106,6 +106,21 @@ export class ViewController {
       );
   }
 
+  @Get('sandbox')
+  public async showSandbox(@Req() req: Request, @Res() res: Response) {
+    const parsedUrl = parse(req.url, true);
+    const serverSideProps = {};
+
+    await this.viewService
+      .getNextServer()
+      .render(
+        req,
+        res,
+        parsedUrl.pathname,
+        Object.assign(parsedUrl.query, serverSideProps),
+      );
+  }
+
   @Get('assets/:id')
   public async showAsset(@Req() req: Request, @Res() res: Response) {
     const parsedUrl = parse(req.url, true);
