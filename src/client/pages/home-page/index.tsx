@@ -11,8 +11,8 @@ import anim1 from './animations/B1.json';
 import anim2 from './animations/B2.json';
 import anim3 from './animations/B3.json';
 import anim4 from './animations/B4.json';
-// import WebAssetBlock from './components/WebAssetSection/WebAssetBlock';
-// import WebAssetCard from './components/WebAssetSection/WebAssetCard';
+import WebAssetBlock from './components/WebAssetSection/WebAssetBlock';
+import WebAssetCard from './components/WebAssetSection/WebAssetCard';
 import classNames from 'classnames';
 import DescriptionBlock from './components/DescriptionBlock';
 import getCookie from 'utils/getCookie';
@@ -323,23 +323,23 @@ const HomePage: FC = () => {
     );
   }
 
-  // useEffect(() => {
-  //   const webAssets = document.querySelectorAll('.styles_isShow__g-Dv6');
+  useEffect(() => {
+    const webAssets = document.querySelectorAll('.styles_isShow__g-Dv6');
 
-  //   const observer = new IntersectionObserver((entries) =>
-  //     entries.forEach((entry) => {
-  //       setTimeout(() => {
-  //         entry.target.classList.toggle(
-  //           'styles_isShow__g-Dv6',
-  //           entry.isIntersecting,
-  //         );
-  //       }, 600);
-  //       if (entry.isIntersecting) observer.unobserve(entry.target);
-  //     }),
-  //   );
+    const observer = new IntersectionObserver((entries) =>
+      entries.forEach((entry) => {
+        setTimeout(() => {
+          entry.target.classList.toggle(
+            'styles_isShow__g-Dv6',
+            entry.isIntersecting,
+          );
+        }, 600);
+        if (entry.isIntersecting) observer.unobserve(entry.target);
+      }),
+    );
 
-  //   webAssets.forEach((elem) => observer.observe(elem));
-  // }, []);
+    webAssets.forEach((elem) => observer.observe(elem));
+  }, []);
 
   return (
     <>
@@ -478,13 +478,11 @@ const HomePage: FC = () => {
             'section',
           )}
         >
+          <h1 className={s.assetsTitle}>Welcome To The Era Of WEB3 Assets</h1>
+          <BackgroundVisuals top={'50%'} />
           <div className={s.webAssetsContainer}>
             {/* <div className={s.webAssetsContainerInner}> */}
-            <h1 className={classNames(s.assetsTitle)}>
-              Welcome to the Era of Web3 assets
-            </h1>
-            <BackgroundVisuals top={'50%'} />
-            <div className={s.webAssetBlock}>
+            {/* <div className={s.webAssetBlock}>
               <img
                 className={`${s.assetsWeb3Desktop}`}
                 src={
@@ -495,44 +493,90 @@ const HomePage: FC = () => {
                 className={s.assetsWeb3Mobile}
                 src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_mobile4.png"
               />
-              {/*<div className={s.assetsWeb3Mobile}>*/}
-              {/*  <WebAssetBlock className={s.webAssetsLegend}>*/}
-              {/*    <p>1. Property Tokenization</p>*/}
-              {/*    <p>2. Purchasing Property Tokens</p>*/}
-              {/*    <p>3. Claiming Rewards from Rent</p>*/}
-              {/*  </WebAssetBlock>*/}
-              {/*  <WebAssetBlock className={s.binaryxMarketplace}>*/}
-              {/*    <WebAssetCard*/}
-              {/*      imageSrc={''}*/}
-              {/*      imageDescription={'Binaryx Marketplace'}*/}
-              {/*    />*/}
-              {/*  </WebAssetBlock>*/}
-              {/*  <WebAssetBlock className={s.propertyTokenization}>*/}
-              {/*    <WebAssetCard imageSrc={''} imageDescription={'Property'} />*/}
-              {/*    <WebAssetCard*/}
-              {/*      imageSrc={'#'}*/}
-              {/*      imageDescription={'Property Tokens'}*/}
-              {/*    />*/}
-              {/*  </WebAssetBlock>*/}
-              {/*  <WebAssetBlock className={s.purchasingPropertyTokens}>*/}
-              {/*    <WebAssetCard*/}
-              {/*      imageSrc={'#'}*/}
-              {/*      imageDescription={'Property Taken'}*/}
-              {/*    />*/}
-              {/*    <WebAssetCard*/}
-              {/*      imageSrc={'#'}*/}
-              {/*      imageDescription={'Stablecoins'}*/}
-              {/*    />*/}
-              {/*    <WebAssetCard imageSrc={'#'} imageDescription={'Users'} />*/}
-              {/*  </WebAssetBlock>*/}
-              {/*  <WebAssetBlock className={s.claimingRewards}>*/}
-              {/*    <WebAssetCard*/}
-              {/*      imageSrc={'#'}*/}
-              {/*      imageDescription={'Property Rent'}*/}
-              {/*    />*/}
-              {/*  </WebAssetBlock>*/}
-              {/*</div>*/}
-            </div>
+            </div> */}
+            {/* <div className={s.assetsWeb3Mobile}> */}
+            <WebAssetBlock className={s.webAssetsLegend}>
+              <p>1. Property Tokenization</p>
+              <p>2. Purchasing Property Tokens</p>
+              <p>3. Claiming Rewards from Rent</p>
+            </WebAssetBlock>
+            <WebAssetBlock className={s.binaryxMarketplace}>
+              <WebAssetCard
+                imageSrc={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-icons/binaryx-logo.svg'
+                }
+                imageDescription={'Binaryx Marketplace'}
+              />
+            </WebAssetBlock>
+            <WebAssetBlock className={s.propertyTokenization}>
+              <WebAssetCard
+                imageSrc={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-icons/property.svg'
+                }
+                imageDescription={'Property'}
+              />
+              <WebAssetCard
+                imageSrc={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-icons/property-tokens.svg'
+                }
+                imageDescription={'Property Tokens'}
+              />
+              <img
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-arrows/Vector-1.svg"
+                className={classNames(s.vector1, s.vectors)}
+              />
+            </WebAssetBlock>
+            <WebAssetBlock className={s.purchasingPropertyTokens}>
+              <WebAssetCard
+                imageSrc={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-icons/propety-token.svg'
+                }
+                imageDescription={'Property Token'}
+              />
+              <WebAssetCard
+                imageSrc={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-icons/stablecoins.svg'
+                }
+                imageDescription={'Stablecoins'}
+              />
+              <WebAssetCard
+                imageSrc={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-icons/users.svg'
+                }
+                imageDescription={'Users'}
+              />
+              <img
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-arrows/Vector-2.svg"
+                className={classNames(s.vector2, s.vectors)}
+              />
+              <img
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-arrows/Vector-3.svg"
+                className={classNames(s.vector3, s.vectors)}
+              />
+            </WebAssetBlock>
+            <WebAssetBlock className={s.claimingRewards}>
+              <WebAssetCard
+                imageSrc={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-icons/property-rent.svg'
+                }
+                imageDescription={'Property Rent'}
+              />
+              <img
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-arrows/Vector-4.svg"
+                className={classNames(s.vector4, s.vectors)}
+              />
+              <img
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-arrows/Vector-5.svg"
+                className={classNames(s.vector5, s.vectors)}
+              />
+              <img
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-arrows/Vector-6.svg"
+                className={classNames(s.vector6, s.vectors)}
+              />
+              <p className={s.rent}>Rent Goes To Smart-Contact</p>
+              <p className={s.claim}>Claim</p>
+              <p className={s.sentMoney}>Sent money</p>
+            </WebAssetBlock>
           </div>
           {/* </div> */}
         </section>

@@ -200,16 +200,52 @@
   //background: var(--background-color_dark);
   color: var(--font-color_white);
   // min-height: 100%;
+  display: grid;
+  place-content: center;
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
 }
 
 .webAssetsContainer {
   display: grid;
-  place-content: center;
-  min-height: 100vh;
+  grid-gap: 25px;
+  grid-template-columns: repeat(3, 1fr);
+}
 
-  @media (max-width: 768px) {
-    place-content: flex-end;
-  }
+.vectors {
+  position: absolute;
+}
+
+.vector1 {
+  top: 50%;
+  left: 35%;
+}
+
+.vector2 {
+  top: 74%;
+  right: 36%;
+}
+
+.vector3 {
+  top: 21.4%;
+  right: 20%;
+  scale: 1.1;
+}
+
+.vector4 {
+  top: -32%;
+  left: 7%;
+}
+
+.vector5 {
+  top: -32%;
+  right: 6.5%;
+}
+
+.vector6 {
+  top: -32%;
+  right: 9%;
 }
 
 .assetsWeb3Mobile {
@@ -222,6 +258,7 @@
 }
 
 .webAssetsLegend {
+  grid-row: 1;
   font-size: var(--font-size_small);
   font-weight: 300;
 }
@@ -261,17 +298,19 @@
 }
 
 .propertyTokenization {
+  grid-row: 2;
   grid-template-columns: 1fr 1fr;
-  grid-column: 1/2;
+  grid-gap: 15px;
 }
 
 .propertyTokenization div {
-  place-self: center;
   background: linear-gradient(180deg, #0097F1 0%, rgba(0, 151, 241, 0) 100%),
     linear-gradient(0deg, rgba(31, 80, 115, 0.5), rgba(31, 80, 115, 0.5));
+  border: 1px solid;
+  border-image-source: linear-gradient(180deg, #0097F1 0%, rgba(0, 151, 241, 0) 100%);
 }
 
-.webAssetBlock *::before {
+.webAssets *::before {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -290,26 +329,23 @@
 }
 
 .purchasingPropertyTokens {
+  display: grid;
   place-content: space-between;
-  grid-column: 3;
+  gap: 20px;
   grid-row: 1/3;
 }
 
 .purchasingPropertyTokens div {
   background: linear-gradient(0deg, rgba(61, 27, 99, 0.5), rgba(61, 27, 99, 0.5)),
     linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
+  border: 1px solid;
+  border-image-source: linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
+  backdrop-filter: blur(10px);
 }
 
 .purchasingPropertyTokens div:first-child {
-  translate: 70%;
-}
-
-.purchasingPropertyTokens div:nth-child(2) {
-  grid-column: 1/2;
-}
-
-.purchasingPropertyTokens div:last-child {
-  grid-column: 3/4;
+  grid-column: 1/3;
+  place-self: center;
 }
 
 .claimingRewards {
@@ -317,13 +353,38 @@
   grid-column: 1/4;
 }
 
+.claimingRewards > p {
+  position: absolute;
+  font-size: 12px;
+}
+
+.rent {
+  top: 10%;
+  left: 26%;
+}
+
+.claim {
+  top: 7%;
+  right: 25.5%;
+}
+
+.sentMoney {
+  top: 43%;
+  right: 23.8%;
+}
+
 .claimingRewards div {
   width: 200px;
-  background: rgba(31, 91, 88, 0.5);
+  border: 1px solid;
+  border-image-source: linear-gradient(180deg, #00DD8D 0%, rgba(0, 181, 221, 0) 100%);
+  background: linear-gradient(180deg, #00DD8D 0%, rgba(0, 181, 221, 0) 100%),
+    linear-gradient(0deg, rgba(31, 91, 88, 0.5), rgba(31, 91, 88, 0.5));
 }
 
 .binaryxMarketplace {
   background-color: rgba(31, 91, 88, 0.5) !important;
+  border: 1px solid;
+  border-image-source: linear-gradient(180deg, #00B5DD 0%, rgba(0, 181, 221, 0) 100%);
   border-radius: 10px !important;
   font-weight: 500;
   grid-row: 2;
@@ -333,17 +394,10 @@
   text-transform: uppercase;
 }
 
-.assets {
-  position: relative;
-  z-index: 1;
-}
-
 .assetsTitle {
-  display: none;
-  color: inherit;
   font-size: var(--font-size_medium);
-  // padding-top: 56px;
   text-align: center;
+  font-weight: 400;
 }
 
 .assetsProperty {
@@ -450,7 +504,7 @@
 // }
 
 .ourTeamContainer {
-  display: grid; 
+  display: grid;
   place-content: center;
   min-height: 100vh;
 
