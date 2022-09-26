@@ -1,4 +1,5 @@
 import { HardhatUserConfig } from "hardhat/config";
+import "hardhat-erc1820";
 
 require('@nomiclabs/hardhat-ethers')
 require("@nomiclabs/hardhat-web3");

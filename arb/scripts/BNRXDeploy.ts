@@ -18,7 +18,7 @@ const main = async () => {
         await ethers.getContractFactory('BNRXToken')
     ).connect(wallet)
 
-    const bnrxToken = await BnrxToken.deploy(web3.utils.toBN(10000).mul(bn1e18).toString())
+    const bnrxToken = await BnrxToken.deploy(web3.utils.toBN(10000).mul(bn1e18).toString(), [])
     await bnrxToken.deployed()
 
     console.log(`BNRXToken deployed to ${bnrxToken.address}`)
