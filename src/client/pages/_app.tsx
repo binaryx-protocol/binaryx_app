@@ -35,22 +35,15 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
     console.log('APP INIT');
     // assetContractService.init();
     if (typeof window !== 'undefined') {
+      if ($featureFlags.FF_MM) {
+        $onBrowserInit()
+      }
       // @ts-ignore
       window.admin = () => {
         setShowAdminMenu((v) => !v)
       }
     }
   }, []);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      $onBrowserInit()
-    }
-  }, []);
-
-  const onWalletConnectClick = () => {
-
-  }
 
   return (
       <Provider>
@@ -71,14 +64,6 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
             <Component {...pageProps} />
             {
                 showAdminMenu && <AdminMenu />
-            }
-            {
-              $featureFlags.FF_MM
-                  ? <>
-                    {JSON.stringify($metaMaskState)}
-                    <button onClick={onWalletConnectClick}>Connect Wallet</button>
-                  </>
-                  :  null
             }
           </ThemeProvider>
         </ApolloProvider>
