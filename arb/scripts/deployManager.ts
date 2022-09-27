@@ -22,17 +22,15 @@ const main = async () => {
     const manager = await Manager.deploy(address.usdtfToken, address.usdtfToken)
     await manager.deployed()
 
-    console.log(`p1Token deployed to ${manager.address}`)
+    console.log(`manager deployed to ${manager.address}`)
 
     //
     const UsdtfToken = await (
         await ethers.getContractFactory('UsdtfToken')
     ).connect(wallet)
 
-    const usdtfToken = await UsdtfToken.attach(address.usdtfToken)
-    await usdtfToken.transfer(manager.address, web3.utils.toBN(50).mul(bn1e18).toString())
-
-    console.log(`usdtfToken deployed to ${usdtfToken.address}`)
+    const p1Token = await UsdtfToken.attach(address.p1Token)
+    await p1Token.transfer(manager.address, web3.utils.toBN(5000).mul(bn1e18).toString())
 }
 
 main()

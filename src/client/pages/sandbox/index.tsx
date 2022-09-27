@@ -1,8 +1,11 @@
-import {ethers} from "ethers";
+import {ethers, BigNumber} from "ethers";
 import {useAtomValue, useSetAtom} from "jotai";
 import * as metaMaskModel from "../../app/models/metaMaskModel";
 import {useEffect} from "react";
 import * as featureFlagsModel from "../../app/models/featureFlagsModel";
+import Button from "@mui/material/Button";
+
+const bn1e18 = BigNumber.from(10).pow(18);
 
 const SandboxPage = () => {
     const $featureFlags = useAtomValue(featureFlagsModel.$featureFlags)
@@ -27,21 +30,29 @@ const SandboxPage = () => {
             // An event triggered whenever anyone transfers to someone else
             "event Transfer(address indexed from, address indexed to, uint amount)"
         ];
-        const vendorAbi = [
-            "function swapSgToDai(uint256 amountToBuy) public",
+        const managerAbi = [
+            "function investUsingUsdt(uint256 amountToBuy) public",
         ];
 
-        const sgToken = new ethers.Contract('0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512', sgAbi, provider);
-        const sgTokenSigned = sgToken.connect(provider.getSigner())
+        const address = {
+            p1Token: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
+            usdtfToken: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
+            manager: '0x59b670e9fA9D0A427751Af201D676719a970857b',
+        }
 
-        const approve = await sgTokenSigned.approve('0x0165878A594ca255338adfa4d48449f69242Eb8F', 1e14)
+        const usdtfToken = new ethers.Contract(address.usdtfToken, sgAbi, provider);
+        const usdtfTokenSigned = usdtfToken.connect(provider.getSigner())
+
+        const amount = BigNumber.from(50).mul(bn1e18)
+
+        const approve = await usdtfTokenSigned.approve(address.manager, amount.toString())
         console.log('approve', approve)
 
-        const vendorToken = new ethers.Contract('0x0165878A594ca255338adfa4d48449f69242Eb8F', vendorAbi, provider);
-        const vendorTokenSigned = vendorToken.connect(provider.getSigner())
+        const manager = new ethers.Contract(address.manager, managerAbi, provider);
+        const managerSigned = manager.connect(provider.getSigner())
 
-        const swapSgToDai = await vendorTokenSigned.swapSgToDai(1e14)
-        console.log('swapSgToDai', swapSgToDai)
+        const investUsingUsdt = await managerSigned.investUsingUsdt(amount.toString())
+        console.log('investUsingUsdt', investUsingUsdt)
     }
 
     useEffect(() => {
@@ -55,8 +66,10 @@ const SandboxPage = () => {
             <h1>Hello</h1>
             <p>
                 {JSON.stringify($metaMaskState)}
-                <button onClick={doTheSwap}>Do the swap</button>
             </p>
+            <Button variant="contained" disableElevation onClick={doTheSwap}>
+                Do the swap
+            </Button>
         </div>
     )
 }

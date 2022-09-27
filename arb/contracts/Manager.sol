@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract Manager is ERC20 {
+contract Manager {
     address owner;
     IERC20 usdtf;
     IERC20 p1;
