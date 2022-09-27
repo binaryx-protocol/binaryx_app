@@ -1,6 +1,14 @@
 import {ethers} from "ethers";
+import {useAtomValue, useSetAtom} from "jotai";
+import * as metaMaskModel from "../../app/models/metaMaskModel";
+import {useEffect} from "react";
+import * as featureFlagsModel from "../../app/models/featureFlagsModel";
 
 const SandboxPage = () => {
+    const $featureFlags = useAtomValue(featureFlagsModel.$featureFlags)
+    const $metaMaskState = useAtomValue(metaMaskModel.$metaMaskState)
+    const $onBrowserInit = useSetAtom(metaMaskModel.$onBrowserInit)
+
     const doTheSwap = async () => {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
 
@@ -36,10 +44,17 @@ const SandboxPage = () => {
         console.log('swapSgToDai', swapSgToDai)
     }
 
+    useEffect(() => {
+        if ($featureFlags.FF_MM) {
+            $onBrowserInit()
+        }
+    }, [])
+
     return (
         <div>
             <h1>Hello</h1>
             <p>
+                {JSON.stringify($metaMaskState)}
                 <button onClick={doTheSwap}>Do the swap</button>
             </p>
         </div>
