@@ -396,16 +396,14 @@ const HomePage: FC = () => {
           className={classNames(s.wrapper, s.section, 'section')}
         >
           <SectionElement
-            heading="Change Expensive Asset Value In Real Estate"
-            preTitle="WE ARE HERE TO:"
+            heading="Expensive asset value already in past"
             sectionHeight={sectionHeight}
             onButtonClick={handleJoinWaitListButtonClick}
           >
             <p className={s.description}>
-              There is still needed a huge amount and knowledge to join a real
-              estate market. With Binaryx and DeFi you will be able to: Buy a
-              real tokenized estate with only 50$ till unlimited Have a way how
-              to deversificate your investments and risks. And many more.
+              With Binaryx Protocol you will be able to buy a real tokenized estate with only 50$ till unlimited.
+              <br />
+              Buy, trade and sell your property fast, secure, and profitable at anytime
             </p>
           </SectionElement>
         </div>
@@ -415,15 +413,12 @@ const HomePage: FC = () => {
           className={classNames(s.wrapper, s.section, 'section')}
         >
           <SectionElement
-            heading="Add Liquidity In The Illiquid Market"
-            preTitle="WE ARE HERE TO:"
+            heading="The next generation DeFi experience with Real Yield"
             onButtonClick={handleJoinWaitListButtonClick}
             sectionHeight={sectionHeight}
           >
             <p className={s.description}>
-              The second problem is a lack of liquidity in the real estate
-              market in traditional finance In DeFi you will be able to sell
-              your property fast, secure, and profitable.
+              Use your property tokens to borrow and keep earning the highest yield available at the same time
             </p>
           </SectionElement>
         </div>
@@ -433,15 +428,12 @@ const HomePage: FC = () => {
           className={classNames(s.wrapper, s.section, 'section')}
         >
           <SectionElement
-            heading="Boost Economy"
-            preTitle="WE ARE HERE TO:"
+            heading="Boosting Economy and scaling Web3"
             sectionHeight={sectionHeight}
             onButtonClick={handleJoinWaitListButtonClick}
           >
             <p className={s.description}>
-              Increasing assets ownership transferring speed with web3
-              technologies Increasing assets ownership transferring speed with
-              web3 technologies.
+              Increasing assets ownership transferring speed with web3 infrastracture
             </p>
           </SectionElement>
         </div>
