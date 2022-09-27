@@ -19,18 +19,18 @@ const main = async () => {
         await ethers.getContractFactory('Manager')
     ).connect(wallet)
 
-    const manager = await Manager.deploy(address.usdtfToken, address.usdtfToken)
+    const manager = await Manager.deploy(address.usdtfToken, address.p1Token)
     await manager.deployed()
 
     console.log(`manager deployed to ${manager.address}`)
 
     //
-    const UsdtfToken = await (
-        await ethers.getContractFactory('UsdtfToken')
+    const PropertyToken = await (
+        await ethers.getContractFactory('PropertyToken')
     ).connect(wallet)
 
-    const p1Token = await UsdtfToken.attach(address.p1Token)
-    await p1Token.transfer(manager.address, web3.utils.toBN(5000).mul(bn1e18).toString())
+    const p1Token = await PropertyToken.attach(address.p1Token)
+    await p1Token.transfer(manager.address, web3.utils.toBN(500).mul(bn1e18).toString())
 }
 
 main()

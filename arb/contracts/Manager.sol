@@ -3,6 +3,7 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "hardhat/console.sol";
 
 contract Manager {
     address owner;
@@ -17,7 +18,8 @@ contract Manager {
 
     function investUsingUsdt(uint256 amountToBuy) public {
         //        sgToken.approve(address(this), amountToBuy);
+        console.log("amountToBuy", amountToBuy);
         usdtf.transferFrom(msg.sender, address(this), amountToBuy);
-        p1.transfer(msg.sender, amountToBuy);
+        p1.transfer(msg.sender, amountToBuy / 50);
     }
 }
