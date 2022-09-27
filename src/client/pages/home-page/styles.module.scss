@@ -2,14 +2,16 @@
 //  overflow: hidden;
 //  height: 100%;
 //}
-
-
 .section {
   outline: none;
 
   * {
     outline: none;
   }
+}
+
+.section1 {
+  height: 90vh;
 }
 
 .containerAnimation {
@@ -19,7 +21,7 @@
   height: 100%;
   top: 0;
 
-  @media (max-width: 748px) {
+  @media (max-width: 768px) {
     //width: auto;
     transform: scale(0.85);
     height: 110vh;
@@ -143,21 +145,18 @@
 }
 
 .heroPageInfo {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  place-content: center flex-start;
   height: 100vh;
 
-  @media (max-width: 748px) {
-    padding-top: 100px;
-    height: 90vh;
+
+  @media (max-width: 768px) {
+    height: 80vh;
   }
 }
 
 .companyTitle {
-  display: flex;
-  flex-direction: column;
-  color: inherit;
+  display: grid;
   font-size: var(--font-size_big);
   font-weight: 300;
 }
@@ -165,7 +164,7 @@
 .companySubTitle {
   font-size: 54px;
 
-  @media (max-width: 748px) {
+  @media (max-width: 768px) {
     font-size: 21px;
   }
 }
@@ -200,37 +199,27 @@
   font-weight: 500;
   background-color: transparent;
   cursor: default;
+  color: #000;
 }
 
 .description {
-  color: inherit;
-  font-weight: 400;
+  margin: 5px 0 0 0;
 }
 
 .webAssets {
   //background: var(--background-color_dark);
   color: var(--font-color_white);
-  min-height: 100%;
+  // min-height: 100%;
 }
 
 .webAssetsContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  place-content: center;
+  min-height: 100vh;
 
-  @media (max-width: 748px) {
-    min-height: 90vh;
+  @media (max-width: 768px) {
+    min-height: 80vh;
   }
-}
-
-.webAssetsContainerInner {}
-
-.assetsWeb3Desktop,
-.assetsWeb3Mobile {
-  place-self: center;
-  margin: 60px 0;
-  max-width: 100%;
 }
 
 .assetsWeb3Mobile {
@@ -239,7 +228,6 @@
 
 .webAssetBlock {
   display: grid;
-  grid-gap: 30px;
   font-family: 'Manrope', sans-serif;
 }
 
@@ -361,9 +349,10 @@
 }
 
 .assetsTitle {
+  display: none;
   color: inherit;
   font-size: var(--font-size_medium);
-  padding-top: 56px;
+  // padding-top: 56px;
   text-align: center;
 }
 
@@ -376,15 +365,15 @@
 }
 
 .timeline {
-  display: flex;
-  align-items: center;
-  position: relative;
-  height: 100vh;
+  display: grid;
+  place-items: center;
+  // position: relative;
+  min-height: 100vh;
   color: white;
 
-  @media (max-width: 748px) {
-    height: 90vh;
-  }
+  // @media (max-width: 768px) {
+  //   height: 90vh;
+  // }
 }
 
 .timelineTitle {
@@ -437,7 +426,7 @@
   justify-content: center;
   align-items: center;
 
-  @media (max-width: 748px) {
+  @media (max-width: 768px) {
     min-height: 90vh;
   }
 }
@@ -450,7 +439,8 @@
 .timelineColumn,
 .timelineHeaders {
   display: grid;
-  grid-template-rows: 140px 80px 160px 80px;
+  // grid-template-rows: 140px 80px 160px 80px;
+  grid-template-rows: 140px 80px 160px;
   grid-gap: 15px;
   width: 150px;
 }
@@ -465,20 +455,18 @@
   font-size: 14px;
 }
 
-.ourTeam {
-  min-height: 100%;
-}
+// .ourTeam {
+//   min-height: 100%;
+// }
 
 .ourTeamContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  display: grid;
+  place-content: center;
   min-height: 100vh;
 
-  @media (max-width: 748px) {
-    min-height: 90vh;
-  }
+  // @media (max-width: 768px) {
+  //   min-height: 90vh;
+  // }
 }
 
 .ourTeamTitle {
@@ -486,6 +474,7 @@
   font-size: var(--font-size_medium);
   font-weight: 400;
   text-align: center;
+  margin: 30px 0 0 0;
 }
 
 .teamGallery {
@@ -498,9 +487,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-height: 100%;
-
-  @media (max-width: 748px) {}
 }
 
 .joinWaitlistTitle {
@@ -510,10 +496,10 @@
 }
 
 .topSection {
-  padding: 124px 0 62px;
+  padding: 62px 0 124px;
 
-  @media (max-width: 748px) {
-    padding: 24px 0;
+  @media (max-width: 768px) {
+    padding: 0;
   }
 }
 
@@ -522,7 +508,7 @@
   justify-content: space-between;
   align-items: center;
 
-  @media (max-width: 748px) {
+  @media (max-width: 768px) {
     flex-direction: column;
   }
 }
@@ -572,7 +558,7 @@
   font-size: 20px;
   border: none;
   border-radius: var(--border-radius_default);
-  color: inherit;
+  color: var(--font-color_white);
   cursor: pointer;
   background: linear-gradient(85.42deg, rgba(0, 174, 255, 0.5) 8.17%, rgba(0, 255, 238, 0.5) 103.39%);
   backdrop-filter: blur(10px);
@@ -603,10 +589,8 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: var(--max-width_desktop);
-  margin: auto;
 
-  @media (max-width: 748px) {
+  @media (max-width: 768px) {
     padding: 18px 0;
     flex-direction: column;
     justify-content: center;
@@ -619,7 +603,7 @@
   display: flex;
   justify-content: space-between;
 
-  @media (max-width: 748px) {
+  @media (max-width: 768px) {
     max-width: 100px;
     flex-wrap: wrap;
     justify-content: flex-end;
@@ -630,26 +614,27 @@
   width: 326px;
 }
 
-.footerBottomSection {
-  align-items: center;
-  padding: 60px 0;
-  background: #FFF;
+.footerNavSocial a {
+  opacity: .8;
+  transition: all .3s ease;
+}
 
-  @media (max-width: 748px) {
-    width: 100%;
-    max-width: none;
-  }
+.footerNavSocial a:hover {
+  opacity: 1;
+  scale: 1.1;
+}
+
+.footerBottomSection {
+  padding: 60px 0;
 }
 
 .footerBottomSectionContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  max-width: var(--max-width_desktop);
-  margin: auto;
+  width: 100vh;
 
-  @media (max-width: 748px) {
+  @media (max-width: 768px) {
     flex-wrap: wrap;
   }
 }
@@ -657,13 +642,13 @@
 .footerLinks {
   text-decoration: underline;
   width: 230px;
-  font-size: var(--font-size_small-extra);
 }
 
 .footerLinks a {
+  font-size: var(--font-size_small-extra);
   color: var(--font-color_gray-dark);
 
-  @media (max-width: 748px) {
+  @media (max-width: 768px) {
     position: relative;
 
     &:nth-child(1) {
@@ -678,39 +663,35 @@
 
 .binaryx {
   font-size: 14px;
-
-  @media (max-width: 748px) {
-    font-size: 10px;
-  }
 }
 
-@media screen and (max-width: 748px) {
+@media screen and (max-width: 768px) {
   .heroPageInfo {
-    justify-content: space-between;
+    display: grid;
+    place-content: space-between;
   }
+
 
   .companyTitle {
     font-size: 25px;
+    position: relative;
+    top: 100px;
   }
 
   .infoSection {
     flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    height: 120px;
-    position: relative;
-    bottom: 80px;
+    min-height: 120px;
   }
 
   .btnJoinWaitlist {
     height: 60px;
-    width: 100%;
-    font-size: 18px;
+    font-size: var(--font-size_small);
+    width: inherit;
   }
 
   .joinCommunity {
     height: 60px;
-    width: 100%;
+    width: inherit;
     font-size: 16px;
   }
 
@@ -719,6 +700,7 @@
   }
 
   .assetsTitle {
+    display: block;
     font-size: 24px;
     font-weight: 300;
   }
@@ -736,8 +718,8 @@
 
   .assetsWeb3Mobile {
     display: block;
-    margin: 0;
-    max-height: 78vh;
+    margin: 0 auto 15px;
+    max-height: calc(100vh - 200px);
   }
 
   .assetsWeb3Desktop {
@@ -745,11 +727,11 @@
     opacity: 0;
   }
 
-  .webAssetBlock {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-  }
+  // .webAssetBlock {
+  //   display: flex;
+  //   flex-direction: column;
+  //   gap: 25px;
+  // }
 
   .binaryxMarketplace {
     width: 100%;
@@ -773,7 +755,7 @@
 
   .timelineGrid {
     grid-template-columns: repeat(6, 160px);
-    margin-top: 100px;
+    // margin-top: 100px;
     grid-gap: 0 10px;
   }
 
@@ -793,7 +775,8 @@
 
   .timelineColumn {
     grid-gap: 40px;
-    grid-template-rows: 75px 80px 160px 80px;
+    // grid-template-rows: 75px 80px 160px 80px;
+    grid-template-rows: 75px 80px 160px;
   }
 
   .timelineTitle {
@@ -806,9 +789,7 @@
   }
 
   .teamGallery {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    align-items: center;
+    overflow: scroll hidden;
     gap: 12px;
   }
 
@@ -816,13 +797,13 @@
     overflow-y: scroll;
   }
 
-  .ourTeamTitle {
-    padding-bottom: 0;
-  }
+  // .ourTeamTitle {
+  //   padding-bottom: 0;
+  // }
 
-  .topSection {
-    flex-direction: column;
-  }
+  // .topSection {
+  //   flex-direction: column;
+  // }
 
   .joinWaitlistTitle {
     font-size: 24px;
@@ -840,6 +821,10 @@
     margin-bottom: 30px;
   }
 
+  .binaryx {
+    font-size: 10px;
+  }
+
   .formSection input {
     font-size: 16px;
   }
@@ -850,8 +835,7 @@
   }
 
   .footer {
-    flex-direction: column;
-    padding: 40px 0;
+    padding: 0;
   }
 
   .footerHeading {
@@ -877,6 +861,7 @@
   .footerBottomSection {
     flex-direction: column;
     padding: 20px;
+    max-width: none;
   }
 
   .footerBottomSection a {

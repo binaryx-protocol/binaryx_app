@@ -18,6 +18,7 @@ import DescriptionBlock from './components/DescriptionBlock';
 import getCookie from 'utils/getCookie';
 
 const HomePage: FC = () => {
+  const [sectionHeight, setSectionHeight] = useState(typeof window !== "undefined" ? window.innerHeight : null);
   const container0 = useRef<HTMLDivElement>(null);
   const container1 = useRef<HTMLDivElement>(null);
   const container2 = useRef<HTMLDivElement>(null);
@@ -34,9 +35,62 @@ const HomePage: FC = () => {
     section4Ref.current,
   ];
   const currentSectionRef = useRef(0);
-  const [isBgOverlayActive, setIsBgOverlayActive] = useState(false);
-  const [isBgAnimationActive, setIsBgAnimationActive] = useState(false);
-  const [isBgOverlayDark, setIsBgOverlayDark] = useState(false);
+  const [bgOverlay, setBgOverlay] = useState({ isBgOverlayActive: false, isBgAnimationActive: false, isBgOverlayDark: false })
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100%';
+    document.body.parentElement.style.overflow = 'hidden';
+    document.body.parentElement.style.height = '100%';
+
+    setTimeout(() => {
+      setSectionHeight(window.innerHeight - 1);
+
+      setTimeout(() => {
+        import('fullpage.js').then((module) => {
+          const fullpage = module.default;
+
+          (window as any).fullpageObject = new fullpage('#main', {
+            //options here
+            autoScrolling: true,
+            scrollHorizontally: true,
+            scrollingSpeed: 1500,
+            fitToSectionDelay: 0,
+            css3: false,
+            lazyLoading: false,
+            fitToSection: false,
+            // anchors: [],
+            // normalScrollElements: "#sectionWaitlist, #sectionTeam",
+            onLeave: (origin, destination, direction) => {
+              const nextSection = destination.index;
+              updateContainerStylesV2(nextSection);
+              currentSectionRef.current = nextSection;
+              const animation = animations.current[nextSection];
+              const nextValue =
+                [1, 2, 3].includes(nextSection) && direction === 'up' ? 1100 : 0;
+              animation?.goToAndPlay(nextValue);
+              console.log('nextSection', nextSection);
+
+              // setIsBgOverlayActive(() => nextSection !== 0);
+              // setIsBgAnimationActive(() => nextSection !== 4);
+              // setIsBgOverlayDark(() => nextSection >= 4);
+
+              setBgOverlay({
+                isBgOverlayActive: nextSection !== 0,
+                isBgAnimationActive: true,
+                isBgOverlayDark: nextSection >= 4
+              });
+            },
+            afterLoad: () => {
+              document.querySelector('.fp-watermark')?.remove();
+
+              setSectionHeight(window.innerHeight);
+            },
+          });
+        });
+      }, 0);
+    }, 0);
+  }, [])
 
   const initAnimation = ({ animationData, container, autoplay }) => {
     const isDesktop = window.innerWidth > 768;
@@ -140,10 +194,6 @@ const HomePage: FC = () => {
   }
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    document.body.style.height = '100%';
-    document.body.parentElement.style.overflow = 'hidden';
-    document.body.parentElement.style.height = '100%';
 
     initAnimations();
 
@@ -151,56 +201,15 @@ const HomePage: FC = () => {
       event.preventDefault();
       event.stopPropagation();
       const currentSection = getCurrentSection();
-      console.log('scroll', event);
       if (currentSection <= 1) {
         return;
       }
-      console.log('currentSection', currentSection);
       updateContainerStyles();
 
       playAnimation(currentSection);
-      // handleSectionScroll();
-      // section3Ref.current.scrollIntoView();
     });
 
     updateContainerStyles();
-    // handleSectionScroll();
-  }, []);
-
-  useEffect(() => {
-    // setTimeout(() => {
-    import('fullpage.js').then((module) => {
-      const fullpage = module.default;
-
-      (window as any).fullpageObject = new fullpage('#main', {
-        //options here
-        autoScrolling: true,
-        scrollHorizontally: true,
-        scrollingSpeed: 1500,
-        fitToSectionDelay: 0,
-        css3: true,
-        fitToSection: false,
-        // anchors: [],
-        // normalScrollElements: "#sectionWaitlist, #sectionTeam",
-        onLeave: (origin, destination, direction) => {
-          const nextSection = destination.index;
-          updateContainerStylesV2(nextSection);
-          currentSectionRef.current = nextSection;
-          const animation = animations.current[nextSection];
-          const nextValue =
-            [1, 2, 3].includes(nextSection) && direction === 'up' ? 1100 : 0;
-          animation?.goToAndPlay(nextValue);
-          console.log('nextSection', nextSection);
-          setIsBgOverlayActive(() => nextSection !== 0);
-          setIsBgAnimationActive(() => nextSection !== 4);
-          setIsBgOverlayDark(() => nextSection >= 4);
-        },
-        afterLoad: () => {
-          document.querySelector('.fp-watermark')?.remove();
-        },
-      });
-    });
-    // }, 1000);
   }, []);
 
   function handleSectionScroll() {
@@ -247,10 +256,6 @@ const HomePage: FC = () => {
       return;
     }
 
-    // let xhr = new XMLHttpRequest();
-    // let url =
-    //   'https://api.hsforms.com/submissions/v3/integration/submit/22710849/33113d53-079c-4c14-ab02-84409352b055';
-
     const data = {
       submittedAt: Date.now(),
       fields: [
@@ -286,19 +291,6 @@ const HomePage: FC = () => {
       },
     };
 
-    // let final_data = JSON.stringify(data);
-    //
-    // xhr.open('POST', url);
-    // xhr.setRequestHeader('Content-Type', 'application/json');
-    //
-    // xhr.onreadystatechange = function () {
-    //   if (xhr.status !== 200) {
-    //
-    //   }
-    // };
-    //
-    // xhr.send(final_data);
-
     fetch(
       'https://api.hsforms.com/submissions/v3/integration/submit/22710849/33113d53-079c-4c14-ab02-84409352b055',
       {
@@ -318,49 +310,33 @@ const HomePage: FC = () => {
   }
 
   function handleJoinWaitListButtonClick() {
-    (window as any).fullpageObject.moveTo(document.querySelectorAll('.section').length);
+    (window as any).fullpageObject.moveTo(
+      document.querySelectorAll('.section').length,
+    );
   }
-
-  // useEffect(() => {
-  //   const webAssets = document.querySelectorAll('.styles_isShow__g-Dv6');
-
-  //   const observer = new IntersectionObserver((entries) =>
-  //     entries.forEach((entry) => {
-  //       setTimeout(() => {
-  //         entry.target.classList.toggle(
-  //           'styles_isShow__g-Dv6',
-  //           entry.isIntersecting,
-  //         );
-  //       }, 600);
-  //       if (entry.isIntersecting) observer.unobserve(entry.target);
-  //     }),
-  //   );
-
-  //   webAssets.forEach((elem) => observer.observe(elem));
-  // }, []);
 
   return (
     <>
-      <Navigation isDark={isBgOverlayDark} />
+      <Navigation isDark={bgOverlay.isBgOverlayDark} />
       <div
         className={classNames(s.bgOverlay, {
-          [s.bgOverlayActive]: isBgOverlayActive,
-          [s.bgOverlayDark]: isBgOverlayDark,
+          [s.bgOverlayActive]: bgOverlay.isBgOverlayActive,
+          [s.bgOverlayDark]: bgOverlay.isBgOverlayDark,
         })}
       >
         <div
           className={classNames(s.bgOverlayItem, s.bgOverlayItem1, {
-            [s.bgOverlayItemActive]: isBgAnimationActive,
+            [s.bgOverlayItemActive]: bgOverlay.isBgAnimationActive,
           })}
         />
         <div
           className={classNames(s.bgOverlayItem, s.bgOverlayItem2, {
-            [s.bgOverlayItemActive]: isBgAnimationActive,
+            [s.bgOverlayItemActive]: bgOverlay.isBgAnimationActive,
           })}
         />
         <div
           className={classNames(s.bgOverlayItem, s.bgOverlayItem3, {
-            [s.bgOverlayItemActive]: isBgAnimationActive,
+            [s.bgOverlayItemActive]: bgOverlay.isBgAnimationActive,
           })}
         />
       </div>
@@ -388,35 +364,31 @@ const HomePage: FC = () => {
         <div
           id="section1"
           ref={section1Ref}
-          className={classNames('section', s.section)}
+          className={classNames(s.wrapper, 'section', s.section, s.section1)}
         >
-          <div className={s.wrapper}>
-            <section className={s.heroPageInfo}>
-              <h1 className={s.companyTitle}>
-                <span>
-                  <b style={{ color: 'rgba(0, 180, 204, 1)' }}>
-                    Binaryx
-                  </b>
-                </span>
-                <span className={s.companySubTitle}>Community-Powered</span>
-                <span className={s.companySubTitle}>
-                  Real Estate Tokenization Protocol
-                </span>
-              </h1>
-              <p className={s.hint}>{/* Technology based */}</p>
-              <div className={s.infoSection}>
-                <button
-                  onClick={handleJoinWaitListButtonClick}
-                  className={s.btnJoinWaitlist}
-                >
-                  Join waitlist
-                </button>
-                <button type="submit" className={s.joinCommunity}>
-                  Join our community
-                </button>
-              </div>
-            </section>
-          </div>
+          <section className={s.heroPageInfo} style={{ height: sectionHeight }}>
+            <h1 className={s.companyTitle}>
+              <span>
+                <b style={{ color: 'rgba(0, 180, 204, 1)' }}>Binaryx</b>
+              </span>
+              <span className={s.companySubTitle}>Community-Powered</span>
+              <span className={s.companySubTitle}>
+                Real Estate Tokenization Protocol
+              </span>
+            </h1>
+            <p className={s.hint}>{/* Technology based */}</p>
+            <div className={s.infoSection}>
+              <button
+                onClick={handleJoinWaitListButtonClick}
+                className={s.btnJoinWaitlist}
+              >
+                Join waitlist
+              </button>
+              <button type="submit" className={s.joinCommunity}>
+                Join our community
+              </button>
+            </div>
+          </section>
         </div>
         <div
           id="section2"
@@ -424,15 +396,16 @@ const HomePage: FC = () => {
           className={classNames(s.wrapper, s.section, 'section')}
         >
           <SectionElement
-            heading="Expensive asset value already in past"
+            heading="Change Expensive Asset Value In Real Estate"
+            preTitle="WE ARE HERE TO:"
+            sectionHeight={sectionHeight}
             onButtonClick={handleJoinWaitListButtonClick}
           >
             <p className={s.description}>
-              With Binaryx Protocol you will be able to buy a real tokenized
-              estate with only $50 till unlimited.
-              <br />
-              Buy, trade and sell your property fast, secure, and profitable at
-              anytime
+              There is still needed a huge amount and knowledge to join a real
+              estate market. With Binaryx and DeFi you will be able to: Buy a
+              real tokenized estate with only 50$ till unlimited Have a way how
+              to deversificate your investments and risks. And many more.
             </p>
           </SectionElement>
         </div>
@@ -442,12 +415,15 @@ const HomePage: FC = () => {
           className={classNames(s.wrapper, s.section, 'section')}
         >
           <SectionElement
-            heading="The next generation DeFi experience with Real Yield"
+            heading="Add Liquidity In The Illiquid Market"
+            preTitle="WE ARE HERE TO:"
             onButtonClick={handleJoinWaitListButtonClick}
+            sectionHeight={sectionHeight}
           >
             <p className={s.description}>
-              Use your property tokens to borrow and keep earning the highest
-              yield available at the same time
+              The second problem is a lack of liquidity in the real estate
+              market in traditional finance In DeFi you will be able to sell
+              your property fast, secure, and profitable.
             </p>
           </SectionElement>
         </div>
@@ -457,13 +433,15 @@ const HomePage: FC = () => {
           className={classNames(s.wrapper, s.section, 'section')}
         >
           <SectionElement
-            heading="Boost Economy and scale Web3"
+            heading="Boost Economy"
             preTitle="WE ARE HERE TO:"
+            sectionHeight={sectionHeight}
             onButtonClick={handleJoinWaitListButtonClick}
           >
             <p className={s.description}>
               Increasing assets ownership transferring speed with web3
-              infrastracture
+              technologies Increasing assets ownership transferring speed with
+              web3 technologies.
             </p>
           </SectionElement>
         </div>
@@ -477,63 +455,63 @@ const HomePage: FC = () => {
             'section',
           )}
         >
-          <div className={s.webAssetsContainer}>
-            <div className={s.webAssetsContainerInner}>
-              <h1 className={`${s.assetsTitle} ${s.assetsWeb3Mobile}`}>
-                Welcome to the Era of Web3 assets
-              </h1>
-              <BackgroundVisuals top={'50%'} />
-              <div className={s.webAssetBlock}>
-                <img
-                  className={`${s.assetsWeb3Desktop}`}
-                  src={
-                    'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_desktop.svg'
-                  }
-                />
-                <img
-                  className={s.assetsWeb3Mobile}
-                  src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_mobile4.png"
-                />
-                {/*<div className={s.assetsWeb3Mobile}>*/}
-                {/*  <WebAssetBlock className={s.webAssetsLegend}>*/}
-                {/*    <p>1. Property Tokenization</p>*/}
-                {/*    <p>2. Purchasing Property Tokens</p>*/}
-                {/*    <p>3. Claiming Rewards from Rent</p>*/}
-                {/*  </WebAssetBlock>*/}
-                {/*  <WebAssetBlock className={s.binaryxMarketplace}>*/}
-                {/*    <WebAssetCard*/}
-                {/*      imageSrc={''}*/}
-                {/*      imageDescription={'Binaryx Marketplace'}*/}
-                {/*    />*/}
-                {/*  </WebAssetBlock>*/}
-                {/*  <WebAssetBlock className={s.propertyTokenization}>*/}
-                {/*    <WebAssetCard imageSrc={''} imageDescription={'Property'} />*/}
-                {/*    <WebAssetCard*/}
-                {/*      imageSrc={'#'}*/}
-                {/*      imageDescription={'Property Tokens'}*/}
-                {/*    />*/}
-                {/*  </WebAssetBlock>*/}
-                {/*  <WebAssetBlock className={s.purchasingPropertyTokens}>*/}
-                {/*    <WebAssetCard*/}
-                {/*      imageSrc={'#'}*/}
-                {/*      imageDescription={'Property Taken'}*/}
-                {/*    />*/}
-                {/*    <WebAssetCard*/}
-                {/*      imageSrc={'#'}*/}
-                {/*      imageDescription={'Stablecoins'}*/}
-                {/*    />*/}
-                {/*    <WebAssetCard imageSrc={'#'} imageDescription={'Users'} />*/}
-                {/*  </WebAssetBlock>*/}
-                {/*  <WebAssetBlock className={s.claimingRewards}>*/}
-                {/*    <WebAssetCard*/}
-                {/*      imageSrc={'#'}*/}
-                {/*      imageDescription={'Property Rent'}*/}
-                {/*    />*/}
-                {/*  </WebAssetBlock>*/}
-                {/*</div>*/}
-              </div>
+          <div className={s.webAssetsContainer} style={{ minHeight: sectionHeight }}>
+            <h1 className={classNames(s.assetsTitle)}>
+              Welcome to the Era of Web3 assets
+            </h1>
+            {/*<BackgroundVisuals top={'50%'} />*/}
+            <div className={s.webAssetBlock}>
+              <img
+                className={`${s.assetsWeb3Desktop}`}
+                src={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_desktop.svg'
+                }
+              />
+              <img
+                className={s.assetsWeb3Mobile}
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_mobile4.png"
+                style={{ maxHeight: sectionHeight - 250 }}
+              />
+              {/*<div className={s.assetsWeb3Mobile}>*/}
+              {/*  <WebAssetBlock className={s.webAssetsLegend}>*/}
+              {/*    <p>1. Property Tokenization</p>*/}
+              {/*    <p>2. Purchasing Property Tokens</p>*/}
+              {/*    <p>3. Claiming Rewards from Rent</p>*/}
+              {/*  </WebAssetBlock>*/}
+              {/*  <WebAssetBlock className={s.binaryxMarketplace}>*/}
+              {/*    <WebAssetCard*/}
+              {/*      imageSrc={''}*/}
+              {/*      imageDescription={'Binaryx Marketplace'}*/}
+              {/*    />*/}
+              {/*  </WebAssetBlock>*/}
+              {/*  <WebAssetBlock className={s.propertyTokenization}>*/}
+              {/*    <WebAssetCard imageSrc={''} imageDescription={'Property'} />*/}
+              {/*    <WebAssetCard*/}
+              {/*      imageSrc={'#'}*/}
+              {/*      imageDescription={'Property Tokens'}*/}
+              {/*    />*/}
+              {/*  </WebAssetBlock>*/}
+              {/*  <WebAssetBlock className={s.purchasingPropertyTokens}>*/}
+              {/*    <WebAssetCard*/}
+              {/*      imageSrc={'#'}*/}
+              {/*      imageDescription={'Property Taken'}*/}
+              {/*    />*/}
+              {/*    <WebAssetCard*/}
+              {/*      imageSrc={'#'}*/}
+              {/*      imageDescription={'Stablecoins'}*/}
+              {/*    />*/}
+              {/*    <WebAssetCard imageSrc={'#'} imageDescription={'Users'} />*/}
+              {/*  </WebAssetBlock>*/}
+              {/*  <WebAssetBlock className={s.claimingRewards}>*/}
+              {/*    <WebAssetCard*/}
+              {/*      imageSrc={'#'}*/}
+              {/*      imageDescription={'Property Rent'}*/}
+              {/*    />*/}
+              {/*  </WebAssetBlock>*/}
+              {/*</div>*/}
             </div>
           </div>
+          {/* </div> */}
         </section>
         <section
           className={classNames(s.timeline, s.section, s.wrapper, 'section')}
@@ -629,60 +607,58 @@ const HomePage: FC = () => {
           id="sectionTeam"
           className={classNames(s.section, s.ourTeam, 'section')}
         >
-          <div className={s.ourTeamContainer}>
-            <div className={s.ourTeamContainerInner}>
-              <h1 className={s.ourTeamTitle}>Our Team</h1>
-              <div className={classNames(s.teamGallery, s.wrapper)}>
-                <TeamBlock
-                  imgSrc={
-                    'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/oleg_kurchenko.png'
-                  }
-                  personName={'Oleg Kurchenko'}
-                  personPosition={'Chief Executive Officer'}
-                  socialLinkImage={
-                    'https://cdn-icons-png.flaticon.com/512/61/61109.png'
-                  }
-                  socialLink={'#'}
-                  socialUserName={'oleg_kurchenko'}
-                />
-                <TeamBlock
-                  imgSrc={
-                    'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/dmytro_zeleniy.png'
-                  }
-                  personName={'Dmytro Zeleniy'}
-                  personPosition={'Chief Technical Officer'}
-                  socialLinkImage={
-                    'https://cdn-icons-png.flaticon.com/512/61/61109.png'
-                  }
-                  socialLink={'#'}
-                  socialUserName={'dmytro_zeleniy'}
-                />
-                <TeamBlock
-                  imgSrc={
-                    'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/dmytro_lizanets.png'
-                  }
-                  personName={'Dmytro Lizanets'}
-                  personPosition={'Chief Marketing Officer'}
-                  socialLinkImage={
-                    'https://cdn-icons-png.flaticon.com/512/61/61109.png'
-                  }
-                  socialLink={'#'}
-                  socialUserName={'dmytro_lizanets'}
-                />
-                <TeamBlock
-                  imgSrc={
-                    'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/andriy_makaveli.png'
-                  }
-                  personName={'Andriy Makaveli'}
-                  personPosition={'Chief Business Development Officer'}
-                  socialLinkImage={
-                    'https://cdn-icons-png.flaticon.com/512/61/61109.png'
-                  }
-                  socialLink={'#'}
-                  socialUserName={'andriy_makaveli'}
-                />
-                {/* <BackgroundVisuals top={'40%'} /> */}
-              </div>
+          <div className={s.ourTeamContainer} style={{ minHeight: sectionHeight }}>
+            <h1 className={s.ourTeamTitle}>Our Team</h1>
+            <div className={classNames(s.teamGallery, s.wrapper)}>
+              <TeamBlock
+                imgSrc={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/oleg_kurchenko.png'
+                }
+                personName={'Oleg Kurchenko'}
+                personPosition={'Chief Executive Officer'}
+                socialLinkImage={
+                  'https://cdn-icons-png.flaticon.com/512/61/61109.png'
+                }
+                socialLink={'#'}
+                socialUserName={'oleg_kurchenko'}
+              />
+              <TeamBlock
+                imgSrc={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/dmytro_zeleniy.png'
+                }
+                personName={'Dmytro Zeleniy'}
+                personPosition={'Chief Technical Officer'}
+                socialLinkImage={
+                  'https://cdn-icons-png.flaticon.com/512/61/61109.png'
+                }
+                socialLink={'#'}
+                socialUserName={'dmytro_zeleniy'}
+              />
+              <TeamBlock
+                imgSrc={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/dmytro_lizanets.png'
+                }
+                personName={'Dmytro Lizanets'}
+                personPosition={'Chief Marketing Officer'}
+                socialLinkImage={
+                  'https://cdn-icons-png.flaticon.com/512/61/61109.png'
+                }
+                socialLink={'#'}
+                socialUserName={'dmytro_lizanets'}
+              />
+              <TeamBlock
+                imgSrc={
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/andriy_makaveli.png'
+                }
+                personName={'Andriy Makaveli'}
+                personPosition={'Chief Business Development Officer'}
+                socialLinkImage={
+                  'https://cdn-icons-png.flaticon.com/512/61/61109.png'
+                }
+                socialLink={'#'}
+                socialUserName={'andriy_makaveli'}
+              />
+              {/* <BackgroundVisuals top={'40%'} /> */}
             </div>
           </div>
         </section>
@@ -722,10 +698,10 @@ const HomePage: FC = () => {
               </div>
             </div>
             {/* <BackgroundVisuals top={'10%'} /> */}
-            {/*</section>*/}
+            {/* </section> */}
             {/*<section className={classNames(s.section, s.footerSection, "section")}>*/}
             <footer className={s.footer}>
-              <div className={s.footerContainer}>
+              <div className={classNames(s.footerContainer, s.wrapper)}>
                 <h1 className={s.footerHeading}>Let's Keep in Touch With:</h1>
                 <nav className={s.footerNavSocial}>
                   <NavSocialImage
@@ -764,24 +740,29 @@ const HomePage: FC = () => {
                   />
                 </nav>
               </div>
-            </footer>
-            <nav className={s.footerBottomSection}>
-              <div className={s.footerBottomSectionContainer}>
-                <img
-                  src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg"
-                  alt="company_logo"
-                  width={180}
-                  onClick={() => (window as any).fullpageObject.moveTo(0)}
-                />
-                <div className={s.footerLinks}>
-                  <MenuElement link={'#'} body={'Privacy Policy'} />
-                  <MenuElement link={'#'} body={'Terms of service'} />
+              <nav className={s.footerBottomSection}>
+                <div
+                  className={classNames(
+                    s.footerBottomSectionContainer,
+                    s.wrapper,
+                  )}
+                >
+                  <img
+                    src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg"
+                    alt="company_logo"
+                    width={180}
+                    onClick={() => (window as any).fullpageObject.moveTo(0)}
+                  />
+                  <div className={s.footerLinks}>
+                    <MenuElement link={'#'} body={'Privacy Policy'} />
+                    <MenuElement link={'#'} body={'Terms of service'} />
+                  </div>
+                  <span className={s.binaryx}>
+                    ©Binaryx. All rights reserved 2022
+                  </span>
                 </div>
-                <span className={s.binaryx}>
-                  ©Binaryx. All rights reserved 2022
-                </span>
-              </div>
-            </nav>
+              </nav>
+            </footer>
           </div>
         </section>
       </main>
