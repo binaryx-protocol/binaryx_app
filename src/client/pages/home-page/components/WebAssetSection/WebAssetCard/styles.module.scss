@@ -11,18 +11,19 @@
   z-index: 2;
 }
 
-.webAssetCard img {
-  margin-bottom: 10px;
-}
-
-.webAssetCard p {
-  margin: 0;
+.description {
+  margin-bottom: 0;
 }
 
 @media screen and (max-width: 768px) {
   .webAssetCard {
-    width: 110px;
-    height: 95px;
+    width: 100px;
+    height: 70px;
     font-size: 12px;
+  }
+
+  .description {
+    margin-top: 6px;
+    font-size: 11px;
   }
 }

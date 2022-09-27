@@ -9,8 +9,8 @@ type WebAssetCard = {
 const WebAssetCard: FC<WebAssetCard> = ({ imageSrc, imageDescription }) => {
   return (
     <div className={s.webAssetCard}>
-      <img src={imageSrc} />
-      <p>{imageDescription}</p>
+      <img className={s.image} src={imageSrc} />
+      <p className={s.description}>{imageDescription}</p>
     </div>
   );
 };

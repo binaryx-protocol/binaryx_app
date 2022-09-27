@@ -192,10 +192,6 @@
   cursor: default;
 }
 
-.description {
-  margin: 5px 0 0 0;
-}
-
 .webAssets {
   //background: var(--background-color_dark);
   color: var(--font-color_white);
@@ -211,10 +207,20 @@
   display: grid;
   grid-gap: 25px;
   grid-template-columns: repeat(3, 1fr);
+
+  @media screen and (max-width: 768px) {
+    grid-gap: 10px;
+    max-width: 320px;
+    grid-template-columns: 250px;
+  }
 }
 
-.vectors {
+.vectorsDesktop {
   position: absolute;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 }
 
 .vector1 {
@@ -301,6 +307,12 @@
   grid-row: 2;
   grid-template-columns: 1fr 1fr;
   grid-gap: 15px;
+
+  @media screen and (max-width: 768px) {
+    grid-row: 1;
+    grid-gap: 0;
+    place-items: center;
+  }
 }
 
 .propertyTokenization div {
@@ -351,27 +363,31 @@
 .claimingRewards {
   display: block;
   grid-column: 1/4;
+
+  @media screen and (max-width: 768px) {
+    grid-column: unset;
+  }
 }
 
-.claimingRewards > p {
+.claimingRewards>p {
   position: absolute;
   font-size: 12px;
 }
 
-.rent {
-  top: 10%;
-  left: 26%;
-}
+// .rent {
+//   top: 10%;
+//   left: 26%;
+// }
 
-.claim {
-  top: 7%;
-  right: 25.5%;
-}
+// .claim {
+//   top: 7%;
+//   right: 25.5%;
+// }
 
-.sentMoney {
-  top: 43%;
-  right: 23.8%;
-}
+// .sentMoney {
+//   top: 43%;
+//   right: 23.8%;
+// }
 
 .claimingRewards div {
   width: 200px;
@@ -379,6 +395,10 @@
   border-image-source: linear-gradient(180deg, #00DD8D 0%, rgba(0, 181, 221, 0) 100%);
   background: linear-gradient(180deg, #00DD8D 0%, rgba(0, 181, 221, 0) 100%),
     linear-gradient(0deg, rgba(31, 91, 88, 0.5), rgba(31, 91, 88, 0.5));
+
+  @media screen and (max-width: 786px) {
+    width: 100px;
+  }
 }
 
 .binaryxMarketplace {
@@ -392,6 +412,8 @@
   place-self: center;
   width: 250px;
   text-transform: uppercase;
+  position: relative;
+  z-index: 1;
 }
 
 .assetsTitle {
@@ -463,17 +485,17 @@
   border-left: 20px solid #008E85;
 }
 
-.timelineContainer {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+// .timelineContainer {
+//   min-height: 100vh;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
 
-  @media (max-width: 768px) {
-    min-height: 90vh;
-  }
-}
+//   @media (max-width: 768px) {
+//     min-height: 90vh;
+//   }
+// }
 
 .timelineGrid {
   display: grid;
@@ -746,6 +768,7 @@
     display: block;
     font-size: 24px;
     font-weight: 300;
+    text-align: left;
   }
 
   .purchasingPropertyTokens,
@@ -777,23 +800,23 @@
   // }
 
   .binaryxMarketplace {
-    width: 100%;
+    // place-self: center;
+    grid-column: 1;
+    height: 135px;
+    width: 160px;
+    margin: 25px 0;
+    place-self: flex-end;
+    position: relative;
+    right: 12%;
   }
 
   .binaryxMarketplace p {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .purchasingPropertyTokens {
     grid-gap: 10px;
-  }
-
-  .purchasingPropertyTokens div:first-child {
-    translate: 60%;
-  }
-
-  .claimingRewards div {
-    margin: auto;
+    grid-row: 3;
   }
 
   .timelineGrid {

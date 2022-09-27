@@ -422,17 +422,12 @@ const HomePage: FC = () => {
           className={classNames(s.wrapper, s.section, 'section')}
         >
           <SectionElement
-            heading="Change Expensive Asset Value In Real Estate"
+            heading="Expensive asset value already in past"
             preTitle="WE ARE HERE TO:"
+            body="With Binaryx Protocol you will be able to buy a real tokenized estate with only 50$ till unlimited. 
+            Buy, trade and sell your property fast, secure, and profitable at anytime"
             onButtonClick={handleJoinWaitListButtonClick}
-          >
-            <p className={s.description}>
-              There is still needed a huge amount and knowledge to join a real
-              estate market. With Binaryx and DeFi you will be able to: Buy a
-              real tokenized estate with only 50$ till unlimited Have a way how
-              to deversificate your investments and risks. And many more.
-            </p>
-          </SectionElement>
+          />
         </div>
         <div
           id="section3"
@@ -440,16 +435,11 @@ const HomePage: FC = () => {
           className={classNames(s.wrapper, s.section, 'section')}
         >
           <SectionElement
-            heading="Add Liquidity In The Illiquid Market"
+            heading="The next generation DeFi experience with Real Yield"
             preTitle="WE ARE HERE TO:"
+            body="Use your property tokens to borrow and keep earning the highest yield available at the same time"
             onButtonClick={handleJoinWaitListButtonClick}
-          >
-            <p className={s.description}>
-              The second problem is a lack of liquidity in the real estate
-              market in traditional finance In DeFi you will be able to sell
-              your property fast, secure, and profitable.
-            </p>
-          </SectionElement>
+          />
         </div>
         <div
           id="section4"
@@ -457,16 +447,11 @@ const HomePage: FC = () => {
           className={classNames(s.wrapper, s.section, 'section')}
         >
           <SectionElement
-            heading="Boost Economy"
+            heading="Boosting Economy and scaling Web3"
             preTitle="WE ARE HERE TO:"
+            body="Increasing assets ownership transferring speed with web3 infrastracture "
             onButtonClick={handleJoinWaitListButtonClick}
-          >
-            <p className={s.description}>
-              Increasing assets ownership transferring speed with web3
-              technologies Increasing assets ownership transferring speed with
-              web3 technologies.
-            </p>
-          </SectionElement>
+          />
         </div>
         <section
           id="sectionWebAssets"
@@ -479,22 +464,7 @@ const HomePage: FC = () => {
           )}
         >
           <h1 className={s.assetsTitle}>Welcome To The Era Of WEB3 Assets</h1>
-          <BackgroundVisuals top={'50%'} />
           <div className={s.webAssetsContainer}>
-            {/* <div className={s.webAssetsContainerInner}> */}
-            {/* <div className={s.webAssetBlock}>
-              <img
-                className={`${s.assetsWeb3Desktop}`}
-                src={
-                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_desktop.svg'
-                }
-              />
-              <img
-                className={s.assetsWeb3Mobile}
-                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_mobile4.png"
-              />
-            </div> */}
-            {/* <div className={s.assetsWeb3Mobile}> */}
             <WebAssetBlock className={s.webAssetsLegend}>
               <p>1. Property Tokenization</p>
               <p>2. Purchasing Property Tokens</p>
@@ -503,7 +473,7 @@ const HomePage: FC = () => {
             <WebAssetBlock className={s.binaryxMarketplace}>
               <WebAssetCard
                 imageSrc={
-                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-icons/binaryx-logo.svg'
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/binaryx-logo.svg'
                 }
                 imageDescription={'Binaryx Marketplace'}
               />
@@ -511,74 +481,137 @@ const HomePage: FC = () => {
             <WebAssetBlock className={s.propertyTokenization}>
               <WebAssetCard
                 imageSrc={
-                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-icons/property.svg'
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property.svg'
                 }
                 imageDescription={'Property'}
               />
               <WebAssetCard
                 imageSrc={
-                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-icons/property-tokens.svg'
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property-tokens.svg'
                 }
                 imageDescription={'Property Tokens'}
               />
               <img
-                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-arrows/Vector-1.svg"
-                className={classNames(s.vector1, s.vectors)}
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-arrows/Vector-1.svg"
+                className={classNames(s.vector1, s.vectorsDesktop)}
+              />
+              <img
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/mobile/web3-arrows/Vector-1.svg"
+                style={{ position: 'absolute', top: '26%', left: '28%' }}
+              />
+              <img
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/mobile/web3-arrows/Vector-2.svg"
+                style={{
+                  position: 'absolute',
+                  top: '17%',
+                  left: '2%',
+                  scale: '1.1 0.95',
+                }}
               />
             </WebAssetBlock>
             <WebAssetBlock className={s.purchasingPropertyTokens}>
               <WebAssetCard
                 imageSrc={
-                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-icons/propety-token.svg'
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/propety-token.svg'
                 }
                 imageDescription={'Property Token'}
               />
               <WebAssetCard
                 imageSrc={
-                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-icons/stablecoins.svg'
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/stablecoins.svg'
                 }
                 imageDescription={'Stablecoins'}
               />
               <WebAssetCard
                 imageSrc={
-                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-icons/users.svg'
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/users.svg'
                 }
                 imageDescription={'Users'}
               />
               <img
-                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-arrows/Vector-2.svg"
-                className={classNames(s.vector2, s.vectors)}
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-arrows/Vector-2.svg"
+                className={classNames(s.vector2, s.vectorsDesktop)}
               />
               <img
-                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-arrows/Vector-3.svg"
-                className={classNames(s.vector3, s.vectors)}
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-arrows/Vector-3.svg"
+                className={classNames(s.vector3, s.vectorsDesktop)}
+              />
+              <img
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/mobile/web3-arrows/Vector-3.svg"
+                style={{
+                  position: 'absolute',
+                  bottom: '6%',
+                  right: '-14%',
+                  scale: '1.3 .8',
+                }}
+              />
+              <img
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/mobile/web3-arrows/Vector-4.svg"
+                style={{
+                  position: 'absolute',
+                  right: '-8%',
+                  bottom: '23%',
+                  scale: '1.2 .8',
+                }}
+              />
+              <img
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/mobile/web3-arrows/Vector-5.svg"
+                style={{
+                  position: 'absolute',
+                  bottom: '36%',
+                  left: '50%',
+                  scale: '.9 .77',
+                }}
+              />
+              <img
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/mobile/web3-arrows/Vector-6.svg"
+                style={{
+                  position: 'absolute',
+                  bottom: '8%',
+                  left: '15%',
+                  scale: '1 0.85',
+                }}
               />
             </WebAssetBlock>
             <WebAssetBlock className={s.claimingRewards}>
               <WebAssetCard
                 imageSrc={
-                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-icons/property-rent.svg'
+                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property-rent.svg'
                 }
                 imageDescription={'Property Rent'}
               />
               <img
-                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-arrows/Vector-4.svg"
-                className={classNames(s.vector4, s.vectors)}
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-arrows/Vector-4.svg"
+                className={classNames(s.vector4, s.vectorsDesktop)}
               />
               <img
-                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-arrows/Vector-5.svg"
-                className={classNames(s.vector5, s.vectors)}
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-arrows/Vector-5.svg"
+                className={classNames(s.vector5, s.vectorsDesktop)}
               />
               <img
-                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/web3Assets/web3-arrows/Vector-6.svg"
-                className={classNames(s.vector6, s.vectors)}
+                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-arrows/Vector-6.svg"
+                className={classNames(s.vector6, s.vectorsDesktop)}
               />
-              <p className={s.rent}>Rent Goes To Smart-Contact</p>
-              <p className={s.claim}>Claim</p>
-              <p className={s.sentMoney}>Sent money</p>
+              <p
+                className={s.rent}
+                style={{ rotate: '-90deg', bottom: '250%', right: '-54%' }}
+              >
+                Rent Goes To Smart-Contact
+              </p>
+              <p
+                className={s.claim}
+                style={{ rotate: '-90deg', bottom: '250%', right: '-12%' }}
+              >
+                Claim
+              </p>
+              <p
+                className={s.sentMoney}
+                style={{ rotate: '-90deg', bottom: '250%', right: '-27%' }}
+              >
+                Sent money
+              </p>
             </WebAssetBlock>
           </div>
-          {/* </div> */}
         </section>
         <section
           className={classNames(s.timeline, s.section, s.wrapper, 'section')}
