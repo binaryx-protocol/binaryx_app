@@ -1,7 +1,6 @@
 import { atom } from 'jotai'
-import {ethers} from "ethers";
 
-type TAccountAddress = string
+type AccountAddress = string
 const KNOWN_CHAINS = {
     '0x1': 'Ethereum Main Network (Mainnet)',
     '0x3': 'Ropsten',
@@ -11,15 +10,15 @@ const KNOWN_CHAINS = {
     '0x66eeb': 'Arbitrum (Rinkeby)',
 }
 
-type TKnownChainId = keyof typeof KNOWN_CHAINS
+type KnownChainId = keyof typeof KNOWN_CHAINS
 
-type TMetaMaskState = {
-    accounts: TAccountAddress[] | null
-    chainId: TKnownChainId | null
+type MetaMaskState = {
+    accounts: AccountAddress[] | null
+    chainId: KnownChainId | null
     isConnected: boolean | null
 }
 
-export const $metaMaskState = atom<TMetaMaskState>({
+export const $metaMaskState = atom<MetaMaskState>({
     accounts: null,
     chainId: null,
     isConnected: null,
@@ -28,7 +27,7 @@ export const $metaMaskState = atom<TMetaMaskState>({
 export const $onBrowserInit = atom(
     null,
     (get, set) => {
-        const update = (object: Partial<TMetaMaskState>) => {
+        const update = (object: Partial<MetaMaskState>) => {
             const prevState = get($metaMaskState)
             set(
                 $metaMaskState,
@@ -39,8 +38,8 @@ export const $onBrowserInit = atom(
 
         update({ isConnected: ethereum.isConnected() })
 
-        const onAccountsConnectOrDisconnect = (accounts: TAccountAddress[]) => update({ accounts })
-        const onChainIdChange = (chainId: TKnownChainId) => update({ chainId })
+        const onAccountsConnectOrDisconnect = (accounts: AccountAddress[]) => update({ accounts })
+        const onChainIdChange = (chainId: KnownChainId) => update({ chainId })
 
         ethereum.on('accountsChanged', onAccountsConnectOrDisconnect);
         ethereum.on('chainChanged', onChainIdChange);
