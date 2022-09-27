@@ -1,54 +1,65 @@
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&display=swap');
-
 .block {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-  place-items: center;
-  align-items: center;
-  height: 100vh;
+  place-content: center flex-start;
+  min-height: 100vh;
   color: #1e1e1e;
-  border-bottom: 1px solid #1e1e1e;
-  font-family: 'Manrope', sans-serif;
 }
 
-.description {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
-  width: 500px;
-  height: 328px;
+.infoBlock {
+  max-width: 500px;
 }
 
 .title {
-  font-size: 36px;
+  font-size: var(--font-size_medium);
   font-weight: 300;
   color: inherit;
+  margin: 10px 0;
 }
 
 .weAreHere {
-  color: rgba(1, 155, 186, 1);
-  font-size: 18px;
-  line-height: 25px;
-  text-transform: uppercase;
+  color: var(--font-color_blue);
+  margin: 0;
 }
 
 .btnWaitlist {
-  color: inherit;
-  border: 1px solid rgba(34, 34, 34, 1);
+  max-width: 260px;
+  min-height: 60px;
+  border: 1px solid var(--border-color_dark);
+  border-radius: var(--border-radius_default);
   background-color: transparent;
   font-size: 20px;
-  font-weight: 300;
+  font-weight: 500;
   font-family: inherit;
-  line-height: 20px;
-  position: relative;
-  top: 58px;
-  padding: 20px 50px;
   cursor: pointer;
+  position: relative;
+  top: 100px;
+  color: #000;
 }
 
-.imageBlock {
-  height: 512px;
-  width: clamp(45ch, 50%, 75ch);
-}
+@media screen and (max-width: 768px) {
+  .block {
+    place-content: space-between;
+  }
 
+  .weAreHere {
+    font-size: 16px;
+    margin: 0 0 5px 0;
+  }
+
+  .title {
+    font-size: 24px;
+    margin: 0;
+  }
+
+  .btnWaitlist {
+    max-width: 100%;
+    font-size: 18px;
+    top: auto;
+    bottom: 50px;
+  }
+
+  .infoBlock {
+    margin-top: 85px;
+    font-size: 14px;
+  }
+}

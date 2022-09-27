@@ -3,28 +3,31 @@ import s from './styles.module.scss';
 
 type Props = {
   heading: string;
-  imageSrc: string;
-  alt?: string;
+  preTitle?: string;
   children?: ReactChild | ReactChild[];
+  id?: string;
+  onButtonClick?: () => void;
+  sectionHeight?: number | null;
 };
 
 const SectionElement: FC<Props> = ({
   heading,
-  imageSrc,
-  alt,
+  preTitle,
+  id,
   children,
-}: Props) => (
-  <main className={s.block}>
-    <div className={s.description}>
-      <p className={s.weAreHere}>We are here to:</p>
+  onButtonClick,
+  sectionHeight
+}) => (
+  <section id={id} className={s.block} style={{ minHeight: sectionHeight }}>
+    <div className={s.infoBlock}>
+      {preTitle && <p className={s.weAreHere}>{preTitle}</p>}
       <h2 className={s.title}>{heading}</h2>
       {children}
-      <button type="submit" className={s.btnWaitlist}>
-        Join waitlist
-      </button>
     </div>
-    <img className={s.imageBlock} src={imageSrc} alt={alt} />
-  </main>
+    <button type="submit" className={s.btnWaitlist} onClick={onButtonClick}>
+      Join waitlist
+    </button>
+  </section>
 );
 
 export default SectionElement;

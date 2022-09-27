@@ -5,8 +5,8 @@ import { Container } from '@mui/material';
 import NavSocialImage from '../NavSocialImage';
 
 type Props = {
-  hideSocial?: boolean
-}
+  hideSocial?: boolean;
+};
 
 const LandingNav: FC<Props> = ({ hideSocial }) => {
   return (

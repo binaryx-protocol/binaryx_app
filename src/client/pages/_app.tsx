@@ -4,8 +4,7 @@ import AdminMenu from 'components/admin/AdminMenu';
 import { ApolloProvider } from '@apollo/client';
 import client from '../app/apollo-client';
 import { createTheme, ThemeProvider } from '@mui/material';
-// import Home from './home';
-// import Navigation from 'components/navigation';
+import '../app/styles/globalVariables.css';
 import {Provider, useSetAtom, useAtomValue} from "jotai";
 import * as metaMaskModel from "../app/models/metaMaskModel";
 import * as featureFlagsModel from "../app/models/featureFlagsModel";
@@ -25,6 +24,7 @@ const theme = createTheme({
 
 const MyApp: FC<Props> = ({ Component, pageProps }) => {
   const [showAdminMenu, setShowAdminMenu] = useState(false)
+  const includeHubSpotTrackingScript = process.env.NODE_ENV === "production"
   const $featureFlags = useAtomValue(featureFlagsModel.$featureFlags)
   const $metaMaskState = useAtomValue(metaMaskModel.$metaMaskState)
   const $onBrowserInit = useSetAtom(metaMaskModel.$onBrowserInit)
@@ -46,28 +46,27 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
   }, []);
 
   return (
-      <Provider>
-        <ApolloProvider client={client}>
-          <ThemeProvider theme={theme}>
-            {/*<meta name="viewport" content="initial-scale=1, width=device-width" />*/}
-            <CssBaseline />
-            <link
-                rel="stylesheet"
-                href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-            />
-            <link
-                rel="stylesheet"
-                href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&display=swap"
-            />
-            {/* <Navigation /> */}
-            {/* <Home data={''} /> */}
-            <Component {...pageProps} />
-            {
-                showAdminMenu && <AdminMenu />
-            }
-          </ThemeProvider>
-        </ApolloProvider>
-      </Provider>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
+        {/*<meta name="viewport" content="initial-scale=1, width=device-width" />*/}
+        <CssBaseline />
+        {/* <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        /> */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&display=swap"
+        />
+        {/* <Navigation /> */}
+        {/* <Home data={''} /> */}
+        <Component {...pageProps} />
+        {
+          showAdminMenu && <AdminMenu />
+        }
+      </ThemeProvider>
+      {includeHubSpotTrackingScript && <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/22710849.js" />}
+    </ApolloProvider>
   );
 };
 
