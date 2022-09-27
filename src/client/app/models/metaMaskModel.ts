@@ -83,15 +83,33 @@ export const $onBrowserInit = atom(
         //         console.error(err);
         //     });
 
-        const token = {
-            type: 'ERC20',
-            options: {
-                address: '0x4e8C6307AF6fC893D76dfAD9198bcE29601Db057',
-                symbol: 'BNRX',
-                decimals: 18,
-                image: '',
-            },
-        }
+        // const token = {
+        //     type: 'ERC20',
+        //     options: {
+        //         address: '0x4e8C6307AF6fC893D76dfAD9198bcE29601Db057',
+        //         symbol: 'BNRX',
+        //         decimals: 18,
+        //         image: '',
+        //     },
+        // }
+        //
+        // const token1155 = {
+        //     type: 'ERC1155',
+        //     options: {
+        //         address: '0x0165878A594ca255338adfa4d48449f69242Eb8F',
+        //         symbol: 'M1155',
+        //         decimals: 1,
+        //         image: '',
+        //     },
+        // }
+        //
+        // ethereum.request({ method: 'wallet_watchAsset', params: token1155 })
+        //     .then((args) => {
+        //         console.log('wallet_watchAsset', args)
+        //     })
+        //     .catch((err) => {
+        //         console.error(err);
+        //     });
 
         // ethereum.request({ method: 'wallet_watchAsset', params: token })
         //     .then((args) => {

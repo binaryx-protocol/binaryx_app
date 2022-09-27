@@ -30,6 +30,10 @@ const SandboxPage = () => {
             // An event triggered whenever anyone transfers to someone else
             "event Transfer(address indexed from, address indexed to, uint amount)"
         ];
+        const erc1155Abi = [
+            // Some details about the token
+            "function balanceOf(address account, uint256 id) public view virtual override returns (uint256)",
+        ];
         const managerAbi = [
             "function investUsingUsdt(uint256 amountToBuy) public",
         ];
@@ -42,27 +46,34 @@ const SandboxPage = () => {
 
 
         //
-        const p1Token = new ethers.Contract(address.p1Token, erc20Abi, provider);
-        const p1TokenSigned = p1Token.connect(provider.getSigner())
-
-        const p1TokenBalance = await p1TokenSigned.balanceOf(address.manager)
-        console.log('p1TokenBalance', p1TokenBalance.toString())
+        // const p1Token = new ethers.Contract(address.p1Token, erc20Abi, provider);
+        // const p1TokenSigned = p1Token.connect(provider.getSigner())
+        //
+        // const p1TokenBalance = await p1TokenSigned.balanceOf(address.manager)
+        // console.log('p1TokenBalance', p1TokenBalance.toString())
+        //
+        // //
+        // const usdtfToken = new ethers.Contract(address.usdtfToken, erc20Abi, provider);
+        // const usdtfTokenSigned = usdtfToken.connect(provider.getSigner())
+        //
+        // const amount = BigNumber.from(50).mul(bn1e18)
+        //
+        // const approve = await usdtfTokenSigned.approve(address.manager, amount.toString())
+        // console.log('approve', approve)
+        //
+        // //
+        // const manager = new ethers.Contract(address.manager, managerAbi, provider);
+        // const managerSigned = manager.connect(provider.getSigner())
+        //
+        // const investUsingUsdt = await managerSigned.investUsingUsdt(amount.toString())
+        // console.log('investUsingUsdt', investUsingUsdt)
 
         //
-        const usdtfToken = new ethers.Contract(address.usdtfToken, erc20Abi, provider);
-        const usdtfTokenSigned = usdtfToken.connect(provider.getSigner())
+        const m1155 = new ethers.Contract('0x0165878A594ca255338adfa4d48449f69242Eb8F', erc1155Abi, provider);
+        const m1155Signed = m1155.connect(provider.getSigner())
 
-        const amount = BigNumber.from(50).mul(bn1e18)
-
-        const approve = await usdtfTokenSigned.approve(address.manager, amount.toString())
-        console.log('approve', approve)
-
-        //
-        const manager = new ethers.Contract(address.manager, managerAbi, provider);
-        const managerSigned = manager.connect(provider.getSigner())
-
-        const investUsingUsdt = await managerSigned.investUsingUsdt(amount.toString())
-        console.log('investUsingUsdt', investUsingUsdt)
+        const balance = await m1155Signed.balanceOf('0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266', 2)
+        console.log('balance', balance.toString())
     }
 
     useEffect(() => {
