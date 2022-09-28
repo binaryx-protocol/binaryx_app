@@ -109,7 +109,7 @@ export class ViewController {
   @Get('sandbox')
   public async showSandbox(@Req() req: Request, @Res() res: Response) {
     const parsedUrl = parse(req.url, true);
-    const serverSideProps = {};
+    const serverSideProps = getPublicEnv();
 
     await this.viewService
       .getNextServer()
@@ -156,3 +156,11 @@ export class ViewController {
       .render(req, res, parsedUrl.pathname, parsedUrl.query);
   }
 }
+
+const getPublicEnv = (): Record<string, string> =>
+  Object.entries(process.env).reduce((acc, [name, value]) => {
+    if (!!name.match(/PUBLIC/)) {
+      acc[name] = value;
+    }
+    return acc;
+  }, {});

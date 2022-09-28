@@ -39,6 +39,7 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
       <Provider>
         <ApolloProvider client={client}>
           <ThemeProvider theme={theme}>
+            <script type="application/json" id="SSR_pageProps">{JSON.stringify(pageProps)}</script>
             {/*<meta name="viewport" content="initial-scale=1, width=device-width" />*/}
             <CssBaseline />
             {/* <link

@@ -1,4 +1,6 @@
 import { atom } from 'jotai'
+import {$rpcConfig} from "./rpcConfigModel";
+import {completeAction, isDoneAction} from "../utils/isDoneActionLs";
 
 type AccountAddress = string
 const KNOWN_CHAINS = {
@@ -27,6 +29,21 @@ export const $metaMaskState = atom<MetaMaskState>({
 export const $onBrowserInit = atom(
     null,
     (get, set) => {
+        set($walletConnect)
+    }
+)
+
+export const $walletConnect = atom(
+    null,
+    (get, set) => {
+        console.log('$walletConnect')
+
+        const rpcConfig = get($rpcConfig)
+        if (rpcConfig === null) {
+            console.error('rpcConfig is missing')
+            return
+        }
+
         const update = (object: Partial<MetaMaskState>) => {
             const prevState = get($metaMaskState)
             set(
@@ -34,85 +51,58 @@ export const $onBrowserInit = atom(
                 { ...prevState, ...object }
             )
         }
-        const ethereum = window.ethereum
 
-        update({ isConnected: ethereum.isConnected() })
+        const main = async () => {
+            const ethereum = window.ethereum
+            update({ isConnected: ethereum.isConnected() })
+            const onAccountsConnectOrDisconnect = (accounts: AccountAddress[]) => update({ accounts })
+            const onChainIdChange = (chainId: KnownChainId) => update({ chainId })
 
-        const onAccountsConnectOrDisconnect = (accounts: AccountAddress[]) => update({ accounts })
-        const onChainIdChange = (chainId: KnownChainId) => update({ chainId })
+            await ethereum.request({ method: 'eth_requestAccounts' })
+                .then(onAccountsConnectOrDisconnect)
+                .catch((err) => {
+                    if (err.code === 4001) {
+                        // EIP-1193 userRejectedRequest error
+                        // If this happens, the user rejected the connection request.
+                        console.log('Please connect to MetaMask.');
+                    } else {
+                        console.error(err);
+                    }
+                });
 
-        ethereum.on('accountsChanged', onAccountsConnectOrDisconnect);
-        ethereum.on('chainChanged', onChainIdChange);
+            if (!isDoneAction('addRpc')) {
+                await ethereum.request({ method: 'wallet_addEthereumChain', params: [rpcConfig.chain] })
+                    .then(() => completeAction('addRpc'))
+                    .catch((err) => {
+                        console.error(err);
+                    });
 
-        ethereum.request({ method: 'eth_chainId' })
-            .then(onChainIdChange)
+            }
 
-        ethereum.request({ method: 'eth_accounts' })
-            .then(onAccountsConnectOrDisconnect)
+            if (!isDoneAction('addBnrxAsset')) {
+                await ethereum.request({ method: 'wallet_watchAsset', params: rpcConfig.bnrxAsset })
+                    .then(() => completeAction('addBnrxAsset'))
+                    .catch((err) => {
+                        console.error(err);
+                    });
+            }
 
-        ethereum.request({ method: 'eth_requestAccounts' })
-            .then(onAccountsConnectOrDisconnect)
-            .catch((err) => {
-                if (err.code === 4001) {
-                    // EIP-1193 userRejectedRequest error
-                    // If this happens, the user rejected the connection request.
-                    console.log('Please connect to MetaMask.');
-                } else {
-                    console.error(err);
-                }
-            });
+            await ethereum.request({ method: 'eth_accounts' })
+                .then(onAccountsConnectOrDisconnect)
 
-        const chain = {
-            chainId: `0x${Number(421611).toString(16)}`,
-            blockExplorerUrls: ['https://rinkeby-explorer.arbitrum.io/#/'],
-            chainName: 'Arbitrum Rinkeby',
-            // iconUrls: [],
-            nativeCurrency: {
-                name: 'ETH',
-                symbol: 'ETH',
-                decimals: 18
-            },
-            rpcUrls: ['https://rinkeby.arbitrum.io/rpc']
+            await ethereum.request({ method: 'eth_chainId' })
+                .then(onChainIdChange)
+
+            ethereum.on('accountsChanged', onAccountsConnectOrDisconnect);
+            ethereum.on('chainChanged', onChainIdChange);
         }
 
-        // ethereum.request({ method: 'wallet_addEthereumChain', params: [chain] })
-        //     .then((args) => {
-        //         console.log('wallet_addEthereumChain', args)
-        //     })
-        //     .catch((err) => {
-        //         console.error(err);
-        //     });
-
-        const token = {
-            type: 'ERC20',
-            options: {
-                address: '0x4e8C6307AF6fC893D76dfAD9198bcE29601Db057',
-                symbol: 'BNRX',
-                decimals: 18,
-                image: '',
-            },
-        }
-
-        // ethereum.request({ method: 'wallet_watchAsset', params: token })
-        //     .then((args) => {
-        //         console.log('wallet_watchAsset', args)
-        //     })
-        //     .catch((err) => {
-        //         console.error(err);
-        //     });
+        main()
 
         // NOTE: more docs at https://ethereum.org/en/developers/docs/apis/json-rpc/#web3_clientversion
-        // ethereum.request({ method: 'web3_clientVersion' })
-        //     .then((args) => {
-        //         console.log('web3_clientVersion', args)
-        //     })
-        //     .catch((err) => {
-        //         console.error(err);
-        //     });
 
         // TODO handle connect & disconnect
         // TODO handle https://docs.metamask.io/guide/rpc-api.html#unrestricted-methods wallet_registerOnboarding
         // TODO wallet_switchEthereumChain https://docs.metamask.io/guide/rpc-api.html#usage-with-wallet-switchethereumchain
-
     }
 )
