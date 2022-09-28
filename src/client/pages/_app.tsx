@@ -5,6 +5,7 @@ import { ApolloProvider } from '@apollo/client';
 import client from '../app/apollo-client';
 import { createTheme, ThemeProvider } from '@mui/material';
 import '../app/styles/globalVariables.css';
+import {Provider} from "jotai";
 
 type Props = {
   Component: any;
@@ -35,27 +36,29 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
   }, []);
 
   return (
-    <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
-        {/*<meta name="viewport" content="initial-scale=1, width=device-width" />*/}
-        <CssBaseline />
-        {/* <link
+      <Provider>
+        <ApolloProvider client={client}>
+          <ThemeProvider theme={theme}>
+            {/*<meta name="viewport" content="initial-scale=1, width=device-width" />*/}
+            <CssBaseline />
+            {/* <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
         /> */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&display=swap"
-        />
-        {/* <Navigation /> */}
-        {/* <Home data={''} /> */}
-        <Component {...pageProps} />
-        {
-          showAdminMenu && <AdminMenu />
-        }
-      </ThemeProvider>
-      {includeHubSpotTrackingScript && <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/22710849.js" />}
-    </ApolloProvider>
+            <link
+                rel="stylesheet"
+                href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&display=swap"
+            />
+            {/* <Navigation /> */}
+            {/* <Home data={''} /> */}
+            <Component {...pageProps} />
+            {
+                showAdminMenu && <AdminMenu />
+            }
+          </ThemeProvider>
+          {includeHubSpotTrackingScript && <script type="text/javascript" id="hs-script-loader" async defer src="//js-na1.hs-scripts.com/22710849.js" />}
+        </ApolloProvider>
+      </Provider>
   );
 };
 
