@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Navigation from './components/HomeNavigation';
 import { FC, useEffect, useRef, useState } from 'react';
 import SectionElement from './components/SectionElement';
