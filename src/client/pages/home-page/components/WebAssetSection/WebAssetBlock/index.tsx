@@ -5,6 +5,7 @@ import s from './styles.module.scss';
 type WebAssetBlock = {
   className?: string;
   children?: ReactChild | ReactChild[];
+  style?: string;
 };
 
 const WebAssetBlock: FC<WebAssetBlock> = ({ className, children }) => {
