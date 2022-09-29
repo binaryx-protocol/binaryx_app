@@ -6,13 +6,7 @@ import TeamBlock from './components/TeamBlock';
 import NavSocialImage from './components/NavSocialImage';
 import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
 import lottie from 'lottie-web';
-import BackgroundVisuals from './components/BackgroundVisuals';
 import anim1 from './animations/B1.json';
-import anim2 from './animations/B2.json';
-import anim3 from './animations/B3.json';
-import anim4 from './animations/B4.json';
-// import WebAssetBlock from './components/WebAssetSection/WebAssetBlock';
-// import WebAssetCard from './components/WebAssetSection/WebAssetCard';
 import classNames from 'classnames';
 import DescriptionBlock from './components/DescriptionBlock';
 import getCookie from 'utils/getCookie';
@@ -35,7 +29,7 @@ const HomePage: FC = () => {
     section4Ref.current,
   ];
   const currentSectionRef = useRef(0);
-  const [bgOverlay, setBgOverlay] = useState({ isBgOverlayActive: false, isBgAnimationActive: false, isBgOverlayDark: false })
+  const [bgOverlay, setBgOverlay] = useState({ isBgOverlayActive: true, isBgAnimationActive: true, isBgOverlayDark: false })
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -52,7 +46,7 @@ const HomePage: FC = () => {
 
           (window as any).fullpageObject = new fullpage('#main', {
             //options here
-            autoScrolling: true,
+            autoScrolling: false,
             scrollHorizontally: true,
             scrollingSpeed: 1500,
             fitToSectionDelay: 0,
@@ -70,6 +64,7 @@ const HomePage: FC = () => {
                 [1, 2, 3].includes(nextSection) && direction === 'up' ? 1100 : 0;
               animation?.goToAndPlay(nextValue);
               console.log('nextSection', nextSection);
+              console.log('nextAnimation', animation);
 
               // setIsBgOverlayActive(() => nextSection !== 0);
               // setIsBgAnimationActive(() => nextSection !== 4);
@@ -82,6 +77,10 @@ const HomePage: FC = () => {
               });
             },
             afterLoad: () => {
+              const main = document.getElementById("main");
+              main.style.height = "100vh";
+              main.style.overflow = "scroll";
+
               document.querySelector('.fp-watermark')?.remove();
 
               setSectionHeight(window.innerHeight);
@@ -96,7 +95,7 @@ const HomePage: FC = () => {
     const isDesktop = window.innerWidth > 768;
     return lottie.loadAnimation({
       container,
-      renderer: 'canvas',
+      renderer: new URLSearchParams(window.location.search).get("renderer") as 'svg' || 'svg',
       loop: false,
       autoplay,
       animationData,
@@ -112,15 +111,14 @@ const HomePage: FC = () => {
       return 0;
     }
 
-    if (window.scrollY <= 5) {
-      return 0;
-    }
-
-    // let result =
+    const main = document.getElementById("main");
 
     for (const [index, section] of getSections().entries() as any) {
-      const scrollPosition = window.scrollY - (section?.offsetTop - 95);
-      if (scrollPosition > 0 && scrollPosition < section.clientHeight) {
+      const scrollPosition = main.scrollTop;
+      if (scrollPosition <= 5) {
+        return 0;
+      }
+      if (scrollPosition < section.clientHeight + section?.offsetTop) {
         if (index === 3) {
           return 3;
         }
@@ -128,7 +126,25 @@ const HomePage: FC = () => {
       }
     }
 
-    return 3;
+    return 4;
+
+    // if (window.scrollY <= 5) {
+    //   return 0;
+    // }
+
+    // let result =
+
+    // for (const [index, section] of getSections().entries() as any) {
+    //   const scrollPosition = window.scrollY - (section?.offsetTop - 95);
+    //   if (scrollPosition > 0 && scrollPosition < section.clientHeight) {
+    //     if (index === 3) {
+    //       return 3;
+    //     }
+    //     return index + 1;
+    //   }
+    // }
+
+    // return 3;
   };
 
   function getCurrentSectionV2() {
@@ -139,16 +155,18 @@ const HomePage: FC = () => {
     if (animationIndex === 0) {
       return;
     }
-    console.log('playanimation start ' + animationIndex);
 
     const animation = animations.current[animationIndex];
     const section = getSections()[animationIndex - 1];
     const offsetTop = section?.offsetTop;
     const height = section?.clientHeight;
 
+    console.log('playanimation start ' + animationIndex, section, animation);
+
     if (section && animation) {
-      const scrollPosition = window.scrollY - (offsetTop - 95);
-      const scrollPercent = (scrollPosition * 100) / height;
+      // const scrollPosition = window.scrollY - (offsetTop);
+      const scrollPosition = document.getElementById("main").scrollTop;
+      const scrollPercent = ((scrollPosition - offsetTop) * 100) / height;
 
       const maxFrames = animation.totalFrames;
       let frame = (maxFrames * scrollPercent) / 100;
@@ -160,11 +178,11 @@ const HomePage: FC = () => {
       animation.goToAndStop(frame, true);
 
       console.log(
-        'playanimation ' + animationIndex,
-        frame,
-        maxFrames,
-        scrollPosition,
-        scrollPercent,
+        'playanimation ' + animationIndex + "\n",
+        `frame: ${frame} \n`,
+        `maxFrames: ${maxFrames}\n`,
+        `scrollPosition: ${scrollPosition}\n`,
+        `scrollPercent: ${scrollPercent}`
       );
     }
   };
@@ -175,42 +193,125 @@ const HomePage: FC = () => {
       container: document.getElementById('animationContainer0'),
       autoplay: true,
     });
+    console.log("anim1", anim1);
+    import("./animations/B2.json")
+      .then((module) => {
+        const anim2 = module.default;
+        console.log("anim2", anim2);
+        animations.current[1] = initAnimation({
+          animationData: anim2,
+          container: document.getElementById('animationContainer1'),
+          autoplay: false,
+        });
+      })
+      .then(() => import("./animations/B3.json"))
+      .then((module) => {
+        const anim3 = module.default;
+        animations.current[2] = initAnimation({
+          animationData: anim3,
+          container: document.getElementById('animationContainer2'),
+          autoplay: false,
+        });
+      })
+      .then(() => import("./animations/B4.json"))
+      .then((module) => {
+        const anim4 = module.default;
+        animations.current[3] = initAnimation({
+          animationData: anim4,
+          container: document.getElementById('animationContainer3'),
+          autoplay: false,
+        });
+      })
 
-    animations.current[1] = initAnimation({
-      animationData: anim2,
-      container: document.getElementById('animationContainer1'),
-      autoplay: false,
-    });
-    animations.current[2] = initAnimation({
-      animationData: anim3,
-      container: document.getElementById('animationContainer2'),
-      autoplay: false,
-    });
-    animations.current[3] = initAnimation({
-      animationData: anim4,
-      container: document.getElementById('animationContainer3'),
-      autoplay: false,
-    });
+  }
+
+  function changeWheelSpeed(container, speedY) {
+    var scrollY = 0;
+
+    var handleScrollReset = function() {
+      scrollY = container.scrollTop;
+    };
+    var handleMouseWheel = function(e) {
+      e.preventDefault();
+      scrollY += speedY * e.deltaY
+      if (scrollY < 0) {
+        scrollY = 0;
+      } else {
+        var limitY = container.scrollHeight - container.clientHeight;
+        if (scrollY > limitY) {
+          scrollY = limitY;
+        }
+      }
+      container.scrollTop = scrollY;
+
+      const currentSection = getCurrentSection();
+      const isBgOverlayDark = currentSection >= 4;
+      // if (isBgOverlayDark !== bgOverlay.isBgOverlayDark) {
+      //   setBgOverlay({
+      //     isBgOverlayActive: true,
+      //     isBgAnimationActive: true,
+      //     isBgOverlayDark
+      //   });
+      console.log("scroll event", isBgOverlayDark);
+      // }
+    };
+
+    container.addEventListener('mouseup', handleScrollReset, { passive: false });
+    container.addEventListener('mousedown', handleScrollReset, { passive: false });
+    container.addEventListener('mousewheel', handleMouseWheel, { passive: false });
+
+    var removed = false;
+
+    return function() {
+      if (removed) {
+        return;
+      }
+
+      container.removeEventListener('mouseup', handleScrollReset, { passive: false });
+      container.removeEventListener('mousedown', handleScrollReset, { passive: false });
+      container.removeEventListener('mousewheel', handleMouseWheel, { passive: false });
+
+      removed = true;
+    };
   }
 
   useEffect(() => {
-
+    const main = document.getElementById("main");
+    changeWheelSpeed(main, 0.1)
     initAnimations();
 
-    document.addEventListener('scroll', (event) => {
+    main.addEventListener('scroll', (event) => {
       event.preventDefault();
       event.stopPropagation();
       const currentSection = getCurrentSection();
-      if (currentSection <= 1) {
-        return;
-      }
+      // if (currentSection <= 1) {
+      //   return;
+      // }
       updateContainerStyles();
 
+      console.log("currentSection", currentSection);
       playAnimation(currentSection);
+      updateOverlayStyles();
     });
 
     updateContainerStyles();
   }, []);
+
+  function updateOverlayStyles() {
+    const overlay = document.getElementById("bg-overlay");
+    const section = getSections()[3];
+    const scrollPosition = document.getElementById("main").scrollTop;
+    const scrollPercent = ((scrollPosition - section.offsetTop) * 100) / section.clientHeight;
+    overlay.style.transition = "none";
+    if (scrollPercent > 0) {
+      overlay.style.backgroundColor = `rgba(27, 27, 27, ${scrollPercent / 100}`;
+      const animationOpacity = 1 - scrollPercent / 100;
+      container3.current.style.opacity = animationOpacity
+    } else {
+      overlay.style.backgroundColor = "rgba(27, 27, 27, 0)";
+      container3.current.style.opacity = 1;
+    }
+  }
 
   function handleSectionScroll() {
     const currentSection = getCurrentSection();
@@ -319,6 +420,7 @@ const HomePage: FC = () => {
     <>
       <Navigation isDark={bgOverlay.isBgOverlayDark} />
       <div
+        id="bg-overlay"
         className={classNames(s.bgOverlay, {
           [s.bgOverlayActive]: bgOverlay.isBgOverlayActive,
           [s.bgOverlayDark]: bgOverlay.isBgOverlayDark,
@@ -360,7 +462,7 @@ const HomePage: FC = () => {
         ref={container3}
         id="animationContainer3"
       />
-      <main id="main" className={s.heroPage}>
+      <main id="main" className={s.heroPage} style={{ height: "100vh", overflow: "scroll" }}>
         <div
           id="section1"
           ref={section1Ref}
