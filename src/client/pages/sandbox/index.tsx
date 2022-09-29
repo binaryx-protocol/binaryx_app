@@ -7,7 +7,8 @@ import Button from "@mui/material/Button";
 
 const bn1e18 = BigNumber.from(10).pow(18);
 
-const SandboxPage = () => {
+const SandboxPage = (...args) => {
+    console.log('args', args)
     const $featureFlags = useAtomValue(featureFlagsModel.$featureFlags)
     const $metaMaskState = useAtomValue(metaMaskModel.$metaMaskState)
     const $onBrowserInit = useSetAtom(metaMaskModel.$onBrowserInit)
