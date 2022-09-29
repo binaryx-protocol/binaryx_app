@@ -8,7 +8,8 @@ const getDockerRunCmdScalableVersion = (config, repositoryTag, envFileName) => `
 sudo docker run -it -d --rm\\
       -p 80:3000\\
       -v /home/ec2-user/shared/${envFileName}:/shared/.env \\
-      -e DEBUG_ENV_FILE=${envFileName}\\
+      -e DEBUG_envFileName=${envFileName}\\
+      -e DEBUG_repositoryTag=${repositoryTag}\\
       --ulimit nofile=65535:65535 --name ${config.containerName}\\
       ${config.accountId}/${config.repositoryName}:${repositoryTag}
     `
@@ -34,16 +35,30 @@ const getSign = async (imageTag) => {
 }
 
 async function deployStaging(imageTag){
-
-
     const sign = await getSign(imageTag)
-
     try {
         await deployScalableImage(config, servers['i2'], imageTag, '.i2_app_env')
+    } catch (e) {
+        console.log(config, { text: `i2: deploy -> critical error: ${e.toString()}. ${sign}` })
+        console.log('e', e)
+    }
+}
+
+async function deployProduction(imageTag){
+    const sign = await getSign(imageTag)
+    try {
+        await deployScalableImage(config, servers['i1'], imageTag, '.i1_app_env')
     } catch (e) {
         console.log(config, { text: `i1: deploy -> critical error: ${e.toString()}. ${sign}` })
         console.log('e', e)
     }
+}
+
+async function serverInfo(server, config, envFile){
+    await runRemotely(server, `ls -la ~/shared`).catch(console.error)
+    await runRemotely(server, `cat ~/shared/${envFile}`).catch(console.error)
+    await runRemotely(server, `sudo docker exec -it ${config.containerName} "sh env"`).catch(console.error)
+    await runRemotely(server, `sudo docker logs ${config.containerName}`).catch(console.error)
 }
 
 module.exports = {
@@ -51,4 +66,6 @@ module.exports = {
     deployScalableImage,
     getSign,
     deployStaging,
+    deployProduction,
+    serverInfo,
 };

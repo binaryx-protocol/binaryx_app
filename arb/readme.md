@@ -18,5 +18,5 @@ npx hardhat run scripts/BNRXDeploy.js
 
 ```
 npx hardhat compile
-npx hardhat run scripts/BNRXDeploy.js  --network l2
+npx hardhat run scripts/BNRXDeploy.js --network l2
 ```
