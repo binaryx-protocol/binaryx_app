@@ -9,6 +9,7 @@
   border-radius: var(--border-radius_default);
   position: relative;
   z-index: 2;
+  opacity: 0;
 }
 
 .description {
@@ -25,5 +26,21 @@
   .description {
     margin-top: 6px;
     font-size: 11px;
+  }
+}
+
+.isShow {
+  animation: webCardShow 1s ease forwards;
+  animation-delay: calc(var(--order) * var(--animation-delay));
+}
+
+@keyframes webCardShow {
+  from {
+    translate: 0 30px;
+  }
+
+  to {
+    translate: 0 0;
+    opacity: 1;
   }
 }

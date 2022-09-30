@@ -12,6 +12,7 @@
 
 .isShow {
   animation: webAssetShow 1s ease forwards;
+  animation-delay: calc(var(--order) * var(--animation-delay));
 }
 
 @keyframes webAssetShow {

@@ -16,12 +16,12 @@
 }
 
 .webAssets {
-  color: var(--font-color_white);
   display: grid;
   place-content: center;
   position: relative;
   z-index: 1;
   min-height: 100vh;
+  color: var(--font-color_white);
 }
 
 .webAssetsContainer {
@@ -127,31 +127,36 @@
   grid-row: 1;
   font-size: var(--font-size_small);
   font-weight: 300;
-}
+  
+  p {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    width: 80%;
+    padding-left: 20px;
+    margin: 0;
+    height: 45px;
+    opacity: 0;
+    animation: webAssetShow 1s ease forwards;
+  }
 
-.webAssetsLegend p {
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  width: 80%;
-  padding-left: 20px;
-  margin: 0;
-  height: 45px;
-}
+  .legendMenuFirst {
+    background: linear-gradient(90deg, rgba(0, 174, 255, 0.3) 0%, rgba(30, 54, 71, 0) 100%);
+    border-radius: 7px 0 0 0;
+    animation-delay: calc(var(--order) * var(--animation-delay));
+  }
 
-.webAssetsLegend p:first-child {
-  background: linear-gradient(90deg, rgba(0, 174, 255, 0.3) 0%, rgba(30, 54, 71, 0) 100%);
-  border-radius: 7px 0 0 0;
-}
+  .legendMenuSecond {
+    background: linear-gradient(90deg, rgba(159, 67, 255, 0.3) 0%, rgba(120, 0, 255, 0) 100%);
+    animation-delay: calc(var(--order) * var(--animation-delay));
+  }
 
-.webAssetsLegend p:nth-child(2) {
-  background: linear-gradient(90deg, rgba(159, 67, 255, 0.3) 0%, rgba(120, 0, 255, 0) 100%);
-}
-
-.webAssetsLegend p:last-child {
-  background: linear-gradient(90deg, rgba(0, 255, 238, 0.3) 0%, rgba(0, 174, 255, 0) 100%);
-  border: none;
-  border-radius: 0 0 0 7px;
+  .legendMenuThird {
+    background: linear-gradient(90deg, rgba(0, 255, 238, 0.3) 0%, rgba(0, 174, 255, 0) 100%);
+    border: none;
+    border-radius: 0 0 0 7px;
+    animation-delay: calc(var(--order) * var(--animation-delay));
+  }
 }
 
 .purchasingPropertyTokens,
@@ -349,5 +354,16 @@
   .purchasingPropertyTokens {
     grid-gap: 10px;
     grid-row: 3;
+  }
+}
+
+@keyframes webAssetShow {
+  from {
+    translate: 0 30px;
+  }
+
+  to {
+    translate: 0 0;
+    opacity: 1;
   }
 }

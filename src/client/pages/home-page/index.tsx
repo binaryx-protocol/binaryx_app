@@ -13,7 +13,7 @@ import anim4 from './animations/B4.json';
 import classNames from 'classnames';
 import DescriptionBlock from './components/DescriptionBlock';
 import getCookie from 'utils/getCookie';
-import SchemaDesktop from './components/WebAssetSection/SchemaDesktop';
+import SchemaSection from './components/WebAssetSection/SchemaSection';
 
 const HomePage: FC = () => {
   const container0 = useRef<HTMLDivElement>(null);
@@ -322,21 +322,30 @@ const HomePage: FC = () => {
   }
 
   useEffect(() => {
-    const webAssets = document.querySelectorAll('.styles_isShow__g-Dv6');
+    const webAssetBlock = document.querySelectorAll(
+      '.styles_defaultStyle___P7Rq',
+    );
+    const webAssetCard = document.querySelectorAll(
+      '.styles_webAssetCard__cCZGz',
+    );
+    const animation = document.querySelectorAll('.animationElement');
 
     const observer = new IntersectionObserver((entries) =>
       entries.forEach((entry) => {
-        setTimeout(() => {
-          entry.target.classList.toggle(
-            'styles_isShow__g-Dv6',
-            entry.isIntersecting,
-          );
-        }, 600);
-        if (entry.isIntersecting) observer.unobserve(entry.target);
+        entry.target.classList.toggle(
+          'styles_isShow__g-Dv6',
+          entry.isIntersecting,
+        );
+        entry.target.classList.toggle(
+          'styles_animation__3ydEE',
+          entry.isIntersecting,
+        );
       }),
     );
 
-    webAssets.forEach((elem) => observer.observe(elem));
+    webAssetBlock.forEach((elem) => observer.observe(elem));
+    webAssetCard.forEach((elem) => observer.observe(elem));
+    animation.forEach((elem) => observer.observe(elem));
   }, []);
 
   return (
@@ -451,7 +460,7 @@ const HomePage: FC = () => {
             onButtonClick={handleJoinWaitListButtonClick}
           />
         </div>
-        <SchemaDesktop
+        <SchemaSection
           id="sectionWebAssets"
           className={classNames(s.section, 'section')}
         />
