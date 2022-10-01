@@ -5,12 +5,13 @@ import s from './styles.module.scss';
 type Props = {
   order: number;
   children: ReactChild | ReactChild[];
+  className: string;
 };
 
-const AnimationElement: FC<Props> = ({ order, children }) => {
+const AnimationElement: FC<Props> = ({ order, className, children }) => {
   return (
     <div
-      className={classNames('animationElement', s.animation)}
+      className={classNames('animationElement', s.animation, className)}
       style={{ '--order': order.toString() } as any}
     >
       {children}

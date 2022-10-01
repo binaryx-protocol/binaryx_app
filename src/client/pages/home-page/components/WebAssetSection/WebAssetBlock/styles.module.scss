@@ -1,4 +1,4 @@
-.defaultStyle {
+.webAssetBlock {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--border-radius_default);
@@ -13,15 +13,15 @@
 .isShow {
   animation: webAssetShow 1s ease forwards;
   animation-delay: calc(var(--order) * var(--animation-delay));
+  -webkit-animation-delay: calc(var(--order) * var(--animation-delay));
 }
 
 @keyframes webAssetShow {
   from {
-    translate: 0 30px;
+    opacity: 0;
   }
 
   to {
-    translate: 0 0;
     opacity: 1;
   }
 }

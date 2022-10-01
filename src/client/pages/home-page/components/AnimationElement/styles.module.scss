@@ -1,16 +1,16 @@
 .animation {
   animation: webAssetShow 1s ease forwards;
-  animation-delay: calc(var(--order) * 300ms);
+  animation-delay: calc(var(--order) * var(--default-delay));
+  -webkit-animation-delay: calc(var(--order) * var(--default-delay));
   opacity: 0;
 }
 
 @keyframes webAssetShow {
   from {
-    translate: 0 30px;
+    opacity: 0;
   }
 
   to {
-    translate: 0 0;
     opacity: 1;
   }
 }

@@ -10,6 +10,7 @@
   position: relative;
   z-index: 2;
   opacity: 0;
+  backdrop-filter: blur(2px);
 }
 
 .description {
@@ -32,15 +33,15 @@
 .isShow {
   animation: webCardShow 1s ease forwards;
   animation-delay: calc(var(--order) * var(--animation-delay));
+  -webkit-animation-delay: calc(var(--order) * var(--animation-delay));
 }
 
 @keyframes webCardShow {
   from {
-    translate: 0 30px;
+    opacity: 0;
   }
 
   to {
-    translate: 0 0;
     opacity: 1;
   }
 }

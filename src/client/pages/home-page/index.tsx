@@ -336,10 +336,6 @@ const HomePage: FC = () => {
           'styles_isShow__g-Dv6',
           entry.isIntersecting,
         );
-        entry.target.classList.toggle(
-          'styles_animation__3ydEE',
-          entry.isIntersecting,
-        );
       }),
     );
 

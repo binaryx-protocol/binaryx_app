@@ -12,7 +12,7 @@ const WebAssetBlock: FC<Props> = ({ className, animationOrder, children }) => {
   return (
     <div
       style={{ '--order': animationOrder.toString() } as any}
-      className={classNames(s.defaultStyle, className)}
+      className={classNames(s.webAssetBlock, className)}
     >
       {children}
     </div>
