@@ -321,29 +321,6 @@ const HomePage: FC = () => {
     );
   }
 
-  useEffect(() => {
-    const webAssetBlock = document.querySelectorAll(
-      '.styles_defaultStyle___P7Rq',
-    );
-    const webAssetCard = document.querySelectorAll(
-      '.styles_webAssetCard__cCZGz',
-    );
-    const animation = document.querySelectorAll('.animationElement');
-
-    const observer = new IntersectionObserver((entries) =>
-      entries.forEach((entry) => {
-        entry.target.classList.toggle(
-          'styles_isShow__g-Dv6',
-          entry.isIntersecting,
-        );
-      }),
-    );
-
-    webAssetBlock.forEach((elem) => observer.observe(elem));
-    webAssetCard.forEach((elem) => observer.observe(elem));
-    animation.forEach((elem) => observer.observe(elem));
-  }, []);
-
   return (
     <>
       <Navigation isDark={isBgOverlayDark} />
