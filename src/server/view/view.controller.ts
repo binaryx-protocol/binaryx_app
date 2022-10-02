@@ -16,6 +16,20 @@ export class ViewController {
       .render(req, res, parsedUrl.pathname, parsedUrl.query);
   }
 
+  async nextHandler(req: Request, res: Response) {
+    const parsedUrl = parse(req.url, true);
+    const serverSideProps = { dataFromController: '123' };
+
+    await this.viewService
+      .getNextServer()
+      .render(
+        req,
+        res,
+        parsedUrl.pathname,
+        Object.assign(parsedUrl.query, serverSideProps),
+      );
+  }
+
   @Get('/')
   public async showHomeTemp(@Req() req: Request, @Res() res: Response) {
     const parsedUrl = parse(req.url, true);
@@ -134,6 +148,21 @@ export class ViewController {
         parsedUrl.pathname,
         Object.assign(parsedUrl.query, serverSideProps),
       );
+  }
+
+  @Get('admin/assets')
+  public async listAdminAssets(@Req() req: Request, @Res() res: Response) {
+    this.nextHandler(req, res);
+  }
+
+  @Get('admin/assets/new')
+  public async newAdminAssets(@Req() req: Request, @Res() res: Response) {
+    this.nextHandler(req, res);
+  }
+
+  @Get('admin/assets/:id/edit')
+  public async editAdminAssets(@Req() req: Request, @Res() res: Response) {
+    this.nextHandler(req, res);
   }
 
   @UseGuards(JwtAuthGuard)

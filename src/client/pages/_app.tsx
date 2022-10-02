@@ -5,7 +5,9 @@ import { ApolloProvider } from '@apollo/client';
 import client from '../app/apollo-client';
 import { createTheme, ThemeProvider } from '@mui/material';
 import '../app/styles/globalVariables.css';
-import {Provider} from "jotai";
+import {Provider, useAtomValue, useSetAtom} from "jotai";
+import * as featureFlagsModel from "../app/models/featureFlagsModel";
+import * as metaMaskModel from "../app/models/metaMaskModel";
 
 type Props = {
   Component: any;
@@ -26,6 +28,7 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
 
   useEffect(() => {
     console.log('APP INIT');
+    console.log('process.env.NODE_ENV', process.env.NODE_ENV);
     // assetContractService.init();
     if (typeof window !== 'undefined') {
       // @ts-ignore
@@ -52,6 +55,7 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
             />
             {/* <Navigation /> */}
             {/* <Home data={''} /> */}
+            <WalletConnector />
             <Component {...pageProps} />
             {
                 showAdminMenu && <AdminMenu />
@@ -62,5 +66,18 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
       </Provider>
   );
 };
+
+// NOTE: it has to be nested inside jotai's Provider
+const WalletConnector = () => {
+  const $featureFlags = useAtomValue(featureFlagsModel.$featureFlags)
+  const $onBrowserInit = useSetAtom(metaMaskModel.$onBrowserInit)
+  useEffect(() => {
+    if ($featureFlags.FF_MM) {
+      $onBrowserInit()
+    }
+  }, [])
+
+  return null
+}
 
 export default MyApp;

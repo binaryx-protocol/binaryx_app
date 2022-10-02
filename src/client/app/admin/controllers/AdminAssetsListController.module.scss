@@ -1,0 +1,15 @@
+.topNav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h1{
+    margin: 0;
+  }
+}
+
+.container{
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 10px;
+}
