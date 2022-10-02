@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import s from './styles.module.scss';
 import Props from '../WebAssetBlock';
@@ -12,59 +12,116 @@ type Props = {
 };
 
 const SchemaSection: FC<Props> = ({ className, id }) => {
+  const webAssetContainer = useRef<HTMLDivElement>(null);
+
+  const toggleClassName = (
+    className: string,
+    entry: IntersectionObserverEntry,
+  ) => {
+    const webAssetBlocks = entry.target.children;
+    for (let i = 0; i < webAssetBlocks.length; i++) {
+      webAssetBlocks[i].classList.toggle(className, entry.isIntersecting);
+      const webAssetCards = entry.target.children[i].children;
+      for (let j = 0; j < webAssetCards.length; j++) {
+        webAssetCards[j].classList.toggle(className, entry.isIntersecting);
+      }
+    }
+  };
+
   useEffect(() => {
-    const webAssetBlock = document.querySelectorAll(
-      '.styles_webAssetBlock__2R29o',
-    );
-    const webAssetCard = document.querySelectorAll(
-      '.styles_webAssetCard__cCZGz',
-    );
-    const animation = document.querySelectorAll('.animationElement');
-
-    const observer = new IntersectionObserver((entries) =>
-      entries.forEach((entry) => {
-        entry.target.classList.toggle(
-          'styles_isShow__g-Dv6',
-          entry.isIntersecting,
-        );
-      }),
-    );
-
-    webAssetBlock.forEach((elem) => observer.observe(elem));
-    webAssetCard.forEach((elem) => observer.observe(elem));
-    animation.forEach((elem) => observer.observe(elem));
+    const observer = new IntersectionObserver(([entry]) => {
+      toggleClassName(s.isShow, entry);
+    });
+    observer.observe(webAssetContainer.current);
   }, []);
+
+  // const onMouseEnter = (id: string, className: string) => {
+  //   document.getElementById(id).classList.toggle(className);
+  // };
+
+  // const onMouseLeave = (id: string, className: string) => {
+  //   document.getElementById(id).classList.toggle(className);
+  // };
 
   return (
     <section id={id} className={classNames(s.webAssets, className)}>
       <div className={s.container}>
         <h1 className={s.assetsTitle}>Welcome To The Era Of WEB3 Assets</h1>
-        <div className={s.webAssetsContainer}>
-          <WebAssetBlock className={s.webAssetsLegend} animationOrder={6}>
-            <AnimationElement order={8} className={s.legendMenuFirst}>
+        <div ref={webAssetContainer} className={s.webAssetsContainer}>
+          <WebAssetBlock
+            className={classNames(s.webAssetsLegend)}
+            animationOrder={6}
+          >
+            <AnimationElement
+              // onMouseEnter={() =>
+              //   onMouseEnter(
+              //     'propertyTokenization',
+              //     s.propertyTokenizationSelected,
+              //   )
+              // }
+              // onMouseLeave={() =>
+              //   onMouseLeave(
+              //     'propertyTokenization',
+              //     s.propertyTokenizationSelected,
+              //   )
+              // }
+              order={8}
+              className={classNames(s.legendMenuFirst)}
+            >
               <p>1. Property Tokenization</p>
             </AnimationElement>
-            <AnimationElement order={16} className={s.legendMenuSecond}>
+            <AnimationElement
+              // onMouseEnter={() =>
+              //   onMouseEnter(
+              //     'purchasingPropertyTokens',
+              //     s.purchasingPropertyTokensSelected,
+              //   )
+              // }
+              // onMouseLeave={() =>
+              //   onMouseLeave(
+              //     'purchasingPropertyTokens',
+              //     s.purchasingPropertyTokensSelected,
+              //   )
+              // }
+              order={16}
+              className={classNames(s.legendMenuSecond)}
+            >
               <p>2. Purchasing Property Tokens</p>
             </AnimationElement>
-            <AnimationElement order={28} className={s.legendMenuThird}>
+            <AnimationElement
+              // onMouseEnter={() =>
+              //   onMouseEnter('claimingRewards', s.claimingRewardsSelected)
+              // }
+              // onMouseLeave={() =>
+              //   onMouseLeave('claimingRewards', s.claimingRewardsSelected)
+              // }
+              order={28}
+              className={classNames(s.legendMenuThird)}
+            >
               <p>3. Claiming Rewards from Rent</p>
             </AnimationElement>
           </WebAssetBlock>
-          <WebAssetBlock className={s.binaryxMarketplace} animationOrder={4}>
+          <WebAssetBlock
+            className={classNames(s.binaryxMarketplace)}
+            animationOrder={4}
+          >
             <WebAssetCard
               animationOrder={2}
-              className={s.binaryxMain}
+              className={classNames(s.binaryxMain)}
               imageSrc={
                 'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/binaryx-logo.svg'
               }
               imageDescription={'Binaryx Marketplace'}
             />
           </WebAssetBlock>
-          <WebAssetBlock className={s.propertyTokenization} animationOrder={8}>
+          <WebAssetBlock
+            id="propertyTokenization"
+            className={classNames(s.propertyTokenization)}
+            animationOrder={8}
+          >
             <WebAssetCard
               animationOrder={10}
-              className={s.property}
+              className={classNames(s.property)}
               imageSrc={
                 'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property.svg'
               }
@@ -72,7 +129,7 @@ const SchemaSection: FC<Props> = ({ className, id }) => {
             />
             <WebAssetCard
               animationOrder={12}
-              className={s.propertyTokens}
+              className={classNames(s.propertyTokens)}
               imageSrc={
                 'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property-tokens.svg'
               }
@@ -90,6 +147,7 @@ const SchemaSection: FC<Props> = ({ className, id }) => {
             />
           </WebAssetBlock>
           <WebAssetBlock
+            id="purchasingPropertyTokens"
             className={s.purchasingPropertyTokens}
             animationOrder={16}
           >
@@ -146,7 +204,11 @@ const SchemaSection: FC<Props> = ({ className, id }) => {
               className={classNames(s.vector6Mobile, s.vectorsMobile)}
             />
           </WebAssetBlock>
-          <WebAssetBlock className={s.claimingRewards} animationOrder={28}>
+          <WebAssetBlock
+            id="claimingRewards"
+            className={s.claimingRewards}
+            animationOrder={28}
+          >
             <WebAssetCard
               animationOrder={30}
               className={s.propertyRent}

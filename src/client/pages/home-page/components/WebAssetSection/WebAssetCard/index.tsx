@@ -17,7 +17,7 @@ const WebAssetCard: FC<WebAssetCard> = ({
 }) => {
   return (
     <div
-      style={{ '--order': animationOrder.toString() } as any}
+      style={{ '--order': animationOrder } as any}
       className={classNames(s.webAssetCard, className)}
     >
       <img className={s.image} src={imageSrc} />

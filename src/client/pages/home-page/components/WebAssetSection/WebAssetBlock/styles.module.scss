@@ -3,25 +3,8 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--border-radius_default);
   backdrop-filter: blur(10px);
-  opacity: 0;
 
   @media screen and (max-width: 768px) {
     height: fit-content;
-  }
-}
-
-.isShow {
-  animation: webAssetShow 1s ease forwards;
-  animation-delay: calc(var(--order) * var(--animation-delay));
-  -webkit-animation-delay: calc(var(--order) * var(--animation-delay));
-}
-
-@keyframes webAssetShow {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
   }
 }

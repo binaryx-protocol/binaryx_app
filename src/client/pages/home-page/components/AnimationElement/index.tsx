@@ -1,18 +1,27 @@
 import classNames from 'classnames';
 import { FC, ReactChild } from 'react';
-import s from './styles.module.scss';
 
 type Props = {
   order: number;
   children: ReactChild | ReactChild[];
   className: string;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 };
 
-const AnimationElement: FC<Props> = ({ order, className, children }) => {
+const AnimationElement: FC<Props> = ({
+  order,
+  className,
+  onMouseEnter,
+  onMouseLeave,
+  children,
+}) => {
   return (
     <div
-      className={classNames('animationElement', s.animation, className)}
-      style={{ '--order': order.toString() } as any}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className={classNames('animationElement', className)}
+      style={{ '--order': order, opacity: '0' } as any}
     >
       {children}
     </div>

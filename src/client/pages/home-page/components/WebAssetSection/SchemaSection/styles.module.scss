@@ -142,7 +142,6 @@
 
   .legendMenuFirst {
     border-radius: 7px 0 0 0;
-    animation-delay: calc(var(--order) * var(--animation-delay));
 
     &:hover {
       background: linear-gradient(90deg, rgba(0, 174, 255, 0.3) 0%, rgba(30, 54, 71, 0) 100%);
@@ -151,23 +150,19 @@
 }
 
 .legendMenuSecond {
-  animation-delay: calc(var(--order) * var(--animation-delay));
-
   &:hover {
     background: linear-gradient(90deg, rgba(159, 67, 255, 0.3) 0%, rgba(120, 0, 255, 0) 100%);
   }
 }
 
 .legendMenuThird {
-  border: none;
+  border: none !important;
   border-radius: 0 0 0 7px;
-  animation-delay: calc(var(--order) * var(--animation-delay));
 
   &:hover {
     background: linear-gradient(90deg, rgba(0, 255, 238, 0.3) 0%, rgba(0, 174, 255, 0) 100%);
   }
 }
-
 
 .purchasingPropertyTokens,
 .propertyTokenization,
@@ -180,7 +175,7 @@
 
 .propertyTokenization {
   grid-row: 2;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 15px;
 
   .property,
@@ -197,6 +192,12 @@
     place-items: center;
   }
 }
+
+// .propertyTokenization.propertyTokenizationSelected {
+//   background: linear-gradient(180deg, #0097F1 0%, rgba(0, 151, 241, 0) 100%),
+//     linear-gradient(0deg, rgba(31, 80, 115, 0.5), rgba(31, 80, 115, 0.5));
+//   background-blend-mode: color;
+// }
 
 .webAssets *::before {
   position: absolute;
@@ -232,14 +233,20 @@
   }
 }
 
+// .purchasingPropertyTokens.purchasingPropertyTokensSelected {
+//   background: linear-gradient(0deg, rgba(61, 27, 99, 0.5), rgba(61, 27, 99, 0.5)),
+//     linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
+//   background-blend-mode: color;
+// }
+
 .purchasingPropertyTokens div:first-child {
-  grid-column: 1/3;
+  grid-column: 1 / span 2;
   place-self: center;
 }
 
 .claimingRewards {
   display: block;
-  grid-column: 1/4;
+  grid-column: 1 / span 3;
 
   .propertyRent {
     width: 200px;
@@ -257,6 +264,12 @@
     grid-column: unset;
   }
 }
+
+// .claimingRewards.claimingRewardsSelected {
+//   background: linear-gradient(180deg, #00B5DD 0%, rgba(0, 181, 221, 0) 100%),
+//     linear-gradient(0deg, rgba(31, 91, 88, 0.5), rgba(31, 91, 88, 0.5));
+//   background-blend-mode: color;
+// }
 
 .rent,
 .claim,
@@ -371,6 +384,13 @@
     grid-gap: 10px;
     grid-row: 3;
   }
+}
+
+.isShow {
+  animation: webAssetShow 1s ease forwards;
+  animation-delay: calc(var(--order) * var(--animation-delay));
+  -webkit-animation-delay: calc(var(--order) * var(--animation-delay));
+  opacity: 0;
 }
 
 @keyframes webAssetShow {
