@@ -193,11 +193,14 @@
   }
 }
 
-// .propertyTokenization.propertyTokenizationSelected {
-//   background: linear-gradient(180deg, #0097F1 0%, rgba(0, 151, 241, 0) 100%),
-//     linear-gradient(0deg, rgba(31, 80, 115, 0.5), rgba(31, 80, 115, 0.5));
-//   background-blend-mode: color;
-// }
+.propertyTokenization.propertyTokenizationSelected {
+  background: linear-gradient(180deg, #0097F1 0%, rgba(0, 151, 241, 0) 100%),
+    linear-gradient(0deg, rgba(31, 80, 115, 0.5), rgba(31, 80, 115, 0.5));
+  border: 1px solid;
+  border-image-source: linear-gradient(180deg, #0097F1 0%, rgba(0, 151, 241, 0) 100%);
+  background-blend-mode: color;
+  transition: background 1s ease;
+}
 
 .webAssets *::before {
   position: absolute;
@@ -233,11 +236,14 @@
   }
 }
 
-// .purchasingPropertyTokens.purchasingPropertyTokensSelected {
-//   background: linear-gradient(0deg, rgba(61, 27, 99, 0.5), rgba(61, 27, 99, 0.5)),
-//     linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
-//   background-blend-mode: color;
-// }
+.purchasingPropertyTokens.purchasingPropertyTokensSelected {
+  background: linear-gradient(0deg, rgba(61, 27, 99, 0.5), rgba(61, 27, 99, 0.5)),
+    linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
+  border: 1px solid;
+  border-image-source: linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
+  background-blend-mode: color;
+  transition: background 1s ease;
+}
 
 .purchasingPropertyTokens div:first-child {
   grid-column: 1 / span 2;
@@ -257,6 +263,7 @@
 
     @media screen and (max-width: 786px) {
       width: 100px;
+      left: 20px;
     }
   }
 
@@ -265,11 +272,13 @@
   }
 }
 
-// .claimingRewards.claimingRewardsSelected {
-//   background: linear-gradient(180deg, #00B5DD 0%, rgba(0, 181, 221, 0) 100%),
-//     linear-gradient(0deg, rgba(31, 91, 88, 0.5), rgba(31, 91, 88, 0.5));
-//   background-blend-mode: color;
-// }
+.claimingRewards.claimingRewardsSelected {
+  background: linear-gradient(180deg, #00DD8D 0%, rgba(0, 181, 221, 0) 100%), linear-gradient(0deg, rgba(31, 91, 88, 0.5), rgba(31, 91, 88, 0.5));
+  border: 1px solid;
+  border-image-source: linear-gradient(180deg, #00DD8D 0%, rgba(0, 181, 221, 0) 100%);
+  background-blend-mode: color;
+  transition: background 1s ease;
+}
 
 .rent,
 .claim,

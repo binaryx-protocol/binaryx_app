@@ -29,19 +29,23 @@ const SchemaSection: FC<Props> = ({ className, id }) => {
   };
 
   useEffect(() => {
+    const isDesktop = window.innerWidth > 768;
     const observer = new IntersectionObserver(([entry]) => {
-      toggleClassName(s.isShow, entry);
+      if (isDesktop) {
+        toggleClassName(s.isShow, entry);
+      }
+      if (entry.isIntersecting) observer.unobserve(entry.target);
     });
     observer.observe(webAssetContainer.current);
   }, []);
 
-  // const onMouseEnter = (id: string, className: string) => {
-  //   document.getElementById(id).classList.toggle(className);
-  // };
+  const onMouseEnter = (id: string, className: string) => {
+    document.getElementById(id).classList.toggle(className);
+  };
 
-  // const onMouseLeave = (id: string, className: string) => {
-  //   document.getElementById(id).classList.toggle(className);
-  // };
+  const onMouseLeave = (id: string, className: string) => {
+    document.getElementById(id).classList.toggle(className);
+  };
 
   return (
     <section id={id} className={classNames(s.webAssets, className)}>
@@ -53,48 +57,48 @@ const SchemaSection: FC<Props> = ({ className, id }) => {
             animationOrder={6}
           >
             <AnimationElement
-              // onMouseEnter={() =>
-              //   onMouseEnter(
-              //     'propertyTokenization',
-              //     s.propertyTokenizationSelected,
-              //   )
-              // }
-              // onMouseLeave={() =>
-              //   onMouseLeave(
-              //     'propertyTokenization',
-              //     s.propertyTokenizationSelected,
-              //   )
-              // }
+              onMouseEnter={() =>
+                onMouseEnter(
+                  'propertyTokenization',
+                  s.propertyTokenizationSelected,
+                )
+              }
+              onMouseLeave={() =>
+                onMouseLeave(
+                  'propertyTokenization',
+                  s.propertyTokenizationSelected,
+                )
+              }
               order={8}
               className={classNames(s.legendMenuFirst)}
             >
               <p>1. Property Tokenization</p>
             </AnimationElement>
             <AnimationElement
-              // onMouseEnter={() =>
-              //   onMouseEnter(
-              //     'purchasingPropertyTokens',
-              //     s.purchasingPropertyTokensSelected,
-              //   )
-              // }
-              // onMouseLeave={() =>
-              //   onMouseLeave(
-              //     'purchasingPropertyTokens',
-              //     s.purchasingPropertyTokensSelected,
-              //   )
-              // }
+              onMouseEnter={() =>
+                onMouseEnter(
+                  'purchasingPropertyTokens',
+                  s.purchasingPropertyTokensSelected,
+                )
+              }
+              onMouseLeave={() =>
+                onMouseLeave(
+                  'purchasingPropertyTokens',
+                  s.purchasingPropertyTokensSelected,
+                )
+              }
               order={16}
               className={classNames(s.legendMenuSecond)}
             >
               <p>2. Purchasing Property Tokens</p>
             </AnimationElement>
             <AnimationElement
-              // onMouseEnter={() =>
-              //   onMouseEnter('claimingRewards', s.claimingRewardsSelected)
-              // }
-              // onMouseLeave={() =>
-              //   onMouseLeave('claimingRewards', s.claimingRewardsSelected)
-              // }
+              onMouseEnter={() =>
+                onMouseEnter('claimingRewards', s.claimingRewardsSelected)
+              }
+              onMouseLeave={() =>
+                onMouseLeave('claimingRewards', s.claimingRewardsSelected)
+              }
               order={28}
               className={classNames(s.legendMenuThird)}
             >

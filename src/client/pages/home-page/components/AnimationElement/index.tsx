@@ -21,7 +21,7 @@ const AnimationElement: FC<Props> = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       className={classNames('animationElement', className)}
-      style={{ '--order': order, opacity: '0' } as any}
+      style={{ '--order': order } as any}
     >
       {children}
     </div>
