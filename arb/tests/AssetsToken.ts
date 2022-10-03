@@ -1,7 +1,40 @@
 import { time, loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
+import * as chai from "chai";
 import { expect } from "chai";
-import { ethers } from "hardhat";
+import { ethers, web3 } from "hardhat";
+
+// const bnChai = require('bn-chai');
+// const BN = require('bn.js');
+// // chai.use(bnChai(BN));
+// chai.use(bnChai(web3.utils.BN));
+
+type AssetInput = {
+  name: string,
+  symbol: string,
+  totalTokensSupply: number,
+  tokenPrice: number,
+  originalOwner: string,
+}
+
+const expectBn = (given, expected) => {
+  expect(given.toString()).to.eq(expected.toString())
+}
+
+const defaultAttrs = (): AssetInput => ({
+  name: 'Name',
+  symbol: 'Symbol',
+  totalTokensSupply: 10000,
+  tokenPrice: 50,
+  originalOwner: 'REPLACE_ME',
+})
+
+const createMany = async (sc, count, attrs: Partial<AssetInput> = {}) => {
+  for (let i =0; i<count;i++) {
+    const a = { ...defaultAttrs(), ...attrs }
+    await sc.createAsset(...Object.values(a))
+  }
+}
 
 describe("AssetsToken", function () {
   async function deployFixture() {
@@ -17,7 +50,35 @@ describe("AssetsToken", function () {
     it("should deploy", async function () {
       const { sc } = await loadFixture(deployFixture);
 
-      expect(await sc.name()).to.equal('Houses');
+      const count = await sc.getAssetsCount()
+      expectBn(count, 0)
+    });
+  });
+
+  describe("createAsset", function () {
+    it("with valid params", async function () {
+      const { sc, otherAccount } = await loadFixture(deployFixture);
+
+      await sc.createAsset(
+        'Name',
+        'Symbol',
+        10000,
+        50,
+        otherAccount.address
+      )
+
+      const count = await sc.getAssetsCount()
+      expectBn(count, 1)
+    });
+  });
+
+  describe("listAssets", function () {
+    it("multiple items", async function () {
+      const { sc, otherAccount } = await loadFixture(deployFixture);
+      await createMany(sc, 10, { originalOwner: otherAccount.address })
+
+      const count = await sc.getAssetsCount()
+      expectBn(count, 10)
     });
   });
 });

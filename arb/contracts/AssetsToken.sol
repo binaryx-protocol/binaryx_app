@@ -5,24 +5,26 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+
 interface IAssetsTokenManager {
-  // TODO add batch
-  function createAsset(string memory name, string memory symbol, uint256 totalTokensSupply, uint256 tokenPrice, address originalOwner) external;
-  function listAssets() external;
-  // TODO add batch
-  function patchAsset(uint256 id, string memory name, string memory symbol, uint256 totalTokensSupply, uint256 tokenPrice, address originalOwner) external;
-  // TODO add batch
-  function disableAsset(uint256 id) external;
-}
-
-contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
-  using Counters for Counters.Counter;
-
   struct Asset {
     uint256 totalTokensSupply;
     uint256 tokenPrice;
     address originalOwner;
   }
+
+  // TODO add batch
+  function createAsset(string memory name, string memory symbol, uint256 totalTokensSupply, uint256 tokenPrice, address originalOwner) external;
+  function listAssets() external view returns(Asset[] memory);
+  // TODO add batch
+  function patchAsset(uint256 id, string memory name, string memory symbol, uint256 totalTokensSupply, uint256 tokenPrice, address originalOwner) external;
+  // TODO add batch
+  function disableAsset(uint256 id) external;
+  function getAssetsCount() external view returns(uint256);
+}
+
+contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
+  using Counters for Counters.Counter;
 
   uint256 public constant GOLD = 0;
   uint256 public constant SILVER = 1;
@@ -44,8 +46,8 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
   }
 
   function createAsset(string memory name, string memory symbol, uint256 totalTokensSupply, uint256 tokenPrice, address originalOwner) public override {
-    _assetIds.increment();
     uint256 id = _assetIds.current();
+    _assetIds.increment();
     assetsIds[id] = Asset(
       totalTokensSupply,
         tokenPrice,
@@ -53,8 +55,26 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
     );
   }
 
-  function listAssets() public override {
+  function createAsset2(uint256 totalTokensSupply, uint256 tokenPrice, address originalOwner) public {
+    uint256 id = _assetIds.current();
+    _assetIds.increment();
+    assetsIds[id] = Asset(
+      totalTokensSupply,
+        tokenPrice,
+        originalOwner
+    );
+  }
 
+  function listAssets() public override view returns(Asset[] memory) {
+    uint count = _assetIds.current();
+    Asset[] memory result = new Asset[](count);
+
+    for (uint i = 0; i < count; i++) {
+      Asset storage asset = assetsIds[i];
+      result[i] = asset;
+    }
+
+    return result;
   }
 
   function patchAsset(uint256 id, string memory name, string memory symbol, uint256 totalTokensSupply, uint256 tokenPrice, address originalOwner) public override {
@@ -63,5 +83,9 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
 
   function disableAsset(uint256 id) public override {
 
+  }
+
+  function getAssetsCount() public view override returns(uint256) {
+    return _assetIds.current();
   }
 }

@@ -17,6 +17,7 @@
     "@openzeppelin/contracts": "^4.7.3",
     "arb-shared-dependencies": "^1.0.0",
     "dotenv": "^8.2.0",
-    "hardhat-erc1820": "^0.1.0"
+    "hardhat-erc1820": "^0.1.0",
+    "hardhat-gas-reporter": "^1.0.9"
   }
 }
