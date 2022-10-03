@@ -14,6 +14,7 @@ import classNames from 'classnames';
 import DescriptionBlock from './components/DescriptionBlock';
 import getCookie from 'utils/getCookie';
 import SchemaSection from './components/WebAssetSection/SchemaSection';
+import TimelineSection from './components/TimelineSection';
 
 const HomePage: FC = () => {
   const container0 = useRef<HTMLDivElement>(null);
@@ -433,100 +434,8 @@ const HomePage: FC = () => {
             onButtonClick={handleJoinWaitListButtonClick}
           />
         </div>
-        <SchemaSection
-          id="sectionWebAssets"
-          className={classNames(s.section, 'section')}
-        />
-        <section
-          className={classNames(s.timeline, s.section, s.wrapper, 'section')}
-        >
-          <div className={s.timelineGrid}>
-            <div className={s.timelineSeparatorTr} />
-            <ul className={s.timelineSeparatorLine}>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
-            <div className={s.timelineHeaders}>
-              <h1 className={s.timelineTitle}>Timeline</h1>
-              <h3>Product</h3>
-              <h3>Marketing</h3>
-              {/*<h3>Organization</h3>*/}
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year={'2022'}>
-                <li>MVP Building</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>– Socials launch</li>
-                <li>– First 750 members onboarded</li>
-              </DescriptionBlock>
-              {/*<DescriptionBlock>*/}
-              {/*  <li>Legal set up</li>*/}
-              {/*</DescriptionBlock>*/}
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year={'Q1 2023'}>
-                <li>Binaryx marketplace pre-launch on Testnet v1, v2</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>&gt; 5k members onboarded</li>
-                <li>&gt; 2k KYC done</li>
-              </DescriptionBlock>
-              {/*<DescriptionBlock>*/}
-              {/*  <li>Seed round</li>*/}
-              {/*</DescriptionBlock>*/}
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year={'Q2 2023'}>
-                <li>Testnet v3 launch</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>– Academy launch</li>
-                <li>– Ambassador program launch</li>
-              </DescriptionBlock>
-              {/*<DescriptionBlock>*/}
-              {/*  <li>IDO</li>*/}
-              {/*</DescriptionBlock>*/}
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year={'Q3 2023'}>
-                <li>Binaryx marketplace official launch</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>– Airdrop for the first academy graduates</li>
-                <li>– Staking program</li>
-                <li>&gt; 70k members onboarded</li>
-                <li>&gt; 7k $aBNRX holders</li>
-              </DescriptionBlock>
-              {/*<DescriptionBlock>*/}
-              {/*  <li>– Token launch</li>*/}
-              {/*  <li>– DAO launch</li>*/}
-              {/*</DescriptionBlock>*/}
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year="Q4 2023">
-                <li>1 st Smart contact audit</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>Referral program launch</li>
-                <li>200k members onboarded</li>
-                <li>&gt; 20k $aBNRX holders</li>
-              </DescriptionBlock>
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year="2024">
-                <li>Other DeFi services launch The secondary market</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>&gt; 100k $aBRX holders</li>
-              </DescriptionBlock>
-            </div>
-          </div>
-        </section>
+        <SchemaSection className={classNames(s.section, 'section')} />
+        <TimelineSection className={classNames(s.section, 'section')} />
         <section
           id="sectionTeam"
           className={classNames(s.section, s.ourTeam, 'section')}
@@ -582,7 +491,6 @@ const HomePage: FC = () => {
                 socialLink={'#'}
                 socialUserName={'andriy_makaveli'}
               />
-              {/* <BackgroundVisuals top={'40%'} /> */}
             </div>
           </div>
         </section>
@@ -621,7 +529,6 @@ const HomePage: FC = () => {
                 </form>
               </div>
             </div>
-            {/* <BackgroundVisuals top={'10%'} /> */}
             {/* </section> */}
             {/*<section className={classNames(s.section, s.footerSection, "section")}>*/}
             <footer className={s.footer}>

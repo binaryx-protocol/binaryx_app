@@ -2,6 +2,15 @@
 //  overflow: hidden;
 //  height: 100%;
 //}
+.container {
+  max-width: var(--max-width_desktop);
+  margin: auto;
+
+  @media screen and (max-width: 768px) {
+    max-width: var(--max-width_mobile);
+  }
+}
+
 .section {
   outline: none;
 
@@ -190,97 +199,6 @@
   font-weight: 500;
   background-color: transparent;
   cursor: default;
-}
-
-.timeline {
-  display: grid;
-  place-items: center;
-  // position: relative;
-  min-height: 100vh;
-  color: white;
-
-  // @media (max-width: 768px) {
-  //   height: 90vh;
-  // }
-}
-
-.timelineTitle {
-  font-size: 36px;
-  font-weight: 300;
-  margin: 8px 0 0 0;
-}
-
-.timelineSeparatorTr {
-  height: 2px;
-  background: linear-gradient(90deg, #01DDDC -0.99%, rgba(1, 221, 220, 0) 100%);
-  position: relative;
-  top: 130px;
-  grid-column: 1/8;
-}
-
-.timelineSeparatorLine {
-  display: grid;
-  grid-template-columns: repeat(6, 170px);
-  position: relative;
-  list-style: none;
-  top: 120px;
-  left: 160px;
-  padding: 0;
-  margin: 0;
-  grid-column: 1/8;
-}
-
-.timelineSeparatorLine li {
-  background-color: #008E85;
-  width: 2px;
-  height: 20px;
-}
-
-.timelineSeparatorTr::before {
-  content: "";
-  position: absolute;
-  top: -19px;
-  width: 0;
-  height: 0;
-  border-top: 20px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-left: 20px solid #008E85;
-}
-
-// .timelineContainer {
-//   min-height: 100vh;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-
-//   @media (max-width: 768px) {
-//     min-height: 90vh;
-//   }
-// }
-
-.timelineGrid {
-  display: grid;
-  grid-gap: 0 20px;
-}
-
-.timelineColumn,
-.timelineHeaders {
-  display: grid;
-  // grid-template-rows: 140px 80px 160px 80px;
-  grid-template-rows: 140px 80px 160px;
-  grid-gap: 15px;
-  width: 150px;
-}
-
-.timelineHeaders {
-  width: fit-content;
-}
-
-.timelineHeaders h3 {
-  margin: 0;
-  color: rgba(0, 142, 133, 1);
-  font-size: 14px;
 }
 
 // .ourTeam {
@@ -526,48 +444,9 @@
     font-size: 16px;
   }
 
-  .timelineGrid {
-    grid-template-columns: repeat(6, 160px);
-    // margin-top: 100px;
-    grid-gap: 0 10px;
-  }
-
-  .timelineSeparatorTr {
-    top: 90px;
-  }
-
-  .timelineSeparatorTr::before {
-    display: none;
-  }
-
-  .timelineSeparatorLine {
-    grid-template-columns: repeat(6, 170px);
-    top: 80px;
-    left: 0;
-  }
-
-  .timelineColumn {
-    grid-gap: 40px;
-    // grid-template-rows: 75px 80px 160px 80px;
-    grid-template-rows: 75px 80px 160px;
-  }
-
-  .timelineTitle {
-    margin: -30px 0 0 0;
-  }
-
-  .timelineHeaders {
-    position: absolute;
-    grid-template-rows: 100px 105px 187px;
-  }
-
   .teamGallery {
     overflow: scroll hidden;
     gap: 12px;
-  }
-
-  .timeline {
-    overflow-y: scroll;
   }
 
   // .ourTeamTitle {

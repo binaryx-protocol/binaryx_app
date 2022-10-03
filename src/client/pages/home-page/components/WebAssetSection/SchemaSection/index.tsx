@@ -8,22 +8,21 @@ import AnimationElement from '../../AnimationElement';
 
 type Props = {
   className?: string;
-  id?: string;
 };
 
-const SchemaSection: FC<Props> = ({ className, id }) => {
+const SchemaSection: FC<Props> = ({ className }) => {
   const webAssetContainer = useRef<HTMLDivElement>(null);
 
   const toggleClassName = (
     className: string,
     entry: IntersectionObserverEntry,
   ) => {
-    const webAssetBlocks = entry.target.children;
-    for (let i = 0; i < webAssetBlocks.length; i++) {
-      webAssetBlocks[i].classList.toggle(className, entry.isIntersecting);
-      const webAssetCards = entry.target.children[i].children;
-      for (let j = 0; j < webAssetCards.length; j++) {
-        webAssetCards[j].classList.toggle(className, entry.isIntersecting);
+    const parentBlocks = entry.target.children;
+    for (let i = 0; i < parentBlocks.length; i++) {
+      parentBlocks[i].classList.toggle(className, entry.isIntersecting);
+      const childBlocks = entry.target.children[i].children;
+      for (let j = 0; j < childBlocks.length; j++) {
+        childBlocks[j].classList.toggle(className, entry.isIntersecting);
       }
     }
   };
@@ -48,7 +47,7 @@ const SchemaSection: FC<Props> = ({ className, id }) => {
   };
 
   return (
-    <section id={id} className={classNames(s.webAssets, className)}>
+    <section className={classNames(s.webAssets, className)}>
       <div className={s.container}>
         <h1 className={s.assetsTitle}>Welcome To The Era Of WEB3 Assets</h1>
         <div ref={webAssetContainer} className={s.webAssetsContainer}>

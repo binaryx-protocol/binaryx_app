@@ -4,7 +4,7 @@ import { FC, ReactChild } from 'react';
 type Props = {
   order: number;
   children: ReactChild | ReactChild[];
-  className: string;
+  className?: string;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
 };
@@ -20,7 +20,7 @@ const AnimationElement: FC<Props> = ({
     <div
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className={classNames('animationElement', className)}
+      className={classNames(className)}
       style={{ '--order': order } as any}
     >
       {children}
