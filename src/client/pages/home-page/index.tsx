@@ -7,7 +7,7 @@ import TeamBlock from './components/TeamBlock';
 import NavSocialImage from './components/NavSocialImage';
 import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
 import lottie from 'lottie-web';
-// import anim1 from './animations/B1.json';
+import anim1 from './animations/B1.json';
 import classNames from 'classnames';
 import DescriptionBlock from './components/DescriptionBlock';
 import getCookie from 'utils/getCookie';
@@ -32,16 +32,16 @@ const HomePage: FC = () => {
     section3Ref.current,
     section4Ref.current,
   ];
-  const section1ContentRef = useRef<HTMLDivElement>(null);
-  const section2ContentRef = useRef<HTMLDivElement>(null);
-  const section3ContentRef = useRef<HTMLDivElement>(null);
-  const section4ContentRef = useRef<HTMLDivElement>(null);
-  const getSectionContents = () => [
-    section1ContentRef.current,
-    section2ContentRef.current,
-    section3ContentRef.current,
-    section4ContentRef.current,
-  ];
+  // const section1ContentRef = useRef<HTMLDivElement>(null);
+  // const section2ContentRef = useRef<HTMLDivElement>(null);
+  // const section3ContentRef = useRef<HTMLDivElement>(null);
+  // const section4ContentRef = useRef<HTMLDivElement>(null);
+  // const getSectionContents = () => [
+  //   section1ContentRef.current,
+  //   section2ContentRef.current,
+  //   section3ContentRef.current,
+  //   section4ContentRef.current,
+  // ];
   const currentSectionRef = useRef(0);
   const [bgOverlay, setBgOverlay] = useState({
     isBgOverlayActive: true,
@@ -143,11 +143,11 @@ const HomePage: FC = () => {
   };
 
   function getScrollPosition() {
-    // if (FF_LP_PARALLAX) {
-    return window.scrollY;
-    // }
+    if (FF_LP_PARALLAX) {
+      return window.scrollY;
+    }
 
-    // return document.getElementById("main")?.scrollTop;
+    return document.getElementById('main')?.scrollTop;
   }
 
   function getScrollObject() {
@@ -220,11 +220,11 @@ const HomePage: FC = () => {
   };
 
   function initAnimations() {
-    // animations.current[0] = initAnimation({
-    //   animationData: anim1,
-    //   container: document.getElementById('animationContainer0'),
-    //   autoplay: true,
-    // });
+    animations.current[0] = initAnimation({
+      animationData: anim1,
+      container: document.getElementById('animationContainer0'),
+      autoplay: true,
+    });
     import('./animations/B2.json')
       .then((module) => {
         const anim2 = module.default;
@@ -327,9 +327,9 @@ const HomePage: FC = () => {
       event.preventDefault();
       event.stopPropagation();
       const currentSection = getCurrentSection();
-      const sectionContentPrev = getSectionContents()[currentSection - 1];
-      const sectionContentNext = getSectionContents()[currentSection];
-      const scrollPercent = getSectionScrollPercent(currentSection - 1);
+      // const sectionContentPrev = getSectionContents()[currentSection - 1];
+      // const sectionContentNext = getSectionContents()[currentSection];
+      // const scrollPercent = getSectionScrollPercent(currentSection - 1);
       // if (sectionContentPrev) {
       //   sectionContentPrev.style.opacity =
       //     scrollPercent > 90 ? 10 - 100 - scrollPercent : 1;
@@ -340,13 +340,15 @@ const HomePage: FC = () => {
       // }
       // console.log(`sectionContentPrev ${scrollPercent > 90 ? 10 - 100 - scrollPercent : 1}`);
       // console.log(`sectionContentNext ${scrollPercent > 90 ? 100 - scrollPercent : 1}`);
-      
+
       // if (currentSection <= 1) {
       //   return;
       // }
       updateContainerStyles();
 
       playAnimation(currentSection);
+      console.log('playAnimation + ' + currentSection);
+
       updateOverlayStyles();
 
       // for (const section of getSections()) {
@@ -576,7 +578,7 @@ const HomePage: FC = () => {
             heading="Expensive asset value already in past"
             sectionHeight={sectionHeight}
             onButtonClick={handleJoinWaitListButtonClick}
-            contentElementRef={section1ContentRef}
+            // contentElementRef={section1ContentRef}
           >
             <p className={s.description}>
               With Binaryx Protocol you will be able to buy a real tokenized
@@ -596,7 +598,7 @@ const HomePage: FC = () => {
             heading="The next generation DeFi experience with Real Yield"
             onButtonClick={handleJoinWaitListButtonClick}
             sectionHeight={sectionHeight}
-            contentElementRef={section2ContentRef}
+            // contentElementRef={section2ContentRef}
           >
             <p className={s.description}>
               Use your property tokens to borrow and keep earning the highest
@@ -612,7 +614,7 @@ const HomePage: FC = () => {
           <SectionElement
             heading="Boosting Economy and scaling Web3"
             sectionHeight={sectionHeight}
-            contentElementRef={section3ContentRef}
+            // contentElementRef={section3ContentRef}
             onButtonClick={handleJoinWaitListButtonClick}
           >
             <p className={s.description}>
