@@ -7,6 +7,7 @@ type Props = {
   body: string;
   id?: string;
   onButtonClick?: () => void;
+  sectionHeight?: number | null;
 };
 
 const SectionElement: FC<Props> = ({
@@ -15,8 +16,9 @@ const SectionElement: FC<Props> = ({
   id,
   body,
   onButtonClick,
+  sectionHeight
 }) => (
-  <section id={id} className={s.block}>
+  <section id={id} className={s.block} style={{ minHeight: sectionHeight }}>
     <div className={s.infoBlock}>
       {preTitle && <p className={s.weAreHere}>{preTitle}</p>}
       <h2 className={s.title}>{heading}</h2>

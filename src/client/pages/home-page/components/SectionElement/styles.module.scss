@@ -37,6 +37,7 @@
   cursor: pointer;
   position: relative;
   top: 100px;
+  color: #000;
 }
 
 @media screen and (max-width: 768px) {
@@ -55,10 +56,11 @@
   }
 
   .btnWaitlist {
-    top: -50%;
     max-width: 100%;
     font-size: 18px;
     color: var(--font-color_base)
+    top: auto;
+    bottom: 50px;
   }
 
   .infoBlock {
