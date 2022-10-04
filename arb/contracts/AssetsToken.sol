@@ -16,13 +16,13 @@ interface IAssetsTokenManager {
     address originalOwner;
     string[] legalDocuments;
 
-//    PropertyAddress propertyAddress;
-//    PropertyInfo propertyInfo;
-//    TokenInfo tokenInfo;
-//    InvestmentInfo investmentInfo;
-//    RentalInfo rentalInfo;
-//    FeeInfo feeInfo;
-//    AssetDao assetDao;
+    //    PropertyAddress propertyAddress;
+    //    PropertyInfo propertyInfo;
+    //    TokenInfo tokenInfo;
+    //    InvestmentInfo investmentInfo;
+    //    RentalInfo rentalInfo;
+    //    FeeInfo feeInfo;
+    //    AssetDao assetDao;
   }
 
   struct PropertyAddress {
@@ -104,7 +104,7 @@ interface IAssetsTokenManager {
     string[] memory legalDocuments
   ) external;
   // TODO add batch
-  function disableAsset(uint256 id) external;
+  function setStatus(uint256 id, uint8 status) external;
   function getAssetsCount() external view returns(uint256);
 }
 
@@ -112,10 +112,10 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
   using Counters for Counters.Counter;
 
   uint8 public constant GOLD = 0;
-  uint8 public constant STATUS_DISABLED = 1;
+  uint8 public constant STATUS_UPCOMING = 1;
   uint8 public constant STATUS_ACTIVE = 2;
-  uint8 public constant STATUS_UPCOMING = 3;
-  uint8 public constant STATUS_SOLD_OUT = 4;
+  uint8 public constant STATUS_SOLD_OUT = 3;
+  uint8 public constant STATUS_DISABLED = 4;
 
   //  mapping(address => uint256[]) public investorAssetsIds;
   //  mapping(address => uint256[]) public originalOwnerAssetsIds;
@@ -149,13 +149,13 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
       status,
       originalOwner,
       legalDocuments
-//      PropertyAddress(),
-//      PropertyInfo(),
-//      TokenInfo(),
-//      InvestmentInfo(),
-//      RentalInfo(),
-//      FeeInfo(),
-//      AssetDao()
+    //      PropertyAddress(),
+    //      PropertyInfo(),
+    //      TokenInfo(),
+    //      InvestmentInfo(),
+    //      RentalInfo(),
+    //      FeeInfo(),
+    //      AssetDao()
     );
     assetsIds[id] = newAsset;
   }
@@ -201,8 +201,8 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
     assetsIds[id] = newAsset;
   }
 
-  function disableAsset(uint256 id) public override {
-
+  function setStatus(uint256 id, uint8 status) public override {
+    assetsIds[id].status = status;
   }
 
   function getAssetsCount() public view override returns(uint256) {

@@ -9,6 +9,13 @@ import { ethers, web3 } from "hardhat";
 // // chai.use(bnChai(BN));
 // chai.use(bnChai(web3.utils.BN));
 
+enum AssetStatuses {
+  'upcoming' = 1,
+  'active'= 2,
+  'sold_out'= 3,
+  'disabled'= 4,
+}
+
 type AssetInput = {
   name: string,
   symbol: string,
@@ -28,7 +35,7 @@ const defaultAttrs = (): AssetInput => ({
   symbol: 'SYM',
   title: 'Title',
   description: 'Description is a long story to tell you about the asset. Let\'s write it another time.',
-  status: 1,
+  status: AssetStatuses.upcoming,
   originalOwner: 'REPLACE_ME',
   legalDocuments: ['https://google.com', 'https://mit.com']
 })
@@ -103,6 +110,27 @@ describe("AssetsToken", function () {
       const resources2 = await sc.listAssets()
       const resource2 = resources2[id]
       expect(resource2.symbol).to.eq("UPD")
+    });
+  });
+
+  describe("setStatus", function () {
+    it("from initial to active", async function () {
+      const { sc, otherAccount } = await loadFixture(deployFixture);
+      await createMany(sc, 1, { originalOwner: otherAccount.address })
+
+      const resources = await sc.listAssets()
+      const id = 0
+      const resource = onlyFields<AssetInput>(resources[id])
+      expect(resource.status).to.eq(AssetStatuses.upcoming)
+
+      await sc.setStatus(
+        id,
+        AssetStatuses.active,
+      )
+
+      const resources2 = await sc.listAssets()
+      const resource2 = resources2[id]
+      expect(resource2.status).to.eq(AssetStatuses.active)
     });
   });
 });
