@@ -1,8 +1,15 @@
 .block {
-  display: grid;
+  display: block;
+  //display: grid;
   place-content: center flex-start;
   min-height: 100vh;
   color: #1e1e1e;
+}
+
+.blockContent {
+  position: sticky;
+  padding-top: 250px;
+  top: 0;
 }
 
 .infoBlock {

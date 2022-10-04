@@ -149,10 +149,20 @@
   place-content: center flex-start;
   height: 100vh;
 
-
   @media (max-width: 768px) {
     height: 80vh;
   }
+}
+
+.heroPageParallax .heroPageInfo {
+  display: block;
+}
+
+.sectionContent {
+  position: sticky;
+  left: 0;
+  top: 0;
+  padding-top: 20%;
 }
 
 .companyTitle {

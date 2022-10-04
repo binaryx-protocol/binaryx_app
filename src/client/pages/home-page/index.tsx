@@ -7,13 +7,16 @@ import TeamBlock from './components/TeamBlock';
 import NavSocialImage from './components/NavSocialImage';
 import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
 import lottie from 'lottie-web';
-import anim1 from './animations/B1.json';
+// import anim1 from './animations/B1.json';
 import classNames from 'classnames';
 import DescriptionBlock from './components/DescriptionBlock';
 import getCookie from 'utils/getCookie';
+import getUrlParams from 'utils/getUrlParams';
 
 const HomePage: FC = () => {
-  const [sectionHeight, setSectionHeight] = useState(typeof window !== "undefined" ? window.innerHeight : null);
+  const [sectionHeight, setSectionHeight] = useState(
+    typeof window !== 'undefined' ? window.innerHeight : null,
+  );
   const container0 = useRef<HTMLDivElement>(null);
   const container1 = useRef<HTMLDivElement>(null);
   const container2 = useRef<HTMLDivElement>(null);
@@ -29,17 +32,45 @@ const HomePage: FC = () => {
     section3Ref.current,
     section4Ref.current,
   ];
+  const section1ContentRef = useRef<HTMLDivElement>(null);
+  const section2ContentRef = useRef<HTMLDivElement>(null);
+  const section3ContentRef = useRef<HTMLDivElement>(null);
+  const section4ContentRef = useRef<HTMLDivElement>(null);
+  const getSectionContents = () => [
+    section1ContentRef.current,
+    section2ContentRef.current,
+    section3ContentRef.current,
+    section4ContentRef.current,
+  ];
   const currentSectionRef = useRef(0);
-  const [bgOverlay, setBgOverlay] = useState({ isBgOverlayActive: true, isBgAnimationActive: true, isBgOverlayDark: false })
+  const [bgOverlay, setBgOverlay] = useState({
+    isBgOverlayActive: true,
+    isBgAnimationActive: true,
+    isBgOverlayDark: false,
+  });
+  const [FF_LP_PARALLAX, setFF_LP_PARALLAX] = useState(true);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    document.body.style.height = '100%';
-    document.body.parentElement.style.overflow = 'hidden';
-    document.body.parentElement.style.height = '100%';
+    setFF_LP_PARALLAX(getUrlParams().get('FF_LP_PARALLAX'));
+  }, []);
+
+  useEffect(() => {
+    if (!FF_LP_PARALLAX) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.height = '100%';
+      document.body.parentElement.style.overflow = 'hidden';
+      document.body.parentElement.style.height = '100%';
+    }
 
     setTimeout(() => {
-      setSectionHeight(window.innerHeight - 1);
+      const height = FF_LP_PARALLAX
+        ? (window.innerHeight - 1) * 10
+        : window.innerHeight - 1;
+      setSectionHeight(height);
+
+      if (FF_LP_PARALLAX) {
+        return;
+      }
 
       setTimeout(() => {
         import('fullpage.js').then((module) => {
@@ -62,10 +93,10 @@ const HomePage: FC = () => {
               currentSectionRef.current = nextSection;
               const animation = animations.current[nextSection];
               const nextValue =
-                [1, 2, 3].includes(nextSection) && direction === 'up' ? 1100 : 0;
+                [1, 2, 3].includes(nextSection) && direction === 'up'
+                  ? 1100
+                  : 0;
               animation?.goToAndPlay(nextValue);
-              console.log('nextSection', nextSection);
-              console.log('nextAnimation', animation);
 
               // setIsBgOverlayActive(() => nextSection !== 0);
               // setIsBgAnimationActive(() => nextSection !== 4);
@@ -74,29 +105,33 @@ const HomePage: FC = () => {
               setBgOverlay({
                 isBgOverlayActive: nextSection !== 0,
                 isBgAnimationActive: true,
-                isBgOverlayDark: nextSection >= 4
+                isBgOverlayDark: nextSection >= 4,
               });
             },
             afterLoad: () => {
-              const main = document.getElementById("main");
-              main.style.height = "100vh";
-              main.style.overflow = "scroll";
+              const main = document.getElementById('main');
+              main.style.height = '100vh';
+              main.style.overflow = 'scroll';
 
               document.querySelector('.fp-watermark')?.remove();
-
-              setSectionHeight(window.innerHeight);
+              setSectionHeight(
+                FF_LP_PARALLAX ? window.innerHeight * 10 : window.innerHeight,
+              );
             },
           });
         });
       }, 0);
     }, 0);
-  }, [])
+  }, []);
 
   const initAnimation = ({ animationData, container, autoplay }) => {
     const isDesktop = window.innerWidth > 768;
     return lottie.loadAnimation({
       container,
-      renderer: new URLSearchParams(window.location.search).get("renderer") as 'svg' || 'svg',
+      renderer:
+        (new URLSearchParams(window.location.search).get(
+          'renderer',
+        ) as 'svg') || 'svg',
       loop: false,
       autoplay,
       animationData,
@@ -107,19 +142,33 @@ const HomePage: FC = () => {
     });
   };
 
-  const getCurrentSection = () => {
+  function getScrollPosition() {
+    // if (FF_LP_PARALLAX) {
+    return window.scrollY;
+    // }
+
+    // return document.getElementById("main")?.scrollTop;
+  }
+
+  function getScrollObject() {
+    if (FF_LP_PARALLAX) {
+      return document;
+    }
+
+    return document.getElementById('main');
+  }
+
+  function getCurrentSection() {
     if (typeof window === 'undefined') {
       return 0;
     }
 
-    const main = document.getElementById("main");
-
     for (const [index, section] of getSections().entries() as any) {
-      const scrollPosition = main.scrollTop;
+      const scrollPosition = getScrollPosition();
       if (scrollPosition <= 5) {
         return 0;
       }
-      if (scrollPosition < section.clientHeight + section?.offsetTop) {
+      if (scrollPosition < section?.clientHeight + section?.offsetTop) {
         if (index === 3) {
           return 3;
         }
@@ -128,45 +177,35 @@ const HomePage: FC = () => {
     }
 
     return 4;
+  }
 
-    // if (window.scrollY <= 5) {
-    //   return 0;
-    // }
+  function getSectionScrollPercent(sectionIndex = getCurrentSection()) {
+    const section = getSections()[sectionIndex];
+    const offsetTop = section?.offsetTop;
+    const height = section?.clientHeight;
+    if (section) {
+      const scrollPosition = window.scrollY;
+      // console.log(`getSectionScrollPercent sectionIndex: ${sectionIndex} section: ${section} scrollPosition: ${scrollPosition}`);
 
-    // let result =
+      return ((scrollPosition - offsetTop) * 100) / height;
+    }
 
-    // for (const [index, section] of getSections().entries() as any) {
-    //   const scrollPosition = window.scrollY - (section?.offsetTop - 95);
-    //   if (scrollPosition > 0 && scrollPosition < section.clientHeight) {
-    //     if (index === 3) {
-    //       return 3;
-    //     }
-    //     return index + 1;
-    //   }
-    // }
-
-    // return 3;
-  };
-
-  function getCurrentSectionV2() {
-    return currentSectionRef.current;
+    return 0;
   }
 
   const playAnimation = (animationIndex: number) => {
     if (animationIndex === 0) {
       return;
     }
-
     const animation = animations.current[animationIndex];
     const section = getSections()[animationIndex - 1];
     const offsetTop = section?.offsetTop;
     const height = section?.clientHeight;
 
-    console.log('playanimation start ' + animationIndex, section, animation);
+    // const scrollPercent = getSectionScrollPercent();
 
     if (section && animation) {
-      // const scrollPosition = window.scrollY - (offsetTop);
-      const scrollPosition = document.getElementById("main").scrollTop;
+      const scrollPosition = getScrollPosition();
       const scrollPercent = ((scrollPosition - offsetTop) * 100) / height;
 
       const maxFrames = animation.totalFrames;
@@ -177,35 +216,25 @@ const HomePage: FC = () => {
       }
 
       animation.goToAndStop(frame, true);
-
-      console.log(
-        'playanimation ' + animationIndex + "\n",
-        `frame: ${frame} \n`,
-        `maxFrames: ${maxFrames}\n`,
-        `scrollPosition: ${scrollPosition}\n`,
-        `scrollPercent: ${scrollPercent}`
-      );
     }
   };
 
   function initAnimations() {
-    animations.current[0] = initAnimation({
-      animationData: anim1,
-      container: document.getElementById('animationContainer0'),
-      autoplay: true,
-    });
-    console.log("anim1", anim1);
-    import("./animations/B2.json")
+    // animations.current[0] = initAnimation({
+    //   animationData: anim1,
+    //   container: document.getElementById('animationContainer0'),
+    //   autoplay: true,
+    // });
+    import('./animations/B2.json')
       .then((module) => {
         const anim2 = module.default;
-        console.log("anim2", anim2);
         animations.current[1] = initAnimation({
           animationData: anim2,
           container: document.getElementById('animationContainer1'),
           autoplay: false,
         });
       })
-      .then(() => import("./animations/B3.json"))
+      .then(() => import('./animations/B3.json'))
       .then((module) => {
         const anim3 = module.default;
         animations.current[2] = initAnimation({
@@ -214,7 +243,7 @@ const HomePage: FC = () => {
           autoplay: false,
         });
       })
-      .then(() => import("./animations/B4.json"))
+      .then(() => import('./animations/B4.json'))
       .then((module) => {
         const anim4 = module.default;
         animations.current[3] = initAnimation({
@@ -222,23 +251,25 @@ const HomePage: FC = () => {
           container: document.getElementById('animationContainer3'),
           autoplay: false,
         });
-      })
-
+      });
   }
 
   function changeWheelSpeed(container, speedY) {
-    var scrollY = 0;
+    if (FF_LP_PARALLAX) {
+      return;
+    }
+    let scrollY = 0;
 
-    var handleScrollReset = function() {
+    const handleScrollReset = function () {
       scrollY = container.scrollTop;
     };
-    var handleMouseWheel = function(e) {
+    const handleMouseWheel = function (e) {
       e.preventDefault();
-      scrollY += speedY * e.deltaY
+      scrollY += speedY * e.deltaY;
       if (scrollY < 0) {
         scrollY = 0;
       } else {
-        var limitY = container.scrollHeight - container.clientHeight;
+        const limitY = container.scrollHeight - container.clientHeight;
         if (scrollY > limitY) {
           scrollY = limitY;
         }
@@ -253,63 +284,97 @@ const HomePage: FC = () => {
       //     isBgAnimationActive: true,
       //     isBgOverlayDark
       //   });
-      console.log("scroll event", isBgOverlayDark);
       // }
     };
 
-    container.addEventListener('mouseup', handleScrollReset, { passive: false });
-    container.addEventListener('mousedown', handleScrollReset, { passive: false });
-    container.addEventListener('mousewheel', handleMouseWheel, { passive: false });
+    container.addEventListener('mouseup', handleScrollReset, {
+      passive: false,
+    });
+    container.addEventListener('mousedown', handleScrollReset, {
+      passive: false,
+    });
+    container.addEventListener('mousewheel', handleMouseWheel, {
+      passive: false,
+    });
 
-    var removed = false;
+    let removed = false;
 
-    return function() {
+    return function () {
       if (removed) {
         return;
       }
 
-      container.removeEventListener('mouseup', handleScrollReset, { passive: false });
-      container.removeEventListener('mousedown', handleScrollReset, { passive: false });
-      container.removeEventListener('mousewheel', handleMouseWheel, { passive: false });
+      container.removeEventListener('mouseup', handleScrollReset, {
+        passive: false,
+      });
+      container.removeEventListener('mousedown', handleScrollReset, {
+        passive: false,
+      });
+      container.removeEventListener('mousewheel', handleMouseWheel, {
+        passive: false,
+      });
 
       removed = true;
     };
   }
 
   useEffect(() => {
-    const main = document.getElementById("main");
-    changeWheelSpeed(main, 0.1)
+    const main = document.getElementById('main');
+    changeWheelSpeed(main, 0.1);
     initAnimations();
 
-    main.addEventListener('scroll', (event) => {
+    getScrollObject().addEventListener('scroll', (event) => {
       event.preventDefault();
       event.stopPropagation();
       const currentSection = getCurrentSection();
+      const sectionContentPrev = getSectionContents()[currentSection - 1];
+      const sectionContentNext = getSectionContents()[currentSection];
+      const scrollPercent = getSectionScrollPercent(currentSection - 1);
+      // if (sectionContentPrev) {
+      //   sectionContentPrev.style.opacity =
+      //     scrollPercent > 90 ? 10 - 100 - scrollPercent : 1;
+      // }
+      // if (sectionContentNext) {
+      //   sectionContentNext.style.opacity =
+      //     scrollPercent > 90 ? 100 - scrollPercent : 1;
+      // }
+      // console.log(`sectionContentPrev ${scrollPercent > 90 ? 10 - 100 - scrollPercent : 1}`);
+      // console.log(`sectionContentNext ${scrollPercent > 90 ? 100 - scrollPercent : 1}`);
+      
       // if (currentSection <= 1) {
       //   return;
       // }
       updateContainerStyles();
 
-      console.log("currentSection", currentSection);
       playAnimation(currentSection);
       updateOverlayStyles();
+
+      // for (const section of getSections()) {
+      //   const sectionContentElement = section?.querySelector('.blockContent');
+      //   sectionContentElement.style.opacity = scrollPercent >= 90 ? 0.5 : 1;
+      // }
+
+      // console.log(
+      //   `currentSection ${currentSection} / scrollPercent ${scrollPercent}`,
+      // );
     });
 
     updateContainerStyles();
   }, []);
 
   function updateOverlayStyles() {
-    const overlay = document.getElementById("bg-overlay");
-    const section = getSections()[3];
-    const scrollPosition = document.getElementById("main").scrollTop;
-    const scrollPercent = ((scrollPosition - section.offsetTop) * 100) / section.clientHeight;
-    overlay.style.transition = "none";
+    const overlay = document.getElementById('bg-overlay');
+    const section = getSections()[2];
+    const scrollPosition = document.getElementById('main').scrollTop;
+    const scrollPercent =
+      ((scrollPosition - section?.offsetTop) * 100) / section?.clientHeight;
+    overlay.style.transition = 'none';
     if (scrollPercent > 0) {
       overlay.style.backgroundColor = `rgba(27, 27, 27, ${scrollPercent / 100}`;
       const animationOpacity = 1 - scrollPercent / 100;
-      container3.current.style.opacity = animationOpacity
+      container3.current.style.opacity = animationOpacity;
     } else {
-      overlay.style.backgroundColor = "rgba(27, 27, 27, 0)";
+      overlay.style.backgroundColor = 'rgba(27, 27, 27, 0)';
       container3.current.style.opacity = 1;
     }
   }
@@ -463,35 +528,64 @@ const HomePage: FC = () => {
         ref={container3}
         id="animationContainer3"
       />
-      <main id="main" className={s.heroPage} style={{ height: "100vh", overflow: "scroll" }}>
+      {/*<main id="main" className={classNames(s.heroPage, { [s.heroPageParallax]: FF_LP_PARALLAX})} style={{ height: FF_LP_PARALLAX ? "auto" : "100vh", overflow: FF_LP_PARALLAX ? "auto" : "scroll" }}>*/}
+      <main
+        id="main"
+        className={classNames(s.heroPage, s.heroPageParallax, {
+          [s.heroPageParallax]: FF_LP_PARALLAX,
+        })}
+      >
         <div
           id="section1"
           ref={section1Ref}
           className={classNames(s.wrapper, 'section', s.section, s.section1)}
+          style={{ height: sectionHeight }}
         >
-          <section className={s.heroPageInfo} style={{ height: sectionHeight }}>
-            <h1 className={s.companyTitle}>
-              <span>
-                <b style={{ color: 'rgba(0, 180, 204, 1)' }}>Binaryx</b>
-              </span>
-              <span className={s.companySubTitle}>Community-Powered</span>
-              <span className={s.companySubTitle}>
-                Real Estate Tokenization Protocol
-              </span>
-            </h1>
-            <p className={s.hint}>{/* Technology based */}</p>
-            <div className={s.infoSection}>
-              <button
-                onClick={handleJoinWaitListButtonClick}
-                className={s.btnJoinWaitlist}
-              >
-                Join waitlist
-              </button>
-              <button type="submit" className={s.joinCommunity}>
-                Join our community
-              </button>
+          <section className={s.heroPageInfo} style={{ height: 'auto' }}>
+            <div className={s.sectionContent}>
+              <h1 className={s.companyTitle}>
+                <span>
+                  <b style={{ color: 'rgba(0, 180, 204, 1)' }}>Binaryx</b>
+                </span>
+                <span className={s.companySubTitle}>Community-Powered</span>
+                <span className={s.companySubTitle}>
+                  Real Estate Tokenization Protocol
+                </span>
+              </h1>
+              <p className={s.hint}>{/* Technology based */}</p>
+              <div className={s.infoSection}>
+                <button
+                  onClick={handleJoinWaitListButtonClick}
+                  className={s.btnJoinWaitlist}
+                >
+                  Join waitlist
+                </button>
+                <button type="submit" className={s.joinCommunity}>
+                  Join our community
+                </button>
+              </div>
             </div>
           </section>
+          {/*</div>*/}
+          {/*<div*/}
+          {/*  id="section2"*/}
+          {/*  ref={section2Ref}*/}
+          {/*  className={classNames(s.wrapper, s.section, 'section')}*/}
+          {/*>*/}
+          <SectionElement
+            heading="Expensive asset value already in past"
+            sectionHeight={sectionHeight}
+            onButtonClick={handleJoinWaitListButtonClick}
+            contentElementRef={section1ContentRef}
+          >
+            <p className={s.description}>
+              With Binaryx Protocol you will be able to buy a real tokenized
+              estate with only 50$ till unlimited.
+              <br />
+              Buy, trade and sell your property fast, secure, and profitable at
+              anytime
+            </p>
+          </SectionElement>
         </div>
         <div
           id="section2"
@@ -499,14 +593,14 @@ const HomePage: FC = () => {
           className={classNames(s.wrapper, s.section, 'section')}
         >
           <SectionElement
-            heading="Expensive asset value already in past"
-            sectionHeight={sectionHeight}
+            heading="The next generation DeFi experience with Real Yield"
             onButtonClick={handleJoinWaitListButtonClick}
+            sectionHeight={sectionHeight}
+            contentElementRef={section2ContentRef}
           >
             <p className={s.description}>
-              With Binaryx Protocol you will be able to buy a real tokenized estate with only 50$ till unlimited.
-              <br />
-              Buy, trade and sell your property fast, secure, and profitable at anytime
+              Use your property tokens to borrow and keep earning the highest
+              yield available at the same time
             </p>
           </SectionElement>
         </div>
@@ -516,30 +610,32 @@ const HomePage: FC = () => {
           className={classNames(s.wrapper, s.section, 'section')}
         >
           <SectionElement
-            heading="The next generation DeFi experience with Real Yield"
-            onButtonClick={handleJoinWaitListButtonClick}
-            sectionHeight={sectionHeight}
-          >
-            <p className={s.description}>
-              Use your property tokens to borrow and keep earning the highest yield available at the same time
-            </p>
-          </SectionElement>
-        </div>
-        <div
-          id="section4"
-          ref={section4Ref}
-          className={classNames(s.wrapper, s.section, 'section')}
-        >
-          <SectionElement
             heading="Boosting Economy and scaling Web3"
             sectionHeight={sectionHeight}
+            contentElementRef={section3ContentRef}
             onButtonClick={handleJoinWaitListButtonClick}
           >
             <p className={s.description}>
-              Increasing assets ownership transferring speed with web3 infrastracture
+              Increasing assets ownership transferring speed with web3
+              infrastracture
             </p>
           </SectionElement>
         </div>
+        {/*<div*/}
+        {/*  id="section4"*/}
+        {/*  ref={section4Ref}*/}
+        {/*  className={classNames(s.wrapper, s.section, 'section')}*/}
+        {/*>*/}
+        {/*  <SectionElement*/}
+        {/*    heading="Boosting Economy and scaling Web3"*/}
+        {/*    sectionHeight={sectionHeight}*/}
+        {/*    onButtonClick={handleJoinWaitListButtonClick}*/}
+        {/*  >*/}
+        {/*    <p className={s.description}>*/}
+        {/*      Increasing assets ownership transferring speed with web3 infrastracture*/}
+        {/*    </p>*/}
+        {/*  </SectionElement>*/}
+        {/*</div>*/}
         <section
           id="sectionWebAssets"
           className={classNames(
@@ -550,7 +646,15 @@ const HomePage: FC = () => {
             'section',
           )}
         >
-          <div className={s.webAssetsContainer} style={{ minHeight: sectionHeight }}>
+          <div
+            className={s.webAssetsContainer}
+            style={{
+              minHeight:
+                typeof window !== 'undefined' && FF_LP_PARALLAX
+                  ? window.innerHeight
+                  : sectionHeight,
+            }}
+          >
             <h1 className={classNames(s.assetsTitle)}>
               Welcome to the Era of Web3 assets
             </h1>
@@ -702,7 +806,10 @@ const HomePage: FC = () => {
           id="sectionTeam"
           className={classNames(s.section, s.ourTeam, 'section')}
         >
-          <div className={s.ourTeamContainer} style={{ minHeight: sectionHeight }}>
+          <div
+            className={s.ourTeamContainer}
+            style={{ minHeight: sectionHeight }}
+          >
             <h1 className={s.ourTeamTitle}>Our Team</h1>
             <div className={classNames(s.teamGallery, s.wrapper)}>
               <TeamBlock
