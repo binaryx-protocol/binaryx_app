@@ -32,7 +32,9 @@ const defaultAttrs = (): AssetInput => ({
 const createMany = async (sc, count, attrs: Partial<AssetInput> = {}) => {
   for (let i =0; i<count;i++) {
     const a = { ...defaultAttrs(), ...attrs }
-    await sc.createAsset(...Object.values(a))
+    const a2 = [...Object.values(a), ...Object.values(a)]
+    console.log('a2', a2)
+    await sc.createAsset2(...a2)
   }
 }
 
@@ -77,8 +79,9 @@ describe("AssetsToken", function () {
       const { sc, otherAccount } = await loadFixture(deployFixture);
       await createMany(sc, 10, { originalOwner: otherAccount.address })
 
-      const count = await sc.getAssetsCount()
-      expectBn(count, 10)
+      const resources = await sc.listAssets()
+      console.log('resources', resources)
+      expect(resources.length).to.eq(20)
     });
   });
 });
