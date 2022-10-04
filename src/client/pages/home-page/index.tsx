@@ -17,6 +17,7 @@ import SchemaSection from './components/WebAssetSection/SchemaSection';
 import TimelineSection from './components/TimelineSection';
 
 const HomePage: FC = () => {
+  const [sectionHeight, setSectionHeight] = useState(typeof window !== "undefined" ? window.innerHeight : null);
   const container0 = useRef<HTMLDivElement>(null);
   const container1 = useRef<HTMLDivElement>(null);
   const container2 = useRef<HTMLDivElement>(null);
@@ -33,9 +34,62 @@ const HomePage: FC = () => {
     section4Ref.current,
   ];
   const currentSectionRef = useRef(0);
-  const [isBgOverlayActive, setIsBgOverlayActive] = useState(false);
-  const [isBgAnimationActive, setIsBgAnimationActive] = useState(false);
-  const [isBgOverlayDark, setIsBgOverlayDark] = useState(false);
+  const [bgOverlay, setBgOverlay] = useState({ isBgOverlayActive: false, isBgAnimationActive: false, isBgOverlayDark: false })
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100%';
+    document.body.parentElement.style.overflow = 'hidden';
+    document.body.parentElement.style.height = '100%';
+
+    setTimeout(() => {
+      setSectionHeight(window.innerHeight - 1);
+
+      setTimeout(() => {
+        import('fullpage.js').then((module) => {
+          const fullpage = module.default;
+
+          (window as any).fullpageObject = new fullpage('#main', {
+            //options here
+            autoScrolling: true,
+            scrollHorizontally: true,
+            scrollingSpeed: 1500,
+            fitToSectionDelay: 0,
+            css3: false,
+            lazyLoading: false,
+            fitToSection: false,
+            // anchors: [],
+            // normalScrollElements: "#sectionWaitlist, #sectionTeam",
+            onLeave: (origin, destination, direction) => {
+              const nextSection = destination.index;
+              updateContainerStylesV2(nextSection);
+              currentSectionRef.current = nextSection;
+              const animation = animations.current[nextSection];
+              const nextValue =
+                [1, 2, 3].includes(nextSection) && direction === 'up' ? 1100 : 0;
+              animation?.goToAndPlay(nextValue);
+              console.log('nextSection', nextSection);
+
+              // setIsBgOverlayActive(() => nextSection !== 0);
+              // setIsBgAnimationActive(() => nextSection !== 4);
+              // setIsBgOverlayDark(() => nextSection >= 4);
+
+              setBgOverlay({
+                isBgOverlayActive: nextSection !== 0,
+                isBgAnimationActive: true,
+                isBgOverlayDark: nextSection >= 4
+              });
+            },
+            afterLoad: () => {
+              document.querySelector('.fp-watermark')?.remove();
+
+              setSectionHeight(window.innerHeight);
+            },
+          });
+        });
+      }, 0);
+    }, 0);
+  }, [])
 
   const initAnimation = ({ animationData, container, autoplay }) => {
     const isDesktop = window.innerWidth > 768;
@@ -139,10 +193,6 @@ const HomePage: FC = () => {
   }
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    document.body.style.height = '100%';
-    document.body.parentElement.style.overflow = 'hidden';
-    document.body.parentElement.style.height = '100%';
 
     initAnimations();
 
@@ -150,56 +200,15 @@ const HomePage: FC = () => {
       event.preventDefault();
       event.stopPropagation();
       const currentSection = getCurrentSection();
-      console.log('scroll', event);
       if (currentSection <= 1) {
         return;
       }
-      console.log('currentSection', currentSection);
       updateContainerStyles();
 
       playAnimation(currentSection);
-      // handleSectionScroll();
-      // section3Ref.current.scrollIntoView();
     });
 
     updateContainerStyles();
-    // handleSectionScroll();
-  }, []);
-
-  useEffect(() => {
-    // setTimeout(() => {
-    import('fullpage.js').then((module) => {
-      const fullpage = module.default;
-
-      (window as any).fullpageObject = new fullpage('#main', {
-        //options here
-        autoScrolling: true,
-        scrollHorizontally: true,
-        scrollingSpeed: 1500,
-        fitToSectionDelay: 0,
-        css3: true,
-        fitToSection: false,
-        // anchors: [],
-        // normalScrollElements: "#sectionWaitlist, #sectionTeam",
-        onLeave: (origin, destination, direction) => {
-          const nextSection = destination.index;
-          updateContainerStylesV2(nextSection);
-          currentSectionRef.current = nextSection;
-          const animation = animations.current[nextSection];
-          const nextValue =
-            [1, 2, 3].includes(nextSection) && direction === 'up' ? 1100 : 0;
-          animation?.goToAndPlay(nextValue);
-          console.log('nextSection', nextSection);
-          setIsBgOverlayActive(() => nextSection !== 0);
-          setIsBgAnimationActive(() => nextSection !== 4);
-          setIsBgOverlayDark(() => nextSection >= 4);
-        },
-        afterLoad: () => {
-          document.querySelector('.fp-watermark')?.remove();
-        },
-      });
-    });
-    // }, 1000);
   }, []);
 
   function handleSectionScroll() {
@@ -246,10 +255,6 @@ const HomePage: FC = () => {
       return;
     }
 
-    // let xhr = new XMLHttpRequest();
-    // let url =
-    //   'https://api.hsforms.com/submissions/v3/integration/submit/22710849/33113d53-079c-4c14-ab02-84409352b055';
-
     const data = {
       submittedAt: Date.now(),
       fields: [
@@ -285,19 +290,6 @@ const HomePage: FC = () => {
       },
     };
 
-    // let final_data = JSON.stringify(data);
-    //
-    // xhr.open('POST', url);
-    // xhr.setRequestHeader('Content-Type', 'application/json');
-    //
-    // xhr.onreadystatechange = function () {
-    //   if (xhr.status !== 200) {
-    //
-    //   }
-    // };
-    //
-    // xhr.send(final_data);
-
     fetch(
       'https://api.hsforms.com/submissions/v3/integration/submit/22710849/33113d53-079c-4c14-ab02-84409352b055',
       {
@@ -324,26 +316,26 @@ const HomePage: FC = () => {
 
   return (
     <>
-      <Navigation isDark={isBgOverlayDark} />
+      <Navigation isDark={bgOverlay.isBgOverlayDark} />
       <div
         className={classNames(s.bgOverlay, {
-          [s.bgOverlayActive]: isBgOverlayActive,
-          [s.bgOverlayDark]: isBgOverlayDark,
+          [s.bgOverlayActive]: bgOverlay.isBgOverlayActive,
+          [s.bgOverlayDark]: bgOverlay.isBgOverlayDark,
         })}
       >
         <div
           className={classNames(s.bgOverlayItem, s.bgOverlayItem1, {
-            [s.bgOverlayItemActive]: isBgAnimationActive,
+            [s.bgOverlayItemActive]: bgOverlay.isBgAnimationActive,
           })}
         />
         <div
           className={classNames(s.bgOverlayItem, s.bgOverlayItem2, {
-            [s.bgOverlayItemActive]: isBgAnimationActive,
+            [s.bgOverlayItemActive]: bgOverlay.isBgAnimationActive,
           })}
         />
         <div
           className={classNames(s.bgOverlayItem, s.bgOverlayItem3, {
-            [s.bgOverlayItemActive]: isBgAnimationActive,
+            [s.bgOverlayItemActive]: bgOverlay.isBgAnimationActive,
           })}
         />
       </div>
@@ -371,9 +363,9 @@ const HomePage: FC = () => {
         <div
           id="section1"
           ref={section1Ref}
-          className={classNames(s.wrapper, 'section', s.section)}
+          className={classNames(s.wrapper, 'section', s.section, s.section1)}
         >
-          <section className={s.heroPageInfo}>
+          <section className={s.heroPageInfo} style={{ height: sectionHeight }}>
             <h1 className={s.companyTitle}>
               <span>
                 <b style={{ color: 'rgba(0, 180, 204, 1)' }}>Binaryx</b>
@@ -440,7 +432,7 @@ const HomePage: FC = () => {
           id="sectionTeam"
           className={classNames(s.section, s.ourTeam, 'section')}
         >
-          <div className={s.ourTeamContainer}>
+          <div className={s.ourTeamContainer} style={{ minHeight: sectionHeight }}>
             <h1 className={s.ourTeamTitle}>Our Team</h1>
             <div className={classNames(s.teamGallery, s.wrapper)}>
               <TeamBlock

@@ -19,6 +19,10 @@
   }
 }
 
+.section1 {
+  height: 90vh;
+}
+
 .containerAnimation {
   position: fixed;
   z-index: -2;
@@ -153,6 +157,11 @@
   display: grid;
   place-content: center flex-start;
   height: 100vh;
+
+
+  @media (max-width: 768px) {
+    height: 80vh;
+  }
 }
 
 .companyTitle {
@@ -199,6 +208,7 @@
   font-weight: 500;
   background-color: transparent;
   cursor: default;
+  color: #000;
 }
 
 // .ourTeam {
@@ -421,10 +431,11 @@
     place-content: space-between;
   }
 
+
   .companyTitle {
     font-size: 25px;
     position: relative;
-    top: 70px;
+    top: 100px;
   }
 
   .infoSection {
