@@ -1,10 +1,9 @@
 {
-  "name": "demo-dapp-election",
+  "name": "ARB BNRX",
   "license": "Apache-2.0",
   "version": "1.0.0",
   "scripts": {
-    "build": "hardhat compile",
-    "exec": "hardhat run scripts/exec.js --network l2"
+    "build": "hardhat compile"
   },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.2",
@@ -13,8 +12,10 @@
     "hardhat": "^2.2.0"
   },
   "dependencies": {
+    "@nomiclabs/hardhat-web3": "^2.0.0",
     "@openzeppelin/contracts": "^4.7.3",
     "arb-shared-dependencies": "^1.0.0",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "hardhat-erc1820": "^0.1.0"
   }
 }

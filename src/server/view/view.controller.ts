@@ -106,6 +106,21 @@ export class ViewController {
       );
   }
 
+  @Get('sandbox')
+  public async showSandbox(@Req() req: Request, @Res() res: Response) {
+    const parsedUrl = parse(req.url, true);
+    const serverSideProps = getPublicEnv();
+
+    await this.viewService
+      .getNextServer()
+      .render(
+        req,
+        res,
+        parsedUrl.pathname,
+        Object.assign(parsedUrl.query, serverSideProps),
+      );
+  }
+
   @Get('assets/:id')
   public async showAsset(@Req() req: Request, @Res() res: Response) {
     const parsedUrl = parse(req.url, true);
@@ -141,3 +156,11 @@ export class ViewController {
       .render(req, res, parsedUrl.pathname, parsedUrl.query);
   }
 }
+
+const getPublicEnv = (): Record<string, string> =>
+  Object.entries(process.env).reduce((acc, [name, value]) => {
+    if (!!name.match(/PUBLIC/)) {
+      acc[name] = value;
+    }
+    return acc;
+  }, {});
