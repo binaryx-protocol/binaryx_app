@@ -12,9 +12,11 @@ import { ethers, web3 } from "hardhat";
 type AssetInput = {
   name: string,
   symbol: string,
-  totalTokensSupply: number,
-  tokenPrice: number,
+  title: string,
+  description: string,
+  status: number,
   originalOwner: string,
+  legalDocuments: string[],
 }
 
 const expectBn = (given, expected) => {
@@ -23,18 +25,18 @@ const expectBn = (given, expected) => {
 
 const defaultAttrs = (): AssetInput => ({
   name: 'Name',
-  symbol: 'Symbol',
-  totalTokensSupply: 10000,
-  tokenPrice: 50,
+  symbol: 'SYM',
+  title: 'Title',
+  description: 'Description is a long story to tell you about the asset. Let\'s write it another time.',
+  status: 1,
   originalOwner: 'REPLACE_ME',
+  legalDocuments: ['https://google.com', 'https://mit.com']
 })
 
 const createMany = async (sc, count, attrs: Partial<AssetInput> = {}) => {
   for (let i =0; i<count;i++) {
     const a = { ...defaultAttrs(), ...attrs }
-    const a2 = [...Object.values(a), ...Object.values(a)]
-    console.log('a2', a2)
-    await sc.createAsset2(...a2)
+    await sc.createAsset(...Object.values(a))
   }
 }
 
@@ -61,13 +63,7 @@ describe("AssetsToken", function () {
     it("with valid params", async function () {
       const { sc, otherAccount } = await loadFixture(deployFixture);
 
-      await sc.createAsset(
-        'Name',
-        'Symbol',
-        10000,
-        50,
-        otherAccount.address
-      )
+      await createMany(sc, 1, { originalOwner: otherAccount.address })
 
       const count = await sc.getAssetsCount()
       expectBn(count, 1)
@@ -81,7 +77,7 @@ describe("AssetsToken", function () {
 
       const resources = await sc.listAssets()
       console.log('resources', resources)
-      expect(resources.length).to.eq(20)
+      expect(resources.length).to.eq(10)
     });
   });
 });

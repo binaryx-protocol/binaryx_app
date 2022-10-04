@@ -8,18 +8,21 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 interface IAssetsTokenManager {
   struct Asset {
-    address originalOwner;
     string name;
+    string symbol;
     string title;
     string description;
     uint8 status;
+    address originalOwner;
+    string[] legalDocuments;
 
-    PropertyAddress propertyAddress;
-    PropertyInfo propertyInfo;
-    TokenInfo tokenInfo;
-    InvestmentInfo investmentInfo;
-    RentalInfo rentalInfo;
-    FeeInfo feeInfo;
+//    PropertyAddress propertyAddress;
+//    PropertyInfo propertyInfo;
+//    TokenInfo tokenInfo;
+//    InvestmentInfo investmentInfo;
+//    RentalInfo rentalInfo;
+//    FeeInfo feeInfo;
+//    AssetDao assetDao;
   }
 
   struct PropertyAddress {
@@ -71,8 +74,23 @@ interface IAssetsTokenManager {
     uint256 upfrontLlcFee;
   }
 
+  struct AssetDao {
+    string proposal;
+    address managementOracle;
+    address legalOracle;
+    address auditOracle;
+  }
+
   // TODO add batch
-  function createAsset(string memory name, string memory symbol, uint256 totalTokensSupply, uint256 tokenPrice, address originalOwner) external;
+  function createAsset(
+    string memory name,
+    string memory symbol,
+    string memory title,
+    string memory description,
+    uint8 status,
+    address originalOwner,
+    string[] memory legalDocuments
+  ) external;
   function listAssets() external view returns(Asset[] memory);
   // TODO add batch
   function patchAsset(uint256 id, string memory name, string memory symbol, uint256 totalTokensSupply, uint256 tokenPrice, address originalOwner) external;
@@ -85,10 +103,10 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
   using Counters for Counters.Counter;
 
   uint8 public constant GOLD = 0;
-  uint8 public constant STATUS_DISABLED;
-  uint8 public constant STATUS_ACTIVE;
-  uint8 public constant STATUS_UPCOMING;
-  uint8 public constant STATUS_SOLD_OUT;
+  uint8 public constant STATUS_DISABLED = 1;
+  uint8 public constant STATUS_ACTIVE = 2;
+  uint8 public constant STATUS_UPCOMING = 3;
+  uint8 public constant STATUS_SOLD_OUT = 4;
 
   //  mapping(address => uint256[]) public investorAssetsIds;
   //  mapping(address => uint256[]) public originalOwnerAssetsIds;
@@ -101,20 +119,36 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
 
   function initialize() public {
     _mint(msg.sender, GOLD, 10**18, "");
-    STATUS_DISABLED = 0;
-    STATUS_ACTIVE = 1;
-    STATUS_UPCOMING = 2;
-    STATUS_SOLD_OUT = 3;
   }
 
-  function createAsset(string memory name, string memory symbol, uint256 totalTokensSupply, uint256 tokenPrice, address originalOwner) public override {
+  function createAsset(
+    string memory name,
+    string memory symbol,
+    string memory title,
+    string memory description,
+    uint8 status,
+    address originalOwner,
+    string[] memory legalDocuments
+  ) public override {
     uint256 id = _assetIds.current();
     _assetIds.increment();
-    assetsIds[id] = Asset(
-      totalTokensSupply,
-      tokenPrice,
-      originalOwner
+    Asset memory newAsset = Asset(
+      name,
+      symbol,
+      title,
+      description,
+      status,
+      originalOwner,
+      legalDocuments
+//      PropertyAddress(),
+//      PropertyInfo(),
+//      TokenInfo(),
+//      InvestmentInfo(),
+//      RentalInfo(),
+//      FeeInfo(),
+//      AssetDao()
     );
+    assetsIds[id] = newAsset;
   }
 
   function listAssets() public override view returns(Asset[] memory) {
