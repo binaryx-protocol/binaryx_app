@@ -15,6 +15,7 @@ import DescriptionBlock from './components/DescriptionBlock';
 import getCookie from 'utils/getCookie';
 import SchemaSection from './components/WebAssetSection/SchemaSection';
 import TimelineSection from './components/TimelineSection';
+import PopupMenu from './components/PopupMenu';
 
 const HomePage: FC = () => {
   const container0 = useRef<HTMLDivElement>(null);
@@ -322,6 +323,8 @@ const HomePage: FC = () => {
     );
   }
 
+  const [isShowing, setIsShowing] = useState(false);
+
   return (
     <>
       <Navigation isDark={isBgOverlayDark} />
@@ -376,7 +379,7 @@ const HomePage: FC = () => {
           <section className={s.heroPageInfo}>
             <h1 className={s.companyTitle}>
               <span>
-                <b style={{ color: 'rgba(0, 180, 204, 1)' }}>Binaryx</b>
+                <b style={{ color: 'var(--font-color_blue-light)' }}>Binaryx</b>
               </span>
               <span className={s.companySubTitle}>Community-Powered</span>
               <span className={s.companySubTitle}>
@@ -386,7 +389,9 @@ const HomePage: FC = () => {
             <p className={s.hint}>{/* Technology based */}</p>
             <div className={s.infoSection}>
               <button
-                onClick={handleJoinWaitListButtonClick}
+                onClick={() => {
+                  setIsShowing(!isShowing);
+                }}
                 className={s.btnJoinWaitlist}
               >
                 Join waitlist
@@ -394,6 +399,11 @@ const HomePage: FC = () => {
               <button type="submit" className={s.joinCommunity}>
                 Join our community
               </button>
+              {isShowing ? (
+                <PopupMenu isShowing={isShowing} setIsShowing={setIsShowing} />
+              ) : (
+                ''
+              )}
             </div>
           </section>
         </div>
@@ -407,7 +417,7 @@ const HomePage: FC = () => {
             preTitle="WE ARE HERE TO:"
             body="With Binaryx Protocol you will be able to buy a real tokenized estate with only 50$ till unlimited. 
             Buy, trade and sell your property fast, secure, and profitable at anytime"
-            onButtonClick={handleJoinWaitListButtonClick}
+            // onButtonClick={handleJoinWaitListButtonClick}
           />
         </div>
         <div
