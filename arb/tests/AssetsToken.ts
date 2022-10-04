@@ -76,8 +76,40 @@ describe("AssetsToken", function () {
       await createMany(sc, 10, { originalOwner: otherAccount.address })
 
       const resources = await sc.listAssets()
-      console.log('resources', resources)
       expect(resources.length).to.eq(10)
+      expect(resources[0].symbol).to.eq("SYM")
+    });
+  });
+
+  describe("updateAsset", function () {
+    it("one with valid params", async function () {
+      const { sc, otherAccount } = await loadFixture(deployFixture);
+      await createMany(sc, 1, { originalOwner: otherAccount.address })
+
+      const resources = await sc.listAssets()
+      const id = 0
+      const resource = onlyFields<AssetInput>(resources[id])
+      expect(resource.symbol).to.eq("SYM")
+
+      const attrs = {
+        ...resource,
+        symbol: 'UPD'
+      }
+      await sc.updateAsset(
+        id,
+        ...Object.values(attrs),
+      )
+
+      const resources2 = await sc.listAssets()
+      const resource2 = resources2[id]
+      expect(resource2.symbol).to.eq("UPD")
     });
   });
 });
+
+const onlyFields = <T>(object): T => Object.entries(object).reduce((acc, [name, value]) => {
+  if (!name.match(/^[0-9]+$/)) {
+    acc[name] = value;
+  }
+  return acc;
+}, {}) as T

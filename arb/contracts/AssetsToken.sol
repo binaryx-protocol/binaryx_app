@@ -93,7 +93,16 @@ interface IAssetsTokenManager {
   ) external;
   function listAssets() external view returns(Asset[] memory);
   // TODO add batch
-  function patchAsset(uint256 id, string memory name, string memory symbol, uint256 totalTokensSupply, uint256 tokenPrice, address originalOwner) external;
+  function updateAsset(
+    uint256 id,
+    string memory name,
+    string memory symbol,
+    string memory title,
+    string memory description,
+    uint8 status,
+    address originalOwner,
+    string[] memory legalDocuments
+  ) external;
   // TODO add batch
   function disableAsset(uint256 id) external;
   function getAssetsCount() external view returns(uint256);
@@ -163,8 +172,33 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
     return result;
   }
 
-  function patchAsset(uint256 id, string memory name, string memory symbol, uint256 totalTokensSupply, uint256 tokenPrice, address originalOwner) public override {
-
+  function updateAsset(
+    uint256 id,
+    string memory name,
+    string memory symbol,
+    string memory title,
+    string memory description,
+    uint8 status,
+    address originalOwner,
+    string[] memory legalDocuments
+  ) public override {
+    Asset memory newAsset = Asset(
+      name,
+      symbol,
+      title,
+      description,
+      status,
+      originalOwner,
+      legalDocuments
+    //      PropertyAddress(),
+    //      PropertyInfo(),
+    //      TokenInfo(),
+    //      InvestmentInfo(),
+    //      RentalInfo(),
+    //      FeeInfo(),
+    //      AssetDao()
+    );
+    assetsIds[id] = newAsset;
   }
 
   function disableAsset(uint256 id) public override {
