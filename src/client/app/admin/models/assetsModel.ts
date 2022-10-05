@@ -3,6 +3,8 @@ import * as metaMaskModel from "../../models/metaMaskModel";
 import {loadable} from "jotai/utils";
 import {ethers} from "ethers";
 import {assetsManagerAbi} from "../abis";
+import * as rpcConfigModel from "../../models/rpcConfigModel";
+import {RpcConfig} from "../../models/rpcConfigModel";
 
 enum AssetStatuses {
   'upcoming' = 1,
@@ -31,10 +33,6 @@ type AssetInput = {
   // propertyAddress: AssetAddress,
 }
 
-const address = {
-  manager: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0' // TODO take from config
-}
-
 const assetAddressAttrs  = (): AssetAddress => ({
   country: 'UA',
   state: 'Che',
@@ -56,9 +54,9 @@ const defaultAttrs = (): AssetInput => ({
 })
 
 const rpcClient = {
-  async createAsset(args: any) {
+  async createAsset($rpcConfig: RpcConfig, args: any) {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const manager = new ethers.Contract(address.manager, assetsManagerAbi, provider);
+    const manager = new ethers.Contract($rpcConfig.assetsTokenAddress, assetsManagerAbi, provider);
     const managerSigned = manager.connect(provider.getSigner())
 
     console.log('args', args)
@@ -70,21 +68,24 @@ const rpcClient = {
     )
     console.log('result', result)
   },
-  async listAssets() {
+  async listAssets($rpcConfig: RpcConfig) {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const manager = new ethers.Contract(address.manager, assetsManagerAbi, provider);
+    const manager = new ethers.Contract($rpcConfig.assetsTokenAddress, assetsManagerAbi, provider);
     const managerSigned = manager.connect(provider.getSigner())
 
     const result = await managerSigned.listAssets()
-    console.log('result', result)
+    console.log('listAssets result', result)
     return result
   }
 }
 
 export const $doCreateAsset = atom(null, async (get) => {
   const $walletReadiness = get(metaMaskModel.$walletReadiness)
-  if ($walletReadiness === 'ready') {
+  const $rpcConfig = get(rpcConfigModel.$rpcConfig)
+
+  if ($walletReadiness === 'ready' && $rpcConfig) {
     await rpcClient.createAsset(
+      $rpcConfig,
       defaultAttrs()
     );
   } else {
@@ -94,13 +95,13 @@ export const $doCreateAsset = atom(null, async (get) => {
 
 export const $blockchainAssetsAsync = atom<any>(async (get) => {
   const $walletReadiness = get(metaMaskModel.$walletReadiness)
-  if ($walletReadiness === 'ready') {
-    console.log('listAssets')
-    return await rpcClient.listAssets()
-  } else {
-    console.log('skip')
-    throw new Error('skip')
+  get(metaMaskModel.$metaMaskState)
+  const $rpcConfig = get(rpcConfigModel.$rpcConfig)
+
+  if ($walletReadiness === 'ready' && $rpcConfig) {
+    return await rpcClient.listAssets($rpcConfig)
   }
+  console.log('$blockchainAssetsAsync skip')
 })
 
 export const $blockchainAssets = loadable($blockchainAssetsAsync)

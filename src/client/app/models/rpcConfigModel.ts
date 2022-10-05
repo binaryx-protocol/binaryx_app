@@ -23,7 +23,7 @@ type NewRpcToken = {
     },
 }
 
-type RpcConfig = {
+export type RpcConfig = {
     chain: NewRpcChain
     bnrxRootToken: NewRpcToken
     usdtL1Address: string
