@@ -13,7 +13,7 @@ type NewRpcChain = {
     iconUrls?: string[]
 }
 
-type NewRpcAsset = {
+type NewRpcToken = {
     type: 'ERC20' | 'ERC777' | 'ERC1155',
     options: {
         address: string,
@@ -25,7 +25,7 @@ type NewRpcAsset = {
 
 type RpcConfig = {
     chain: NewRpcChain
-    bnrxAsset: NewRpcAsset
+    bnrxRootToken: NewRpcToken
     usdtL1Address: string
     usdtL2Address: string
   assetsTokenAddress: string
@@ -44,7 +44,7 @@ const arbRinkeby: RpcConfig = {
         },
         rpcUrls: ['https://rinkeby.arbitrum.io/rpc']
     },
-    bnrxAsset: {
+  bnrxRootToken: {
         type: 'ERC20',
         options: {
             address: '0x4e8C6307AF6fC893D76dfAD9198bcE29601Db057',
@@ -62,7 +62,7 @@ const localhost: RpcConfig = {
     chain: {
         // chainId: `0x${Number(421611).toString(16)}`,
         chainId: `0x${Number(31337).toString(16)}`,
-        blockExplorerUrls: ['http://127.0.0.1:8545/'],
+        blockExplorerUrls: ['https://rinkeby-explorer.arbitrum.io/#/'],
         chainName: 'HH',
         // iconUrls: [],
         nativeCurrency: {
@@ -70,9 +70,9 @@ const localhost: RpcConfig = {
             symbol: 'ETH',
             decimals: 18
         },
-        rpcUrls: ['https://rinkeby.arbitrum.io/rpc']
+        rpcUrls: ['http://127.0.0.1:8545']
     },
-    bnrxAsset: {
+  bnrxRootToken: {
         type: 'ERC20',
         options: {
             address: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
