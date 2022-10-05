@@ -8,6 +8,7 @@ import {useAtomValue, useSetAtom} from "jotai";
 export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
   const $doCreateAsset = useSetAtom(assetsModel.$doCreateAsset)
+  const $walletConnect = useSetAtom(metaMaskModel.$walletConnect)
   const $walletReadiness = useAtomValue(metaMaskModel.$walletReadiness)
   const $metaMaskState = useAtomValue(metaMaskModel.$metaMaskState)
   console.log('$blockchainAssets', $blockchainAssets)
@@ -24,7 +25,7 @@ export const AdminAssetsListController = () => {
               $walletReadiness === 'ready'
                 ? $metaMaskState.accounts[0]
                 : (
-                  <Button variant="outlined" >
+                  <Button variant="outlined" onClick={$walletConnect}>
                     Connect Wallet
                   </Button>
                 )
