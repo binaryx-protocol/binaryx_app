@@ -12,6 +12,8 @@ import classNames from 'classnames';
 import DescriptionBlock from './components/DescriptionBlock';
 import getCookie from 'utils/getCookie';
 import getUrlParams from 'utils/getUrlParams';
+import SchemaSection from './components/WebAssetSection/SchemaSection';
+import TimelineSection from './components/TimelineSection';
 
 const HomePage: FC = () => {
   const [sectionHeight, setSectionHeight] = useState(
@@ -906,7 +908,6 @@ const HomePage: FC = () => {
                 socialLink={'#'}
                 socialUserName={'andriy_makaveli'}
               />
-              {/* <BackgroundVisuals top={'40%'} /> */}
             </div>
           </div>
         </section>
@@ -945,7 +946,6 @@ const HomePage: FC = () => {
                 </form>
               </div>
             </div>
-            {/* <BackgroundVisuals top={'10%'} /> */}
             {/* </section> */}
             {/*<section className={classNames(s.section, s.footerSection, "section")}>*/}
             <footer className={s.footer}>

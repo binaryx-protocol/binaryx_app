@@ -1,23 +1,27 @@
+import classNames from 'classnames';
 import { FC } from 'react';
 import s from './styles.module.scss';
 
 type WebAssetCard = {
   imageSrc: string;
-  imageWidth?: number;
-  imageHeight?: number;
   imageDescription: string;
+  animationOrder: number;
+  className: string;
 };
 
 const WebAssetCard: FC<WebAssetCard> = ({
   imageSrc,
-  imageWidth,
-  imageHeight,
   imageDescription,
+  animationOrder,
+  className,
 }) => {
   return (
-    <div className={s.webAssetCard}>
-      <img src={imageSrc} width={imageWidth || 50} height={imageHeight || 50} />
-      <p>{imageDescription}</p>
+    <div
+      style={{ '--order': animationOrder } as any}
+      className={classNames(s.webAssetCard, className)}
+    >
+      <img className={s.image} src={imageSrc} />
+      <p className={s.description}>{imageDescription}</p>
     </div>
   );
 };

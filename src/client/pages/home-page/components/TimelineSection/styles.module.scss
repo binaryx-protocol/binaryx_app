@@ -1,0 +1,139 @@
+.container {
+  max-width: var(--max-width_desktop);
+  margin: auto;
+
+  @media screen and (max-width: 768px) {
+    max-width: var(--max-width_mobile);
+  }
+}
+
+.timeline {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  color: white;
+
+  @media (max-width: 768px) {
+    overflow-y: scroll;
+  }
+}
+
+.timelineTitle {
+  font-size: 36px;
+  font-weight: 300;
+  margin: 8px 0 0 0;
+}
+
+.timelineSeparatorTr {
+  height: 2px;
+  background: linear-gradient(90deg, #01DDDC -0.99%, rgba(1, 221, 220, 0) 100%);
+  position: relative;
+  top: 130px;
+  grid-column: 1/8;
+
+  @media screen and (max-width: 768px) {
+    top: 101px;
+  }
+}
+
+.timelineSeparatorBars {
+  display: grid;
+  grid-template-columns: repeat(6, 177px);
+  position: relative;
+  list-style: none;
+  top: 120px;
+  left: 160px;
+  padding: 0;
+  margin: 0;
+  grid-column: 1/8;
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(6, 170px);
+    top: 90px;
+    left: unset;
+  }
+}
+
+.timelineSeparatorBars .bar {
+  background-color: #008E85;
+  width: 2px;
+  height: 20px;
+}
+
+.timelineSeparatorTr::before {
+  content: "";
+  position: absolute;
+  top: -19px;
+  width: 0;
+  height: 0;
+  border-top: 20px solid transparent;
+  border-bottom: 20px solid transparent;
+  border-left: 20px solid #008E85;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+}
+
+.timelineGrid {
+  display: grid;
+  grid-gap: 0 20px;
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(6, 160px);
+    // margin-top: 100px;
+    grid-gap: 0 10px;
+  }
+}
+
+.timelineColumn,
+.timelineHeaders {
+  display: grid;
+  // grid-template-rows: 140px 80px 160px 80px;
+  grid-template-rows: 140px 80px 160px;
+  grid-gap: 15px;
+}
+
+@media screen and (max-width: 768px) {
+  .timelineColumn {
+    grid-gap: 40px;
+    // grid-template-rows: 75px 80px 160px 80px;
+    grid-template-rows: 75px 80px 160px;
+  }
+
+  .timelineHeaders {
+    position: absolute;
+    grid-template-rows: 100px 105px 187px;
+  }
+
+  .timelineTitle {
+    margin: -30px 0 0 0;
+  }
+}
+
+.timelineHeaders {
+  width: fit-content;
+}
+
+.timelineHeaders .subTitle {
+  margin: 0;
+  color: rgba(0, 142, 133, 1);
+  font-size: 14px;
+}
+
+.isShow {
+  animation: timelineShow 1s ease forwards;
+  animation-delay: calc(var(--order) * var(--animation-delay));
+  -webkit-animation-delay: calc(var(--order) * var(--animation-delay));
+  opacity: 0;
+}
+
+@keyframes timelineShow {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

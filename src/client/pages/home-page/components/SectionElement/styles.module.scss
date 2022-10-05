@@ -32,6 +32,10 @@
   margin: 0;
 }
 
+.description {
+  margin: 5px 0 0 0;
+}
+
 .btnWaitlist {
   max-width: 260px;
   min-height: 60px;
@@ -69,6 +73,7 @@
   .btnWaitlist {
     max-width: 100%;
     font-size: 18px;
+    color: var(--font-color_base);
     top: auto;
     bottom: 50px;
   }
