@@ -3,10 +3,11 @@ import styles from './AdminAssetsListController.module.scss'
 import Button from "@mui/material/Button";
 // import * as metaMaskModel from "../../models/metaMaskModel";
 import * as assetsModel from "../models/assetsModel";
-import {useAtomValue} from "jotai";
+import {useAtomValue, useSetAtom} from "jotai";
 
 export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
+  const $doCreateAsset = useSetAtom(assetsModel.$doCreateAsset)
   console.log('$blockchainAssets', $blockchainAssets)
 
   return (
@@ -21,6 +22,9 @@ export const AdminAssetsListController = () => {
               Back
             </Button>
           </Link>
+          <Button variant="outlined" onClick={$doCreateAsset}>
+            Create
+          </Button>
         </div>
       </div>
     </div>
