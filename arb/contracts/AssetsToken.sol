@@ -16,7 +16,7 @@ interface IAssetsTokenManager {
     address originalOwner;
     string[] legalDocuments;
 
-    //    PropertyAddress propertyAddress;
+        PropertyAddress propertyAddress;
     //    PropertyInfo propertyInfo;
     //    TokenInfo tokenInfo;
     //    InvestmentInfo investmentInfo;
@@ -89,7 +89,8 @@ interface IAssetsTokenManager {
     string memory description,
     uint8 status,
     address originalOwner,
-    string[] memory legalDocuments
+    string[] memory legalDocuments,
+    PropertyAddress memory propertyAddress
   ) external;
   function listAssets() external view returns(Asset[] memory);
   // TODO add batch
@@ -101,7 +102,8 @@ interface IAssetsTokenManager {
     string memory description,
     uint8 status,
     address originalOwner,
-    string[] memory legalDocuments
+    string[] memory legalDocuments,
+    PropertyAddress memory propertyAddress
   ) external;
   // TODO add batch
   function setStatus(uint256 id, uint8 status) external;
@@ -137,7 +139,8 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
     string memory description,
     uint8 status,
     address originalOwner,
-    string[] memory legalDocuments
+    string[] memory legalDocuments,
+    PropertyAddress memory propertyAddress
   ) public override {
     uint256 id = _assetIds.current();
     _assetIds.increment();
@@ -148,8 +151,8 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
       description,
       status,
       originalOwner,
-      legalDocuments
-    //      PropertyAddress(),
+      legalDocuments,
+    propertyAddress
     //      PropertyInfo(),
     //      TokenInfo(),
     //      InvestmentInfo(),
@@ -180,16 +183,33 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
     string memory description,
     uint8 status,
     address originalOwner,
-    string[] memory legalDocuments
+    string[] memory legalDocuments,
+    PropertyAddress memory propertyAddress
   ) public override {
-    Asset memory newAsset = Asset(
-      name,
-      symbol,
-      title,
-      description,
-      status,
-      originalOwner,
-      legalDocuments
+    Asset storage oldAsset = assetsIds[id];
+    oldAsset.name = name;
+    oldAsset.symbol = symbol;
+    oldAsset.title = title;
+    oldAsset.description = description;
+    oldAsset.status = status;
+    oldAsset.originalOwner = originalOwner;
+    oldAsset.legalDocuments = legalDocuments;
+    oldAsset.propertyAddress = propertyAddress;
+//    oldAsset.propertyAddress.state = propertyAddress.state;
+//    oldAsset.propertyAddress.city = propertyAddress.city;
+//    oldAsset.propertyAddress.postalCode = propertyAddress.postalCode;
+//    oldAsset.propertyAddress.addressLine1 = propertyAddress.addressLine1;
+//    oldAsset.propertyAddress.addressLine2 = propertyAddress.addressLine2;
+
+//    Asset memory newAsset = Asset(
+//      name,
+//      symbol,
+//      title,
+//      description,
+//      status,
+//      originalOwner,
+//      legalDocuments,
+//  oldAsset.propertyAddress
     //      PropertyAddress(),
     //      PropertyInfo(),
     //      TokenInfo(),
@@ -197,9 +217,13 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
     //      RentalInfo(),
     //      FeeInfo(),
     //      AssetDao()
-    );
-    assetsIds[id] = newAsset;
+//    );
+//    assetsIds[id] = newAsset;
   }
+
+//  function isEq(string memory a, string memory b) internal pure returns(bool) {
+//    return   keccak256(abi.encodePacked(a)) == keccak256(abi.encodePacked(b));
+//  }
 
   function setStatus(uint256 id, uint8 status) public override {
     assetsIds[id].status = status;

@@ -16,6 +16,15 @@ enum AssetStatuses {
   'disabled'= 4,
 }
 
+type AssetAddress = {
+  country: string
+  state: string
+  city: string
+  postalCode: string
+  addressLine1: string
+  addressLine2: string
+}
+
 type AssetInput = {
   name: string,
   symbol: string,
@@ -24,11 +33,21 @@ type AssetInput = {
   status: number,
   originalOwner: string,
   legalDocuments: string[],
+  propertyAddress: AssetAddress,
 }
 
 const expectBn = (given, expected) => {
   expect(given.toString()).to.eq(expected.toString())
 }
+
+const assetAddressAttrs  = (): AssetAddress => ({
+  country: 'UA',
+  state: 'Che',
+  city: 'Cherkassy',
+  postalCode: '19600',
+  addressLine1: 'Khreschatik 1',
+  addressLine2: '5th floor',
+})
 
 const defaultAttrs = (): AssetInput => ({
   name: 'Name',
@@ -37,7 +56,8 @@ const defaultAttrs = (): AssetInput => ({
   description: 'Description is a long story to tell you about the asset. Let\'s write it another time.',
   status: AssetStatuses.upcoming,
   originalOwner: 'REPLACE_ME',
-  legalDocuments: ['https://google.com', 'https://mit.com']
+  legalDocuments: ['https://google.com', 'https://mit.com'],
+  propertyAddress: assetAddressAttrs(),
 })
 
 const createMany = async (sc, count, attrs: Partial<AssetInput> = {}) => {
@@ -85,6 +105,7 @@ describe("AssetsToken", function () {
       const resources = await sc.listAssets()
       expect(resources.length).to.eq(10)
       expect(resources[0].symbol).to.eq("SYM")
+      expect(resources[0].propertyAddress.country).to.eq("UA")
     });
   });
 
@@ -102,6 +123,9 @@ describe("AssetsToken", function () {
         ...resource,
         symbol: 'UPD'
       }
+      attrs.propertyAddress.country = 'NW'
+      attrs.propertyAddress.city = 'NW'
+      // delete attrs.propertyAddress
       await sc.updateAsset(
         id,
         ...Object.values(attrs),
@@ -139,5 +163,10 @@ const onlyFields = <T>(object): T => Object.entries(object).reduce((acc, [name, 
   if (!name.match(/^[0-9]+$/)) {
     acc[name] = value;
   }
+  if (isObject(acc[name])) {
+    acc[name] = onlyFields(acc[name])
+  }
   return acc;
 }, {}) as T
+
+const isObject = (v) => typeof v === 'object' && Object.keys(v).some(k => !k.match(/^[0-9]+$/))
