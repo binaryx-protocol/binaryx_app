@@ -4,10 +4,8 @@ import {AdminAssetsListController} from "admin/controllers/AdminAssetsListContro
 const Assets: NextPage<any> = (props) => {
   return (
     <>
-      <div>
-        {JSON.stringify(props)}
+        {/*{JSON.stringify(props)}*/}
         <AdminAssetsListController />
-      </div>
     </>
   );
 };

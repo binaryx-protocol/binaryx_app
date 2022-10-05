@@ -33,7 +33,7 @@ type AssetInput = {
   status: number,
   originalOwner: string,
   legalDocuments: string[],
-  propertyAddress: AssetAddress,
+  // propertyAddress: AssetAddress,
 }
 
 const expectBn = (given, expected) => {
@@ -57,7 +57,7 @@ const defaultAttrs = (): AssetInput => ({
   status: AssetStatuses.upcoming,
   originalOwner: 'REPLACE_ME',
   legalDocuments: ['https://google.com', 'https://mit.com'],
-  propertyAddress: assetAddressAttrs(),
+  // propertyAddress: assetAddressAttrs(),
 })
 
 const createMany = async (sc, count, attrs: Partial<AssetInput> = {}) => {
@@ -105,7 +105,7 @@ describe("AssetsToken", function () {
       const resources = await sc.listAssets()
       expect(resources.length).to.eq(10)
       expect(resources[0].symbol).to.eq("SYM")
-      expect(resources[0].propertyAddress.country).to.eq("UA")
+      // expect(resources[0].propertyAddress.country).to.eq("UA")
     });
   });
 
@@ -123,8 +123,8 @@ describe("AssetsToken", function () {
         ...resource,
         symbol: 'UPD'
       }
-      attrs.propertyAddress.country = 'NW'
-      attrs.propertyAddress.city = 'NW'
+      // attrs.propertyAddress.country = 'NW'
+      // attrs.propertyAddress.city = 'NW'
       // delete attrs.propertyAddress
       await sc.updateAsset(
         id,

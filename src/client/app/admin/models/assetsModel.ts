@@ -28,7 +28,7 @@ type AssetInput = {
   status: number,
   originalOwner: string,
   legalDocuments: string[],
-  propertyAddress: AssetAddress,
+  // propertyAddress: AssetAddress,
 }
 
 const address = {
@@ -47,12 +47,12 @@ const assetAddressAttrs  = (): AssetAddress => ({
 const defaultAttrs = (): AssetInput => ({
   name: 'Name',
   symbol: 'SYM',
-  title: 'Title',
+  title: 'Title ' + Math.random(),
   description: 'Description is a long story to tell you about the asset. Let\'s write it another time.',
   status: AssetStatuses.upcoming,
   originalOwner: 'REPLACE_ME',
   legalDocuments: ['https://google.com', 'https://mit.com'],
-  propertyAddress: assetAddressAttrs(),
+  // propertyAddress: assetAddressAttrs(),
 })
 
 const rpcClient = {
@@ -64,7 +64,6 @@ const rpcClient = {
     console.log('args', args)
     args.originalOwner = '0x70997970C51812dc3A010C7d01b50e0d17dc79C8'
     const argsArr = Object.values(args)
-    argsArr[7] = Object.values(argsArr[7])
     console.log('argsArr', argsArr)
     const result = await managerSigned.createAsset(
       ...argsArr
@@ -78,17 +77,9 @@ const rpcClient = {
 
     const result = await managerSigned.listAssets()
     console.log('result', result)
+    return result
   }
 }
-
-export const $blockchainAssetsAsync = atom<any>(async (get) => {
-  const $walletReadiness = get(metaMaskModel.$walletReadiness)
-  if ($walletReadiness === 'ready') {
-    console.log('Getting assets')
-  } else {
-    console.log('waiting for wallet')
-  }
-})
 
 export const $doCreateAsset = atom(null, async (get) => {
   const $walletReadiness = get(metaMaskModel.$walletReadiness)
@@ -98,6 +89,17 @@ export const $doCreateAsset = atom(null, async (get) => {
     );
   } else {
     console.log('waiting for wallet')
+  }
+})
+
+export const $blockchainAssetsAsync = atom<any>(async (get) => {
+  const $walletReadiness = get(metaMaskModel.$walletReadiness)
+  if ($walletReadiness === 'ready') {
+    console.log('listAssets')
+    return await rpcClient.listAssets()
+  } else {
+    console.log('skip')
+    throw new Error('skip')
   }
 })
 

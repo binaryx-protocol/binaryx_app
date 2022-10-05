@@ -19,5 +19,5 @@ export const assetsManagerAbi = [
     string[] memory legalDocuments
   ) public`
   ,
-  // `function listAssets() public view returns((${AssetStruct})[] memory)`,
+  `function listAssets() public view returns((${AssetStruct})[] memory)`,
 ]
