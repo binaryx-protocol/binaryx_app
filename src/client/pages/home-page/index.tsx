@@ -396,8 +396,7 @@ const HomePage: FC = () => {
         >
           <SectionElement
             heading="Expensive asset value already in past"
-            preTitle="WE ARE HERE TO:"
-            body="With Binaryx Protocol you will be able to buy a real tokenized estate with only 50$ till unlimited. 
+            body="With Binaryx Protocol you will be able to buy a real tokenized estate with only 50$ till unlimited.
             Buy, trade and sell your property fast, secure, and profitable at anytime"
             onButtonClick={handleJoinWaitListButtonClick}
           />
@@ -409,7 +408,6 @@ const HomePage: FC = () => {
         >
           <SectionElement
             heading="The next generation DeFi experience with Real Yield"
-            preTitle="WE ARE HERE TO:"
             body="Use your property tokens to borrow and keep earning the highest yield available at the same time"
             onButtonClick={handleJoinWaitListButtonClick}
           />
@@ -421,7 +419,6 @@ const HomePage: FC = () => {
         >
           <SectionElement
             heading="Boosting Economy and scaling Web3"
-            preTitle="WE ARE HERE TO:"
             body="Increasing assets ownership transferring speed with web3 infrastracture "
             onButtonClick={handleJoinWaitListButtonClick}
           />
