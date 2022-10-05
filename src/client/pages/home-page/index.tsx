@@ -32,16 +32,16 @@ const HomePage: FC = () => {
     section3Ref.current,
     section4Ref.current,
   ];
-  // const section1ContentRef = useRef<HTMLDivElement>(null);
-  // const section2ContentRef = useRef<HTMLDivElement>(null);
-  // const section3ContentRef = useRef<HTMLDivElement>(null);
-  // const section4ContentRef = useRef<HTMLDivElement>(null);
-  // const getSectionContents = () => [
-  //   section1ContentRef.current,
-  //   section2ContentRef.current,
-  //   section3ContentRef.current,
-  //   section4ContentRef.current,
-  // ];
+  const section1ContentRef = useRef<HTMLDivElement>(null);
+  const section2ContentRef = useRef<HTMLDivElement>(null);
+  const section3ContentRef = useRef<HTMLDivElement>(null);
+  const section4ContentRef = useRef<HTMLDivElement>(null);
+  const getSectionContents = () => [
+    section1ContentRef.current,
+    section2ContentRef.current,
+    section3ContentRef.current,
+    section4ContentRef.current,
+  ];
   const currentSectionRef = useRef(0);
   const [bgOverlay, setBgOverlay] = useState({
     isBgOverlayActive: true,
@@ -49,9 +49,14 @@ const HomePage: FC = () => {
     isBgOverlayDark: false,
   });
   const [FF_LP_PARALLAX, setFF_LP_PARALLAX] = useState(true);
+  const [windowHeight, setWindowHeight] = useState(null);
 
   useEffect(() => {
-    setFF_LP_PARALLAX(getUrlParams().get('FF_LP_PARALLAX'));
+    setTimeout(() => {
+      setFF_LP_PARALLAX(getUrlParams().get('FF_LP_PARALLAX'));
+      setWindowHeight(typeof window !== "undefined" ? window.innerHeight : 800);
+      console.log("typeof window", typeof window);
+    }, 0);
   }, []);
 
   useEffect(() => {
@@ -64,7 +69,7 @@ const HomePage: FC = () => {
 
     setTimeout(() => {
       const height = FF_LP_PARALLAX
-        ? (window.innerHeight - 1) * 10
+        ? (window.innerHeight - 1) * 7
         : window.innerHeight - 1;
       setSectionHeight(height);
 
@@ -124,14 +129,14 @@ const HomePage: FC = () => {
     }, 0);
   }, []);
 
-  const initAnimation = ({ animationData, container, autoplay }) => {
+  const initAnimation = ({ animationData, container, autoplay, renderer = 'svg' }) => {
     const isDesktop = window.innerWidth > 768;
     return lottie.loadAnimation({
       container,
       renderer:
         (new URLSearchParams(window.location.search).get(
           'renderer',
-        ) as 'svg') || 'svg',
+        ) as 'svg') || renderer || 'svg',
       loop: false,
       autoplay,
       animationData,
@@ -165,7 +170,7 @@ const HomePage: FC = () => {
 
     for (const [index, section] of getSections().entries() as any) {
       const scrollPosition = getScrollPosition();
-      if (scrollPosition <= 5) {
+      if (scrollPosition <= 10) {
         return 0;
       }
       if (scrollPosition < section?.clientHeight + section?.offsetTop) {
@@ -219,12 +224,42 @@ const HomePage: FC = () => {
     }
   };
 
-  function initAnimations() {
-    animations.current[0] = initAnimation({
-      animationData: anim1,
-      container: document.getElementById('animationContainer0'),
-      autoplay: true,
+  function initAnimations(lazyLoad = true) {
+    // animations.current[0] = initAnimation({
+    //   animationData: anim1,
+    //   container: document.getElementById('animationContainer0'),
+    //   autoplay: true,
+    // });
+    if (!lazyLoad) {
+      import('./animations/index').then(module => {
+        // animations.current[0] = initAnimation({
+        //   animationData: module.B1,
+        //   container: document.getElementById('animationContainer0'),
+        //   autoplay: true,
+        //   renderer: 'canvas'
+        // });
+        console.log("module", module);
+        animations.current[1] = initAnimation({
+          animationData: module.B2,
+          container: document.getElementById('animationContainer1'),
+          autoplay: false,
+          renderer: 'svg'
+        });
+      });
+
+      return;
+    }
+
+    import('./animations/B1.json').then((module) => {
+      const anim1 = module.default;
+      animations.current[0] = initAnimation({
+        animationData: anim1,
+        container: document.getElementById('animationContainer0'),
+        autoplay: true,
+        renderer: 'svg'
+      });
     });
+
     import('./animations/B2.json')
       .then((module) => {
         const anim2 = module.default;
@@ -232,6 +267,7 @@ const HomePage: FC = () => {
           animationData: anim2,
           container: document.getElementById('animationContainer1'),
           autoplay: false,
+          renderer: 'svg'
         });
       })
       .then(() => import('./animations/B3.json'))
@@ -321,25 +357,30 @@ const HomePage: FC = () => {
   useEffect(() => {
     const main = document.getElementById('main');
     changeWheelSpeed(main, 0.1);
-    initAnimations();
+    initAnimations(true );
 
     getScrollObject().addEventListener('scroll', (event) => {
       event.preventDefault();
       event.stopPropagation();
       const currentSection = getCurrentSection();
-      // const sectionContentPrev = getSectionContents()[currentSection - 1];
-      // const sectionContentNext = getSectionContents()[currentSection];
-      // const scrollPercent = getSectionScrollPercent(currentSection - 1);
-      // if (sectionContentPrev) {
-      //   sectionContentPrev.style.opacity =
-      //     scrollPercent > 90 ? 10 - 100 - scrollPercent : 1;
-      // }
-      // if (sectionContentNext) {
-      //   sectionContentNext.style.opacity =
-      //     scrollPercent > 90 ? 100 - scrollPercent : 1;
-      // }
-      // console.log(`sectionContentPrev ${scrollPercent > 90 ? 10 - 100 - scrollPercent : 1}`);
-      // console.log(`sectionContentNext ${scrollPercent > 90 ? 100 - scrollPercent : 1}`);
+      const sectionContentPrev = getSectionContents()[currentSection - 1];
+      const sectionContentNext = getSectionContents()[currentSection];
+      const scrollPercent = getSectionScrollPercent(currentSection - 1);
+      if (sectionContentPrev) {
+        const opacity =
+          scrollPercent > 90 ? 1 - (10 - (100 - scrollPercent)) / 10 : 1;
+        sectionContentPrev.style.opacity = opacity;
+
+        console.log(`sectionContentPrev ${opacity}`);
+      }
+      if (sectionContentNext) {
+        const opacity =
+          scrollPercent > 95 ? (5 - (100 - scrollPercent)) / 10 : 0;
+
+        sectionContentNext.style.opacity = opacity;
+        console.log(`sectionContentNext ${opacity}`);
+      }
+      console.log(`scrollPercent ${scrollPercent}`);
 
       // if (currentSection <= 1) {
       //   return;
@@ -537,6 +578,7 @@ const HomePage: FC = () => {
           [s.heroPageParallax]: FF_LP_PARALLAX,
         })}
       >
+        <button className={s.waitListBtn}>Join Waitlist</button>
         <div
           id="section1"
           ref={section1Ref}
@@ -577,8 +619,9 @@ const HomePage: FC = () => {
           <SectionElement
             heading="Expensive asset value already in past"
             sectionHeight={sectionHeight}
+            windowHeight={windowHeight}
             onButtonClick={handleJoinWaitListButtonClick}
-            // contentElementRef={section1ContentRef}
+            contentElementRef={section1ContentRef}
           >
             <p className={s.description}>
               With Binaryx Protocol you will be able to buy a real tokenized
@@ -598,7 +641,8 @@ const HomePage: FC = () => {
             heading="The next generation DeFi experience with Real Yield"
             onButtonClick={handleJoinWaitListButtonClick}
             sectionHeight={sectionHeight}
-            // contentElementRef={section2ContentRef}
+            windowHeight={windowHeight}
+            contentElementRef={section2ContentRef}
           >
             <p className={s.description}>
               Use your property tokens to borrow and keep earning the highest
@@ -614,7 +658,8 @@ const HomePage: FC = () => {
           <SectionElement
             heading="Boosting Economy and scaling Web3"
             sectionHeight={sectionHeight}
-            // contentElementRef={section3ContentRef}
+            windowHeight={windowHeight}
+            contentElementRef={section3ContentRef}
             onButtonClick={handleJoinWaitListButtonClick}
           >
             <p className={s.description}>
@@ -641,7 +686,6 @@ const HomePage: FC = () => {
         <section
           id="sectionWebAssets"
           className={classNames(
-            s.wrapper,
             s.section,
             s.assets,
             s.webAssets,
@@ -654,7 +698,7 @@ const HomePage: FC = () => {
               minHeight:
                 typeof window !== 'undefined' && FF_LP_PARALLAX
                   ? window.innerHeight
-                  : sectionHeight,
+                  : windowHeight,
             }}
           >
             <h1 className={classNames(s.assetsTitle)}>

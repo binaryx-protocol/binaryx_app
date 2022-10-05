@@ -212,12 +212,35 @@
   color: #000;
 }
 
+
+.waitListBtn {
+  max-width: 290px;
+  min-height: 60px;
+  border: 1px solid var(--border-color_dark);
+  border-radius: var(--border-radius_default);
+  background-color: transparent;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  position: fixed;
+  top: auto;
+  bottom: 35px;
+  left: 15px;
+  right: 15px;
+  color: #000;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
 .description {
   margin: 5px 0 0 0;
 }
 
 .webAssets {
-  //background: var(--background-color_dark);
+  background: var(--background-color_dark);
   color: var(--font-color_white);
   // min-height: 100%;
 }
