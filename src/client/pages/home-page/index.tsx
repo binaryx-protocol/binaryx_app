@@ -6,16 +6,15 @@ import TeamBlock from './components/TeamBlock';
 import NavSocialImage from './components/NavSocialImage';
 import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
 import lottie from 'lottie-web';
-import BackgroundVisuals from './components/BackgroundVisuals';
 import anim1 from './animations/B1.json';
 import anim2 from './animations/B2.json';
 import anim3 from './animations/B3.json';
 import anim4 from './animations/B4.json';
-// import WebAssetBlock from './components/WebAssetSection/WebAssetBlock';
-// import WebAssetCard from './components/WebAssetSection/WebAssetCard';
 import classNames from 'classnames';
 import DescriptionBlock from './components/DescriptionBlock';
 import getCookie from 'utils/getCookie';
+import SchemaSection from './components/WebAssetSection/SchemaSection';
+import TimelineSection from './components/TimelineSection';
 
 const HomePage: FC = () => {
   const [sectionHeight, setSectionHeight] = useState(typeof window !== "undefined" ? window.innerHeight : null);
@@ -397,15 +396,10 @@ const HomePage: FC = () => {
         >
           <SectionElement
             heading="Expensive asset value already in past"
-            sectionHeight={sectionHeight}
+            body="With Binaryx Protocol you will be able to buy a real tokenized estate with only 50$ till unlimited.
+            Buy, trade and sell your property fast, secure, and profitable at anytime"
             onButtonClick={handleJoinWaitListButtonClick}
-          >
-            <p className={s.description}>
-              With Binaryx Protocol you will be able to buy a real tokenized estate with only 50$ till unlimited.
-              <br />
-              Buy, trade and sell your property fast, secure, and profitable at anytime
-            </p>
-          </SectionElement>
+          />
         </div>
         <div
           id="section3"
@@ -414,13 +408,9 @@ const HomePage: FC = () => {
         >
           <SectionElement
             heading="The next generation DeFi experience with Real Yield"
+            body="Use your property tokens to borrow and keep earning the highest yield available at the same time"
             onButtonClick={handleJoinWaitListButtonClick}
-            sectionHeight={sectionHeight}
-          >
-            <p className={s.description}>
-              Use your property tokens to borrow and keep earning the highest yield available at the same time
-            </p>
-          </SectionElement>
+          />
         </div>
         <div
           id="section4"
@@ -429,172 +419,12 @@ const HomePage: FC = () => {
         >
           <SectionElement
             heading="Boosting Economy and scaling Web3"
-            sectionHeight={sectionHeight}
+            body="Increasing assets ownership transferring speed with web3 infrastracture "
             onButtonClick={handleJoinWaitListButtonClick}
-          >
-            <p className={s.description}>
-              Increasing assets ownership transferring speed with web3 infrastracture
-            </p>
-          </SectionElement>
+          />
         </div>
-        <section
-          id="sectionWebAssets"
-          className={classNames(
-            s.wrapper,
-            s.section,
-            s.assets,
-            s.webAssets,
-            'section',
-          )}
-        >
-          <div className={s.webAssetsContainer} style={{ minHeight: sectionHeight }}>
-            <h1 className={classNames(s.assetsTitle)}>
-              Welcome to the Era of Web3 assets
-            </h1>
-            {/*<BackgroundVisuals top={'50%'} />*/}
-            <div className={s.webAssetBlock}>
-              <img
-                className={`${s.assetsWeb3Desktop}`}
-                src={
-                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_desktop.svg'
-                }
-              />
-              <img
-                className={s.assetsWeb3Mobile}
-                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_mobile4.png"
-                style={{ maxHeight: sectionHeight - 250 }}
-              />
-              {/*<div className={s.assetsWeb3Mobile}>*/}
-              {/*  <WebAssetBlock className={s.webAssetsLegend}>*/}
-              {/*    <p>1. Property Tokenization</p>*/}
-              {/*    <p>2. Purchasing Property Tokens</p>*/}
-              {/*    <p>3. Claiming Rewards from Rent</p>*/}
-              {/*  </WebAssetBlock>*/}
-              {/*  <WebAssetBlock className={s.binaryxMarketplace}>*/}
-              {/*    <WebAssetCard*/}
-              {/*      imageSrc={''}*/}
-              {/*      imageDescription={'Binaryx Marketplace'}*/}
-              {/*    />*/}
-              {/*  </WebAssetBlock>*/}
-              {/*  <WebAssetBlock className={s.propertyTokenization}>*/}
-              {/*    <WebAssetCard imageSrc={''} imageDescription={'Property'} />*/}
-              {/*    <WebAssetCard*/}
-              {/*      imageSrc={'#'}*/}
-              {/*      imageDescription={'Property Tokens'}*/}
-              {/*    />*/}
-              {/*  </WebAssetBlock>*/}
-              {/*  <WebAssetBlock className={s.purchasingPropertyTokens}>*/}
-              {/*    <WebAssetCard*/}
-              {/*      imageSrc={'#'}*/}
-              {/*      imageDescription={'Property Taken'}*/}
-              {/*    />*/}
-              {/*    <WebAssetCard*/}
-              {/*      imageSrc={'#'}*/}
-              {/*      imageDescription={'Stablecoins'}*/}
-              {/*    />*/}
-              {/*    <WebAssetCard imageSrc={'#'} imageDescription={'Users'} />*/}
-              {/*  </WebAssetBlock>*/}
-              {/*  <WebAssetBlock className={s.claimingRewards}>*/}
-              {/*    <WebAssetCard*/}
-              {/*      imageSrc={'#'}*/}
-              {/*      imageDescription={'Property Rent'}*/}
-              {/*    />*/}
-              {/*  </WebAssetBlock>*/}
-              {/*</div>*/}
-            </div>
-          </div>
-          {/* </div> */}
-        </section>
-        <section
-          className={classNames(s.timeline, s.section, s.wrapper, 'section')}
-        >
-          <div className={s.timelineGrid}>
-            <div className={s.timelineSeparatorTr} />
-            <ul className={s.timelineSeparatorLine}>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
-            <div className={s.timelineHeaders}>
-              <h1 className={s.timelineTitle}>Timeline</h1>
-              <h3>Product</h3>
-              <h3>Marketing</h3>
-              {/*<h3>Organization</h3>*/}
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year={'2022'}>
-                <li>MVP Building</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>– Socials launch</li>
-                <li>– First 750 members onboarded</li>
-              </DescriptionBlock>
-              {/*<DescriptionBlock>*/}
-              {/*  <li>Legal set up</li>*/}
-              {/*</DescriptionBlock>*/}
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year={'Q1 2023'}>
-                <li>Binaryx marketplace pre-launch on Testnet v1, v2</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>&gt; 5k members onboarded</li>
-                <li>&gt; 2k KYC done</li>
-              </DescriptionBlock>
-              {/*<DescriptionBlock>*/}
-              {/*  <li>Seed round</li>*/}
-              {/*</DescriptionBlock>*/}
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year={'Q2 2023'}>
-                <li>Testnet v3 launch</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>– Academy launch</li>
-                <li>– Ambassador program launch</li>
-              </DescriptionBlock>
-              {/*<DescriptionBlock>*/}
-              {/*  <li>IDO</li>*/}
-              {/*</DescriptionBlock>*/}
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year={'Q3 2023'}>
-                <li>Binaryx marketplace official launch</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>– Airdrop for the first academy graduates</li>
-                <li>– Staking program</li>
-                <li>&gt; 70k members onboarded</li>
-                <li>&gt; 7k $aBNRX holders</li>
-              </DescriptionBlock>
-              {/*<DescriptionBlock>*/}
-              {/*  <li>– Token launch</li>*/}
-              {/*  <li>– DAO launch</li>*/}
-              {/*</DescriptionBlock>*/}
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year="Q4 2023">
-                <li>1 st Smart contact audit</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>Referral program launch</li>
-                <li>200k members onboarded</li>
-                <li>&gt; 20k $aBNRX holders</li>
-              </DescriptionBlock>
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year="2024">
-                <li>Other DeFi services launch The secondary market</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>&gt; 100k $aBRX holders</li>
-              </DescriptionBlock>
-            </div>
-          </div>
-        </section>
+        <SchemaSection className={classNames(s.section, 'section')} />
+        <TimelineSection className={classNames(s.section, 'section')} />
         <section
           id="sectionTeam"
           className={classNames(s.section, s.ourTeam, 'section')}
@@ -650,7 +480,6 @@ const HomePage: FC = () => {
                 socialLink={'#'}
                 socialUserName={'andriy_makaveli'}
               />
-              {/* <BackgroundVisuals top={'40%'} /> */}
             </div>
           </div>
         </section>
@@ -689,7 +518,6 @@ const HomePage: FC = () => {
                 </form>
               </div>
             </div>
-            {/* <BackgroundVisuals top={'10%'} /> */}
             {/* </section> */}
             {/*<section className={classNames(s.section, s.footerSection, "section")}>*/}
             <footer className={s.footer}>

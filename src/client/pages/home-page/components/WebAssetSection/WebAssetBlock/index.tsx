@@ -1,14 +1,26 @@
-import { FC, ReactChild } from 'react';
+import classNames from 'classnames';
+import { FC, LegacyRef, ReactChild } from 'react';
 import s from './styles.module.scss';
 
-type WebAssetBlock = {
+type Props = {
   className?: string;
   children?: ReactChild | ReactChild[];
+  animationOrder: number;
+  id?: string;
 };
 
-const WebAssetBlock: FC<WebAssetBlock> = ({ className, children }) => {
+const WebAssetBlock: FC<Props> = ({
+  className,
+  animationOrder,
+  id,
+  children,
+}) => {
   return (
-    <div className={`${s.defaultStyle} ${className} ${s.isShow}`}>
+    <div
+      id={id}
+      style={{ '--order': animationOrder } as any}
+      className={classNames(s.webAssetBlock, className)}
+    >
       {children}
     </div>
   );

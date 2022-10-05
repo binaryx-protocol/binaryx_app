@@ -1,0 +1,15 @@
+.yearBlock {
+  height: fit-content;
+  font-size: var(--font-size_small);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid white;
+  backdrop-filter: blur(10px);
+  text-align: center;
+  padding: 5px 25px;
+  border-radius: var(--border-radius_default);
+}
+
+.yearBlock .title {
+  font-size: 20px;
+  font-weight: 500;
+}
