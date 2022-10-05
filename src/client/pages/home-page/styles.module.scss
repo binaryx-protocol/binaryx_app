@@ -23,6 +23,12 @@
   height: 90vh;
 }
 
+.sectionsDark {
+  background-color: var(--background-color_dark);
+  position: relative;
+  z-index: 1;
+}
+
 .containerAnimation {
   position: fixed;
   z-index: -2;
@@ -195,10 +201,19 @@
 .infoSection {
   display: flex;
   height: 60px;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    bottom: 35px;
+    left: 0;
+    right: 0;
+    padding: 0 15px;;
+  }
 }
 
 .btnJoinWaitlist {
   width: 260px;
+  min-height: 60px;
   border: none;
   border-radius: var(--border-radius_default);
   color: var(--font-color_base);
@@ -208,6 +223,43 @@
   background: linear-gradient(85.42deg, rgba(0, 174, 255, 0.5) 8.17%, rgba(0, 255, 238, 0.5) 103.39%);
   backdrop-filter: blur(10px);
   cursor: pointer;
+  transition: background 1s, margin 0.5s;
+
+  @media (max-width: 768px) {
+    margin-bottom: 10px;
+  }
+}
+
+
+.btnJoinWaitlistNext {
+  max-width: 290px;
+  min-height: 60px;
+  border: 1px solid var(--border-color_dark);
+  border-radius: var(--border-radius_default);
+  background: transparent;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  //position: fixed;
+  top: auto;
+  bottom: 35px;
+  left: 15px;
+  right: 15px;
+  color: #000;
+  margin-top: 74px;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+
+
+  @media (max-width: 768px) {
+    margin-bottom: 20px;
+    width: auto;
+    max-width: none;
+    box-sizing: border-box;
+  }
 }
 
 .joinCommunity {
@@ -221,28 +273,6 @@
   color: #000;
 }
 
-
-.waitListBtn {
-  max-width: 290px;
-  min-height: 60px;
-  border: 1px solid var(--border-color_dark);
-  border-radius: var(--border-radius_default);
-  background-color: transparent;
-  font-size: 20px;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  position: fixed;
-  top: auto;
-  bottom: 35px;
-  left: 15px;
-  right: 15px;
-  color: #000;
-
-  @media (min-width: 768px) {
-    display: none;
-  }
-}
 
 // .ourTeam {
 //   min-height: 100%;
@@ -468,7 +498,7 @@
   .companyTitle {
     font-size: 25px;
     position: relative;
-    top: 100px;
+    top: 0;
   }
 
   .infoSection {

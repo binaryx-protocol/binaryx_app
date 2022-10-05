@@ -1,10 +1,10 @@
-import { FC, RefObject } from 'react';
+import { FC, ReactNode, RefObject } from 'react';
 import s from './styles.module.scss';
 
 type Props = {
   heading: string;
   preTitle?: string;
-  body: string;
+  description: string | ReactNode;
   id?: string;
   onButtonClick?: () => void;
   sectionHeight?: number | null;
@@ -16,7 +16,7 @@ const SectionElement: FC<Props> = ({
   heading,
   preTitle,
   id,
-  body,
+  description,
   onButtonClick,
   sectionHeight,
   windowHeight,
@@ -27,7 +27,7 @@ const SectionElement: FC<Props> = ({
       <div className={s.infoBlock}>
         {preTitle && <p className={s.weAreHere}>{preTitle}</p>}
         <h2 className={s.title}>{heading}</h2>
-        <p className={s.description}>{body}</p>
+        <p className={s.description}>{description}</p>
       </div>
       <button type="submit" className={s.btnWaitlist} onClick={onButtonClick}>
         Join waitlist

@@ -14,6 +14,7 @@ import getCookie from 'utils/getCookie';
 import getUrlParams from 'utils/getUrlParams';
 import SchemaSection from './components/WebAssetSection/SchemaSection';
 import TimelineSection from './components/TimelineSection';
+import BgOverlay from './components/BgOverlay';
 
 const HomePage: FC = () => {
   const [sectionHeight, setSectionHeight] = useState(
@@ -45,19 +46,21 @@ const HomePage: FC = () => {
     section4ContentRef.current,
   ];
   const currentSectionRef = useRef(0);
+  const joinWaitListBtnRef = useRef(null);
   const [bgOverlay, setBgOverlay] = useState({
     isBgOverlayActive: true,
     isBgAnimationActive: true,
     isBgOverlayDark: false,
   });
+  const [isBgOverlayDark, setIsBgOverlayDark] = useState(false);
   const [FF_LP_PARALLAX, setFF_LP_PARALLAX] = useState(true);
   const [windowHeight, setWindowHeight] = useState(null);
 
   useEffect(() => {
     setTimeout(() => {
       setFF_LP_PARALLAX(getUrlParams().get('FF_LP_PARALLAX'));
-      setWindowHeight(typeof window !== "undefined" ? window.innerHeight : 800);
-      console.log("typeof window", typeof window);
+      setWindowHeight(typeof window !== 'undefined' ? window.innerHeight : 800);
+      console.log('typeof window', typeof window);
     }, 0);
   }, []);
 
@@ -67,6 +70,8 @@ const HomePage: FC = () => {
       document.body.style.height = '100%';
       document.body.parentElement.style.overflow = 'hidden';
       document.body.parentElement.style.height = '100%';
+    } else {
+      document.body.style.scrollBehavior = 'smooth';
     }
 
     setTimeout(() => {
@@ -131,14 +136,21 @@ const HomePage: FC = () => {
     }, 0);
   }, []);
 
-  const initAnimation = ({ animationData, container, autoplay, renderer = 'svg' }) => {
+  const initAnimation = ({
+    animationData,
+    container,
+    autoplay,
+    renderer = 'svg',
+  }) => {
     const isDesktop = window.innerWidth > 768;
     return lottie.loadAnimation({
       container,
       renderer:
         (new URLSearchParams(window.location.search).get(
           'renderer',
-        ) as 'svg') || renderer || 'svg',
+        ) as 'svg') ||
+        renderer ||
+        'svg',
       loop: false,
       autoplay,
       animationData,
@@ -233,19 +245,19 @@ const HomePage: FC = () => {
     //   autoplay: true,
     // });
     if (!lazyLoad) {
-      import('./animations/index').then(module => {
+      import('./animations/index').then((module) => {
         // animations.current[0] = initAnimation({
         //   animationData: module.B1,
         //   container: document.getElementById('animationContainer0'),
         //   autoplay: true,
         //   renderer: 'canvas'
         // });
-        console.log("module", module);
+        console.log('module', module);
         animations.current[1] = initAnimation({
           animationData: module.B2,
           container: document.getElementById('animationContainer1'),
           autoplay: false,
-          renderer: 'svg'
+          renderer: 'svg',
         });
       });
 
@@ -258,7 +270,7 @@ const HomePage: FC = () => {
         animationData: anim1,
         container: document.getElementById('animationContainer0'),
         autoplay: true,
-        renderer: 'svg'
+        renderer: 'svg',
       });
     });
 
@@ -269,7 +281,7 @@ const HomePage: FC = () => {
           animationData: anim2,
           container: document.getElementById('animationContainer1'),
           autoplay: false,
-          renderer: 'svg'
+          renderer: 'svg',
         });
       })
       .then(() => import('./animations/B3.json'))
@@ -359,7 +371,7 @@ const HomePage: FC = () => {
   useEffect(() => {
     const main = document.getElementById('main');
     changeWheelSpeed(main, 0.1);
-    initAnimations(true );
+    initAnimations(true);
 
     getScrollObject().addEventListener('scroll', (event) => {
       event.preventDefault();
@@ -372,21 +384,32 @@ const HomePage: FC = () => {
         const opacity =
           scrollPercent > 90 ? 1 - (10 - (100 - scrollPercent)) / 10 : 1;
         sectionContentPrev.style.opacity = opacity;
-
-        console.log(`sectionContentPrev ${opacity}`);
       }
       if (sectionContentNext) {
         const opacity =
           scrollPercent > 95 ? (5 - (100 - scrollPercent)) / 10 : 0;
 
         sectionContentNext.style.opacity = opacity;
-        console.log(`sectionContentNext ${opacity}`);
       }
-      console.log(`scrollPercent ${scrollPercent}`);
+      if (currentSection === 1) {
+        sectionContentPrev.style.opacity =
+          scrollPercent > 5 ? (95 - (100 - scrollPercent)) / 10 : 0;
+      }
 
-      // if (currentSection <= 1) {
-      //   return;
-      // }
+      if (currentSection >= 4) {
+        setIsBgOverlayDark(() => true);
+        console.log("setBgOverlay", true);
+      } else if (currentSection <= 4) {
+        setIsBgOverlayDark(() => false);
+        console.log("setBgOverlay", false);
+      }
+
+      if (window.scrollY > 500) {
+        joinWaitListBtnRef.current.classList.add(s.btnJoinWaitlistNext);
+      } else {
+        joinWaitListBtnRef.current.classList.remove(s.btnJoinWaitlistNext);
+      }
+
       updateContainerStyles();
 
       playAnimation(currentSection);
@@ -529,30 +552,12 @@ const HomePage: FC = () => {
 
   return (
     <>
-      <Navigation isDark={bgOverlay.isBgOverlayDark} />
-      <div
+      <Navigation isDark={isBgOverlayDark} />
+      <BgOverlay
         id="bg-overlay"
-        className={classNames(s.bgOverlay, {
-          [s.bgOverlayActive]: bgOverlay.isBgOverlayActive,
-          [s.bgOverlayDark]: bgOverlay.isBgOverlayDark,
-        })}
-      >
-        <div
-          className={classNames(s.bgOverlayItem, s.bgOverlayItem1, {
-            [s.bgOverlayItemActive]: bgOverlay.isBgAnimationActive,
-          })}
-        />
-        <div
-          className={classNames(s.bgOverlayItem, s.bgOverlayItem2, {
-            [s.bgOverlayItemActive]: bgOverlay.isBgAnimationActive,
-          })}
-        />
-        <div
-          className={classNames(s.bgOverlayItem, s.bgOverlayItem3, {
-            [s.bgOverlayItemActive]: bgOverlay.isBgAnimationActive,
-          })}
-        />
-      </div>
+        isBgOverlayActive={bgOverlay.isBgOverlayActive}
+        isBgAnimationActive={bgOverlay.isBgAnimationActive}
+      />
       <div
         className={s.containerAnimation}
         ref={container0}
@@ -580,15 +585,14 @@ const HomePage: FC = () => {
           [s.heroPageParallax]: FF_LP_PARALLAX,
         })}
       >
-        <button className={s.waitListBtn}>Join Waitlist</button>
         <div
           id="section1"
           ref={section1Ref}
           className={classNames(s.wrapper, 'section', s.section, s.section1)}
           style={{ height: sectionHeight }}
         >
-          <section className={s.heroPageInfo} style={{ height: 'auto' }}>
-            <div className={s.sectionContent}>
+          <section className={s.heroPageInfo} style={{ height: windowHeight }}>
+            <div className={s.sectionContent} style={{ height: windowHeight }}>
               <h1 className={s.companyTitle}>
                 <span>
                   <b style={{ color: 'rgba(0, 180, 204, 1)' }}>Binaryx</b>
@@ -603,6 +607,7 @@ const HomePage: FC = () => {
                 <button
                   onClick={handleJoinWaitListButtonClick}
                   className={s.btnJoinWaitlist}
+                  ref={joinWaitListBtnRef}
                 >
                   Join waitlist
                 </button>
@@ -620,19 +625,20 @@ const HomePage: FC = () => {
           {/*>*/}
           <SectionElement
             heading="Expensive asset value already in past"
+            description={
+              <>
+                With Binaryx Protocol you will be able to buy a real tokenized
+                estate with only 50$ till unlimited.
+                <br />
+                Buy, trade and sell your property fast, secure, and profitable
+                at anytime
+              </>
+            }
             sectionHeight={sectionHeight}
             windowHeight={windowHeight}
             onButtonClick={handleJoinWaitListButtonClick}
             contentElementRef={section1ContentRef}
-          >
-            <p className={s.description}>
-              With Binaryx Protocol you will be able to buy a real tokenized
-              estate with only 50$ till unlimited.
-              <br />
-              Buy, trade and sell your property fast, secure, and profitable at
-              anytime
-            </p>
-          </SectionElement>
+          />
         </div>
         <div
           id="section2"
@@ -641,16 +647,12 @@ const HomePage: FC = () => {
         >
           <SectionElement
             heading="The next generation DeFi experience with Real Yield"
+            description="Use your property tokens to borrow and keep earning the highest yield available at the same time"
             onButtonClick={handleJoinWaitListButtonClick}
             sectionHeight={sectionHeight}
             windowHeight={windowHeight}
             contentElementRef={section2ContentRef}
-          >
-            <p className={s.description}>
-              Use your property tokens to borrow and keep earning the highest
-              yield available at the same time
-            </p>
-          </SectionElement>
+          />
         </div>
         <div
           id="section3"
@@ -659,16 +661,12 @@ const HomePage: FC = () => {
         >
           <SectionElement
             heading="Boosting Economy and scaling Web3"
+            description="Increasing assets ownership transferring speed with web3 infrastructure"
             sectionHeight={sectionHeight}
             windowHeight={windowHeight}
             contentElementRef={section3ContentRef}
             onButtonClick={handleJoinWaitListButtonClick}
-          >
-            <p className={s.description}>
-              Increasing assets ownership transferring speed with web3
-              infrastracture
-            </p>
-          </SectionElement>
+          />
         </div>
         {/*<div*/}
         {/*  id="section4"*/}
@@ -685,334 +683,196 @@ const HomePage: FC = () => {
         {/*    </p>*/}
         {/*  </SectionElement>*/}
         {/*</div>*/}
-        <section
-          id="sectionWebAssets"
-          className={classNames(
-            s.section,
-            s.assets,
-            s.webAssets,
-            'section',
-          )}
-        >
-          <div
-            className={s.webAssetsContainer}
-            style={{
-              minHeight:
-                typeof window !== 'undefined' && FF_LP_PARALLAX
-                  ? window.innerHeight
-                  : windowHeight,
-            }}
+        <div className={s.sectionsDark}>
+          <BgOverlay
+            isBgOverlayActive={true}
+            isBgAnimationActive={true}
+            isBgOverlayAbsolute={true}
+            height={windowHeight}
+          />
+          <BgOverlay
+            isBgOverlayActive={true}
+            isBgAnimationActive={true}
+            isBgOverlayAbsolute={true}
+            height={windowHeight}
+            paddingTop={windowHeight}
+          />
+          <BgOverlay
+            isBgOverlayActive={true}
+            isBgAnimationActive={true}
+            isBgOverlayAbsolute={true}
+            height={windowHeight}
+            paddingTop={windowHeight * 2}
+          />
+          <SchemaSection className={classNames(s.section, 'section')} />
+          <TimelineSection className={classNames(s.section, 'section')} />
+          <section
+            id="sectionTeam"
+            className={classNames(s.section, s.ourTeam, 'section')}
           >
-            <h1 className={classNames(s.assetsTitle)}>
-              Welcome to the Era of Web3 assets
-            </h1>
-            {/*<BackgroundVisuals top={'50%'} />*/}
-            <div className={s.webAssetBlock}>
-              <img
-                className={`${s.assetsWeb3Desktop}`}
-                src={
-                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_desktop.svg'
-                }
-              />
-              <img
-                className={s.assetsWeb3Mobile}
-                src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/web3_section_temporary_mobile4.png"
-                style={{ maxHeight: sectionHeight - 250 }}
-              />
-              {/*<div className={s.assetsWeb3Mobile}>*/}
-              {/*  <WebAssetBlock className={s.webAssetsLegend}>*/}
-              {/*    <p>1. Property Tokenization</p>*/}
-              {/*    <p>2. Purchasing Property Tokens</p>*/}
-              {/*    <p>3. Claiming Rewards from Rent</p>*/}
-              {/*  </WebAssetBlock>*/}
-              {/*  <WebAssetBlock className={s.binaryxMarketplace}>*/}
-              {/*    <WebAssetCard*/}
-              {/*      imageSrc={''}*/}
-              {/*      imageDescription={'Binaryx Marketplace'}*/}
-              {/*    />*/}
-              {/*  </WebAssetBlock>*/}
-              {/*  <WebAssetBlock className={s.propertyTokenization}>*/}
-              {/*    <WebAssetCard imageSrc={''} imageDescription={'Property'} />*/}
-              {/*    <WebAssetCard*/}
-              {/*      imageSrc={'#'}*/}
-              {/*      imageDescription={'Property Tokens'}*/}
-              {/*    />*/}
-              {/*  </WebAssetBlock>*/}
-              {/*  <WebAssetBlock className={s.purchasingPropertyTokens}>*/}
-              {/*    <WebAssetCard*/}
-              {/*      imageSrc={'#'}*/}
-              {/*      imageDescription={'Property Taken'}*/}
-              {/*    />*/}
-              {/*    <WebAssetCard*/}
-              {/*      imageSrc={'#'}*/}
-              {/*      imageDescription={'Stablecoins'}*/}
-              {/*    />*/}
-              {/*    <WebAssetCard imageSrc={'#'} imageDescription={'Users'} />*/}
-              {/*  </WebAssetBlock>*/}
-              {/*  <WebAssetBlock className={s.claimingRewards}>*/}
-              {/*    <WebAssetCard*/}
-              {/*      imageSrc={'#'}*/}
-              {/*      imageDescription={'Property Rent'}*/}
-              {/*    />*/}
-              {/*  </WebAssetBlock>*/}
-              {/*</div>*/}
-            </div>
-          </div>
-          {/* </div> */}
-        </section>
-        <section
-          className={classNames(s.timeline, s.section, s.wrapper, 'section')}
-        >
-          <div className={s.timelineGrid}>
-            <div className={s.timelineSeparatorTr} />
-            <ul className={s.timelineSeparatorLine}>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
-            <div className={s.timelineHeaders}>
-              <h1 className={s.timelineTitle}>Timeline</h1>
-              <h3>Product</h3>
-              <h3>Marketing</h3>
-              {/*<h3>Organization</h3>*/}
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year={'2022'}>
-                <li>MVP Building</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>– Socials launch</li>
-                <li>– First 750 members onboarded</li>
-              </DescriptionBlock>
-              {/*<DescriptionBlock>*/}
-              {/*  <li>Legal set up</li>*/}
-              {/*</DescriptionBlock>*/}
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year={'Q1 2023'}>
-                <li>Binaryx marketplace pre-launch on Testnet v1, v2</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>&gt; 5k members onboarded</li>
-                <li>&gt; 2k KYC done</li>
-              </DescriptionBlock>
-              {/*<DescriptionBlock>*/}
-              {/*  <li>Seed round</li>*/}
-              {/*</DescriptionBlock>*/}
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year={'Q2 2023'}>
-                <li>Testnet v3 launch</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>– Academy launch</li>
-                <li>– Ambassador program launch</li>
-              </DescriptionBlock>
-              {/*<DescriptionBlock>*/}
-              {/*  <li>IDO</li>*/}
-              {/*</DescriptionBlock>*/}
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year={'Q3 2023'}>
-                <li>Binaryx marketplace official launch</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>– Airdrop for the first academy graduates</li>
-                <li>– Staking program</li>
-                <li>&gt; 70k members onboarded</li>
-                <li>&gt; 7k $aBNRX holders</li>
-              </DescriptionBlock>
-              {/*<DescriptionBlock>*/}
-              {/*  <li>– Token launch</li>*/}
-              {/*  <li>– DAO launch</li>*/}
-              {/*</DescriptionBlock>*/}
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year="Q4 2023">
-                <li>1 st Smart contact audit</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>Referral program launch</li>
-                <li>200k members onboarded</li>
-                <li>&gt; 20k $aBNRX holders</li>
-              </DescriptionBlock>
-            </div>
-            <div className={s.timelineColumn}>
-              <DescriptionBlock year="2024">
-                <li>Other DeFi services launch The secondary market</li>
-              </DescriptionBlock>
-              <DescriptionBlock>
-                <li>&gt; 100k $aBRX holders</li>
-              </DescriptionBlock>
-            </div>
-          </div>
-        </section>
-        <section
-          id="sectionTeam"
-          className={classNames(s.section, s.ourTeam, 'section')}
-        >
-          <div
-            className={s.ourTeamContainer}
-            style={{ minHeight: sectionHeight }}
-          >
-            <h1 className={s.ourTeamTitle}>Our Team</h1>
-            <div className={classNames(s.teamGallery, s.wrapper)}>
-              <TeamBlock
-                imgSrc={
-                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/oleg_kurchenko.png'
-                }
-                personName={'Oleg Kurchenko'}
-                personPosition={'Chief Executive Officer'}
-                socialLinkImage={
-                  'https://cdn-icons-png.flaticon.com/512/61/61109.png'
-                }
-                socialLink={'#'}
-                socialUserName={'oleg_kurchenko'}
-              />
-              <TeamBlock
-                imgSrc={
-                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/dmytro_zeleniy.png'
-                }
-                personName={'Dmytro Zeleniy'}
-                personPosition={'Chief Technical Officer'}
-                socialLinkImage={
-                  'https://cdn-icons-png.flaticon.com/512/61/61109.png'
-                }
-                socialLink={'#'}
-                socialUserName={'dmytro_zeleniy'}
-              />
-              <TeamBlock
-                imgSrc={
-                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/dmytro_lizanets.png'
-                }
-                personName={'Dmytro Lizanets'}
-                personPosition={'Chief Marketing Officer'}
-                socialLinkImage={
-                  'https://cdn-icons-png.flaticon.com/512/61/61109.png'
-                }
-                socialLink={'#'}
-                socialUserName={'dmytro_lizanets'}
-              />
-              <TeamBlock
-                imgSrc={
-                  'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/andriy_makaveli.png'
-                }
-                personName={'Andriy Makaveli'}
-                personPosition={'Chief Business Development Officer'}
-                socialLinkImage={
-                  'https://cdn-icons-png.flaticon.com/512/61/61109.png'
-                }
-                socialLink={'#'}
-                socialUserName={'andriy_makaveli'}
-              />
-            </div>
-          </div>
-        </section>
-        <section
-          id="sectionWaitlist"
-          className={classNames(s.section, s.joinWaitlist, 'section')}
-        >
-          <div className={s.joinWaitlistContainer}>
-            <div className={classNames(s.topSection)}>
-              <div className={classNames(s.wrapper, s.topSectionContainer)}>
-                <h2 className={s.joinWaitlistTitle}>Join Waitlist:</h2>
-                <form
-                  id="waitlist-form"
-                  className={s.formSection}
-                  onSubmit={handleFormSubmit}
-                >
-                  <input
-                    type="text"
-                    className={s.input}
-                    placeholder="Your name:"
-                  />
-                  <input
-                    type="email"
-                    className={s.input}
-                    placeholder="Your email:"
-                  />
-                  <button type="submit" className={s.btnSend}>
-                    Send
-                  </button>
-                  <label className={s.privacyPolicy}>
-                    <input type="checkbox" defaultChecked={true} />
-                    <span>
-                      Agree to the Privacy Policy and Terms of Service
-                    </span>
-                  </label>
-                </form>
+            <div
+              className={s.ourTeamContainer}
+              style={{ minHeight: windowHeight }}
+            >
+              <h1 className={s.ourTeamTitle}>Our Team</h1>
+              <div className={classNames(s.teamGallery, s.wrapper)}>
+                <TeamBlock
+                  imgSrc={
+                    'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/oleg_kurchenko.png'
+                  }
+                  personName={'Oleg Kurchenko'}
+                  personPosition={'Chief Executive Officer'}
+                  socialLinkImage={
+                    'https://cdn-icons-png.flaticon.com/512/61/61109.png'
+                  }
+                  socialLink={'#'}
+                  socialUserName={'oleg_kurchenko'}
+                />
+                <TeamBlock
+                  imgSrc={
+                    'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/dmytro_zeleniy.png'
+                  }
+                  personName={'Dmytro Zeleniy'}
+                  personPosition={'Chief Technical Officer'}
+                  socialLinkImage={
+                    'https://cdn-icons-png.flaticon.com/512/61/61109.png'
+                  }
+                  socialLink={'#'}
+                  socialUserName={'dmytro_zeleniy'}
+                />
+                <TeamBlock
+                  imgSrc={
+                    'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/dmytro_lizanets.png'
+                  }
+                  personName={'Dmytro Lizanets'}
+                  personPosition={'Chief Marketing Officer'}
+                  socialLinkImage={
+                    'https://cdn-icons-png.flaticon.com/512/61/61109.png'
+                  }
+                  socialLink={'#'}
+                  socialUserName={'dmytro_lizanets'}
+                />
+                <TeamBlock
+                  imgSrc={
+                    'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/team/andriy_makaveli.png'
+                  }
+                  personName={'Andriy Makaveli'}
+                  personPosition={'Chief Business Development Officer'}
+                  socialLinkImage={
+                    'https://cdn-icons-png.flaticon.com/512/61/61109.png'
+                  }
+                  socialLink={'#'}
+                  socialUserName={'andriy_makaveli'}
+                />
               </div>
             </div>
-            {/* </section> */}
-            {/*<section className={classNames(s.section, s.footerSection, "section")}>*/}
-            <footer className={s.footer}>
-              <div className={classNames(s.footerContainer, s.wrapper)}>
-                <h1 className={s.footerHeading}>Let's Keep in Touch With:</h1>
-                <nav className={s.footerNavSocial}>
-                  <NavSocialImage
-                    link={'https://discord.gg/kJqgYh7G9G'}
-                    src={
-                      'https://cdn-icons-png.flaticon.com/512/5968/5968898.png'
-                    }
-                    alt={'discord'}
-                    className={s.footerNavSocialImage}
-                    width={40}
-                  />
-                  <NavSocialImage
-                    link={'https://twitter.com/realBinaryx'}
-                    src={
-                      'https://cdn-icons-png.flaticon.com/512/733/733635.png'
-                    }
-                    alt={'twitter'}
-                    className={s.footerNavSocialImage}
-                    width={40}
-                  />
-                  <NavSocialImage
-                    link={'https://www.linkedin.com/company/realbinaryx/'}
-                    src={'https://cdn-icons-png.flaticon.com/512/61/61109.png'}
-                    alt={'linkedIn'}
-                    className={s.footerNavSocialImage}
-                    width={40}
-                  />
-                  <NavSocialImage
-                    link={'https://t.me/binaryxnews'}
-                    src={
-                      'https://cdn-icons-png.flaticon.com/512/2111/2111710.png'
-                    }
-                    alt={'telegram'}
-                    className={s.footerNavSocialImage}
-                    width={40}
-                  />
-                </nav>
-              </div>
-              <nav className={s.footerBottomSection}>
-                <div
-                  className={classNames(
-                    s.footerBottomSectionContainer,
-                    s.wrapper,
-                  )}
-                >
-                  <img
-                    src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg"
-                    alt="company_logo"
-                    width={180}
-                    onClick={() => (window as any).fullpageObject.moveTo(0)}
-                  />
-                  <div className={s.footerLinks}>
-                    <MenuElement link={'#'} body={'Privacy Policy'} />
-                    <MenuElement link={'#'} body={'Terms of service'} />
-                  </div>
-                  <span className={s.binaryx}>
-                    ©Binaryx. All rights reserved 2022
-                  </span>
+          </section>
+
+          <section
+            id="sectionWaitlist"
+            className={classNames(s.section, s.joinWaitlist, 'section')}
+          >
+            <div className={s.joinWaitlistContainer}>
+              <div className={classNames(s.topSection)}>
+                <div className={classNames(s.wrapper, s.topSectionContainer)}>
+                  <h2 className={s.joinWaitlistTitle}>Join Waitlist:</h2>
+                  <form
+                    id="waitlist-form"
+                    className={s.formSection}
+                    onSubmit={handleFormSubmit}
+                  >
+                    <input
+                      type="text"
+                      className={s.input}
+                      placeholder="Your name:"
+                    />
+                    <input
+                      type="email"
+                      className={s.input}
+                      placeholder="Your email:"
+                    />
+                    <button type="submit" className={s.btnSend}>
+                      Send
+                    </button>
+                    <label className={s.privacyPolicy}>
+                      <input type="checkbox" defaultChecked={true} />
+                      <span>
+                        Agree to the Privacy Policy and Terms of Service
+                      </span>
+                    </label>
+                  </form>
                 </div>
-              </nav>
-            </footer>
-          </div>
-        </section>
+              </div>
+              {/* </section> */}
+              {/*<section className={classNames(s.section, s.footerSection, "section")}>*/}
+              <footer className={s.footer}>
+                <div className={classNames(s.footerContainer, s.wrapper)}>
+                  <h1 className={s.footerHeading}>Let's Keep in Touch With:</h1>
+                  <nav className={s.footerNavSocial}>
+                    <NavSocialImage
+                      link={'https://discord.gg/kJqgYh7G9G'}
+                      src={
+                        'https://cdn-icons-png.flaticon.com/512/5968/5968898.png'
+                      }
+                      alt={'discord'}
+                      className={s.footerNavSocialImage}
+                      width={40}
+                    />
+                    <NavSocialImage
+                      link={'https://twitter.com/realBinaryx'}
+                      src={
+                        'https://cdn-icons-png.flaticon.com/512/733/733635.png'
+                      }
+                      alt={'twitter'}
+                      className={s.footerNavSocialImage}
+                      width={40}
+                    />
+                    <NavSocialImage
+                      link={'https://www.linkedin.com/company/realbinaryx/'}
+                      src={
+                        'https://cdn-icons-png.flaticon.com/512/61/61109.png'
+                      }
+                      alt={'linkedIn'}
+                      className={s.footerNavSocialImage}
+                      width={40}
+                    />
+                    <NavSocialImage
+                      link={'https://t.me/binaryxnews'}
+                      src={
+                        'https://cdn-icons-png.flaticon.com/512/2111/2111710.png'
+                      }
+                      alt={'telegram'}
+                      className={s.footerNavSocialImage}
+                      width={40}
+                    />
+                  </nav>
+                </div>
+                <nav className={s.footerBottomSection}>
+                  <div
+                    className={classNames(
+                      s.footerBottomSectionContainer,
+                      s.wrapper,
+                    )}
+                  >
+                    <img
+                      src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg"
+                      alt="company_logo"
+                      width={180}
+                      onClick={() => (window as any).fullpageObject.moveTo(0)}
+                    />
+                    <div className={s.footerLinks}>
+                      <MenuElement link={'#'} body={'Privacy Policy'} />
+                      <MenuElement link={'#'} body={'Terms of service'} />
+                    </div>
+                    <span className={s.binaryx}>
+                      ©Binaryx. All rights reserved 2022
+                    </span>
+                  </div>
+                </nav>
+              </footer>
+            </div>
+          </section>
+        </div>
       </main>
     </>
   );

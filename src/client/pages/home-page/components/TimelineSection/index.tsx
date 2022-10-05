@@ -4,6 +4,7 @@ import DescriptionBlock from '../DescriptionBlock';
 import s from './styles.module.scss';
 import AnimationElement from '../AnimationElement';
 import YearBlock from '../YearBlock';
+import BgOverlay from '../BgOverlay';
 
 type Props = {
   className?: string;
@@ -39,6 +40,7 @@ const TimelineSection: FC<Props> = ({ className }) => {
 
   return (
     <section className={classNames(s.timeline, className)}>
+      {/*<BgOverlay isBgOverlayActive={true} isBgAnimationActive={true} isBgOverlayAbsolute={true} />*/}
       <div className={s.container}>
         <div ref={timelineGrid} className={s.timelineGrid}>
           <AnimationElement order={1.8} className={s.timelineSeparatorTr}>

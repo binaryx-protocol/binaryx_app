@@ -48,6 +48,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
 
   return (
     <section className={classNames(s.webAssets, className)}>
+      {/*<BgOverlay isBgOverlayActive={true} isBgAnimationActive={true} isBgOverlayAbsolute={true} />*/}
       <div className={s.container}>
         <h1 className={s.assetsTitle}>Welcome To The Era Of WEB3 Assets</h1>
         <div ref={webAssetContainer} className={s.webAssetsContainer}>
