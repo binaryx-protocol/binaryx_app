@@ -136,17 +136,22 @@ export class ViewController {
   }
 
   @Get('assets-v2')
-  public async listAdminAssets(@Req() req: Request, @Res() res: Response) {
+  public async listAssetsV2(@Req() req: Request, @Res() res: Response) {
     this.nextHandler(req, res);
   }
 
   @Get('assets-v2/new')
-  public async newAdminAssets(@Req() req: Request, @Res() res: Response) {
+  public async newAssetV2(@Req() req: Request, @Res() res: Response) {
     this.nextHandler(req, res);
   }
 
   @Get('assets-v2/:id/edit')
-  public async editAdminAssets(@Req() req: Request, @Res() res: Response) {
+  public async editAssetV2(@Req() req: Request, @Res() res: Response) {
+    this.nextHandler(req, res);
+  }
+
+  @Get('assets-v2/:id')
+  public async showAssetV2(@Req() req: Request, @Res() res: Response) {
     this.nextHandler(req, res);
   }
 
