@@ -1,10 +1,10 @@
 import { atom } from 'jotai'
-import * as metaMaskModel from "../../models/metaMaskModel";
+import * as metaMaskModel from "../../../models/metaMaskModel";
 import {loadable} from "jotai/utils";
 import {ethers} from "ethers";
 import {assetsManagerAbi} from "../abis";
-import * as rpcConfigModel from "../../models/rpcConfigModel";
-import {RpcConfig} from "../../models/rpcConfigModel";
+import * as rpcConfigModel from "../../../models/rpcConfigModel";
+import {RpcConfig} from "../../../models/rpcConfigModel";
 
 export enum AssetStatuses {
   'upcoming' = 1,

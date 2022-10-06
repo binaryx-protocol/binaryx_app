@@ -120,21 +120,6 @@ export class ViewController {
       );
   }
 
-  @Get('sandbox')
-  public async showSandbox(@Req() req: Request, @Res() res: Response) {
-    const parsedUrl = parse(req.url, true);
-    const serverSideProps = getPublicEnv();
-
-    await this.viewService
-      .getNextServer()
-      .render(
-        req,
-        res,
-        parsedUrl.pathname,
-        Object.assign(parsedUrl.query, serverSideProps),
-      );
-  }
-
   @Get('assets/:id')
   public async showAsset(@Req() req: Request, @Res() res: Response) {
     const parsedUrl = parse(req.url, true);
@@ -150,17 +135,17 @@ export class ViewController {
       );
   }
 
-  @Get('admin/assets')
+  @Get('assets-v2')
   public async listAdminAssets(@Req() req: Request, @Res() res: Response) {
     this.nextHandler(req, res);
   }
 
-  @Get('admin/assets/new')
+  @Get('assets-v2/new')
   public async newAdminAssets(@Req() req: Request, @Res() res: Response) {
     this.nextHandler(req, res);
   }
 
-  @Get('admin/assets/:id/edit')
+  @Get('assets-v2/:id/edit')
   public async editAdminAssets(@Req() req: Request, @Res() res: Response) {
     this.nextHandler(req, res);
   }

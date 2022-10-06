@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import {AdminAssetsListController} from "admin/controllers/AdminAssetsListController";
+import {AdminAssetsListController} from "features/assets";
 
 const Assets: NextPage<any> = (props) => {
   return (
