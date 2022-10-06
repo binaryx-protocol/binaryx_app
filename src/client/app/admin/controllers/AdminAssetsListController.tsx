@@ -4,14 +4,16 @@ import Button from "@mui/material/Button";
 import * as metaMaskModel from "../../models/metaMaskModel";
 import * as assetsModel from "../models/assetsModel";
 import {useAtomValue, useSetAtom} from "jotai";
+import {AssetStatuses} from "../models/assetsModel";
 
 export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
   const $doCreateAsset = useSetAtom(assetsModel.$doCreateAsset)
+  const $doActivate = useSetAtom(assetsModel.$doActivate)
+  const $doDisable = useSetAtom(assetsModel.$doDisable)
   const $walletConnect = useSetAtom(metaMaskModel.$walletConnect)
   const $walletReadiness = useAtomValue(metaMaskModel.$walletReadiness)
   const $metaMaskState = useAtomValue(metaMaskModel.$metaMaskState)
-  console.log('$blockchainAssets', $blockchainAssets)
   const blockchainAssets = $blockchainAssets.state === 'hasData' ? $blockchainAssets.data : null
 
   return (
@@ -45,6 +47,7 @@ export const AdminAssetsListController = () => {
                 Back
               </Button>
             </Link>
+            {' '}
             <Button variant="outlined" onClick={$doCreateAsset}>
               Create
             </Button>
@@ -64,6 +67,18 @@ export const AdminAssetsListController = () => {
                 <div>
                   <small>{blockchainAsset.description}</small>
                 </div>
+                <div>
+                  {T.status[blockchainAsset.status]}{' '}
+                  {
+                    blockchainAsset.status === AssetStatuses.upcoming
+                    ? <Button variant="outlined" size="small" onClick={() => $doActivate({ id: i })}>
+                        Activate
+                      </Button>
+                      : <Button variant="outlined" size="small" onClick={() => $doDisable({ id: i })}>
+                        Disable
+                      </Button>
+                  }
+                </div>
               </div>
             ))
           }
@@ -71,4 +86,13 @@ export const AdminAssetsListController = () => {
       </div>
     </>
   )
+}
+
+const T = {
+  status: {
+    1: 'Upcoming',
+    2: 'Active',
+    3: 'Sold Out',
+    4: 'Disabled',
+  }
 }

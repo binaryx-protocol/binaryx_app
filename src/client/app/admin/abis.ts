@@ -20,4 +20,5 @@ export const assetsManagerAbi = [
   ) public`
   ,
   `function listAssets() public view returns((${AssetStruct})[] memory)`,
+  `function setStatus(uint256 id, uint8 status)`,
 ]

@@ -6,7 +6,7 @@ import {assetsManagerAbi} from "../abis";
 import * as rpcConfigModel from "../../models/rpcConfigModel";
 import {RpcConfig} from "../../models/rpcConfigModel";
 
-enum AssetStatuses {
+export enum AssetStatuses {
   'upcoming' = 1,
   'active'= 2,
   'sold_out'= 3,
@@ -54,28 +54,25 @@ const defaultAttrs = (): AssetInput => ({
 })
 
 const rpcClient = {
-  async createAsset($rpcConfig: RpcConfig, args: any) {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const manager = new ethers.Contract($rpcConfig.assetsTokenAddress, assetsManagerAbi, provider);
-    const managerSigned = manager.connect(provider.getSigner())
-
+  async createAsset($rpcConfig: RpcConfig, args: any): Promise<void> {
     console.log('args', args)
     args.originalOwner = '0x70997970C51812dc3A010C7d01b50e0d17dc79C8'
     const argsArr = Object.values(args)
     console.log('argsArr', argsArr)
-    const result = await managerSigned.createAsset(
+    await this.getManagerSc($rpcConfig).createAsset(
       ...argsArr
     )
-    console.log('result', result)
   },
   async listAssets($rpcConfig: RpcConfig) {
+    return await this.getManagerSc($rpcConfig).listAssets()
+  },
+  async setStatus($rpcConfig: RpcConfig, args: { id: number, status: number }) {
+    return await this.getManagerSc($rpcConfig).setStatus(args.id, args.status)
+  },
+  getManagerSc($rpcConfig) {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const manager = new ethers.Contract($rpcConfig.assetsTokenAddress, assetsManagerAbi, provider);
-    const managerSigned = manager.connect(provider.getSigner())
-
-    const result = await managerSigned.listAssets()
-    console.log('listAssets result', result)
-    return result
+    return manager.connect(provider.getSigner())
   }
 }
 
@@ -89,7 +86,35 @@ export const $doCreateAsset = atom(null, async (get) => {
       defaultAttrs()
     );
   } else {
-    console.log('waiting for wallet')
+    throw new Error("Wallet is not connected or config is not provided");
+  }
+})
+
+export const $doActivate = atom(null, async (get, set, args: { id: number }) => {
+  const $walletReadiness = get(metaMaskModel.$walletReadiness)
+  const $rpcConfig = get(rpcConfigModel.$rpcConfig)
+
+  if ($walletReadiness === 'ready' && $rpcConfig) {
+    await rpcClient.setStatus(
+      $rpcConfig,
+      { id: args.id, status: AssetStatuses.active },
+    );
+  } else {
+    throw new Error("Wallet is not connected or config is not provided");
+  }
+})
+
+export const $doDisable = atom(null, async (get, set, args: { id: number }) => {
+  const $walletReadiness = get(metaMaskModel.$walletReadiness)
+  const $rpcConfig = get(rpcConfigModel.$rpcConfig)
+
+  if ($walletReadiness === 'ready' && $rpcConfig) {
+    await rpcClient.setStatus(
+      $rpcConfig,
+      { id: args.id, status: AssetStatuses.disabled },
+    );
+  } else {
+    throw new Error("Wallet is not connected or config is not provided");
   }
 })
 
@@ -100,8 +125,9 @@ export const $blockchainAssetsAsync = atom<any>(async (get) => {
 
   if ($walletReadiness === 'ready' && $rpcConfig) {
     return await rpcClient.listAssets($rpcConfig)
+  } else {
+    throw new Error("Wallet is not connected or config is not provided");
   }
-  console.log('$blockchainAssetsAsync skip')
 })
 
 export const $blockchainAssets = loadable($blockchainAssetsAsync)
