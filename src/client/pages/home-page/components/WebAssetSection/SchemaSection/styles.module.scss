@@ -14,7 +14,9 @@
   z-index: 1;
   min-height: 100vh;
   color: var(--font-color_white);
-  background-color: var(--background-color_dark);
+  max-width: 100%;
+  overflow-x: hidden;
+  //background-color: var(--background-color_dark);
 }
 
 .webAssetsContainer {

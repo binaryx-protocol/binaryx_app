@@ -156,7 +156,7 @@ const HomePage: FC = () => {
       animationData,
       rendererSettings: {
         // preserveAspectRatio: 'xMidYMid meet',
-        preserveAspectRatio: isDesktop ? 'xMaxYMax meet' : 'xMaxYMid slice',
+        preserveAspectRatio: isDesktop ? 'xMaxYMax slice' : 'xMaxYMid slice',
       },
     });
   };
@@ -380,6 +380,7 @@ const HomePage: FC = () => {
       const sectionContentPrev = getSectionContents()[currentSection - 1];
       const sectionContentNext = getSectionContents()[currentSection];
       const scrollPercent = getSectionScrollPercent(currentSection - 1);
+      console.log("currentSection", currentSection);
       if (sectionContentPrev) {
         const opacity =
           scrollPercent > 90 ? 1 - (10 - (100 - scrollPercent)) / 10 : 1;
@@ -391,7 +392,7 @@ const HomePage: FC = () => {
 
         sectionContentNext.style.opacity = opacity;
       }
-      if (currentSection === 1) {
+      if (currentSection === 1 && scrollPercent < 50) {
         sectionContentPrev.style.opacity =
           scrollPercent > 5 ? (95 - (100 - scrollPercent)) / 10 : 0;
       }
@@ -712,7 +713,7 @@ const HomePage: FC = () => {
           >
             <div
               className={s.ourTeamContainer}
-              style={{ minHeight: windowHeight }}
+              // style={{ minHeight: windowHeight }}
             >
               <h1 className={s.ourTeamTitle}>Our Team</h1>
               <div className={classNames(s.teamGallery, s.wrapper)}>

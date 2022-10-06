@@ -281,7 +281,8 @@
 .ourTeamContainer {
   display: grid;
   place-content: center;
-  min-height: 100vh;
+  //min-height: 100vh;
+  padding: 50px 0 80px;
 
   // @media (max-width: 768px) {
   //   min-height: 90vh;
