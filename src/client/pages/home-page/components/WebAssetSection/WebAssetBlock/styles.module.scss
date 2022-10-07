@@ -3,6 +3,7 @@
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--border-radius_default);
   backdrop-filter: blur(10px);
+  position: relative;
 
   @media screen and (max-width: 768px) {
     height: fit-content;

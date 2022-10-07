@@ -18,10 +18,15 @@
   text-align: center;
   width: 100vw;
   height: 100vh;
+  z-index: 4;
   animation: backdrop-filter .5s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
 
   @media screen and (max-width: 768px) {
     height: calc(100vh + 70px);
+  }
+
+  @media screen and (max-height: 667px) {
+    height: 100vh;
   }
 }
 
@@ -42,7 +47,7 @@
   border-radius: var(--border-radius_large);
   background-color: white;
   position: relative;
-  z-index: 2;
+  z-index: 3;
   animation: popupMenuShow .5s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
 
   @media screen and (max-width: 768px) {

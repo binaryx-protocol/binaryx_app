@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import { FC, ReactChild } from 'react';
 
 type Props = {
@@ -20,7 +19,7 @@ const AnimationElement: FC<Props> = ({
     <div
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className={classNames(className)}
+      className={className}
       style={{ '--order': order } as any}
     >
       {children}

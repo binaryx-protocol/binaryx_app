@@ -28,3 +28,13 @@
     font-size: 11px;
   }
 }
+
+@media screen and (max-height: 667px) {
+  .webAssetCard {
+    height: 60px;
+  }
+
+  .image {
+    height: 25px;
+  }
+}

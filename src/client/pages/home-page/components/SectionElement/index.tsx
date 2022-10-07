@@ -16,7 +16,7 @@ const SectionElement: FC<Props> = ({
   id,
   body,
   onButtonClick,
-  sectionHeight
+  sectionHeight,
 }) => (
   <section id={id} className={s.block} style={{ minHeight: sectionHeight }}>
     <div className={s.infoBlock}>

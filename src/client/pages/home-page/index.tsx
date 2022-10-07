@@ -11,14 +11,15 @@ import anim2 from './animations/B2.json';
 import anim3 from './animations/B3.json';
 import anim4 from './animations/B4.json';
 import classNames from 'classnames';
-import DescriptionBlock from './components/DescriptionBlock';
 import getCookie from 'utils/getCookie';
 import SchemaSection from './components/WebAssetSection/SchemaSection';
 import TimelineSection from './components/TimelineSection';
 import PopupMenu from './components/PopupMenu';
 
 const HomePage: FC = () => {
-  const [sectionHeight, setSectionHeight] = useState(typeof window !== "undefined" ? window.innerHeight : null);
+  const [sectionHeight, setSectionHeight] = useState(
+    typeof window !== 'undefined' ? window.innerHeight : null,
+  );
   const container0 = useRef<HTMLDivElement>(null);
   const container1 = useRef<HTMLDivElement>(null);
   const container2 = useRef<HTMLDivElement>(null);
@@ -35,7 +36,11 @@ const HomePage: FC = () => {
     section4Ref.current,
   ];
   const currentSectionRef = useRef(0);
-  const [bgOverlay, setBgOverlay] = useState({ isBgOverlayActive: false, isBgAnimationActive: false, isBgOverlayDark: false })
+  const [bgOverlay, setBgOverlay] = useState({
+    isBgOverlayActive: false,
+    isBgAnimationActive: false,
+    isBgOverlayDark: false,
+  });
 
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -67,7 +72,9 @@ const HomePage: FC = () => {
               currentSectionRef.current = nextSection;
               const animation = animations.current[nextSection];
               const nextValue =
-                [1, 2, 3].includes(nextSection) && direction === 'up' ? 1100 : 0;
+                [1, 2, 3].includes(nextSection) && direction === 'up'
+                  ? 1100
+                  : 0;
               animation?.goToAndPlay(nextValue);
               console.log('nextSection', nextSection);
 
@@ -78,7 +85,7 @@ const HomePage: FC = () => {
               setBgOverlay({
                 isBgOverlayActive: nextSection !== 0,
                 isBgAnimationActive: true,
-                isBgOverlayDark: nextSection >= 4
+                isBgOverlayDark: nextSection >= 4,
               });
             },
             afterLoad: () => {
@@ -90,7 +97,7 @@ const HomePage: FC = () => {
         });
       }, 0);
     }, 0);
-  }, [])
+  }, []);
 
   const initAnimation = ({ animationData, container, autoplay }) => {
     const isDesktop = window.innerWidth > 768;
@@ -194,7 +201,6 @@ const HomePage: FC = () => {
   }
 
   useEffect(() => {
-
     initAnimations();
 
     document.addEventListener('scroll', (event) => {
@@ -309,13 +315,9 @@ const HomePage: FC = () => {
       });
   }
 
-  function handleJoinWaitListButtonClick() {
-    (window as any).fullpageObject.moveTo(
-      document.querySelectorAll('.section').length,
-    );
-  }
-
   const [isShowing, setIsShowing] = useState(false);
+
+  const handleJoinWaitListButtonClick = () => setIsShowing(!isShowing);
 
   return (
     <>
@@ -362,6 +364,12 @@ const HomePage: FC = () => {
         ref={container3}
         id="animationContainer3"
       />
+
+      <PopupMenu
+        isShowing={isShowing}
+        setIsShowing={setIsShowing}
+        handleFormSubmit={handleFormSubmit}
+      />
       <main id="main" className={s.heroPage}>
         <div
           id="section1"
@@ -381,9 +389,7 @@ const HomePage: FC = () => {
             <p className={s.hint}>{/* Technology based */}</p>
             <div className={s.infoSection}>
               <button
-                onClick={() => {
-                  setIsShowing(!isShowing);
-                }}
+                onClick={handleJoinWaitListButtonClick}
                 className={s.btnJoinWaitlist}
               >
                 Join waitlist
@@ -391,11 +397,6 @@ const HomePage: FC = () => {
               <button type="submit" className={s.joinCommunity}>
                 Join our community
               </button>
-              {isShowing ? (
-                <PopupMenu isShowing={isShowing} setIsShowing={setIsShowing} />
-              ) : (
-                ''
-              )}
             </div>
           </section>
         </div>
@@ -409,7 +410,7 @@ const HomePage: FC = () => {
             preTitle="WE ARE HERE TO:"
             body="With Binaryx Protocol you will be able to buy a real tokenized estate with only 50$ till unlimited. 
             Buy, trade and sell your property fast, secure, and profitable at anytime"
-            // onButtonClick={handleJoinWaitListButtonClick}
+            onButtonClick={handleJoinWaitListButtonClick}
           />
         </div>
         <div
@@ -442,7 +443,10 @@ const HomePage: FC = () => {
           id="sectionTeam"
           className={classNames(s.section, s.ourTeam, 'section')}
         >
-          <div className={s.ourTeamContainer} style={{ minHeight: sectionHeight }}>
+          <div
+            className={s.ourTeamContainer}
+            style={{ minHeight: sectionHeight }}
+          >
             <h1 className={s.ourTeamTitle}>Our Team</h1>
             <div className={classNames(s.teamGallery, s.wrapper)}>
               <TeamBlock
