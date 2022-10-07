@@ -19,12 +19,12 @@ export const AssetInfo = ({ title, line1, line2, city, state, postalCode, countr
   return (
     <div className={s.info}>
       <h2 className={s.title}>{title}</h2>
-      <p className={s.addressLine1}>
+      <div className={s.addressLine1}>
         {line1} {line2}
-      </p>
-      <p className={s.addressLine2}>
+      </div>
+      <div className={s.addressLine2}>
         {city}, {state} {postalCode} {country}
-      </p>
+      </div>
       <ul className={s.infoItems}>
         {infoItems.map((infoItem) => (
           <li key={infoItem.type} className={s.infoItem}>

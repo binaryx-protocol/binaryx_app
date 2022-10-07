@@ -9,8 +9,8 @@ type Props = {
 const TabRow: FC<Props> = ({ title, value }: Props) => {
   return (
     <div className={s.tabRow}>
-      <p>{title}</p>
-      <p>{value}</p>
+      <div>{title}</div>
+      <div>{value}</div>
     </div>
   );
 };

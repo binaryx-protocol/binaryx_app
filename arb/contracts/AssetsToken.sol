@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-
+import "hardhat/console.sol";
 
 interface IAssetsTokenManager {
   struct Asset {
@@ -93,6 +93,7 @@ interface IAssetsTokenManager {
 //    PropertyAddress memory propertyAddress
   ) external;
   function listAssets() external view returns(Asset[] memory);
+  function getAsset(uint256 id) external view returns(Asset memory);
   // TODO add batch
   function updateAsset(
     uint256 id,
@@ -231,5 +232,10 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
 
   function getAssetsCount() public view override returns(uint256) {
     return _assetIds.current();
+  }
+
+  function getAsset(uint256 id) public view override returns(Asset memory) {
+    require(bytes(assetsIds[id].name).length > 0, "Not found");
+    return assetsIds[id];
   }
 }

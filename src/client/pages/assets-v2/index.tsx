@@ -10,21 +10,21 @@ const Assets: NextPage<any> = (props) => {
   );
 };
 
-export const getStaticProps = async (sProps) => {
-  console.log('sProps', sProps)
-
-  return {
-    props: {},
-    revalidate: 60 * 5,
-  }
-}
-
-export const getStaticPaths = async () => {
-  return {
-    paths: [],
-    fallback: 'blocking',
-  }
-}
+// export const getStaticProps = async (sProps) => {
+//   console.log('sProps', sProps)
+//
+//   return {
+//     props: {},
+//     revalidate: 60 * 5,
+//   }
+// }
+//
+// export const getStaticPaths = async () => {
+//   return {
+//     paths: [],
+//     fallback: 'blocking',
+//   }
+// }
 
 // Assets.getInitialProps = (iProps) => {
 //   console.log('iProps', iProps)

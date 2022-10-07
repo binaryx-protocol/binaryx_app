@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import * as metaMaskModel from "../../../models/metaMaskModel";
 import * as assetsModel from "../models/assetsModel";
 import {useAtomValue, useSetAtom} from "jotai";
-import {AssetStatuses} from "../models/assetsModel";
+import {AssetStatuses} from "../types";
 
 export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)

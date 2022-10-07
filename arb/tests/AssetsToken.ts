@@ -157,6 +157,22 @@ describe("AssetsToken", function () {
       expect(resource2.status).to.eq(AssetStatuses.active)
     });
   });
+
+  describe("getAsset", function () {
+    it("if exists", async function () {
+      const { sc, otherAccount } = await loadFixture(deployFixture);
+      await createMany(sc, 1, { originalOwner: otherAccount.address })
+
+      const resource = await sc.getAsset(0)
+      expect(resource).to.exist
+    });
+    it("if not found", async function () {
+      const { sc, otherAccount } = await loadFixture(deployFixture);
+      await createMany(sc, 1, { originalOwner: otherAccount.address })
+
+      expect(async () => await sc.getAsset(1000000)).to.throw
+    });
+  });
 });
 
 const onlyFields = <T>(object): T => Object.entries(object).reduce((acc, [name, value]) => {

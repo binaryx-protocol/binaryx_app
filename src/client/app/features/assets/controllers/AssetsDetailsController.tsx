@@ -1,10 +1,4 @@
-import Link from 'next/link'
 import s from './AssetsDetailsController.module.scss'
-import Button from "@mui/material/Button";
-import * as metaMaskModel from "../../../models/metaMaskModel";
-import * as assetsModel from "../models/assetsModel";
-import {useAtomValue, useSetAtom} from "jotai";
-import {AssetStatuses} from "../models/assetsModel";
 import { Gallery } from "../views/Gallery";
 import {InvestBlock} from "../views/InvestBlock";
 import Container from "@mui/material/Container";
