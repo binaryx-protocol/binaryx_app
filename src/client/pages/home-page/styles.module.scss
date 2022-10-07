@@ -459,7 +459,7 @@
     display: grid;
     grid-template-columns: repeat(4, 320px);
     overflow: scroll hidden;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     gap: 10px;
 
     &::-webkit-scrollbar {
