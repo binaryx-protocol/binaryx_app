@@ -33,7 +33,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
       if (isDesktop) {
         toggleClassName(s.isShow, entry);
       }
-      // if (entry.isIntersecting) observer.unobserve(entry.target);
+      if (entry.isIntersecting) observer.unobserve(entry.target);
     });
     observer.observe(webAssetContainer.current);
   }, []);

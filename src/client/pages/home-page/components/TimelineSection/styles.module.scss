@@ -129,11 +129,6 @@
   font-size: 14px;
 }
 
-// Style for iPhone SE
-@media screen and (max-height: 667px) {
-  
-}
-
 .isShow {
   animation: timelineShow 1s ease forwards;
   animation-delay: calc(var(--order) * var(--animation-delay));
