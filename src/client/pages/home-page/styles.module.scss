@@ -182,15 +182,17 @@
 
 .companyTitle {
   display: grid;
-  font-size: var(--font-size_big);
   font-weight: 300;
+  font-size: 60px;
+
+  @media (max-width: 768px) {
+    font-size: 26px;
+  }
 }
 
 .companySubTitle {
-  font-size: 54px;
-
-  @media (max-width: 768px) {
-    font-size: 21px;
+  @media (max-width: 1400px) {
+    font-size: 26px;
   }
 }
 
@@ -522,6 +524,7 @@
   .teamGallery {
     overflow: scroll hidden;
     gap: 12px;
+    padding-bottom: 14px;
   }
 
   // .ourTeamTitle {
