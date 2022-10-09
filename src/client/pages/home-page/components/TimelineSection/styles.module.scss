@@ -34,7 +34,7 @@
 
 .timelineSeparatorBars {
   display: grid;
-  grid-template-columns: repeat(6, 177px);
+  grid-template-columns: repeat(6, 170px);
   position: relative;
   list-style: none;
   top: 120px;
@@ -47,6 +47,7 @@
     grid-template-columns: repeat(6, 170px);
     top: 79px;
     left: unset;
+    width: 2px;
   }
 }
 
@@ -76,9 +77,9 @@
   grid-gap: 0 20px;
 
   @media screen and (max-width: 768px) {
-    grid-template-columns: repeat(6, 160px);
-    grid-gap: 0 10px;
+    grid-template-columns: repeat(6, 1fr);
     overflow: scroll hidden;
+    gap: 0;
     margin-top: 25%;
 
     &::-webkit-scrollbar {
@@ -106,6 +107,11 @@
     // grid-template-rows: 75px 80px 160px 80px;
     grid-template-rows: 80px 80px 160px 1px;
     width: fit-content;
+    margin-right: 20px;
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 
   .timelineHeaders {
@@ -127,11 +133,6 @@
   margin: 0;
   color: rgba(0, 142, 133, 1);
   font-size: 14px;
-}
-
-// Style for iPhone SE
-@media screen and (max-height: 667px) {
-  
 }
 
 .isShow {

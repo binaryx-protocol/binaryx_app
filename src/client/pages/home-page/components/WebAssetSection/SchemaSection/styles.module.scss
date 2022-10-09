@@ -15,7 +15,7 @@
   min-height: 100vh;
   color: var(--font-color_white);
 
-  @media screen and (max-height: 667px) {
+  @media screen and (max-height: 736px) {
     place-content: flex-end center;
   }
 }
@@ -28,10 +28,7 @@
   @media screen and (max-width: 768px) {
     grid-gap: 10px;
     grid-template-columns: 250px;
-  }
-
-  @media screen and (max-height: 667px) {
-    margin-bottom: 7px;
+    // margin-bottom: 7px;
   }
 }
 
@@ -381,6 +378,7 @@
     font-size: 24px;
     font-weight: 300;
     text-align: left;
+    margin-top: 0;
   }
 
   .purchasingPropertyTokens,

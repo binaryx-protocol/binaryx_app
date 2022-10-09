@@ -45,23 +45,23 @@ const TimelineSection: FC<Props> = ({ className }) => {
             <div />
           </AnimationElement>
           <ul className={s.timelineSeparatorBars}>
-            <AnimationElement order={2.8}>
-              <li className={s.bar} />
+            <AnimationElement className={s.bar} order={2.8}>
+              <li />
             </AnimationElement>
-            <AnimationElement order={3.8}>
-              <li className={s.bar} />
+            <AnimationElement className={s.bar} order={3.8}>
+              <li />
             </AnimationElement>
-            <AnimationElement order={4.8}>
-              <li className={s.bar} />
+            <AnimationElement className={s.bar} order={4.8}>
+              <li />
             </AnimationElement>
-            <AnimationElement order={5.8}>
-              <li className={s.bar} />
+            <AnimationElement className={s.bar} order={5.8}>
+              <li />
             </AnimationElement>
-            <AnimationElement order={6.8}>
-              <li className={s.bar} />
+            <AnimationElement className={s.bar} order={6.8}>
+              <li />
             </AnimationElement>
-            <AnimationElement order={7.8}>
-              <li className={s.bar} />
+            <AnimationElement className={s.bar} order={7.8}>
+              <li />
             </AnimationElement>
           </ul>
           <div className={s.timelineHeaders}>
