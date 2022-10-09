@@ -18,7 +18,7 @@ export class ViewController {
 
   async nextHandler(req: Request, res: Response) {
     const parsedUrl = parse(req.url, true);
-    const serverSideProps = { dataFromController: '123' };
+    const serverSideProps = { dataFromController: Math.random() };
 
     await this.viewService
       .getNextServer()

@@ -10,6 +10,22 @@ const Home: NextPage<{ data: string }> = (props) => {
   );
 };
 
+// export const getStaticProps = async (sProps) => {
+//   console.log('sProps', sProps)
+//
+//   return {
+//     props: {},
+//     revalidate: 60 * 5,
+//   }
+// }
+//
+// export const getStaticPaths = async () => {
+//   return {
+//     paths: [],
+//     fallback: 'blocking',
+//   }
+// }
+
 // Home.getInitialProps = ({ query }) => {
 //   return {
 //     data: `some initial props including query params and controller data: ${JSON.stringify(
