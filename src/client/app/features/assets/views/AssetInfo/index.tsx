@@ -12,13 +12,22 @@ type AssetInfoProps = {
   postalCode: string,
   line1: string,
   line2: string,
+  description: string,
+  statusLabel: string,
+  name: string,
+  symbol: string,
+  legalDocuments: string[],
   infoItems: { type: string, value: string }[],
 }
 
-export const AssetInfo = ({ title, line1, line2, city, state, postalCode, country, infoItems }: AssetInfoProps) => {
+export const AssetInfo = ({ title, line1, line2, city, state, postalCode, country, description, statusLabel, name, symbol, legalDocuments, infoItems }: AssetInfoProps) => {
   return (
     <div className={s.info}>
       <h2 className={s.title}>{title}</h2>
+      <div>{description} ({statusLabel})</div>
+      <div className={s.addressLine1}>
+        {name} {symbol}
+      </div>
       <div className={s.addressLine1}>
         {line1} {line2}
       </div>
@@ -32,7 +41,7 @@ export const AssetInfo = ({ title, line1, line2, city, state, postalCode, countr
           </li>
         ))}
       </ul>
-      <Tabs />
+      <Tabs legalDocuments={legalDocuments} />
     </div>
   );
 };

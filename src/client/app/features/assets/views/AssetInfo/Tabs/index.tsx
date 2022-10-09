@@ -35,7 +35,7 @@ function TabPanel(props: TabPanelProps) {
   );
 }
 
-export default function BasicTabs() {
+export default function BasicTabs({ legalDocuments }: { legalDocuments: string[] }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -68,7 +68,7 @@ export default function BasicTabs() {
         <TabFinancials />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <TabDocuments />
+        <TabDocuments legalDocuments={legalDocuments} />
       </TabPanel>
       <TabPanel value={value} index={3}>
         <TabBuyingProcess />

@@ -10,13 +10,13 @@ import {useEffect} from "react";
 import {useRouter} from "next/router";
 
 export const AssetsDetailsController = () => {
-  const { id } = useRouter().query;
+  const id = parseInt(useRouter().query.id as string);
   const $asset = useAtomValue(assetDetailsModel.$asset)
   const $doLoadAsset = useSetAtom(assetDetailsModel.$doLoadAsset)
 
   useEffect(() => {
     if (id) {
-      $doLoadAsset({ id: parseInt(id as string) })
+      $doLoadAsset({ id })
     }
   }, [id])
 
@@ -39,6 +39,11 @@ export const AssetsDetailsController = () => {
   }
   const assetInfo = {
     title: $asset.title,
+    name: $asset.name,
+    symbol: $asset.symbol,
+    description: $asset.description,
+    legalDocuments: $asset.legalDocuments,
+    statusLabel: T.status[$asset.status],
     country: 'string',
     city: 'string',
     state: 'string',
@@ -68,5 +73,13 @@ export const AssetsDetailsController = () => {
   )
 }
 
+
 const T = {
+  status: {
+    1: 'Upcoming',
+    2: 'Active',
+    3: 'Sold Out',
+    4: 'Disabled',
+  }
 }
+

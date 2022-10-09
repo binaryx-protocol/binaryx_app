@@ -1,8 +1,18 @@
 import s from "./styles.module.scss";
-import React, { FC } from "react";
+import React from "react";
 
-const TabDocuments: FC = () => {
-  return <div className={s.tabDocuments}>TabDocuments</div>;
+const TabDocuments = ({ legalDocuments }: { legalDocuments: string[] }) => {
+  return <div className={s.tabDocuments}>
+    {
+      legalDocuments ?
+        legalDocuments.map(url => (
+          <div>
+            <a href={url} target="_blank">{url}</a>
+          </div>
+        ))
+        : '-'
+    }
+  </div>;
 };
 
 export default TabDocuments;
