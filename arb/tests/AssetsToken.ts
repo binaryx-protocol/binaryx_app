@@ -3,6 +3,7 @@ import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import * as chai from "chai";
 import { expect } from "chai";
 import { ethers, web3 } from "hardhat";
+import {onlyFields} from "../../packages/onlyFields";
 
 // const bnChai = require('bn-chai');
 // const BN = require('bn.js');
@@ -174,15 +175,3 @@ describe("AssetsToken", function () {
     });
   });
 });
-
-const onlyFields = <T>(object): T => Object.entries(object).reduce((acc, [name, value]) => {
-  if (!name.match(/^[0-9]+$/)) {
-    acc[name] = value;
-  }
-  if (isObject(acc[name])) {
-    acc[name] = onlyFields(acc[name])
-  }
-  return acc;
-}, {}) as T
-
-const isObject = (v) => typeof v === 'object' && Object.keys(v).some(k => !k.match(/^[0-9]+$/))

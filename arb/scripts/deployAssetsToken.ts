@@ -21,7 +21,7 @@ const main = async () => {
     const assetsToken = await AssetsToken.deploy()
     await assetsToken.deployed()
 
-    console.log(`manager deployed to ${assetsToken.address}`)
+    console.log(`assetsToken deployed to ${assetsToken.address}`)
 }
 
 main()

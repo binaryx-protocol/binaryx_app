@@ -4,16 +4,25 @@ import {InvestBlock} from "../views/InvestBlock";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import {AssetInfo} from "../views/AssetInfo";
+import * as assetDetailsModel from "../models/assetDetailsModel";
+import {useAtomValue, useSetAtom} from "jotai";
+import {useEffect} from "react";
+import {useRouter} from "next/router";
 
 export const AssetsDetailsController = () => {
-  // const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
-  // const $doCreateAsset = useSetAtom(assetsModel.$doCreateAsset)
-  // const $doActivate = useSetAtom(assetsModel.$doActivate)
-  // const $doDisable = useSetAtom(assetsModel.$doDisable)
-  // const $walletConnect = useSetAtom(metaMaskModel.$walletConnect)
-  // const $walletReadiness = useAtomValue(metaMaskModel.$walletReadiness)
-  // const $metaMaskState = useAtomValue(metaMaskModel.$metaMaskState)
-  // const blockchainAssets = $blockchainAssets.state === 'hasData' ? $blockchainAssets.data : null
+  const { id } = useRouter().query;
+  const $asset = useAtomValue(assetDetailsModel.$asset)
+  const $doLoadAsset = useSetAtom(assetDetailsModel.$doLoadAsset)
+
+  useEffect(() => {
+    if (id) {
+      $doLoadAsset({ id: parseInt(id as string) })
+    }
+  }, [id])
+
+  if (!$asset) {
+    return null // TODO skeleton loader
+  }
 
   const images = [
     { src: 'https://ns.clubmed.com/dream/RESORTS_3T___4T/Asie_et_Ocean_indien/Bali/169573-1lng9n8nnf-swhr.jpg' },
@@ -26,10 +35,10 @@ export const AssetsDetailsController = () => {
     progress: 23,
     irr: 4,
     coc: 15,
-    id: 5,
+    id,
   }
   const assetInfo = {
-    title: 'title',
+    title: $asset.title,
     country: 'string',
     city: 'string',
     state: 'string',

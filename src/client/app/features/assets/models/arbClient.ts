@@ -20,6 +20,10 @@ export const arbClient = {
   async setStatus($rpcConfig: RpcConfig, args: { id: number, status: number }) {
     return await this.getManagerSc($rpcConfig).setStatus(args.id, args.status)
   },
+  async getAsset($rpcConfig: RpcConfig, args: { id: number }): Promise<AssetInput> {
+    console.log('args.id', args.id)
+    return await this.getManagerSc($rpcConfig).getAsset(args.id)
+  },
   getManagerSc($rpcConfig) {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     const manager = new ethers.Contract($rpcConfig.assetsTokenAddress, assetsManagerAbi, provider);
