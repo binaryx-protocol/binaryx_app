@@ -7,9 +7,7 @@ import TeamBlock from './components/TeamBlock';
 import NavSocialImage from './components/NavSocialImage';
 import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
 import lottie from 'lottie-web';
-import anim1 from './animations/B1.json';
 import classNames from 'classnames';
-import DescriptionBlock from './components/DescriptionBlock';
 import getCookie from 'utils/getCookie';
 import getUrlParams from 'utils/getUrlParams';
 import SchemaSection from './components/WebAssetSection/SchemaSection';
@@ -24,6 +22,12 @@ const HomePage: FC = () => {
   const container1 = useRef<HTMLDivElement>(null);
   const container2 = useRef<HTMLDivElement>(null);
   const container3 = useRef<HTMLDivElement>(null);
+  const getContainers = () => [
+    container0.current,
+    container1.current,
+    container2.current,
+    container3.current
+  ];
   const animations = useRef([]);
   const section1Ref = useRef<HTMLDivElement>(null);
   const section2Ref = useRef<HTMLDivElement>(null);
@@ -55,6 +59,7 @@ const HomePage: FC = () => {
   const [isBgOverlayDark, setIsBgOverlayDark] = useState(false);
   const [FF_LP_PARALLAX, setFF_LP_PARALLAX] = useState(true);
   const [windowHeight, setWindowHeight] = useState(null);
+  const isVideoAnimation = false;
 
   useEffect(() => {
     setTimeout(() => {
@@ -223,9 +228,54 @@ const HomePage: FC = () => {
 
     // const scrollPercent = getSectionScrollPercent();
 
+
     if (section && animation) {
       const scrollPosition = getScrollPosition();
       const scrollPercent = ((scrollPosition - offsetTop) * 100) / height;
+
+      const maxFrames = animation.totalFrames;
+      let frame = (maxFrames * scrollPercent) / 100;
+
+      if (frame > maxFrames) {
+        frame = maxFrames;
+      }
+
+      animation.goToAndStop(frame, true);
+    }
+  };
+
+  const playVideoAnimation = (animationIndex: number) => {
+    if (animationIndex === 0) {
+      return;
+    }
+    const animation = animations.current[animationIndex];
+    const section = getSections()[animationIndex - 1];
+    const offsetTop = section?.offsetTop;
+    const height = section?.clientHeight;
+
+    // const scrollPercent = getSectionScrollPercent();
+
+
+    // if (section && animation) {
+    if (section) {
+      const scrollPosition = getScrollPosition();
+      const scrollPercent = ((scrollPosition - offsetTop) * 100) / height;
+
+
+      if (isVideoAnimation) {
+        const container = getContainers()[animationIndex];
+        const duration = container.firstChild.duration;
+        let currentTime = (duration * scrollPercent / 100).toFixed(2);
+        console.log("currentTime", currentTime);
+        if (currentTime > duration) {
+          currentTime = duration;
+        }
+        if (currentTime && !isNaN(currentTime) && container.firstChild.currentTime !== currentTime) {
+          container.firstChild.currentTime = currentTime;
+        }
+
+        return;
+      }
 
       const maxFrames = animation.totalFrames;
       let frame = (maxFrames * scrollPercent) / 100;
@@ -304,6 +354,10 @@ const HomePage: FC = () => {
       });
   }
 
+  function initVideoAnimations() {
+    // container0.current
+  }
+
   function changeWheelSpeed(container, speedY) {
     if (FF_LP_PARALLAX) {
       return;
@@ -371,7 +425,88 @@ const HomePage: FC = () => {
   useEffect(() => {
     const main = document.getElementById('main');
     changeWheelSpeed(main, 0.1);
-    initAnimations(true);
+
+    if (isVideoAnimation) {
+      console.log("isVideoAnimation", isVideoAnimation);
+
+      let seeked = false;
+      let lastProgress = 0;
+      const progressDelta = 0.1;
+
+      function lerp(x, y, t) {
+        return (1 - t) * x + t * y;
+      }
+
+      // function scrollPlay(){
+      //   if (!seeked) {
+      //     return;
+      //   }
+      //   seeked = false;
+      //   const currentSection = getCurrentSection();
+      //   // const currentSection = 1;
+      //   const container = getContainers()[currentSection];
+      //   // const container = container1.current;
+      //   const video = container.firstChild;
+      //   const duration = video.duration;
+      //   const scrollProgress = scrollTop / 1000;
+      //   const scrollPercent = getSectionScrollPercent(currentSection - 1);
+      //   const progress =
+      //     Math.round(
+      //       // Smoothly approach scroll progress instead of instantly
+      //       lerp(lastProgress, scrollProgress, progressDelta) * 100
+      //     ) / 100;
+      //   let currentTime = progress;
+      //   // let currentTime = (duration * scrollPercent / 100).toFixed(2);
+      //   // console.log(`scrollPercent: ${scrollPercent} \n currentTime: ${currentTime} \n duration: ${duration} \n currentSection: ${currentSection}`);
+      //   // console.log("frame container", container);
+      //   if (currentTime > duration) {
+      //     currentTime = duration;
+      //   }
+      //   // console.log("container.firstChild.currentTime", typeof container.firstChild.currentTime, typeof currentTime);
+      //   // if (container.firstChild.currentTime.toString() !== currentTime) {
+      //   console.log(`currentTime ${currentTime}`);
+      //   // if (currentTime && !isNaN(currentTime) && container.firstChild.currentTime !== currentTime) {
+      //   //   container.firstChild.currentTime = currentTime;
+      //   // }
+      //   // }
+      //   if (currentTime) {
+      //     video.currentTime = currentTime;
+      //     lastProgress = currentTime;
+      //     console.log(`currentTime ${currentTime}`);
+      //   }
+      //   window.requestAnimationFrame(scrollPlay);
+      //
+      //   container1.current.addEventListener("seeked", () => {
+      //     console.log("seeked");
+      //     seeked = true;
+      //   });
+      // }
+
+      function scrollPlayV2(){
+        var frameNumber = 0, // start video at frame 0
+          // lower numbers = faster playback
+          playbackConst = 500;
+        const vid = document.getElementById("video2");
+        var frameNumber  = window.pageYOffset/playbackConst;
+        vid.currentTime  = frameNumber;
+        // window.requestAnimationFrame(scrollPlay);
+      }
+
+      // window.requestAnimationFrame(scrollPlayV2);
+    } else {
+      initAnimations(true);
+
+      function play(){
+        // const scrollPosition = getScrollPosition();
+        const currentSection = getCurrentSection();
+        playAnimation(currentSection);
+        // let frameNumber  = window.pageYOffset/playbackConst;
+        // vid.currentTime  = frameNumber;
+        window.requestAnimationFrame(play);
+      }
+
+      window.requestAnimationFrame(play);
+    }
 
     getScrollObject().addEventListener('scroll', (event) => {
       event.preventDefault();
@@ -413,7 +548,7 @@ const HomePage: FC = () => {
 
       updateContainerStyles();
 
-      playAnimation(currentSection);
+      // playAnimation(currentSection);
       console.log('playAnimation + ' + currentSection);
 
       updateOverlayStyles();
@@ -430,6 +565,41 @@ const HomePage: FC = () => {
 
     updateContainerStyles();
   }, []);
+
+  // useEffect(function testVideo() {
+  //   const scroller = document.querySelector("body");
+  //   const video = document.querySelector("#video2");
+  //   let seeked = false;
+  //
+  //   let lastProgress = 0;
+  //   const progressDelta = 0.1;
+  //
+  //   function lerp(x, y, t) {
+  //     return (1 - t) * x + t * y;
+  //   }
+  //
+  //   (function tick() {
+  //     requestAnimationFrame(tick);
+  //     if (!seeked) return;
+  //     seeked = false;
+  //     const { scrollHeight, clientHeight, scrollTop } = scroller;
+  //     const maxScroll = 10000; //scrollHeight - clientHeight;
+  //     const scrollProgress = scrollTop / Math.max(maxScroll, 1);
+  //     // Round to 2 decimal places
+  //     const progress =
+  //       Math.round(
+  //         // Smoothly approach scroll progress instead of instantly
+  //         lerp(lastProgress, scrollProgress, progressDelta) * 100
+  //       ) / 100;
+  //     video.currentTime = video.duration * progress;
+  //     lastProgress = progress;
+  //   })();
+  //
+  //   video.addEventListener("seeked", () => {
+  //     seeked = true;
+  //   });
+  //   video.currentTime = 0.001;
+  // }, []);
 
   function updateOverlayStyles() {
     const overlay = document.getElementById('bg-overlay');
@@ -563,12 +733,28 @@ const HomePage: FC = () => {
         className={s.containerAnimation}
         ref={container0}
         id="animationContainer0"
-      />
+      >
+        {isVideoAnimation && (
+          <video preload autoPlay muted>
+            <source src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B1.mp4" type='video/mp4' />
+          </video>
+        )}
+      </div>
       <div
         className={s.containerAnimation}
         ref={container1}
         id="animationContainer1"
-      />
+      >
+
+        {isVideoAnimation && (
+          <video muted playsInline id="video2" src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B2.mp4">
+            {/*<source type="video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;" src="https://www.apple.com/media/us/mac-pro/2013/16C1b6b5-1d91-4fef-891e-ff2fc1c1bb58/videos/macpro_main_desktop.mp4" />*/}
+            {/*<source src="https://www.apple.com/media/us/mac-pro/2013/16C1b6b5-1d91-4fef-891e-ff2fc1c1bb58/videos/macpro_main_desktop.mp4" type='video/mp4' />*/}
+            {/*<source src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B2.mp4" type='video/mp4' />*/}
+            {/*<source src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B2.webm" type='video/webm' />*/}
+          </video>
+        )}
+      </div>
       <div
         className={s.containerAnimation}
         ref={container2}
