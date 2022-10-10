@@ -21,7 +21,6 @@ export const arbClient = {
     return await this.getManagerSc($rpcConfig).setStatus(args.id, args.status)
   },
   async getAsset($rpcConfig: RpcConfig, args: { id: number }): Promise<AssetInput> {
-    console.log('args.id', args.id)
     return await this.getManagerSc($rpcConfig).getAsset(args.id)
   },
   getManagerSc($rpcConfig) {

@@ -15,7 +15,7 @@ export const AssetsDetailsController = () => {
   const $doLoadAsset = useSetAtom(assetDetailsModel.$doLoadAsset)
 
   useEffect(() => {
-    if (id) {
+    if (Number.isInteger(id)) {
       $doLoadAsset({ id })
     }
   }, [id])

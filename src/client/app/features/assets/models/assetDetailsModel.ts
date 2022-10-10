@@ -7,11 +7,9 @@ import {arbClient} from "./arbClient";
 export const $asset = atom(null) as PrimitiveAtom<AssetInput | null>;
 
 export const $doLoadAsset = atom(null, async (get,set, args: { id: number }) => {
-  await new Promise((r) => setTimeout(r, 3000))
-
   await waitFor(() => {
     return get(metaMaskModel.$walletReadiness) === 'ready' && !!get(rpcConfigModel.$rpcConfig)
-  })
+  }, 3)
 
   // TODO - move provider into RPC
   const $rpcConfig = get(rpcConfigModel.$rpcConfig)
@@ -22,8 +20,8 @@ export const $doLoadAsset = atom(null, async (get,set, args: { id: number }) => 
   set($asset, result);
 })
 
-export const waitFor = async (selector: () => boolean) => {
-  return new Promise((resolve) => {
+export const waitFor = async (selector: () => boolean, timeout: number = 30) => {
+  return new Promise((resolve, reject) => {
     const interval = setInterval(() => {
       const result = selector()
       // @ts-ignore
@@ -32,5 +30,9 @@ export const waitFor = async (selector: () => boolean) => {
         resolve(result);
       }
     }, 5);
+    setTimeout(() => {
+      reject()
+      clearInterval(interval);
+    }, timeout * 1000)
   });
 };

@@ -6,7 +6,7 @@ const TabDocuments = ({ legalDocuments }: { legalDocuments: string[] }) => {
     {
       legalDocuments ?
         legalDocuments.map(url => (
-          <div>
+          <div key={url}>
             <a href={url} target="_blank">{url}</a>
           </div>
         ))
