@@ -1,6 +1,6 @@
 import {RpcConfig} from "../../../models/rpcConfigModel";
 import {ethers} from "ethers";
-import {AssetAddress, AssetInput, AssetStatuses} from "../types";
+import {AssetAddress, BcAsset, AssetStatuses} from "../types";
 import {assetsManagerAbi} from "./abis";
 
 
@@ -20,7 +20,7 @@ export const arbClient = {
   async setStatus($rpcConfig: RpcConfig, args: { id: number, status: number }) {
     return await this.getManagerSc($rpcConfig).setStatus(args.id, args.status)
   },
-  async getAsset($rpcConfig: RpcConfig, args: { id: number }): Promise<AssetInput> {
+  async getAsset($rpcConfig: RpcConfig, args: { id: number }): Promise<BcAsset> {
     return await this.getManagerSc($rpcConfig).getAsset(args.id)
   },
   getManagerSc($rpcConfig) {

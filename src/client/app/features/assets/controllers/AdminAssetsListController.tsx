@@ -5,6 +5,7 @@ import * as metaMaskModel from "../../../models/metaMaskModel";
 import * as assetsModel from "../models/assetsListModel";
 import {useAtomValue, useSetAtom} from "jotai";
 import {AssetStatuses} from "../types";
+import {paths} from "../../../../../../pkg/paths";
 
 export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
@@ -78,6 +79,12 @@ export const AdminAssetsListController = () => {
                         Disable
                       </Button>
                   }
+                  {' '}
+                  <Link href={paths.showAsset({ id: i })} passHref>
+                    <Button variant="outlined" size="small">
+                      Invest
+                    </Button>
+                  </Link>
                 </div>
               </div>
             ))

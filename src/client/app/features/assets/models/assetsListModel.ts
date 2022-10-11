@@ -5,7 +5,7 @@ import {ethers} from "ethers";
 import {assetsManagerAbi} from "./abis";
 import * as rpcConfigModel from "../../../models/rpcConfigModel";
 import {RpcConfig} from "../../../models/rpcConfigModel";
-import {AssetAddress, AssetInput, AssetStatuses} from "../types";
+import {AssetAddress, BcAsset, AssetStatuses} from "../types";
 import {arbClient} from "./arbClient";
 
 const assetAddressAttrs  = (): AssetAddress => ({
@@ -17,7 +17,7 @@ const assetAddressAttrs  = (): AssetAddress => ({
   addressLine2: '5th floor',
 })
 
-const defaultAttrs = (): AssetInput => ({
+const defaultAttrs = (): BcAsset => ({
   name: 'Name',
   symbol: 'SYM',
   title: 'Title ' + Math.random(),

@@ -1,10 +1,11 @@
 import {atom, PrimitiveAtom} from 'jotai'
 import * as metaMaskModel from "../../../models/metaMaskModel";
 import * as rpcConfigModel from "../../../models/rpcConfigModel";
-import {AssetInput} from "../types";
+import {BcAsset} from "../types";
 import {arbClient} from "./arbClient";
+import {waitFor} from "../../../utils/pageLoadUtiils";
 
-export const $asset = atom(null) as PrimitiveAtom<AssetInput | null>;
+export const $asset = atom(null) as PrimitiveAtom<BcAsset | null>;
 
 export const $doLoadAsset = atom(null, async (get,set, args: { id: number }) => {
   await waitFor(() => {
@@ -19,20 +20,3 @@ export const $doLoadAsset = atom(null, async (get,set, args: { id: number }) => 
   );
   set($asset, result);
 })
-
-export const waitFor = async (selector: () => boolean, timeout: number = 30) => {
-  return new Promise((resolve, reject) => {
-    const interval = setInterval(() => {
-      const result = selector()
-      // @ts-ignore
-      if (!!result) {
-        clearInterval(interval);
-        resolve(result);
-      }
-    }, 5);
-    setTimeout(() => {
-      reject()
-      clearInterval(interval);
-    }, timeout * 1000)
-  });
-};

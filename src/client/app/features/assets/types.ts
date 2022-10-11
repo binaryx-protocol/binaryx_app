@@ -1,3 +1,4 @@
+import {UiForm, UiFormChangeArgs} from "../../../../../pkg/formType";
 
 export enum AssetStatuses {
   'upcoming' = 1,
@@ -15,7 +16,7 @@ export type AssetAddress = {
   addressLine2: string
 }
 
-export type AssetInput = {
+export type BcAsset = {
   name: string,
   symbol: string,
   title: string,
@@ -24,4 +25,21 @@ export type AssetInput = {
   originalOwner: string,
   legalDocuments: string[],
   // propertyAddress: AssetAddress,
+}
+
+export type UiNewAssetFormValues = {
+  name: string,
+  symbol: string,
+  title: string,
+  description: string,
+  status: number,
+  originalOwner: string,
+  legalDocuments: string,
+  // propertyAddress: AssetAddress,
+}
+
+export type UiNewAssetForm = UiForm<UiNewAssetFormValues>
+export type UiNewAssetFormChangeArgs = {
+  values: UiNewAssetForm['values'],
+  touches: UiNewAssetForm['touches'],
 }
