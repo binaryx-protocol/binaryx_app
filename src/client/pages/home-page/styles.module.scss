@@ -457,9 +457,10 @@
 
   .teamGallery {
     display: grid;
-    grid-template-columns: repeat(4, 320px);
+    // grid-template-columns: repeat(4, 320px);
+    grid-template-columns: repeat(4, 250px);
     overflow: scroll hidden;
-    scroll-snap-type: x proximity;
+    // scroll-snap-type: x proximity;
     gap: 10px;
 
     &::-webkit-scrollbar {

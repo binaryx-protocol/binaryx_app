@@ -1,9 +1,9 @@
 import { FC, useEffect, useRef } from 'react';
 import classNames from 'classnames';
-import DescriptionBlock from '../DescriptionBlock';
-import s from './styles.module.scss';
 import AnimationElement from '../AnimationElement';
-import YearBlock from '../YearBlock';
+import YearBlock from './YearBlock';
+import s from './styles.module.scss';
+import DescriptionBlock from './DescriptionBlock';
 
 type Props = {
   className?: string;

@@ -44,7 +44,7 @@
   grid-column: 1/8;
 
   @media screen and (max-width: 768px) {
-    grid-template-columns: repeat(6, 170px);
+    grid-template-columns: repeat(6, 150px);
     top: 79px;
     left: unset;
     width: 2px;
@@ -107,7 +107,8 @@
     // grid-template-rows: 75px 80px 160px 80px;
     grid-template-rows: 80px 80px 160px 1px;
     width: fit-content;
-    margin-right: 20px;
+    // margin-right: 20px;
+    margin-right: 10px;
 
     &:last-child {
       margin-right: 0;
