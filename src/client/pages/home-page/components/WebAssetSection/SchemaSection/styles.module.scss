@@ -172,21 +172,33 @@
       background: linear-gradient(90deg, rgba(0, 174, 255, 0.3) 0%, rgba(30, 54, 71, 0) 100%);
     }
   }
-}
 
-.legendMenuSecond {
-  &:hover {
-    background: linear-gradient(90deg, rgba(159, 67, 255, 0.3) 0%, rgba(120, 0, 255, 0) 100%);
+  .legendMenuSecond {
+    &:hover {
+      background: linear-gradient(90deg, rgba(159, 67, 255, 0.3) 0%, rgba(120, 0, 255, 0) 100%);
+    }
+  }
+
+  .legendMenuThird {
+    border: none !important;
+    border-radius: 0 0 0 7px;
+
+    &:hover {
+      background: linear-gradient(90deg, rgba(0, 255, 238, 0.3) 0%, rgba(0, 174, 255, 0) 100%);
+    }
   }
 }
 
-.legendMenuThird {
-  border: none !important;
-  border-radius: 0 0 0 7px;
+.legendMenuFirstSelected {
+  background: linear-gradient(90deg, rgba(0, 174, 255, 0.3) 0%, rgba(30, 54, 71, 0) 100%);
+}
 
-  &:hover {
-    background: linear-gradient(90deg, rgba(0, 255, 238, 0.3) 0%, rgba(0, 174, 255, 0) 100%);
-  }
+.legendMenuSecondSelected {
+  background: linear-gradient(90deg, rgba(159, 67, 255, 0.3) 0%, rgba(120, 0, 255, 0) 100%);
+}
+
+.legendMenuThirdSelected {
+  background: linear-gradient(90deg, rgba(0, 255, 238, 0.3) 0%, rgba(0, 174, 255, 0) 100%);
 }
 
 .purchasingPropertyTokens,

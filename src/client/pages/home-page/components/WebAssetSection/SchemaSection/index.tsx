@@ -70,6 +70,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               }
               order={6}
               className={classNames(s.legendMenuFirst)}
+              id={'legendMenuFirst'}
             >
               <p>1. Property Tokenization</p>
             </AnimationElement>
@@ -88,6 +89,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               }
               order={14}
               className={classNames(s.legendMenuSecond)}
+              id={'legendMenuSecond'}
             >
               <p>2. Purchasing Property Tokens</p>
             </AnimationElement>
@@ -100,6 +102,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               }
               order={26}
               className={classNames(s.legendMenuThird)}
+              id={'legendMenuThird'}
             >
               <p>3. Claiming Rewards from Rent</p>
             </AnimationElement>
@@ -120,6 +123,20 @@ const SchemaSection: FC<Props> = ({ className }) => {
           <WebAssetBlock
             id="propertyTokenization"
             className={classNames(s.propertyTokenization)}
+            onMouseEnter={() => {
+              onMouseEnter('legendMenuFirst', s.legendMenuFirstSelected);
+              onMouseEnter(
+                'propertyTokenization',
+                s.propertyTokenizationSelected,
+              );
+            }}
+            onMouseLeave={() => {
+              onMouseLeave('legendMenuFirst', s.legendMenuFirstSelected);
+              onMouseLeave(
+                'propertyTokenization',
+                s.propertyTokenizationSelected,
+              );
+            }}
             animationOrder={6}
           >
             <WebAssetCard
@@ -152,6 +169,20 @@ const SchemaSection: FC<Props> = ({ className }) => {
           <WebAssetBlock
             id="purchasingPropertyTokens"
             className={s.purchasingPropertyTokens}
+            onMouseEnter={() => {
+              onMouseEnter('legendMenuSecond', s.legendMenuSecondSelected);
+              onMouseEnter(
+                'purchasingPropertyTokens',
+                s.purchasingPropertyTokensSelected,
+              );
+            }}
+            onMouseLeave={() => {
+              onMouseLeave('legendMenuSecond', s.legendMenuSecondSelected);
+              onMouseLeave(
+                'purchasingPropertyTokens',
+                s.purchasingPropertyTokensSelected,
+              );
+            }}
             animationOrder={14}
           >
             <WebAssetCard
@@ -210,6 +241,14 @@ const SchemaSection: FC<Props> = ({ className }) => {
           <WebAssetBlock
             id="claimingRewards"
             className={s.claimingRewards}
+            onMouseEnter={() => {
+              onMouseEnter('legendMenuThird', s.legendMenuThirdSelected);
+              onMouseEnter('claimingRewards', s.claimingRewardsSelected);
+            }}
+            onMouseLeave={() => {
+              onMouseLeave('legendMenuThird', s.legendMenuThirdSelected);
+              onMouseLeave('claimingRewards', s.claimingRewardsSelected);
+            }}
             animationOrder={26}
           >
             <WebAssetCard
