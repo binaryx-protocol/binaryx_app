@@ -18,15 +18,16 @@ const HomePage: FC = () => {
   const [sectionHeight, setSectionHeight] = useState(
     typeof window !== 'undefined' ? window.innerHeight : null,
   );
-  const container0 = useRef<HTMLDivElement>(null);
   const container1 = useRef<HTMLDivElement>(null);
   const container2 = useRef<HTMLDivElement>(null);
+  const container2_2 = useRef<HTMLDivElement>(null);
   const container3 = useRef<HTMLDivElement>(null);
+  const container4 = useRef<HTMLDivElement>(null);
   const getContainers = () => [
-    container0.current,
     container1.current,
     container2.current,
-    container3.current
+    container3.current,
+    container4.current
   ];
   const animations = useRef([]);
   const section1Ref = useRef<HTMLDivElement>(null);
@@ -189,7 +190,7 @@ const HomePage: FC = () => {
 
     for (const [index, section] of getSections().entries() as any) {
       const scrollPosition = getScrollPosition();
-      if (scrollPosition <= 10) {
+      if (scrollPosition <= 2) {
         return 0;
       }
       if (scrollPosition < section?.clientHeight + section?.offsetTop) {
@@ -288,58 +289,41 @@ const HomePage: FC = () => {
     }
   };
 
-  function initAnimations(lazyLoad = true) {
-    // animations.current[0] = initAnimation({
-    //   animationData: anim1,
-    //   container: document.getElementById('animationContainer0'),
-    //   autoplay: true,
-    // });
-    if (!lazyLoad) {
-      import('./animations/index').then((module) => {
-        // animations.current[0] = initAnimation({
-        //   animationData: module.B1,
-        //   container: document.getElementById('animationContainer0'),
-        //   autoplay: true,
-        //   renderer: 'canvas'
-        // });
-        console.log('module', module);
-        animations.current[1] = initAnimation({
-          animationData: module.B2,
-          container: document.getElementById('animationContainer1'),
-          autoplay: false,
-          renderer: 'svg',
-        });
-      });
-
-      return;
-    }
-
+  function initAnimations() {
     import('./animations/B1.json').then((module) => {
       const anim1 = module.default;
       animations.current[0] = initAnimation({
         animationData: anim1,
-        container: document.getElementById('animationContainer0'),
+        container: document.getElementById('animationContainer1'),
         autoplay: true,
         renderer: 'svg',
       });
     });
 
-    import('./animations/B2.json')
+    import('./animations/B2_1.json')
       .then((module) => {
         const anim2 = module.default;
         animations.current[1] = initAnimation({
           animationData: anim2,
-          container: document.getElementById('animationContainer1'),
+          container: document.getElementById('animationContainer2'),
           autoplay: false,
           renderer: 'svg',
         });
       })
-      .then(() => import('./animations/B3.json'))
+      .then(() => import('./animations/B2_2.json'))
+      .then((module) => {
+        const anim3 = module.default;
+        animations.current[4] = initAnimation({
+          animationData: anim3,
+          container: document.getElementById('animationContainer2_2'),
+          autoplay: false,
+        });
+      }).then(() => import('./animations/B3.json'))
       .then((module) => {
         const anim3 = module.default;
         animations.current[2] = initAnimation({
           animationData: anim3,
-          container: document.getElementById('animationContainer2'),
+          container: document.getElementById('animationContainer3'),
           autoplay: false,
         });
       })
@@ -348,7 +332,7 @@ const HomePage: FC = () => {
         const anim4 = module.default;
         animations.current[3] = initAnimation({
           animationData: anim4,
-          container: document.getElementById('animationContainer3'),
+          container: document.getElementById('animationContainer4'),
           autoplay: false,
         });
       });
@@ -500,6 +484,7 @@ const HomePage: FC = () => {
         // const scrollPosition = getScrollPosition();
         const currentSection = getCurrentSection();
         playAnimation(currentSection);
+        updateContainerStyles();
         // let frameNumber  = window.pageYOffset/playbackConst;
         // vid.currentTime  = frameNumber;
         window.requestAnimationFrame(play);
@@ -546,7 +531,7 @@ const HomePage: FC = () => {
         joinWaitListBtnRef.current.classList.remove(s.btnJoinWaitlistNext);
       }
 
-      updateContainerStyles();
+      // updateContainerStyles();
 
       // playAnimation(currentSection);
       console.log('playAnimation + ' + currentSection);
@@ -626,28 +611,38 @@ const HomePage: FC = () => {
 
   function updateContainerStyles() {
     const currentSection = getCurrentSection();
+    // const scrollPosition = getScrollPosition()
+    const scrollPercent = getSectionScrollPercent(currentSection - 1);
+    console.log(`updateContainerStyles scrollPercent ${scrollPercent} window.scrollY ${window.scrollY}`);
 
-    if (container0.current) {
-      container0.current.style.display =
-        currentSection === 0 ? 'block' : 'none';
+    if (container1.current) {
       container1.current.style.display =
-        currentSection === 1 ? 'block' : 'none';
+        currentSection === 0 ? 'block' : 'none';
       container2.current.style.display =
-        currentSection === 2 ? 'block' : 'none';
+        currentSection === 1 ? 'block' : 'none';
+      container2_2.current.style.display =
+        currentSection === 1 && window.scrollY < window.innerHeight / 1.7 ? 'block' : 'none';
+      container2_2.current.style.transform = `translateY(${
+        currentSection === 1 ? 1 - window.scrollY * 1.8 : 0
+      }px`;
+      // container2_2.current.style.opacity =
+      //   currentSection === 1 ? 1 - scrollPercent / 100 : 1;
       container3.current.style.display =
+        currentSection === 2 ? 'block' : 'none';
+      container4.current.style.display =
         currentSection === 3 ? 'block' : 'none';
     }
   }
 
   function updateContainerStylesV2(currentSection) {
-    if (container0.current) {
-      container0.current.style.display =
-        currentSection === 0 ? 'block' : 'none';
+    if (container1.current) {
       container1.current.style.display =
-        currentSection === 1 ? 'block' : 'none';
+        currentSection === 0 ? 'block' : 'none';
       container2.current.style.display =
-        currentSection === 2 ? 'block' : 'none';
+        currentSection === 1 ? 'block' : 'none';
       container3.current.style.display =
+        currentSection === 2 ? 'block' : 'none';
+      container4.current.style.display =
         currentSection === 3 ? 'block' : 'none';
     }
   }
@@ -731,8 +726,8 @@ const HomePage: FC = () => {
       />
       <div
         className={s.containerAnimation}
-        ref={container0}
-        id="animationContainer0"
+        ref={container1}
+        id="animationContainer1"
       >
         {isVideoAnimation && (
           <video preload autoPlay muted>
@@ -742,8 +737,13 @@ const HomePage: FC = () => {
       </div>
       <div
         className={s.containerAnimation}
-        ref={container1}
-        id="animationContainer1"
+        ref={container2_2}
+        id="animationContainer2_2"
+      />
+      <div
+        className={s.containerAnimation}
+        ref={container2}
+        id="animationContainer2"
       >
 
         {isVideoAnimation && (
@@ -757,13 +757,13 @@ const HomePage: FC = () => {
       </div>
       <div
         className={s.containerAnimation}
-        ref={container2}
-        id="animationContainer2"
+        ref={container3}
+        id="animationContainer3"
       />
       <div
         className={s.containerAnimation}
-        ref={container3}
-        id="animationContainer3"
+        ref={container4}
+        id="animationContainer4"
       />
       {/*<main id="main" className={classNames(s.heroPage, { [s.heroPageParallax]: FF_LP_PARALLAX})} style={{ height: FF_LP_PARALLAX ? "auto" : "100vh", overflow: FF_LP_PARALLAX ? "auto" : "scroll" }}>*/}
       <main
