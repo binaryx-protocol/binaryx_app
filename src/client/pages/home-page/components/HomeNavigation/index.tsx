@@ -15,7 +15,7 @@ const LandingNav: FC<Props> = ({ isDark }) => {
       <Container maxWidth="xl" className={s.container}>
         <div
           className={s.logoWrap}
-          onClick={() => (window as any).fullpageObject.moveTo(1)}
+          onClick={() => (window as Window).scrollTo(0, 0)}
         >
           <img
             src={`https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_white_horizontal.svg`}
