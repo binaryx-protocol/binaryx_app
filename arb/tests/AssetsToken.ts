@@ -1,14 +1,7 @@
-import { time, loadFixture } from "@nomicfoundation/hardhat-network-helpers";
-import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
-import * as chai from "chai";
+import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
-import { ethers, web3 } from "hardhat";
-import {onlyFields} from "../../packages/onlyFields";
-
-// const bnChai = require('bn-chai');
-// const BN = require('bn.js');
-// // chai.use(bnChai(BN));
-// chai.use(bnChai(web3.utils.BN));
+import { ethers } from "hardhat";
+import {onlyFields} from "../../pkg/onlyFields";
 
 enum AssetStatuses {
   'upcoming' = 1,
