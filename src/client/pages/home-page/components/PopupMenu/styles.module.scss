@@ -12,7 +12,7 @@
 .popupMenu {
   display: grid;
   place-content: center;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   text-align: center;
@@ -128,7 +128,7 @@
     padding-left: 15px;
     letter-spacing: 0.0125em;
   }
-  
+
   .btnToSubscribe {
     height: 60px;
     border: none;
@@ -147,7 +147,7 @@
       font-size: var(--font-size_small);
     }
   }
-  
+
   .privacyPolicy {
     font-size: 10px;
     color: var(--font-color_gray-dark);
