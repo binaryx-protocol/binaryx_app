@@ -1,4 +1,4 @@
-import {UiForm, UiFormChangeArgs} from "../../../../../pkg/formType";
+import {UiForm} from "../../../../../pkg/formType";
 
 export enum AssetStatuses {
   'upcoming' = 1,
