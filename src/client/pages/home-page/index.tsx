@@ -308,7 +308,9 @@ const HomePage: FC = () => {
   };
 
   function initAnimations() {
-    import('./animations/B1.json').then((module) => {
+    const isMobile = window.innerWidth < 768;
+    console.log("isMobile", isMobile);
+    import(`./animations/${isMobile ? "BM1.json" : "B1.json"}`).then((module) => {
       const anim1 = module.default;
       animations.current[0] = initAnimation({
         animationData: anim1,
@@ -318,7 +320,7 @@ const HomePage: FC = () => {
       });
     });
 
-    import('./animations/B2_1.json')
+    import(`./animations/${isMobile ? "BM2_1.json" : "B2_1.json"}`)
       .then((module) => {
         const anim2 = module.default;
         animations.current[1] = initAnimation({
@@ -328,7 +330,7 @@ const HomePage: FC = () => {
           renderer: 'svg',
         });
       })
-      .then(() => import('./animations/B2_2.json'))
+      .then(() => import(`./animations/${isMobile ? "BM2_2.json" : "B2_2.json"}`))
       .then((module) => {
         const anim3 = module.default;
         animations.current[4] = initAnimation({
@@ -336,7 +338,7 @@ const HomePage: FC = () => {
           container: document.getElementById('animationContainer2_2'),
           autoplay: false,
         });
-      }).then(() => import('./animations/B3.json'))
+      }).then(() => import(`./animations/${isMobile ? "BM3.json" : "B3.json"}`))
       .then((module) => {
         const anim3 = module.default;
         animations.current[2] = initAnimation({
@@ -345,7 +347,7 @@ const HomePage: FC = () => {
           autoplay: false,
         });
       })
-      .then(() => import('./animations/B4.json'))
+      .then(() => import(`./animations/${isMobile ? "BM4.json" : "B4.json"}`))
       .then((module) => {
         const anim4 = module.default;
         animations.current[3] = initAnimation({
