@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC } from 'react';
 import s from './styles.module.scss';
 import { Container } from '@mui/material';
