@@ -441,13 +441,17 @@
 }
 
 .footerNavSocial a {
-  opacity: .8;
+  opacity: 1;
   transition: all .3s ease;
 }
 
 .footerNavSocial a:hover {
   opacity: 1;
-  scale: 1.1;
+
+  svg path {
+    fill: #00B4CC;
+  }
+  //scale: 1.1;
 }
 
 .footerBottomSection {

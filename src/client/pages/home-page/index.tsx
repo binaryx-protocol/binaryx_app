@@ -14,6 +14,10 @@ import SchemaSection from './components/WebAssetSection/SchemaSection';
 import TimelineSection from './components/TimelineSection';
 import BgOverlay from './components/BgOverlay';
 import PopupMenu from './components/PopupMenu';
+import IconDiscord from './components/NavSocialImage/IconDiscord';
+import IconTwitter from './components/NavSocialImage/IconTwitter';
+import IconLinkedIn from './components/NavSocialImage/IconLinkedIn';
+import IconTelegram from './components/NavSocialImage/IconTelegram';
 
 const GoogleAnalytics = () => {
   return (
@@ -1008,39 +1012,19 @@ const HomePage: FC = () => {
                   <nav className={s.footerNavSocial}>
                     <NavSocialImage
                       link={'https://discord.gg/kJqgYh7G9G'}
-                      src={
-                        'https://cdn-icons-png.flaticon.com/512/5968/5968898.png'
-                      }
-                      alt={'discord'}
-                      className={s.footerNavSocialImage}
-                      width={40}
+                      icon={<IconDiscord className={s.footerNavSocialImage} width={55} height={40} fill="#335367" />}
                     />
                     <NavSocialImage
                       link={'https://twitter.com/realBinaryx'}
-                      src={
-                        'https://cdn-icons-png.flaticon.com/512/733/733635.png'
-                      }
-                      alt={'twitter'}
-                      className={s.footerNavSocialImage}
-                      width={40}
+                      icon={<IconTwitter className={s.footerNavSocialImage} width={45} height={41} fill="#335367" />}
                     />
                     <NavSocialImage
                       link={'https://www.linkedin.com/company/realbinaryx/'}
-                      src={
-                        'https://cdn-icons-png.flaticon.com/512/61/61109.png'
-                      }
-                      alt={'linkedIn'}
-                      className={s.footerNavSocialImage}
-                      width={40}
+                      icon={<IconLinkedIn className={s.footerNavSocialImage} width={45} height={44} fill="#335367" />}
                     />
                     <NavSocialImage
                       link={'https://t.me/binaryxnews'}
-                      src={
-                        'https://cdn-icons-png.flaticon.com/512/2111/2111710.png'
-                      }
-                      alt={'telegram'}
-                      className={s.footerNavSocialImage}
-                      width={40}
+                      icon={<IconTelegram className={s.footerNavSocialImage} width={43} height={43} fill="#335367" />}
                     />
                   </nav>
                 </div>
