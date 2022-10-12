@@ -502,6 +502,12 @@ const HomePage: FC = () => {
       function play(){
         // const scrollPosition = getScrollPosition();
         const currentSection = getCurrentSection();
+        const scrollPercent = getSectionScrollPercent(currentSection - 1);
+        const progressBarFiller = document.getElementById("progress-bar-filler");
+        const percent = (scrollPercent / 3) + ((currentSection - 1) * 33.333);
+        console.log(" percent", percent);
+        progressBarFiller.style.width = percent + "%";
+
         playAnimation(currentSection);
         updateContainerStyles();
         // let frameNumber  = window.pageYOffset/playbackConst;
@@ -741,6 +747,14 @@ const HomePage: FC = () => {
         isBgOverlayActive={bgOverlay.isBgOverlayActive}
         isBgAnimationActive={bgOverlay.isBgAnimationActive}
       />
+      <div className={s.progressBar}>
+        <span id="progress-bar-filler" className={s.progressBarFiller} />
+        <ul className={s.progressBarItems}>
+          <li className={s.progressBarItem} />
+          <li className={s.progressBarItem} />
+          <li className={s.progressBarItem} />
+        </ul>
+      </div>
       <div
         className={s.containerAnimation}
         ref={container1}
