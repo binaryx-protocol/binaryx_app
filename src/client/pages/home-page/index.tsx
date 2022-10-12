@@ -512,6 +512,11 @@ const HomePage: FC = () => {
       window.requestAnimationFrame(play);
     }
 
+    window.addEventListener('resize', () => {
+      lottie.destroy();
+      initAnimations();
+    });
+
     getScrollObject().addEventListener('scroll', (event) => {
       event.preventDefault();
       event.stopPropagation();
