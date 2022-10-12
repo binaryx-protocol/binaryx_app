@@ -2,7 +2,7 @@
   max-width: var(--max-width_desktop);
   margin: auto;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     max-width: var(--max-width_mobile);
   }
 }
@@ -28,7 +28,7 @@
   grid-gap: 25px;
   grid-template-columns: repeat(3, 1fr);
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     grid-gap: 10px;
     grid-template-columns: 250px;
     // margin-bottom: 7px;
@@ -39,7 +39,7 @@
   position: absolute;
   pointer-events: none;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     display: none;
   }
 }
@@ -78,7 +78,7 @@
 .vectorsMobile {
   display: none;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     display: block;
     position: absolute;
     pointer-events: none;
@@ -228,7 +228,7 @@
     border-image-source: linear-gradient(180deg, #0097F1 0%, rgba(0, 151, 241, 0) 100%);
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     grid-row: 1;
     grid-gap: 0;
     place-items: center;
@@ -303,7 +303,7 @@
     }
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     grid-column: unset;
   }
 }
@@ -319,7 +319,7 @@
   position: absolute;
   font-size: 12px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     rotate: -90deg;
   }
 }
@@ -328,7 +328,7 @@
   top: 10%;
   left: 27.5%;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     top: unset;
     left: unset;
     bottom: 250%;
@@ -340,7 +340,7 @@
   top: 7%;
   right: 25.5%;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     top: unset;
     bottom: 250%;
     right: -12%;
@@ -351,7 +351,7 @@
   top: 43%;
   right: 23.8%;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     top: unset;
     bottom: 250%;
     right: -27%;
@@ -389,7 +389,7 @@
   font-weight: 400;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .assetsTitle {
     font-size: 24px;
     font-weight: 300;

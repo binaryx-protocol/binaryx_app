@@ -82,6 +82,7 @@ const HomePage: FC = () => {
   const [FF_LP_PARALLAX, setFF_LP_PARALLAX] = useState(true);
   const [windowHeight, setWindowHeight] = useState(null);
   const isVideoAnimation = false;
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
 
   useEffect(() => {
     setTimeout(() => {
@@ -1012,22 +1013,23 @@ const HomePage: FC = () => {
                   <nav className={s.footerNavSocial}>
                     <NavSocialImage
                       link={'https://discord.gg/kJqgYh7G9G'}
-                      icon={<IconDiscord className={s.footerNavSocialImage} width={55} height={40} fill="#335367" />}
+                      icon={<IconDiscord className={s.footerNavSocialImage} width={isMobile ? 36 : 55} height={isMobile ? 26 : 40} fill="#335367" />}
                     />
                     <NavSocialImage
                       link={'https://twitter.com/realBinaryx'}
-                      icon={<IconTwitter className={s.footerNavSocialImage} width={45} height={41} fill="#335367" />}
+                      icon={<IconTwitter className={s.footerNavSocialImage} width={isMobile ? 34 : 45} height={isMobile ? 25 : 41} fill="#335367" />}
                     />
                     <NavSocialImage
                       link={'https://www.linkedin.com/company/realbinaryx/'}
-                      icon={<IconLinkedIn className={s.footerNavSocialImage} width={45} height={44} fill="#335367" />}
+                      icon={<IconLinkedIn className={s.footerNavSocialImage} width={isMobile ? 32 : 45} height={isMobile ? 29 : 44} fill="#335367" />}
                     />
                     <NavSocialImage
                       link={'https://t.me/binaryxnews'}
-                      icon={<IconTelegram className={s.footerNavSocialImage} width={43} height={43} fill="#335367" />}
+                      icon={<IconTelegram className={s.footerNavSocialImage} width={isMobile ? 30 : 43} height={isMobile ? 30 : 43} fill="#335367" />}
                     />
                   </nav>
                 </div>
+                <hr className={s.footerDivider} />
                 <nav className={s.footerBottomSection}>
                   <div
                     className={classNames(

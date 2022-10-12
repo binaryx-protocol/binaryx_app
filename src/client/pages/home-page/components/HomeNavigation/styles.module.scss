@@ -5,7 +5,8 @@
   height: 95px;
   width: 100%;
   position: fixed;
-  z-index: 30;
+  z-index: 19;
+  padding: 0 24px;
 
   //background-color: rgba(255, 255, 255, 0.95);
   background-color: transparent;
@@ -37,7 +38,7 @@
 .logo {
   max-width: 180px;
   opacity: 0;
-  transition: opacity 1s;
+  transition: opacity 0.1s;
   cursor: pointer;
 
   &:nth-child(2) {
@@ -60,6 +61,7 @@
   text-decoration: none;
   font-size: 1.1em;
   transition: 0.3s ease;
+
 }
 
 .navLinks a:hover {
@@ -70,6 +72,13 @@
   display: flex;
   justify-content: space-between;
   width: 170px;
+
+
+  @media (max-width: 768px) {
+    svg {
+      transform: scale(0.75);
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {
