@@ -906,7 +906,7 @@ const HomePage: FC = () => {
                   socialLinkImage={
                     'https://cdn-icons-png.flaticon.com/512/61/61109.png'
                   }
-                  socialLink={'#'}
+                  socialLink={'https://www.linkedin.com/in/oleg-kurchenko'}
                   socialUserName={'oleg_kurchenko'}
                 />
                 <TeamBlock
@@ -918,7 +918,7 @@ const HomePage: FC = () => {
                   socialLinkImage={
                     'https://cdn-icons-png.flaticon.com/512/61/61109.png'
                   }
-                  socialLink={'#'}
+                  socialLink={'https://www.linkedin.com/in/dmitriy-green'}
                   socialUserName={'dmytro_zeleniy'}
                 />
                 <TeamBlock
@@ -930,7 +930,7 @@ const HomePage: FC = () => {
                   socialLinkImage={
                     'https://cdn-icons-png.flaticon.com/512/61/61109.png'
                   }
-                  socialLink={'#'}
+                  socialLink={'https://www.linkedin.com/in/dlizanets'}
                   socialUserName={'dmytro_lizanets'}
                 />
                 <TeamBlock
@@ -942,7 +942,7 @@ const HomePage: FC = () => {
                   socialLinkImage={
                     'https://cdn-icons-png.flaticon.com/512/61/61109.png'
                   }
-                  socialLink={'#'}
+                  socialLink={'https://www.linkedin.com/in/andrii-makaveli-b25259150/'}
                   socialUserName={'andriy_makaveli'}
                 />
               </div>

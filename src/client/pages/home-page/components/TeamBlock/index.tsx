@@ -29,9 +29,9 @@ const TeamBlock: FC<Props> = ({
       <div className={s.socialLinkBlock}>
         <img className={s.socialLinkImage} src={socialLinkImage} />
         <span className={s.socialUsername}>
-          <Link className={s.socialLink} href={socialLink}>
+          <a className={s.socialLink} href={socialLink} target="_blank">
             /{socialUserName}
-          </Link>
+          </a>
         </span>
       </div>
     </div>
