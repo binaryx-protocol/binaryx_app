@@ -26,7 +26,7 @@
 .sectionsDark {
   background-color: var(--background-color_dark);
   position: relative;
-  z-index: 1;
+  z-index: 11;
 }
 
 .containerAnimation {
@@ -163,6 +163,8 @@
   display: grid;
   place-content: center flex-start;
   height: 100vh;
+  position: relative;
+  z-index: 10;
 
   @media (max-width: 768px) {
     height: 80vh;
@@ -226,6 +228,8 @@
   backdrop-filter: blur(10px);
   cursor: pointer;
   transition: background 1s, margin 0.5s;
+  z-index: 10;
+  //position: relative;
 
   @media (max-width: 768px) {
     margin-bottom: 10px;

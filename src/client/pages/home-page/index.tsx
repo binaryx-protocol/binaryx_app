@@ -15,6 +15,22 @@ import TimelineSection from './components/TimelineSection';
 import BgOverlay from './components/BgOverlay';
 import PopupMenu from './components/PopupMenu';
 
+const GoogleAnalytics = () => {
+  return (
+    <>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HFY1S4EYJS"></script>
+      <script dangerouslySetInnerHTML={{ __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-HFY1S4EYJS');
+        ` }}
+      />
+    </>
+  )
+};
+
 const HomePage: FC = () => {
   const [sectionHeight, setSectionHeight] = useState(
     typeof window !== 'undefined' ? window.innerHeight : null,
@@ -82,7 +98,7 @@ const HomePage: FC = () => {
 
     setTimeout(() => {
       const height = FF_LP_PARALLAX
-        ? (window.innerHeight - 1) * 7
+        ? (window.innerHeight - 1) * 5
         : window.innerHeight - 1;
       setSectionHeight(height);
 
@@ -792,7 +808,7 @@ const HomePage: FC = () => {
                 >
                   Join waitlist
                 </button>
-                <button type="submit" className={s.joinCommunity}>
+                <button type="submit" className={s.joinCommunity} onClick={handleJoinWaitListButtonClick}>
                   Join our community
                 </button>
               </div>
@@ -1054,6 +1070,7 @@ const HomePage: FC = () => {
             </div>
           </section>
         </div>
+        <GoogleAnalytics />
       </main>
     </>
   );
