@@ -211,11 +211,11 @@
 .infoSection {
   display: flex;
   height: 60px;
-  //overflow: hidden;
+  overflow: hidden;
 
   @media (max-width: 768px) {
     position: fixed;
-    bottom: 35px;
+    bottom: 27px;
     left: 0;
     right: 0;
     padding: 0 15px;;
@@ -261,7 +261,7 @@
   right: 15px;
   color: #000;
   //margin-top: 58px;
-  transform: translateY(65px);
+  transform: translateY(55px);
 
   @media (min-width: 769px) {
     display: none;
