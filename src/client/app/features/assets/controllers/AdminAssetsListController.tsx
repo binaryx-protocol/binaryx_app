@@ -9,7 +9,6 @@ import {paths} from "../../../../../../pkg/paths";
 
 export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
-  const $doCreateAsset = useSetAtom(assetsModel.$doCreateAsset)
   const $doActivate = useSetAtom(assetsModel.$doActivate)
   const $doDisable = useSetAtom(assetsModel.$doDisable)
   const $walletConnect = useSetAtom(metaMaskModel.$walletConnect)
@@ -45,13 +44,15 @@ export const AdminAssetsListController = () => {
           <div>
             <Link href={'/'} passHref>
               <Button variant="outlined">
-                Back
+                Home
               </Button>
             </Link>
             {' '}
-            <Button variant="outlined" onClick={$doCreateAsset}>
-              Create
-            </Button>
+            <Link href={paths.newAsset()} passHref>
+              <Button variant="outlined">
+                ADD
+              </Button>
+            </Link>
           </div>
         </div>
 

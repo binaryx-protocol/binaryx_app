@@ -11,6 +11,7 @@ import {
 import {arbClient} from "./arbClient";
 import {waitFor} from "../../../utils/pageLoadUtiils";
 import {assetValidator} from "./assetValidator";
+import {SyntheticEvent} from "react";
 
 const assetAddressAttrs  = (): AssetAddress => ({
   country: 'UA',
@@ -40,21 +41,29 @@ export const $form = atom<UiNewAssetForm>({
   isSubmitTouched: false,
 })
 
-export const $doCreateAsset = atom(null, async (get) => {
+export const $doCreateAsset = atom(null, async (get, set, form: UiNewAssetForm) => {
   await waitFor(() => {
     return get(metaMaskModel.$walletReadiness) === 'ready' && !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
   const $rpcConfig = get(rpcConfigModel.$rpcConfig)
+  const formValues = {
+    ...form.values,
+    originalOwner: get(metaMaskModel.$metaMaskState).accounts[0]
+  }
   await arbClient.createAsset(
     $rpcConfig,
-    defaultAttrs()
+    formValues
   );
 })
 
 export const $onFormChange = atom(null, (get, set, args: UiNewAssetFormChangeArgs) => {
   set($doUpdateFormValues, args)
   set($doValidateFormValues, args)
+})
+
+export const $onMount = atom(null, (get, set, args: UiNewAssetFormChangeArgs) => {
+  set($doValidateFormValues, get($form))
 })
 
 export const $doUpdateFormValues = atom(null, (get, set, args: UiNewAssetFormChangeArgs) => {
@@ -80,15 +89,13 @@ export const $doValidateFormValues = atom(null, (get, set, args: UiNewAssetFormC
     })
 })
 
-export const $onSubmit = atom(null, (get, set, e) => {
+export const $onSubmit = atom(null, (get, set, e: SyntheticEvent) => {
+  set($form, f => ({ ...f, isSubmitTouched: true }))
+
   const form = get($form)
-  const newForm = {
-    ...form,
-    isSubmitTouched: true,
+  if (form.isValid) {
+    set($doCreateAsset, form)
   }
-  set($form, newForm)
-  set($doValidateFormValues, form)
-  // @ts-ignore
   e.preventDefault();
   return false
 })

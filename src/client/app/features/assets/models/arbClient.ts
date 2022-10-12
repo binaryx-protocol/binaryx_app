@@ -1,17 +1,17 @@
 import {RpcConfig} from "../../../models/rpcConfigModel";
 import {ethers} from "ethers";
-import {AssetAddress, BcAsset, AssetStatuses} from "../types";
+import { BcAsset, UiNewAssetFormValues} from "../types";
 import {assetsManagerAbi} from "./abis";
 
 
 export const arbClient = {
-  async createAsset($rpcConfig: RpcConfig, args: any): Promise<void> {
-    console.log('args', args)
-    args.originalOwner = '0x70997970C51812dc3A010C7d01b50e0d17dc79C8'
-    const argsArr = Object.values(args)
-    console.log('argsArr', argsArr)
+  async createAsset($rpcConfig: RpcConfig, formValues: UiNewAssetFormValues): Promise<void> {
+    const payload = {
+      ...formValues,
+      legalDocuments: formValues.legalDocuments.split(',')
+    }
     await this.getManagerSc($rpcConfig).createAsset(
-      ...argsArr
+      ...Object.values(payload)
     )
   },
   async listAssets($rpcConfig: RpcConfig) {

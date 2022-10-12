@@ -1,31 +1,40 @@
-import s from './AssetsDetailsController.module.scss'
-import { Gallery } from "../views/Gallery";
-import {InvestBlock} from "../views/InvestBlock";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import {AssetInfo} from "../views/AssetInfo";
-import * as assetDetailsModel from "../models/assetDetailsModel";
+import s from './NewAssetController.module.scss'
 import * as newAssetModel from "../models/newAssetModel";
 import {useAtomValue, useSetAtom} from "jotai";
-import {useEffect} from "react";
-import {useRouter} from "next/router";
 import {AssetFormFields} from "../views/AssetFormFields";
 import Button from "@mui/material/Button";
+import {useEffect} from "react";
+import Link from "next/link";
+import {paths} from "../../../../../../pkg/paths";
 
 export const NewAssetController = () => {
   const form = useAtomValue(newAssetModel.$form)
   const onFormChange = useSetAtom(newAssetModel.$onFormChange)
   const onSubmit = useSetAtom(newAssetModel.$onSubmit)
-  // const $doLoadAsset = useSetAtom(assetDetailsModel.$doLoadAsset)
+  const onMount = useSetAtom(newAssetModel.$onMount)
+
+  useEffect(onMount, [])
 
   return (
-    <div>
-      <form noValidate onSubmit={onSubmit}>
-        <AssetFormFields form={form} onChange={onFormChange} />
-        <Button variant="outlined" type="submit">
-          Create
-        </Button>
-      </form>
+    <div className={s.page}>
+      <div className={s.container}>
+        <div className={s.formNav}>
+          <Link href={paths.listAssets()} passHref>
+            <Button variant="outlined">
+              Back
+            </Button>
+          </Link>
+        </div>
+        <form noValidate onSubmit={onSubmit}>
+          <AssetFormFields form={form} onChange={onFormChange} />
+
+          <div className={s.formActions}>
+            <Button variant="contained" type="submit" size="large">
+              Create
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }
