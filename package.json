@@ -44,6 +44,7 @@
     "classnames": "^2.3.1",
     "commander": "^7.0.0",
     "cookie-parser": "^1.4.5",
+    "elegant-validator": "^1.1.1",
     "ethers": "^5.7.1",
     "fullpage.js": "^4.0.11",
     "google-auth-library": "^7.0.4",

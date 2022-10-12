@@ -1,4 +1,5 @@
 // NOT USED: this is just for PoC
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";

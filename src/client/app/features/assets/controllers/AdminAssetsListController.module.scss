@@ -1,0 +1,39 @@
+.crudTopNav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+
+  h1{
+    margin: 0;
+  }
+}
+
+.container{
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 0 10px;
+}
+
+.header{
+  border-bottom: 1px solid #eee;
+}
+
+.headerNav{
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.crudList{
+  display: grid;
+  grid-template-columns: 25% 25% 25%;
+  grid-gap: 10px;
+}
+
+.crudListItem{
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 10px;
+}
