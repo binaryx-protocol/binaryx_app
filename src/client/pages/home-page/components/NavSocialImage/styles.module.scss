@@ -1,0 +1,10 @@
+.navSocialImage {
+  opacity: .8;
+  transition: all .3s;
+
+  &:hover {
+    opacity: 1;
+    scale: 1.1;
+  }
+}
+

@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import s from './styles.module.scss';
 
 type Props = {
   link: string;
@@ -9,7 +10,7 @@ type Props = {
 };
 
 const NavSocialImage: FC<Props> = (props) => (
-  <a href={props.link} target="_blank">
+  <a className={s.navSocialImage} href={props.link} target="_blank">
     <img
       width={props.width}
       src={props.src}

@@ -8,7 +8,7 @@ type Props = {
 
 const YearBlock: FC<Props> = ({ animationOrder, year }) => (
   <div style={{ '--order': animationOrder } as any} className={s.yearBlock}>
-    <h2 className={s.title}>{year}</h2>
+    <span className={s.title}>{year}</span>
   </div>
 );
 

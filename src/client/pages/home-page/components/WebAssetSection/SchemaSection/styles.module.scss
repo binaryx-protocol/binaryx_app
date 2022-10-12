@@ -17,6 +17,10 @@
   max-width: 100%;
   overflow-x: hidden;
   //background-color: var(--background-color_dark);
+
+  @media screen and (max-height: 736px) {
+    place-content: flex-end center;
+  }
 }
 
 .webAssetsContainer {
@@ -27,11 +31,13 @@
   @media screen and (max-width: 768px) {
     grid-gap: 10px;
     grid-template-columns: 250px;
+    // margin-bottom: 7px;
   }
 }
 
 .vectorsDesktop {
   position: absolute;
+  pointer-events: none;
 
   @media screen and (max-width: 768px) {
     display: none;
@@ -75,36 +81,63 @@
   @media screen and (max-width: 768px) {
     display: block;
     position: absolute;
+    pointer-events: none;
   }
 }
 
 .vector1Mobile {
   top: 26%;
   left: 28%;
+
+  @media screen and (max-height: 667px) {
+    top: 16%;
+    left: 29%;
+    scale: 1 0.8;
+  }
 }
 
 .vector2Mobile {
   bottom: -8%;
   left: 2%;
   scale: 1.1 0.83;
+
+  @media screen and (max-height: 667px) {
+    bottom: -50%;
+    left: 2%;
+    scale: 1.1 0.75;
+  }
 }
 
 .vector3Mobile {
   bottom: 6%;
   right: -14%;
   scale: 1.3 .8;
+
+  @media screen and (max-height: 667px) {
+    bottom: -2%;
+    right: -15%;
+    scale: 1.2 0.8;
+  }
 }
 
 .vector4Mobile {
   right: -8%;
   bottom: 23%;
   scale: 1.2 .8;
+
+  @media screen and (max-height: 667px) {
+    bottom: 15%;
+  }
 }
 
 .vector5Mobile {
   bottom: 36%;
   left: 50%;
   scale: .9 .77;
+
+  @media screen and (max-height: 667px) {
+    bottom: 33%;
+  }
 }
 
 .vector6Mobile {
@@ -143,21 +176,33 @@
       background: linear-gradient(90deg, rgba(0, 174, 255, 0.3) 0%, rgba(30, 54, 71, 0) 100%);
     }
   }
-}
 
-.legendMenuSecond {
-  &:hover {
-    background: linear-gradient(90deg, rgba(159, 67, 255, 0.3) 0%, rgba(120, 0, 255, 0) 100%);
+  .legendMenuSecond {
+    &:hover {
+      background: linear-gradient(90deg, rgba(159, 67, 255, 0.3) 0%, rgba(120, 0, 255, 0) 100%);
+    }
+  }
+
+  .legendMenuThird {
+    border: none !important;
+    border-radius: 0 0 0 7px;
+
+    &:hover {
+      background: linear-gradient(90deg, rgba(0, 255, 238, 0.3) 0%, rgba(0, 174, 255, 0) 100%);
+    }
   }
 }
 
-.legendMenuThird {
-  border: none !important;
-  border-radius: 0 0 0 7px;
+.legendMenuFirstSelected {
+  background: linear-gradient(90deg, rgba(0, 174, 255, 0.3) 0%, rgba(30, 54, 71, 0) 100%);
+}
 
-  &:hover {
-    background: linear-gradient(90deg, rgba(0, 255, 238, 0.3) 0%, rgba(0, 174, 255, 0) 100%);
-  }
+.legendMenuSecondSelected {
+  background: linear-gradient(90deg, rgba(159, 67, 255, 0.3) 0%, rgba(120, 0, 255, 0) 100%);
+}
+
+.legendMenuThirdSelected {
+  background: linear-gradient(90deg, rgba(0, 255, 238, 0.3) 0%, rgba(0, 174, 255, 0) 100%);
 }
 
 .purchasingPropertyTokens,
@@ -173,6 +218,7 @@
   grid-row: 2;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 15px;
+  transition: background .5s ease;
 
   .property,
   .propertyTokens {
@@ -190,12 +236,8 @@
 }
 
 .propertyTokenization.propertyTokenizationSelected {
-  background: linear-gradient(180deg, #0097F1 0%, rgba(0, 151, 241, 0) 100%),
-    linear-gradient(0deg, rgba(31, 80, 115, 0.5), rgba(31, 80, 115, 0.5));
-  border: 1px solid;
-  border-image-source: linear-gradient(180deg, #0097F1 0%, rgba(0, 151, 241, 0) 100%);
-  background-blend-mode: color;
-  transition: background 1s ease;
+  background: rgba(31, 80, 115, 0.5);
+  transition: background .5s ease;
 }
 
 .webAssets *::before {
@@ -221,6 +263,7 @@
   place-content: space-between;
   gap: 20px;
   grid-row: 1/3;
+  transition: background .5s ease;
 
   .propertyToken,
   .stablecoins,
@@ -233,12 +276,8 @@
 }
 
 .purchasingPropertyTokens.purchasingPropertyTokensSelected {
-  background: linear-gradient(0deg, rgba(61, 27, 99, 0.5), rgba(61, 27, 99, 0.5)),
-    linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
-  border: 1px solid;
-  border-image-source: linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
-  background-blend-mode: color;
-  transition: background 1s ease;
+  background: rgba(61, 27, 99, 0.5);
+  transition: background .5s ease;
 }
 
 .purchasingPropertyTokens div:first-child {
@@ -249,13 +288,14 @@
 .claimingRewards {
   display: block;
   grid-column: 1 / span 3;
+  transition: background .5s ease;
 
   .propertyRent {
-    width: 200px;
     border: 1px solid;
     border-image-source: linear-gradient(180deg, #00DD8D 0%, rgba(0, 181, 221, 0) 100%);
     background: linear-gradient(180deg, #00DD8D 0%, rgba(0, 181, 221, 0) 100%),
       linear-gradient(0deg, rgba(31, 91, 88, 0.5), rgba(31, 91, 88, 0.5));
+    left: 85px;
 
     @media screen and (max-width: 786px) {
       width: 100px;
@@ -269,11 +309,8 @@
 }
 
 .claimingRewards.claimingRewardsSelected {
-  background: linear-gradient(180deg, #00DD8D 0%, rgba(0, 181, 221, 0) 100%), linear-gradient(0deg, rgba(31, 91, 88, 0.5), rgba(31, 91, 88, 0.5));
-  border: 1px solid;
-  border-image-source: linear-gradient(180deg, #00DD8D 0%, rgba(0, 181, 221, 0) 100%);
-  background-blend-mode: color;
-  transition: background 1s ease;
+  background: rgba(31, 91, 88, 0.5);
+  transition: background .5s ease;
 }
 
 .rent,
@@ -289,7 +326,7 @@
 
 .rent {
   top: 10%;
-  left: 26%;
+  left: 27.5%;
 
   @media screen and (max-width: 768px) {
     top: unset;
@@ -340,26 +377,24 @@
   }
 }
 
+.binaryxMain img {
+  @media screen and (max-height: 667px) {
+    height: 60px;
+  }
+}
+
 .assetsTitle {
   font-size: var(--font-size_medium);
   text-align: center;
   font-weight: 400;
 }
 
-.assetsProperty {
-  display: block;
-  margin: 0 auto;
-  margin-top: 56px;
-  width: 850px;
-  height: 530px;
-}
-
 @media screen and (max-width: 768px) {
   .assetsTitle {
-    display: block;
     font-size: 24px;
     font-weight: 300;
     text-align: left;
+    margin-top: 0;
   }
 
   .purchasingPropertyTokens,
@@ -367,6 +402,10 @@
   .claimingRewards,
   .binaryxMarketplace {
     padding: 15px;
+
+    @media screen and (max-height: 667px) {
+      padding: 10px;
+    }
   }
 
   .webAssetsLegend {
@@ -379,6 +418,11 @@
     width: 160px;
     margin: 25px 0;
     left: 6%;
+
+    @media screen and (max-height: 667px) {
+      margin: 20px;
+      padding: 25px 0;
+    }
   }
 
   .binaryxMarketplace p {

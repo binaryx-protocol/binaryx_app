@@ -522,9 +522,22 @@
   }
 
   .teamGallery {
+    display: grid;
+    // grid-template-columns: repeat(4, 320px);
+    grid-template-columns: repeat(4, 250px);
     overflow: scroll hidden;
-    gap: 12px;
     padding-bottom: 14px;
+    // scroll-snap-type: x proximity;
+    gap: 10px;
+
+    &::-webkit-scrollbar {
+      height: 5px !important;
+      background-color: rgba(90, 90, 90, 0.5) !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(1, 221, 220, 1) !important;
+    }
   }
 
   // .ourTeamTitle {

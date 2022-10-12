@@ -8,14 +8,12 @@ type Props = {
 
 const DescriptionBlock: FC<Props> = ({ animationOrder, children }) => {
   return (
-    <>
-      <div
-        style={{ '--order': animationOrder } as any}
-        className={s.descriptionBlock}
-      >
-        <ul>{children}</ul>
-      </div>
-    </>
+    <div
+      style={{ '--order': animationOrder } as any}
+      className={s.descriptionBlock}
+    >
+      <ul>{children}</ul>
+    </div>
   );
 };
 

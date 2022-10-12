@@ -47,12 +47,18 @@
 }
 
 @media screen and (max-width: 768px) {
-  .teamBlock {
-    width: 260px;
-  }
+  // .teamBlock {
+  //   width: 320px;
+  //   scroll-snap-align: center;
+  // }
 
   .person {
-    width: auto;
-    height: 350px;
+    object-fit: contain;
+    // height: 350px;
+    height: 330px;
+  }
+
+  .personDescription {
+    margin-bottom: 5px;
   }
 }

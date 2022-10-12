@@ -13,6 +13,7 @@ import getUrlParams from 'utils/getUrlParams';
 import SchemaSection from './components/WebAssetSection/SchemaSection';
 import TimelineSection from './components/TimelineSection';
 import BgOverlay from './components/BgOverlay';
+import PopupMenu from './components/PopupMenu';
 
 const HomePage: FC = () => {
   const [sectionHeight, setSectionHeight] = useState(
@@ -700,11 +701,9 @@ const HomePage: FC = () => {
       });
   }
 
-  function handleJoinWaitListButtonClick() {
-    (window as any).fullpageObject.moveTo(
-      document.querySelectorAll('.section').length,
-    );
-  }
+  const [isShowing, setIsShowing] = useState(false);
+
+  const handleJoinWaitListButtonClick = () => setIsShowing(!isShowing);
 
   return (
     <>
@@ -755,6 +754,11 @@ const HomePage: FC = () => {
         ref={container4}
         id="animationContainer4"
       />
+      <PopupMenu
+        isShowing={isShowing}
+        setIsShowing={setIsShowing}
+        handleFormSubmit={handleFormSubmit}
+      />
       {/*<main id="main" className={classNames(s.heroPage, { [s.heroPageParallax]: FF_LP_PARALLAX})} style={{ height: FF_LP_PARALLAX ? "auto" : "100vh", overflow: FF_LP_PARALLAX ? "auto" : "scroll" }}>*/}
       <main
         id="main"
@@ -772,7 +776,7 @@ const HomePage: FC = () => {
             <div className={s.sectionContent} style={{ height: windowHeight }}>
               <h1 className={s.companyTitle}>
                 <span>
-                  <b style={{ color: 'rgba(0, 180, 204, 1)' }}>Binaryx</b>
+                  <b style={{ color: 'var(--font-color_blue-light)' }}>Binaryx</b>
                 </span>
                 <span className={s.companySubTitle}>Community-Powered</span>
                 <span className={s.companySubTitle}>
