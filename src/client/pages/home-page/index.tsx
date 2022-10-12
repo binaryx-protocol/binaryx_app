@@ -66,7 +66,6 @@ const HomePage: FC = () => {
     setTimeout(() => {
       setFF_LP_PARALLAX(getUrlParams().get('FF_LP_PARALLAX'));
       setWindowHeight(typeof window !== 'undefined' ? window.innerHeight : 800);
-      console.log('typeof window', typeof window);
     }, 0);
   }, []);
 
@@ -210,8 +209,6 @@ const HomePage: FC = () => {
     const height = section?.clientHeight;
     if (section) {
       const scrollPosition = window.scrollY;
-      // console.log(`getSectionScrollPercent sectionIndex: ${sectionIndex} section: ${section} scrollPosition: ${scrollPosition}`);
-
       return ((scrollPosition - offsetTop) * 100) / height;
     }
 
@@ -267,7 +264,6 @@ const HomePage: FC = () => {
         const container = getContainers()[animationIndex];
         const duration = container.firstChild.duration;
         let currentTime = (duration * scrollPercent / 100).toFixed(2);
-        console.log("currentTime", currentTime);
         if (currentTime > duration) {
           currentTime = duration;
         }
@@ -411,7 +407,6 @@ const HomePage: FC = () => {
     changeWheelSpeed(main, 0.1);
 
     if (isVideoAnimation) {
-      console.log("isVideoAnimation", isVideoAnimation);
 
       let seeked = false;
       let lastProgress = 0;
@@ -500,7 +495,6 @@ const HomePage: FC = () => {
       const sectionContentPrev = getSectionContents()[currentSection - 1];
       const sectionContentNext = getSectionContents()[currentSection];
       const scrollPercent = getSectionScrollPercent(currentSection - 1);
-      console.log("currentSection", currentSection);
       if (sectionContentPrev) {
         const opacity =
           scrollPercent > 90 ? 1 - (10 - (100 - scrollPercent)) / 10 : 1;
@@ -519,10 +513,8 @@ const HomePage: FC = () => {
 
       if (currentSection >= 4) {
         setIsBgOverlayDark(() => true);
-        console.log("setBgOverlay", true);
       } else if (currentSection <= 4) {
         setIsBgOverlayDark(() => false);
-        console.log("setBgOverlay", false);
       }
 
       if (window.scrollY > 500) {
@@ -534,7 +526,6 @@ const HomePage: FC = () => {
       // updateContainerStyles();
 
       // playAnimation(currentSection);
-      console.log('playAnimation + ' + currentSection);
 
       updateOverlayStyles();
 
@@ -613,7 +604,6 @@ const HomePage: FC = () => {
     const currentSection = getCurrentSection();
     // const scrollPosition = getScrollPosition()
     const scrollPercent = getSectionScrollPercent(currentSection - 1);
-    console.log(`updateContainerStyles scrollPercent ${scrollPercent} window.scrollY ${window.scrollY}`);
 
     if (container1.current) {
       container1.current.style.display =
