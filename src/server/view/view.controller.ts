@@ -16,6 +16,20 @@ export class ViewController {
       .render(req, res, parsedUrl.pathname, parsedUrl.query);
   }
 
+  async nextHandler(req: Request, res: Response) {
+    const parsedUrl = parse(req.url, true);
+    const serverSideProps = { dataFromController: Math.random() };
+
+    await this.viewService
+      .getNextServer()
+      .render(
+        req,
+        res,
+        parsedUrl.pathname,
+        Object.assign(parsedUrl.query, serverSideProps),
+      );
+  }
+
   @Get('/')
   public async showHomeTemp(@Req() req: Request, @Res() res: Response) {
     const parsedUrl = parse(req.url, true);
@@ -106,21 +120,6 @@ export class ViewController {
       );
   }
 
-  @Get('sandbox')
-  public async showSandbox(@Req() req: Request, @Res() res: Response) {
-    const parsedUrl = parse(req.url, true);
-    const serverSideProps = getPublicEnv();
-
-    await this.viewService
-      .getNextServer()
-      .render(
-        req,
-        res,
-        parsedUrl.pathname,
-        Object.assign(parsedUrl.query, serverSideProps),
-      );
-  }
-
   @Get('assets/:id')
   public async showAsset(@Req() req: Request, @Res() res: Response) {
     const parsedUrl = parse(req.url, true);
@@ -134,6 +133,26 @@ export class ViewController {
         parsedUrl.pathname,
         Object.assign(parsedUrl.query, serverSideProps),
       );
+  }
+
+  @Get('assets-v2')
+  public async listAssetsV2(@Req() req: Request, @Res() res: Response) {
+    this.nextHandler(req, res);
+  }
+
+  @Get('assets-v2/new')
+  public async newAssetV2(@Req() req: Request, @Res() res: Response) {
+    this.nextHandler(req, res);
+  }
+
+  @Get('assets-v2/:id/edit')
+  public async editAssetV2(@Req() req: Request, @Res() res: Response) {
+    this.nextHandler(req, res);
+  }
+
+  @Get('assets-v2/:id')
+  public async showAssetV2(@Req() req: Request, @Res() res: Response) {
+    this.nextHandler(req, res);
   }
 
   @UseGuards(JwtAuthGuard)

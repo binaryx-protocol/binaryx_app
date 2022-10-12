@@ -1,11 +1,11 @@
 import { NextPage } from 'next';
-import HomePage from './home-page';
+import {AdminAssetsListController} from "features/assets";
 
-const Home: NextPage<{ data: string }> = (props) => {
-  const { data } = props;
+const Assets: NextPage<any> = (props) => {
   return (
     <>
-      <HomePage /> {data}
+        {/*{JSON.stringify(props)}*/}
+        <AdminAssetsListController />
     </>
   );
 };
@@ -26,12 +26,11 @@ const Home: NextPage<{ data: string }> = (props) => {
 //   }
 // }
 
-// Home.getInitialProps = ({ query }) => {
+// Assets.getInitialProps = (iProps) => {
+//   console.log('iProps', iProps)
 //   return {
-//     data: `some initial props including query params and controller data: ${JSON.stringify(
-//       query,
-//     )}`,
-//   };
+//     query: iProps.query
+//   }
 // };
 
-export default Home;
+export default Assets;

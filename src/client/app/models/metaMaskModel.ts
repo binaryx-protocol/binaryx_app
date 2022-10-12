@@ -13,6 +13,7 @@ const KNOWN_CHAINS = {
 }
 
 type KnownChainId = keyof typeof KNOWN_CHAINS
+type WalletReadiness = 'init' | 'ready'
 
 type MetaMaskState = {
     accounts: AccountAddress[] | null
@@ -24,6 +25,14 @@ export const $metaMaskState = atom<MetaMaskState>({
     accounts: null,
     chainId: null,
     isConnected: null,
+})
+
+export const $walletReadiness = atom<WalletReadiness>((get) => {
+  const s = get($metaMaskState)
+  if (s.isConnected && s.accounts?.[0] && s.chainId) {
+    return 'ready'
+  }
+  return 'init'
 })
 
 export const $onBrowserInit = atom(
@@ -79,9 +88,9 @@ export const $walletConnect = atom(
 
             }
 
-            if (!isDoneAction('addBnrxAsset')) {
-                await ethereum.request({ method: 'wallet_watchAsset', params: rpcConfig.bnrxAsset })
-                    .then(() => completeAction('addBnrxAsset'))
+            if (!isDoneAction('addBnrxRootToken')) {
+                await ethereum.request({ method: 'wallet_watchAsset', params: rpcConfig.bnrxRootToken })
+                    .then(() => completeAction('addBnrxRootToken'))
                     .catch((err) => {
                         console.error(err);
                     });

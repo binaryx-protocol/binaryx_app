@@ -1,0 +1,50 @@
+.tabDetails {
+  display: block;
+}
+
+.title {
+}
+
+.investmentSummaryList {
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+
+.investmentSummaryListItem {
+  background: rgba(147, 131, 255, 0.2);
+  border-radius: 4px;
+  margin: 8px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  width: 192px;
+  height: 128px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.investmentSummaryListItemTitle {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin: 8px 0;
+}
+
+.investmentSummaryListItemValue {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  margin: 8px 0;
+}
+
+.description {
+  font-size: 1rem;
+}
