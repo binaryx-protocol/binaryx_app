@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { atom } from 'jotai'
 import * as metaMaskModel from "../../../models/metaMaskModel";
 import {loadable} from "jotai/utils";
