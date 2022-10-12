@@ -5,8 +5,14 @@
   border: 1px solid white;
   backdrop-filter: blur(10px);
   text-align: center;
-  padding: 5px 25px;
+  padding: 20px 25px;
+  width: 150px;
   border-radius: var(--border-radius_default);
+  
+  @media screen and (max-width: 768px) {
+    width: 140px;
+    padding: 5px 25px;
+  }
 }
 
 .yearBlock .title {

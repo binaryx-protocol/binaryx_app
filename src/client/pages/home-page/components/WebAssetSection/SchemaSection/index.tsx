@@ -53,7 +53,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
         <div ref={webAssetContainer} className={s.webAssetsContainer}>
           <WebAssetBlock
             className={classNames(s.webAssetsLegend)}
-            animationOrder={6}
+            animationOrder={4}
           >
             <AnimationElement
               onMouseEnter={() =>
@@ -68,8 +68,9 @@ const SchemaSection: FC<Props> = ({ className }) => {
                   s.propertyTokenizationSelected,
                 )
               }
-              order={8}
+              order={6}
               className={classNames(s.legendMenuFirst)}
+              id={'legendMenuFirst'}
             >
               <p>1. Property Tokenization</p>
             </AnimationElement>
@@ -86,8 +87,9 @@ const SchemaSection: FC<Props> = ({ className }) => {
                   s.purchasingPropertyTokensSelected,
                 )
               }
-              order={16}
+              order={14}
               className={classNames(s.legendMenuSecond)}
+              id={'legendMenuSecond'}
             >
               <p>2. Purchasing Property Tokens</p>
             </AnimationElement>
@@ -98,18 +100,19 @@ const SchemaSection: FC<Props> = ({ className }) => {
               onMouseLeave={() =>
                 onMouseLeave('claimingRewards', s.claimingRewardsSelected)
               }
-              order={28}
+              order={26}
               className={classNames(s.legendMenuThird)}
+              id={'legendMenuThird'}
             >
               <p>3. Claiming Rewards from Rent</p>
             </AnimationElement>
           </WebAssetBlock>
           <WebAssetBlock
             className={classNames(s.binaryxMarketplace)}
-            animationOrder={4}
+            animationOrder={2}
           >
             <WebAssetCard
-              animationOrder={2}
+              animationOrder={0}
               className={classNames(s.binaryxMain)}
               imageSrc={
                 'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/binaryx-logo.svg'
@@ -120,10 +123,24 @@ const SchemaSection: FC<Props> = ({ className }) => {
           <WebAssetBlock
             id="propertyTokenization"
             className={classNames(s.propertyTokenization)}
-            animationOrder={8}
+            onMouseEnter={() => {
+              onMouseEnter('legendMenuFirst', s.legendMenuFirstSelected);
+              onMouseEnter(
+                'propertyTokenization',
+                s.propertyTokenizationSelected,
+              );
+            }}
+            onMouseLeave={() => {
+              onMouseLeave('legendMenuFirst', s.legendMenuFirstSelected);
+              onMouseLeave(
+                'propertyTokenization',
+                s.propertyTokenizationSelected,
+              );
+            }}
+            animationOrder={6}
           >
             <WebAssetCard
-              animationOrder={10}
+              animationOrder={8}
               className={classNames(s.property)}
               imageSrc={
                 'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property.svg'
@@ -131,7 +148,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               imageDescription={'Property'}
             />
             <WebAssetCard
-              animationOrder={12}
+              animationOrder={10}
               className={classNames(s.propertyTokens)}
               imageSrc={
                 'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property-tokens.svg'
@@ -139,7 +156,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               imageDescription={'Property Tokens'}
             />
             <AnimationElement
-              order={14}
+              order={12}
               className={classNames(s.vector1Desktop, s.vectorsDesktop)}
             >
               <img src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-arrows/Vector-1.svg" />
@@ -152,10 +169,24 @@ const SchemaSection: FC<Props> = ({ className }) => {
           <WebAssetBlock
             id="purchasingPropertyTokens"
             className={s.purchasingPropertyTokens}
-            animationOrder={16}
+            onMouseEnter={() => {
+              onMouseEnter('legendMenuSecond', s.legendMenuSecondSelected);
+              onMouseEnter(
+                'purchasingPropertyTokens',
+                s.purchasingPropertyTokensSelected,
+              );
+            }}
+            onMouseLeave={() => {
+              onMouseLeave('legendMenuSecond', s.legendMenuSecondSelected);
+              onMouseLeave(
+                'purchasingPropertyTokens',
+                s.purchasingPropertyTokensSelected,
+              );
+            }}
+            animationOrder={14}
           >
             <WebAssetCard
-              animationOrder={18}
+              animationOrder={16}
               className={s.propertyToken}
               imageSrc={
                 'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/propety-token.svg'
@@ -163,7 +194,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               imageDescription={'Property Token'}
             />
             <WebAssetCard
-              animationOrder={20}
+              animationOrder={18}
               className={s.stablecoins}
               imageSrc={
                 'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/stablecoins.svg'
@@ -171,7 +202,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               imageDescription={'Stablecoins'}
             />
             <WebAssetCard
-              animationOrder={22}
+              animationOrder={20}
               className={s.users}
               imageSrc={
                 'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/users.svg'
@@ -179,13 +210,13 @@ const SchemaSection: FC<Props> = ({ className }) => {
               imageDescription={'Users'}
             />
             <AnimationElement
-              order={26}
+              order={24}
               className={classNames(s.vector2Desktop, s.vectorsDesktop)}
             >
               <img src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-arrows/Vector-2.svg" />
             </AnimationElement>
             <AnimationElement
-              order={24}
+              order={22}
               className={classNames(s.vector3Desktop, s.vectorsDesktop)}
             >
               <img src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-arrows/Vector-3.svg" />
@@ -210,39 +241,47 @@ const SchemaSection: FC<Props> = ({ className }) => {
           <WebAssetBlock
             id="claimingRewards"
             className={s.claimingRewards}
-            animationOrder={28}
+            onMouseEnter={() => {
+              onMouseEnter('legendMenuThird', s.legendMenuThirdSelected);
+              onMouseEnter('claimingRewards', s.claimingRewardsSelected);
+            }}
+            onMouseLeave={() => {
+              onMouseLeave('legendMenuThird', s.legendMenuThirdSelected);
+              onMouseLeave('claimingRewards', s.claimingRewardsSelected);
+            }}
+            animationOrder={26}
           >
             <WebAssetCard
-              animationOrder={30}
+              animationOrder={28}
               className={s.propertyRent}
               imageSrc={
                 'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property-rent.svg'
               }
               imageDescription={'Property Rent'}
             />
-            <AnimationElement order={34} className={s.rent}>
+            <AnimationElement order={32} className={s.rent}>
               <p>Rent Goes To Smart-Contact</p>
             </AnimationElement>
-            <AnimationElement order={38} className={s.claim}>
+            <AnimationElement order={36} className={s.claim}>
               <p>Claim</p>
             </AnimationElement>
-            <AnimationElement order={42} className={s.sentMoney}>
+            <AnimationElement order={40} className={s.sentMoney}>
               <p>Sent money</p>
             </AnimationElement>
             <AnimationElement
-              order={32}
+              order={30}
               className={classNames(s.vector4Desktop, s.vectorsDesktop)}
             >
               <img src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-arrows/Vector-4.svg" />
             </AnimationElement>
             <AnimationElement
-              order={40}
+              order={38}
               className={classNames(s.vector5Desktop, s.vectorsDesktop)}
             >
               <img src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-arrows/Vector-5.svg" />
             </AnimationElement>
             <AnimationElement
-              order={36}
+              order={34}
               className={classNames(s.vector6Desktop, s.vectorsDesktop)}
             >
               <img src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-arrows/Vector-6.svg" />

@@ -7,12 +7,16 @@ type Props = {
   children?: ReactChild | ReactChild[];
   animationOrder: number;
   id?: string;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 };
 
 const WebAssetBlock: FC<Props> = ({
   className,
   animationOrder,
   id,
+  onMouseEnter,
+  onMouseLeave,
   children,
 }) => {
   return (
@@ -20,6 +24,8 @@ const WebAssetBlock: FC<Props> = ({
       id={id}
       style={{ '--order': animationOrder } as any}
       className={classNames(s.webAssetBlock, className)}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {children}
     </div>

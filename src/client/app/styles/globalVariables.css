@@ -6,6 +6,7 @@
 
   --font-color_base: rgba(34, 34, 34, 1);
   --font-color_blue: rgba(1, 155, 186, 1);
+  --font-color_blue-light: rgba(0, 180, 204, 1);
   --font-color_white: rgb(248, 249, 250, 1);
   --font-color_gray: rgba(170, 170, 170, 1);
   --font-color_gray-dark: rgba(144, 144, 144, 1);
@@ -15,6 +16,7 @@
   --border-color_dark: #1e1e1e;
   --border-color_white: #f8f9fa;
   --border-radius_default: 7px;
+  --border-radius_large: 10px;
 
   --max-width_desktop: 1200px;
   --max-width_mobile: 320px;

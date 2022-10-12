@@ -12,15 +12,14 @@ type Props = {
 
 const SectionElement: FC<Props> = ({
   heading,
-  preTitle,
   id,
   body,
   onButtonClick,
-  sectionHeight
+  sectionHeight,
 }) => (
   <section id={id} className={s.block} style={{ minHeight: sectionHeight }}>
     <div className={s.infoBlock}>
-      {preTitle && <p className={s.weAreHere}>{preTitle}</p>}
+      <p className={s.weAreHere}>We Are Hero To:</p>
       <h2 className={s.title}>{heading}</h2>
       <p className={s.description}>{body}</p>
     </div>

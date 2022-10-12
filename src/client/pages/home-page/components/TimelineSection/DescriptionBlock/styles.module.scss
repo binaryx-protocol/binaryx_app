@@ -4,7 +4,12 @@
   border-radius: var(--border-radius_default);
   backdrop-filter: blur(10px);
   font-size: 12px;
+  width: 150px;
   padding: 0 10px;
+  
+  @media screen and (max-width: 768px) {
+    width: 140px;
+  }
 }
 
 .descriptionBlock ul {
@@ -15,10 +20,4 @@
 .descriptionBlock ul li {
   list-style: none;
   line-height: 2;
-}
-
-@media screen and (max-width: 768px) {
-  .yearBlock h2 {
-    margin: 0;
-  }
 }
