@@ -6,14 +6,15 @@
   width: 100%;
   position: fixed;
   z-index: 3;
-  background-color: rgba(255, 255, 255, 0.95);
+  //background-color: rgba(255, 255, 255, 0.95);
+  background-color: transparent;
   backdrop-filter: blur(10px) saturate(2);
   font-family: "Manrope", sans-serif;
   transition: background-color 1s;
 }
 
 .headerDark {
-  background-color: rgba(0, 0, 0, .75);
+  //background-color: rgba(0, 0, 0, .75);
   backdrop-filter: blur(10px);
 
   .navSocial img {

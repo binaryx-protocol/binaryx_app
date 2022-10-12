@@ -10,8 +10,16 @@
 .timeline {
   display: grid;
   place-items: center;
-  min-height: 100vh;
+  //min-height: 80vh;
+  padding: 30px 0;
   color: white;
+  position: relative;
+  //background-color: var(--background-color_dark);
+  z-index: 1;
+
+  @media (max-width: 768px) {
+    overflow-y: scroll;
+  }
 }
 
 .timelineTitle {

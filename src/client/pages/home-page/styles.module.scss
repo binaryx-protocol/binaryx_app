@@ -23,6 +23,12 @@
   height: 90vh;
 }
 
+.sectionsDark {
+  background-color: var(--background-color_dark);
+  position: relative;
+  z-index: 1;
+}
+
 .containerAnimation {
   position: fixed;
   z-index: -2;
@@ -158,23 +164,35 @@
   place-content: center flex-start;
   height: 100vh;
 
-
   @media (max-width: 768px) {
     height: 80vh;
   }
 }
 
+.heroPageParallax .heroPageInfo {
+  display: block;
+}
+
+.sectionContent {
+  position: sticky;
+  left: 0;
+  top: 0;
+  padding-top: 20%;
+}
+
 .companyTitle {
   display: grid;
-  font-size: var(--font-size_big);
   font-weight: 300;
+  font-size: 60px;
+
+  @media (max-width: 768px) {
+    font-size: 26px;
+  }
 }
 
 .companySubTitle {
-  font-size: 54px;
-
-  @media (max-width: 768px) {
-    font-size: 21px;
+  @media (max-width: 1400px) {
+    font-size: 26px;
   }
 }
 
@@ -185,10 +203,19 @@
 .infoSection {
   display: flex;
   height: 60px;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    bottom: 35px;
+    left: 0;
+    right: 0;
+    padding: 0 15px;;
+  }
 }
 
 .btnJoinWaitlist {
   width: 260px;
+  min-height: 60px;
   border: none;
   border-radius: var(--border-radius_default);
   color: var(--font-color_base);
@@ -198,6 +225,43 @@
   background: linear-gradient(85.42deg, rgba(0, 174, 255, 0.5) 8.17%, rgba(0, 255, 238, 0.5) 103.39%);
   backdrop-filter: blur(10px);
   cursor: pointer;
+  transition: background 1s, margin 0.5s;
+
+  @media (max-width: 768px) {
+    margin-bottom: 10px;
+  }
+}
+
+
+.btnJoinWaitlistNext {
+  max-width: 290px;
+  min-height: 60px;
+  border: 1px solid var(--border-color_dark);
+  border-radius: var(--border-radius_default);
+  background: transparent;
+  font-size: 20px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  //position: fixed;
+  top: auto;
+  bottom: 35px;
+  left: 15px;
+  right: 15px;
+  color: #000;
+  margin-top: 74px;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
+
+
+  @media (max-width: 768px) {
+    margin-bottom: 20px;
+    width: auto;
+    max-width: none;
+    box-sizing: border-box;
+  }
 }
 
 .joinCommunity {
@@ -211,6 +275,7 @@
   color: #000;
 }
 
+
 // .ourTeam {
 //   min-height: 100%;
 // }
@@ -218,7 +283,8 @@
 .ourTeamContainer {
   display: grid;
   place-content: center;
-  min-height: 100vh;
+  //min-height: 100vh;
+  padding: 50px 0 80px;
 
   // @media (max-width: 768px) {
   //   min-height: 90vh;
@@ -388,7 +454,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100vh;
+  width: 100%;
 
   @media (max-width: 768px) {
     flex-wrap: wrap;
@@ -435,7 +501,7 @@
   .companyTitle {
     font-size: 25px;
     position: relative;
-    top: 100px;
+    top: 0;
   }
 
   .infoSection {
@@ -460,6 +526,7 @@
     // grid-template-columns: repeat(4, 320px);
     grid-template-columns: repeat(4, 250px);
     overflow: scroll hidden;
+    padding-bottom: 14px;
     // scroll-snap-type: x proximity;
     gap: 10px;
 

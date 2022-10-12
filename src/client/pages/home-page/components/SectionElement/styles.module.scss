@@ -1,8 +1,19 @@
 .block {
-  display: grid;
+  display: block;
+  //display: grid;
   place-content: center flex-start;
   min-height: 100vh;
   color: #1e1e1e;
+}
+
+.blockContent {
+  position: sticky;
+  padding-top: 250px;
+  top: 0;
+
+  @media (max-width: 768px) {
+    padding-top: 70px;
+  }
 }
 
 .infoBlock {
@@ -28,6 +39,7 @@
 
 .btnWaitlist {
   max-width: 260px;
+  width: 100%;
   min-height: 60px;
   border: 1px solid var(--border-color_dark);
   border-radius: var(--border-radius_default);
@@ -39,6 +51,10 @@
   position: relative;
   top: 100px;
   color: #000;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -65,7 +81,7 @@
   }
 
   .infoBlock {
-    margin-top: 85px;
+    margin-top: 45px;
     font-size: 14px;
   }
 }
