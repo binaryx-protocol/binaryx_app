@@ -211,6 +211,7 @@
 .infoSection {
   display: flex;
   height: 60px;
+  //overflow: hidden;
 
   @media (max-width: 768px) {
     position: fixed;
@@ -233,7 +234,7 @@
   background: linear-gradient(85.42deg, rgba(0, 174, 255, 0.5) 8.17%, rgba(0, 255, 238, 0.5) 103.39%);
   backdrop-filter: blur(10px);
   cursor: pointer;
-  transition: background 1s, margin 0.5s;
+  transition: background 1s, margin 0.5s, transform 0.5s;
   z-index: 10;
   //position: relative;
 
@@ -259,9 +260,10 @@
   left: 15px;
   right: 15px;
   color: #000;
-  margin-top: 74px;
+  //margin-top: 58px;
+  transform: translateY(65px);
 
-  @media (min-width: 768px) {
+  @media (min-width: 769px) {
     display: none;
   }
 
@@ -283,8 +285,14 @@
   background-color: transparent;
   cursor: default;
   color: #000;
+  opacity: 1;
+  transition: opacity 0.3s;
 }
 
+
+.btnJoinWaitlistNext + .joinCommunity {
+  opacity: 0;
+}
 
 // .ourTeam {
 //   min-height: 100%;
@@ -527,7 +535,8 @@
 
 @media screen and (max-width: 768px) {
   .wrapper {
-    max-width: var(--max-width_mobile);
+    max-width: none;
+    padding: 0 20px;
   }
 
   .heroPageInfo {

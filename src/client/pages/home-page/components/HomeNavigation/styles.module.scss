@@ -87,7 +87,8 @@
   }
 
   .header .container {
-    max-width: var(--max-width_mobile);
+    max-width: none;
+    //padding: 0 ;
   }
 
   .logo {
