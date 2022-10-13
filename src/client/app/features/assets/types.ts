@@ -22,8 +22,11 @@ export type BcAsset = {
   title: string,
   description: string,
   status: number,
-  originalOwner: string,
-  legalDocuments: string[],
+  tokenInfo_totalSupply: number,
+  tokenInfo_apr: number,
+  tokenInfo_tokenPrice: number,
+  // originalOwner: string,
+  // legalDocuments: string[],
   // propertyAddress: AssetAddress,
 }
 
