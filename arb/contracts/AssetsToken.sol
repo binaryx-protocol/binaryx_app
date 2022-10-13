@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "hardhat/console.sol";
 import "./IAssetsTokenManager.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
   using Counters for Counters.Counter;
@@ -149,5 +150,10 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
   function getAsset(uint256 id) public view override returns(Asset memory) {
     require(bytes(assetsIds[id].name).length > 0, "Not found");
     return assetsIds[id];
+  }
+
+  function investUsingUsdt(uint256 assetId, uint256 assetTokensToBuy) public override {
+    IERC20(0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0).transferFrom(msg.sender, address(this), assetTokensToBuy);
+//    p1.transfer(msg.sender, amountToBuy / 50);
   }
 }

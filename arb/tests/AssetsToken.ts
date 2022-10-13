@@ -1,7 +1,9 @@
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
-import { ethers } from "hardhat";
+import hre, {ethers, web3} from "hardhat";
 import {onlyFields} from "../../pkg/onlyFields";
+import {bnToInt, expectBn} from "../testUtils";
+import {address} from "../scripts/address";
 
 enum AssetStatuses {
   'upcoming' = 1,
@@ -21,19 +23,6 @@ type AssetInput = {
   tokenInfo_tokenPrice: number,
 }
 
-const expectBn = (given, expected) => {
-  expect(given.toString()).to.eq(expected.toString())
-}
-
-const assetAddressAttrs  = (): AssetAddress => ({
-  country: 'UA',
-  state: 'Che',
-  city: 'Cherkassy',
-  postalCode: '19600',
-  addressLine1: 'Khreschatik 1',
-  addressLine2: '5th floor',
-})
-
 const defaultAttrs = (): AssetInput => ({
   name: 'Name',
   symbol: 'SYM',
@@ -52,6 +41,9 @@ const createMany = async (sc, count, attrs: Partial<AssetInput> = {}) => {
   }
 }
 
+const usdtDecimals = 1e6;
+const usdtInitialBalance = 1000;
+
 describe("AssetsToken", function () {
   async function deployFixture() {
     const [owner, otherAccount] = await ethers.getSigners();
@@ -59,7 +51,10 @@ describe("AssetsToken", function () {
     const Class = await ethers.getContractFactory("AssetsToken");
     const sc = await Class.deploy();
 
-    return { sc, owner, otherAccount };
+    const UsdtfToken = await ethers.getContractFactory("UsdtfToken");
+    const usdtfToken = await UsdtfToken.deploy(web3.utils.toBN(usdtInitialBalance).mul(web3.utils.toBN(usdtDecimals)).toString());
+
+    return { sc, owner, otherAccount, usdtfToken };
   }
 
   describe("Deployment", function () {
@@ -97,6 +92,35 @@ describe("AssetsToken", function () {
       const resources = await sc.listAssets()
       expect(resources.length).to.eq(10)
       expect(resources[0].symbol).to.eq("SYM")
+    });
+  });
+
+  describe("investUsingUsdt", function () {
+    it("with valid params", async function () {
+      const { sc, otherAccount, owner, usdtfToken } = await loadFixture(deployFixture);
+      await createMany(sc, 1)
+
+      console.log('usdtfToken', usdtfToken.address)
+
+      await usdtfToken.approve(sc.address, 110 * usdtDecimals)
+
+      expect(
+        bnToInt(await usdtfToken.balanceOf(owner.address))
+      ).to.eq(usdtInitialBalance * usdtDecimals)
+
+      expect(
+        bnToInt(await usdtfToken.balanceOf(sc.address))
+      ).to.eq(0)
+
+      const a = await usdtfToken.allowance(owner.address, sc.address)
+      console.log('a.toString()', a.toString())
+
+      await sc.investUsingUsdt(0, 2)
+
+      expect(
+        bnToInt(await usdtfToken.balanceOf(sc.address))
+      ).to.eq(2)
+
     });
   });
 

@@ -113,4 +113,6 @@ interface IAssetsTokenManager {
   function setStatus(uint256 id, uint8 status) external;
 
   function getAssetsCount() external view returns(uint256);
+
+  function investUsingUsdt(uint256 assetId, uint256 assetTokensToBuy) external;
 }
