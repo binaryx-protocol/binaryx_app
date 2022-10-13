@@ -31,10 +31,10 @@ export const AssetsDetailsController = () => {
     { src: 'https://assets.architecturaldigest.in/photos/60083c58d0435267a8df8fdc/master/w_1920,h_1080,c_limit/Bali-villa-Uluwatu-SAOTA.jpg' },
   ]
   const investInfo = {
-    tokensLeft: 12500,
-    progress: 23,
+    tokensLeft: Number($asset.tokenInfo_totalSupply.toString()),
+    progress: 0,
     irr: 4,
-    coc: 15,
+    coc: Number($asset.tokenInfo_apr.toString()),
     id,
   }
   const assetInfo = {
@@ -42,7 +42,7 @@ export const AssetsDetailsController = () => {
     name: $asset.name,
     symbol: $asset.symbol,
     description: $asset.description,
-    legalDocuments: $asset.legalDocuments,
+    legalDocuments: [],
     statusLabel: T.status[$asset.status],
     country: 'string',
     city: 'string',

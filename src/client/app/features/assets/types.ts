@@ -36,9 +36,9 @@ export type UiNewAssetFormValues = {
   title: string,
   description: string,
   status: number,
-  originalOwner: string,
-  legalDocuments: string,
-  // propertyAddress: AssetAddress,
+  tokenInfo_totalSupply: number,
+  tokenInfo_apr: number,
+  tokenInfo_tokenPrice: number,
 }
 
 export type UiNewAssetForm = UiForm<UiNewAssetFormValues>

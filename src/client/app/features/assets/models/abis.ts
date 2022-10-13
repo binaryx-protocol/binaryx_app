@@ -4,8 +4,9 @@ const AssetStruct = `
     string title,
     string description,
     uint8 status,
-    address originalOwner,
-    string[] legalDocuments
+    uint256 tokenInfo_totalSupply,
+    uint256 tokenInfo_apr,
+    uint256 tokenInfo_tokenPrice
 `
 
 export const assetsManagerAbi = [
@@ -15,13 +16,15 @@ export const assetsManagerAbi = [
     string memory title,
     string memory description,
     uint8 status,
-    address originalOwner,
-    string[] memory legalDocuments
+    uint256 tokenInfo_totalSupply,
+    uint256 tokenInfo_apr,
+    uint256 tokenInfo_tokenPrice
   ) public`
   ,
   `function listAssets() public view returns((${AssetStruct})[] memory)`,
   `function getAsset(uint256 id) public view returns((${AssetStruct}) memory)`,
   `function setStatus(uint256 id, uint8 status)`,
+  `function investUsingUsdt(uint256 assetId, uint256 assetTokensToBuy)`,
 ]
 
 export const erc20Abi = [

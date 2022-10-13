@@ -37,7 +37,9 @@ export const AssetFormFields = ({ form, onChange }: AssetFormFieldsProps) => {
         <TextField label="Symbol" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'symbol')} />
         <TextField label="Title" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'title')} />
         <TextField label="Description" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'description')} />
-        <TextField label="Legal Documents" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'legalDocuments')} />
+        <TextField label="Total Supply" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'tokenInfo_totalSupply')} />
+        <TextField label="APR (%)" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'tokenInfo_apr')} />
+        <TextField label="Token Price ($)" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'tokenInfo_tokenPrice')} />
       </Box>
     </div>
   );

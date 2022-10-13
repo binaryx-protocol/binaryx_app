@@ -6,12 +6,8 @@ import {assetsManagerAbi, erc20Abi} from "./abis";
 
 export const arbClient = {
   async createAsset($rpcConfig: RpcConfig, formValues: UiNewAssetFormValues): Promise<void> {
-    const payload = {
-      ...formValues,
-      legalDocuments: formValues.legalDocuments.split(',')
-    }
     await this.getManagerSc($rpcConfig).createAsset(
-      ...Object.values(payload)
+      ...Object.values(formValues)
     )
   },
   async listAssets($rpcConfig: RpcConfig) {
@@ -23,11 +19,10 @@ export const arbClient = {
   async getAsset($rpcConfig: RpcConfig, args: { id: number }): Promise<BcAsset> {
     return await this.getManagerSc($rpcConfig).getAsset(args.id)
   },
-  async invest($rpcConfig: RpcConfig, args: { id: number, tokensAmount: number }) {
-    return await this.getManagerSc($rpcConfig).getAsset(args.id)
+  async investUsingUsdt($rpcConfig: RpcConfig, args: { id: number, tokensToBuyAmount: number }) {
+    return await this.getManagerSc($rpcConfig).investUsingUsdt(args.id, args.tokensToBuyAmount)
   },
   async approveUsdt($rpcConfig: RpcConfig, args: { amountInMicro: number }) {
-    console.log('args', args)
     const provider = getProvider()
     const usdtfToken = new ethers.Contract($rpcConfig.usdtL2Address, erc20Abi, provider);
     const usdtfTokenSigned = usdtfToken.connect(provider.getSigner())

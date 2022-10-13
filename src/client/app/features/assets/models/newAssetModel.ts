@@ -13,24 +13,15 @@ import {waitFor} from "../../../utils/pageLoadUtiils";
 import {assetValidator} from "./assetValidator";
 import {SyntheticEvent} from "react";
 
-const assetAddressAttrs  = (): AssetAddress => ({
-  country: 'UA',
-  state: 'Che',
-  city: 'Cherkassy',
-  postalCode: '19600',
-  addressLine1: 'Khreschatik 1',
-  addressLine2: '5th floor',
-})
-
 const defaultAttrs = (): UiNewAssetFormValues => ({
   name: '',
   symbol: '',
   title: '',
   description: '',
   status: AssetStatuses.upcoming,
-  originalOwner: '',
-  legalDocuments: '',
-  // propertyAddress: assetAddressAttrs(),
+  tokenInfo_totalSupply: 10_000, // decimals = 0
+  tokenInfo_apr: 10, // percents
+  tokenInfo_tokenPrice: 50_00, // decimals = 2
 })
 
 export const $form = atom<UiNewAssetForm>({
@@ -49,7 +40,7 @@ export const $doCreateAsset = atom(null, async (get, set, form: UiNewAssetForm) 
   const $rpcConfig = get(rpcConfigModel.$rpcConfig)
   const formValues = {
     ...form.values,
-    originalOwner: get(metaMaskModel.$metaMaskState).accounts[0]
+    // originalOwner: get(metaMaskModel.$metaMaskState).accounts[0]
   }
   await arbClient.createAsset(
     $rpcConfig,

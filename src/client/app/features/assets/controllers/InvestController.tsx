@@ -24,7 +24,7 @@ export const InvestController = () => {
   }, [id])
 
   const doInvest = () => {
-    $onSubmit({ asset: $asset })
+    $onSubmit({ asset: $asset, id })
   }
 
   if (!$asset) {
