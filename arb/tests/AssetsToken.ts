@@ -29,9 +29,9 @@ const defaultAttrs = (): AssetInput => ({
   title: 'Title',
   description: 'Description is a long story to tell you about the asset. Let\'s write it another time.',
   status: AssetStatuses.upcoming,
-  tokenInfo_totalSupply: 10_000,
-  tokenInfo_apr: 10,
-  tokenInfo_tokenPrice: 50_00,
+  tokenInfo_totalSupply: 10_000, // decimals = 0
+  tokenInfo_apr: 10, // percents
+  tokenInfo_tokenPrice: 50_00, // decimals = 2
 })
 
 const createMany = async (sc, count, attrs: Partial<AssetInput> = {}) => {
@@ -96,31 +96,33 @@ describe("AssetsToken", function () {
   });
 
   describe("investUsingUsdt", function () {
+    const expectUsdtBalance = async (usdtfToken, address, dollars) => expect(
+      bnToInt(await usdtfToken.balanceOf(address))
+    ).to.eq(dollars * usdtDecimals)
+
     it("with valid params", async function () {
       const { sc, otherAccount, owner, usdtfToken } = await loadFixture(deployFixture);
       await createMany(sc, 1)
 
-      console.log('usdtfToken', usdtfToken.address)
+      const assetId = 0;
 
       await usdtfToken.approve(sc.address, 110 * usdtDecimals)
 
-      expect(
-        bnToInt(await usdtfToken.balanceOf(owner.address))
-      ).to.eq(usdtInitialBalance * usdtDecimals)
+      await expectUsdtBalance(usdtfToken, owner.address, usdtInitialBalance)
+      await expectUsdtBalance(usdtfToken, sc.address, 0)
 
       expect(
-        bnToInt(await usdtfToken.balanceOf(sc.address))
+        bnToInt(await sc.balanceOf(owner.address, assetId))
       ).to.eq(0)
 
-      const a = await usdtfToken.allowance(owner.address, sc.address)
-      console.log('a.toString()', a.toString())
+      await sc.investUsingUsdt(assetId, 2)
 
-      await sc.investUsingUsdt(0, 2)
+      await expectUsdtBalance(usdtfToken, owner.address, usdtInitialBalance - 100)
+      await expectUsdtBalance(usdtfToken, sc.address, 100)
 
       expect(
-        bnToInt(await usdtfToken.balanceOf(sc.address))
+        bnToInt(await sc.balanceOf(owner.address, assetId))
       ).to.eq(2)
-
     });
   });
 

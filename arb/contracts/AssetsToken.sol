@@ -153,7 +153,9 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
   }
 
   function investUsingUsdt(uint256 assetId, uint256 assetTokensToBuy) public override {
-    IERC20(0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0).transferFrom(msg.sender, address(this), assetTokensToBuy);
-//    p1.transfer(msg.sender, amountToBuy / 50);
+    Asset storage asset = assetsIds[assetId];
+    uint256 costInUsdt = assetTokensToBuy * asset.tokenInfo_tokenPrice * 10**4;
+    IERC20(0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0).transferFrom(msg.sender, address(this), costInUsdt);
+    _safeTransferFrom(address(this), msg.sender, assetId, assetTokensToBuy, "");
   }
 }
