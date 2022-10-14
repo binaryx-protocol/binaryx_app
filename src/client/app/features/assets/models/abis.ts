@@ -27,6 +27,9 @@ export const assetsManagerAbi = [
   `function investUsingUsdt(uint256 assetId, uint256 assetTokensToBuy)`,
 ]
 
+export const erc1155Abi = [
+  "function balanceOf(address, uint256) view returns (uint)",
+];
 export const erc20Abi = [
   // Some details about the token
   "function name() view returns (string)",

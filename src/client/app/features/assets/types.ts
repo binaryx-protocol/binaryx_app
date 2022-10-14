@@ -1,4 +1,4 @@
-import {UiForm, UiFormChangeArgs} from "../../../../../pkg/formType";
+import {UiForm} from "../../../../../pkg/formType";
 
 export enum AssetStatuses {
   'upcoming' = 1,
@@ -25,9 +25,16 @@ export type BcAsset = {
   tokenInfo_totalSupply: number,
   tokenInfo_apr: number,
   tokenInfo_tokenPrice: number,
-  // originalOwner: string,
-  // legalDocuments: string[],
-  // propertyAddress: AssetAddress,
+}
+
+export type BcAssetMetaData = {
+  tokensLeft: number,
+}
+
+export type UiAssetComputed = {
+  tokensSold: number,
+  tokensLeft: number,
+  progress: number,
 }
 
 export type UiNewAssetFormValues = {

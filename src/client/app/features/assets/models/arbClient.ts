@@ -1,7 +1,8 @@
 import {getProvider, RpcConfig} from "../../../models/rpcConfigModel";
 import {BigNumber, ethers} from "ethers";
-import { BcAsset, UiNewAssetFormValues} from "../types";
-import {assetsManagerAbi, erc20Abi} from "./abis";
+import {BcAsset, BcAssetMetaData, UiNewAssetFormValues} from "../types";
+import {assetsManagerAbi, erc1155Abi, erc20Abi} from "./abis";
+import {bnToInt} from "../../../../../../arb/testUtils";
 
 
 export const arbClient = {
@@ -19,6 +20,11 @@ export const arbClient = {
   async getAsset($rpcConfig: RpcConfig, args: { id: number }): Promise<BcAsset> {
     return await this.getManagerSc($rpcConfig).getAsset(args.id)
   },
+  async getAssetTokenInfo($rpcConfig: RpcConfig, args: { id: number }): Promise<BcAssetMetaData> {
+    return {
+      tokensLeft: await this.getManagerSc($rpcConfig).balanceOf($rpcConfig.assetsTokenAddress, args.id)
+    }
+  },
   async investUsingUsdt($rpcConfig: RpcConfig, args: { id: number, tokensToBuyAmount: number }) {
     return await this.getManagerSc($rpcConfig).investUsingUsdt(args.id, args.tokensToBuyAmount)
   },
@@ -31,7 +37,11 @@ export const arbClient = {
   },
   getManagerSc($rpcConfig) {
     const provider = getProvider()
-    const manager = new ethers.Contract($rpcConfig.assetsTokenAddress, assetsManagerAbi, provider);
+    const abi = [
+      ...erc1155Abi,
+      ...assetsManagerAbi,
+    ]
+    const manager = new ethers.Contract($rpcConfig.assetsTokenAddress, abi, provider);
     return manager.connect(provider.getSigner())
   }
 }

@@ -8,10 +8,13 @@ import * as assetDetailsModel from "../models/assetDetailsModel";
 import {useAtomValue, useSetAtom} from "jotai";
 import {useEffect} from "react";
 import {useRouter} from "next/router";
+import {bnToInt} from "../../../utils/objectUtils";
 
 export const AssetsDetailsController = () => {
   const id = parseInt(useRouter().query.id as string);
   const $asset = useAtomValue(assetDetailsModel.$asset)
+  const $assetMetaData = useAtomValue(assetDetailsModel.$assetMetaData)
+  const $assetComputed = useAtomValue(assetDetailsModel.$assetComputed)
   const $doLoadAsset = useSetAtom(assetDetailsModel.$doLoadAsset)
 
   useEffect(() => {
@@ -20,7 +23,7 @@ export const AssetsDetailsController = () => {
     }
   }, [id])
 
-  if (!$asset) {
+  if (!$asset || !$assetMetaData || !$assetComputed) {
     return null // TODO skeleton loader
   }
 
@@ -31,10 +34,10 @@ export const AssetsDetailsController = () => {
     { src: 'https://assets.architecturaldigest.in/photos/60083c58d0435267a8df8fdc/master/w_1920,h_1080,c_limit/Bali-villa-Uluwatu-SAOTA.jpg' },
   ]
   const investInfo = {
-    tokensLeft: Number($asset.tokenInfo_totalSupply.toString()),
-    progress: 0,
+    tokensLeft: $assetComputed.tokensLeft,
+    progress: $assetComputed.progress,
     irr: 4,
-    coc: Number($asset.tokenInfo_apr.toString()),
+    coc: bnToInt($asset.tokenInfo_apr),
     id,
   }
   const assetInfo = {

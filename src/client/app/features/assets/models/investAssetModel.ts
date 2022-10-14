@@ -5,6 +5,7 @@ import * as metaMaskModel from "../../../models/metaMaskModel";
 import * as rpcConfigModel from "../../../models/rpcConfigModel";
 import {arbClient} from "./arbClient";
 import {BcAsset} from "../types";
+import {bnToInt} from "../../../utils/objectUtils";
 
 export const $amount = atom(1);
 
@@ -22,7 +23,6 @@ export const $onSubmit = atom(null, async (get,set, { asset, id }: { asset: BcAs
   if (!amount) {
     throw new Error('amount is required')
   }
-
   const amountInMicro = estimateCost(asset, amount)
   if (!amountInMicro) {
     throw new Error('amountInMicro is required')
@@ -36,4 +36,4 @@ export const $onSubmit = atom(null, async (get,set, { asset, id }: { asset: BcAs
   await arbClient.investUsingUsdt($rpcConfig, { id, tokensToBuyAmount: amount })
 })
 
-const estimateCost = (asset: BcAsset, tokensAmount) => asset.tokenInfo_tokenPrice * tokensAmount * 10e4;
+const estimateCost = (asset: BcAsset, tokensAmount) => bnToInt(asset.tokenInfo_tokenPrice) * tokensAmount * 10e4;
