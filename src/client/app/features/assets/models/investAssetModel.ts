@@ -6,10 +6,11 @@ import * as rpcConfigModel from "../../../models/rpcConfigModel";
 import {arbClient} from "./arbClient";
 import {BcAsset} from "../types";
 import {bnToInt} from "../../../utils/objectUtils";
+import {UiInputChangeEvent} from "../../../types/globals";
 
 export const $amount = atom(1);
 
-export const $onAmountChange = atom(null, async (get,set, e: SyntheticEvent) => {
+export const $onAmountChange = atom(null, async (get,set, e: UiInputChangeEvent) => {
   set($amount, parseInt(e.target.value));
 })
 

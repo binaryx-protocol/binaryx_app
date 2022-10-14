@@ -28,12 +28,13 @@ export const arbClient = {
   async investUsingUsdt($rpcConfig: RpcConfig, args: { id: number, tokensToBuyAmount: number }) {
     return await this.getManagerSc($rpcConfig).investUsingUsdt(args.id, args.tokensToBuyAmount)
   },
-  async approveUsdt($rpcConfig: RpcConfig, args: { amountInMicro: number }) {
+  async approveUsdt($rpcConfig: RpcConfig, { amountInMicro }: { amountInMicro: number }) {
     const provider = getProvider()
     const usdtfToken = new ethers.Contract($rpcConfig.usdtL2Address, erc20Abi, provider);
     const usdtfTokenSigned = usdtfToken.connect(provider.getSigner())
 
-    await usdtfTokenSigned.approve($rpcConfig.assetsTokenAddress, args.amountInMicro)
+    console.log('amountInMicro', amountInMicro)
+    await usdtfTokenSigned.approve($rpcConfig.assetsTokenAddress, amountInMicro)
   },
   getManagerSc($rpcConfig) {
     const provider = getProvider()
