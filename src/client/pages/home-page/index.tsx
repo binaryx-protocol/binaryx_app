@@ -73,6 +73,7 @@ const HomePage: FC = () => {
   ];
   const currentSectionRef = useRef(0);
   const joinWaitListBtnRef = useRef(null);
+  const progressBarElementRef = useRef(null);
   const [bgOverlay, setBgOverlay] = useState({
     isBgOverlayActive: true,
     isBgAnimationActive: true,
@@ -558,6 +559,12 @@ const HomePage: FC = () => {
         joinWaitListBtnRef.current.classList.remove(s.btnJoinWaitlistNext);
       }
 
+      if (window.scrollY > 5) {
+        progressBarElementRef.current.classList.add(s.progressBarActive);
+      } else {
+        progressBarElementRef.current.classList.remove(s.progressBarActive);
+      }
+
       // updateContainerStyles();
 
       // playAnimation(currentSection);
@@ -747,7 +754,7 @@ const HomePage: FC = () => {
         isBgOverlayActive={bgOverlay.isBgOverlayActive}
         isBgAnimationActive={bgOverlay.isBgAnimationActive}
       />
-      <div className={s.progressBar}>
+      <div className={s.progressBar} ref={progressBarElementRef}>
         <span id="progress-bar-filler" className={s.progressBarFiller} />
         <ul className={s.progressBarItems}>
           <li className={s.progressBarItem} />
