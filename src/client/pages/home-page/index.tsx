@@ -103,7 +103,7 @@ const HomePage: FC = () => {
 
     setTimeout(() => {
       const height = FF_LP_PARALLAX
-        ? (window.innerHeight - 1) * 5
+        ? (window.innerHeight - 1) * 3
         : window.innerHeight - 1;
       setSectionHeight(height);
 
@@ -872,7 +872,7 @@ const HomePage: FC = () => {
             heading="The next generation DeFi experience with Real Yield"
             description="Use your property tokens to borrow and keep earning the highest yield available at the same time"
             onButtonClick={handleJoinWaitListButtonClick}
-            sectionHeight={sectionHeight}
+            sectionHeight={sectionHeight / 2}
             windowHeight={windowHeight}
             contentElementRef={section2ContentRef}
           />
@@ -880,12 +880,12 @@ const HomePage: FC = () => {
         <div
           id="section3"
           ref={section3Ref}
-          className={classNames(s.wrapper, s.section, 'section')}
+          className={classNames(s.wrapper, s.section, s.section3, 'section')}
         >
           <SectionElement
             heading="Boosting Economy and scaling Web3"
             description="Increasing assets ownership transferring speed with web3 infrastructure"
-            sectionHeight={sectionHeight}
+            sectionHeight={sectionHeight / 1.25}
             windowHeight={windowHeight}
             contentElementRef={section3ContentRef}
             onButtonClick={handleJoinWaitListButtonClick}
