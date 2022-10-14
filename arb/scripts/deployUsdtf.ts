@@ -6,7 +6,7 @@ require('dotenv').config()
 
 requireEnvVariables(['DEVNET_PRIVKEY', 'L2RPC'])
 
-const bn1e18 = web3.utils.toBN(1e18);
+const usdtPrecision = web3.utils.toBN(10e6);
 
 const main = async () => {
   const wallet = (await hre.ethers.getSigners())[0]
@@ -17,7 +17,7 @@ const main = async () => {
     await ethers.getContractFactory('UsdtfToken')
   ).connect(wallet)
 
-  const usdtfToken = await UsdtfToken.deploy(web3.utils.toBN(10000).mul(bn1e18).toString(), [])
+  const usdtfToken = await UsdtfToken.deploy(web3.utils.toBN(10000).mul(usdtPrecision).toString(), [])
   await usdtfToken.deployed()
 
   console.log(`usdtfToken deployed to ${usdtfToken.address}`)

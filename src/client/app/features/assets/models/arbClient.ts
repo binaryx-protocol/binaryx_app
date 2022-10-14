@@ -33,7 +33,6 @@ export const arbClient = {
     const usdtfToken = new ethers.Contract($rpcConfig.usdtL2Address, erc20Abi, provider);
     const usdtfTokenSigned = usdtfToken.connect(provider.getSigner())
 
-    console.log('amountInMicro', amountInMicro)
     await usdtfTokenSigned.approve($rpcConfig.assetsTokenAddress, amountInMicro)
   },
   getManagerSc($rpcConfig) {

@@ -35,7 +35,7 @@ export const InvestController = () => {
     <div className={s.page}>
       <div className={s.container}>
         <div className={s.formNav}>
-          <Link href={paths.listAssets()} passHref>
+          <Link href={paths.showAsset({ id })} passHref>
             <Button variant="outlined">
               Back
             </Button>
