@@ -114,5 +114,4 @@ interface IAssetsTokenManager {
 
   function getAssetsCount() external view returns(uint256);
 
-  function investUsingUsdt(uint256 assetId, uint256 assetTokensToBuy) external;
 }

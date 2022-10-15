@@ -2,30 +2,31 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
-import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Receiver.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "hardhat/console.sol";
 import "./IAssetsTokenManager.sol";
+import "./IAssetsInvestmentsManager.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
+contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestmentsManager {
   using Counters for Counters.Counter;
 
-  uint8 public constant GOLD = 0;
   uint8 public constant STATUS_UPCOMING = 1;
   uint8 public constant STATUS_ACTIVE = 2;
   uint8 public constant STATUS_SOLD_OUT = 3;
   uint8 public constant STATUS_DISABLED = 4;
+  IERC20 usdt;
 
   mapping(uint256 => Asset) public assetsIds;
   Counters.Counter private _assetIds;
 
-  constructor() ERC1155("") {
-    initialize();
+  constructor(address usdtfA) ERC1155("") {
+    initialize(usdtfA);
   }
 
-  function initialize() public {
+  function initialize(address usdtfA) public {
+    usdt = IERC20(usdtfA);
   }
 
   function createAsset(
@@ -96,9 +97,6 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
     uint256 tokenInfo_totalSupply,
     uint256 tokenInfo_apr,
     uint256 tokenInfo_tokenPrice
-  //    address originalOwner,
-  //    string[] memory legalDocuments
-  //    PropertyAddress memory propertyAddress
   ) public override {
     Asset storage oldAsset = assetsIds[id];
     oldAsset.name = name;
@@ -106,38 +104,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
     oldAsset.title = title;
     oldAsset.description = description;
     oldAsset.status = status;
-    //    oldAsset.originalOwner = originalOwner;
-    //    oldAsset.legalDocuments = legalDocuments;
-    //    oldAsset.propertyAddress = propertyAddress;
-    //    oldAsset.propertyAddress.state = propertyAddress.state;
-    //    oldAsset.propertyAddress.city = propertyAddress.city;
-    //    oldAsset.propertyAddress.postalCode = propertyAddress.postalCode;
-    //    oldAsset.propertyAddress.addressLine1 = propertyAddress.addressLine1;
-    //    oldAsset.propertyAddress.addressLine2 = propertyAddress.addressLine2;
-
-    //    Asset memory newAsset = Asset(
-    //      name,
-    //      symbol,
-    //      title,
-    //      description,
-    //      status,
-    //      originalOwner,
-    //      legalDocuments,
-    //  oldAsset.propertyAddress
-    //      PropertyAddress(),
-    //      PropertyInfo(),
-    //      TokenInfo(),
-    //      InvestmentInfo(),
-    //      RentalInfo(),
-    //      FeeInfo(),
-    //      AssetDao()
-    //    );
-    //    assetsIds[id] = newAsset;
   }
-
-  //  function isEq(string memory a, string memory b) internal pure returns(bool) {
-  //    return   keccak256(abi.encodePacked(a)) == keccak256(abi.encodePacked(b));
-  //  }
 
   function setStatus(uint256 id, uint8 status) public override {
     assetsIds[id].status = status;
@@ -155,7 +122,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager {
   function investUsingUsdt(uint256 assetId, uint256 assetTokensToBuy) public override {
     Asset storage asset = assetsIds[assetId];
     uint256 costInUsdt = assetTokensToBuy * asset.tokenInfo_tokenPrice * 10**4;
-    IERC20(0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0).transferFrom(msg.sender, address(this), costInUsdt);
+    usdt.transferFrom(msg.sender, address(this), costInUsdt);
     _safeTransferFrom(address(this), msg.sender, assetId, assetTokensToBuy, "");
   }
 }

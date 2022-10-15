@@ -1,9 +1,8 @@
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import hre, {ethers, web3} from "hardhat";
-import {onlyFields} from "../../pkg/onlyFields";
 import {bnToInt, expectBn} from "../testUtils";
-import {address} from "../scripts/address";
+import {onlyFields} from "../objectUtils";
 
 enum AssetStatuses {
   'upcoming' = 1,
@@ -48,11 +47,11 @@ describe("AssetsToken", function () {
   async function deployFixture() {
     const [owner, otherAccount] = await ethers.getSigners();
 
-    const Class = await ethers.getContractFactory("AssetsToken");
-    const sc = await Class.deploy();
-
     const UsdtfToken = await ethers.getContractFactory("UsdtfToken");
     const usdtfToken = await UsdtfToken.deploy(web3.utils.toBN(usdtInitialBalance).mul(web3.utils.toBN(usdtDecimals)).toString());
+
+    const Class = await ethers.getContractFactory("AssetsToken");
+    const sc = await Class.deploy(usdtfToken.address);
 
     return { sc, owner, otherAccount, usdtfToken };
   }
