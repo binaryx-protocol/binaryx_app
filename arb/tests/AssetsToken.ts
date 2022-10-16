@@ -141,15 +141,12 @@ describe("AssetsToken", function () {
       expect(
         bnToInt(assetsIdsByInvestor[1])
       ).to.eq(3)
+      // test 2
+      const assetsByInvestor = await sc.assetsByInvestor()
+      expect(
+        (assetsByInvestor).length
+      ).to.eq(2)
     });
-
-    // it("should return assetsIdsByInvestor", async function () {
-    //   const { sc, otherAccount } = await loadFixture(deployFixture);
-    //
-    //   await createMany(sc, 1)
-    //   const assetsIds = await sc.assetsIdsByInvestor()
-    //   console.log('assetsIds', assetsIds)
-    // });
   });
 
   // describe("updateAsset", function () {
