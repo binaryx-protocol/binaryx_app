@@ -44,6 +44,10 @@ const usdtDecimals = 1e6;
 const usdtInitialBalance = 1000;
 
 describe("AssetsToken", function () {
+  const expectUsdtBalance = async (usdtfToken, address, dollars) => expect(
+    bnToInt(await usdtfToken.balanceOf(address))
+  ).to.eq(dollars * usdtDecimals)
+
   async function deployFixture() {
     const [owner, otherAccount] = await ethers.getSigners();
 
@@ -95,17 +99,11 @@ describe("AssetsToken", function () {
   });
 
   describe("investUsingUsdt", function () {
-    const expectUsdtBalance = async (usdtfToken, address, dollars) => expect(
-      bnToInt(await usdtfToken.balanceOf(address))
-    ).to.eq(dollars * usdtDecimals)
-
     it("with valid params", async function () {
       const { sc, otherAccount, owner, usdtfToken } = await loadFixture(deployFixture);
       await createMany(sc, 1)
 
       const assetId = 0;
-
-      await usdtfToken.approve(sc.address, 110 * usdtDecimals)
 
       await expectUsdtBalance(usdtfToken, owner.address, usdtInitialBalance)
       await expectUsdtBalance(usdtfToken, sc.address, 0)
@@ -114,15 +112,44 @@ describe("AssetsToken", function () {
         bnToInt(await sc.balanceOf(owner.address, assetId))
       ).to.eq(0)
 
+      // do the action
+      await usdtfToken.approve(sc.address, 110 * usdtDecimals)
       await sc.investUsingUsdt(assetId, 2)
 
+      // test swap was done
       await expectUsdtBalance(usdtfToken, owner.address, usdtInitialBalance - 100)
       await expectUsdtBalance(usdtfToken, sc.address, 100)
-
-      expect(
-        bnToInt(await sc.balanceOf(owner.address, assetId))
-      ).to.eq(2)
     });
+  });
+
+  describe("assetsIdsByInvestor", function () {
+    it("should show multiple assets", async function () {
+      const { sc, otherAccount, owner, usdtfToken } = await loadFixture(deployFixture);
+      await createMany(sc, 5)
+      await usdtfToken.approve(sc.address, 1000 * usdtDecimals)
+      await sc.investUsingUsdt(1, 2)
+      await sc.investUsingUsdt(3, 2)
+
+      // test
+      const assetsIdsByInvestor = await sc.assetsIdsByInvestor()
+      expect(
+        (assetsIdsByInvestor).length
+      ).to.eq(2)
+      expect(
+        bnToInt(assetsIdsByInvestor[0])
+      ).to.eq(1)
+      expect(
+        bnToInt(assetsIdsByInvestor[1])
+      ).to.eq(3)
+    });
+
+    // it("should return assetsIdsByInvestor", async function () {
+    //   const { sc, otherAccount } = await loadFixture(deployFixture);
+    //
+    //   await createMany(sc, 1)
+    //   const assetsIds = await sc.assetsIdsByInvestor()
+    //   console.log('assetsIds', assetsIds)
+    // });
   });
 
   // describe("updateAsset", function () {

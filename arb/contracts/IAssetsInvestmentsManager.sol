@@ -11,4 +11,5 @@ interface IAssetsInvestmentsManager {
     uint256 earnedAt;
   }
   function investUsingUsdt(uint256 assetId, uint256 assetTokensToBuy) external;
+//  function assetsByInvestor() external;
 }

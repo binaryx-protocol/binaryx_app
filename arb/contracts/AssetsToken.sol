@@ -19,6 +19,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
   IERC20 usdt;
 
   mapping(uint256 => Asset) public assetsIds;
+  mapping(address => uint256[]) public _assetsByInvestor;
   Counters.Counter private _assetIds;
 
   constructor(address usdtfA) ERC1155("") {
@@ -124,5 +125,14 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
     uint256 costInUsdt = assetTokensToBuy * asset.tokenInfo_tokenPrice * 10**4;
     usdt.transferFrom(msg.sender, address(this), costInUsdt);
     _safeTransferFrom(address(this), msg.sender, assetId, assetTokensToBuy, "");
+    if (_assetsByInvestor[msg.sender].length == 0) {
+      _assetsByInvestor[msg.sender] = new uint256[](1);
+      _assetsByInvestor[msg.sender][0] = assetId;
+    } else {
+      _assetsByInvestor[msg.sender].push(assetId);
+    }
+  }
+  function assetsIdsByInvestor() public view returns(uint256[] memory) {
+    return _assetsByInvestor[msg.sender];
   }
 }
