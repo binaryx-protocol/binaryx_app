@@ -127,25 +127,28 @@ describe("AssetsToken", function () {
       const { sc, otherAccount, owner, usdtfToken } = await loadFixture(deployFixture);
       await createMany(sc, 5)
       await usdtfToken.approve(sc.address, 1000 * usdtDecimals)
-      await sc.investUsingUsdt(1, 2)
-      await sc.investUsingUsdt(3, 2)
+      await sc.investUsingUsdt(1, 1)
+      await sc.investUsingUsdt(3, 5)
 
       // test
-      const assetsIdsByInvestor = await sc.assetsIdsByInvestor()
-      expect(
-        (assetsIdsByInvestor).length
-      ).to.eq(2)
-      expect(
-        bnToInt(assetsIdsByInvestor[0])
-      ).to.eq(1)
-      expect(
-        bnToInt(assetsIdsByInvestor[1])
-      ).to.eq(3)
+      // const assetsIdsByInvestor = await sc.assetsIdsByInvestor()
+      // expect(
+      //   (assetsIdsByInvestor).length
+      // ).to.eq(2)
+      // expect(
+      //   bnToInt(assetsIdsByInvestor[0])
+      // ).to.eq(1)
+      // expect(
+      //   bnToInt(assetsIdsByInvestor[1])
+      // ).to.eq(3)
       // test 2
-      const assetsByInvestor = await sc.assetsByInvestor()
-      expect(
-        (assetsByInvestor).length
-      ).to.eq(2)
+      // const assetsByInvestor = await sc.assetsByInvestor()
+      // expect(
+      //   (assetsByInvestor).length
+      // ).to.eq(2)
+
+      const myRewardsPerAsset = await sc.getMyRewardsPerAsset();
+      console.log('myRewardsPerAsset', myRewardsPerAsset)
     });
   });
 

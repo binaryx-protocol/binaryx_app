@@ -18,9 +18,9 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
   uint8 public constant STATUS_DISABLED = 4;
   IERC20 usdt;
 
-  mapping(uint256 => Asset) public assetsIds;
-  mapping(address => uint256[]) public _assetsByInvestor;
-  Counters.Counter private _assetIds;
+  mapping(uint256 => Asset) public _assets;
+  mapping(address => Investment[]) public _investments;
+  Counters.Counter private _assetsCounter;
 
   constructor(address usdtfA) ERC1155("") {
     initialize(usdtfA);
@@ -40,8 +40,8 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
     uint256 tokenInfo_apr,
     uint256 tokenInfo_tokenPrice
   ) public override {
-    uint256 id = _assetIds.current();
-    _assetIds.increment();
+    uint256 id = _assetsCounter.current();
+    _assetsCounter.increment();
     Asset memory newAsset = Asset(
       name,
       symbol,
@@ -52,7 +52,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
       tokenInfo_apr,
       tokenInfo_tokenPrice
     );
-    assetsIds[id] = newAsset;
+    _assets[id] = newAsset;
     _mint(address(this), id, tokenInfo_totalSupply, "");
   }
 
@@ -77,11 +77,11 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
   }
 
   function listAssets() public override view returns(Asset[] memory) {
-    uint count = _assetIds.current();
+    uint count = _assetsCounter.current();
     Asset[] memory result = new Asset[](count);
 
     for (uint i = 0; i < count; i++) {
-      Asset storage asset = assetsIds[i];
+      Asset storage asset = _assets[i];
       result[i] = asset;
     }
 
@@ -99,7 +99,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
     uint256 tokenInfo_apr,
     uint256 tokenInfo_tokenPrice
   ) public override {
-    Asset storage oldAsset = assetsIds[id];
+    Asset storage oldAsset = _assets[id];
     oldAsset.name = name;
     oldAsset.symbol = symbol;
     oldAsset.title = title;
@@ -108,45 +108,70 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
   }
 
   function setStatus(uint256 id, uint8 status) public override {
-    assetsIds[id].status = status;
+    _assets[id].status = status;
   }
 
   function getAssetsCount() public view override returns(uint256) {
-    return _assetIds.current();
+    return _assetsCounter.current();
   }
 
   function getAsset(uint256 id) public view override returns(Asset memory) {
-    require(bytes(assetsIds[id].name).length > 0, "Not found");
-    return assetsIds[id];
+    require(bytes(_assets[id].name).length > 0, "Not found");
+    return _assets[id];
   }
 
   function investUsingUsdt(uint256 assetId, uint256 assetTokensToBuy) public override {
-    Asset storage asset = assetsIds[assetId];
+    Asset storage asset = _assets[assetId];
     uint256 costInUsdt = assetTokensToBuy * asset.tokenInfo_tokenPrice * 10**4;
     usdt.transferFrom(msg.sender, address(this), costInUsdt);
     _safeTransferFrom(address(this), msg.sender, assetId, assetTokensToBuy, "");
 
     // save investment
-    if (_assetsByInvestor[msg.sender].length == 0) {
-      _assetsByInvestor[msg.sender] = new uint256[](1);
-      _assetsByInvestor[msg.sender][0] = assetId;
-    } else {
-      _assetsByInvestor[msg.sender].push(assetId);
-    }
-  }
-  function assetsIdsByInvestor() public view returns(uint256[] memory) {
-    return _assetsByInvestor[msg.sender];
+    _investments[msg.sender].push(
+      Investment(assetId, 0, block.timestamp)
+    );
   }
 
-  function assetsByInvestor() public view returns(Asset[] memory) {
-    uint count = _assetsByInvestor[msg.sender].length;
-    Asset[] memory result = new Asset[](count);
+  //  function assetsByInvestor() public view returns(Asset[] memory) {
+  //    uint count = _investments[msg.sender].length;
+  //    Asset[] memory result = new Asset[](count);
+  //
+  //    for (uint i = 0; i < count; i++) {
+  //      Asset storage asset = _assets[_investments[msg.sender][i].assetId];
+  //      result[i] = asset;
+  //    }
+  //
+  //    return result;
+  //  }
+
+  //  function estimateMyReward() public view returns(Asset[] memory) {
+  //    uint count = _investments[msg.sender].length;
+  //    Asset[] memory result = new Asset[](count);
+  //
+  //    for (uint i = 0; i < count; i++) {
+  //      _balances[id][account]
+  //      Asset storage asset = _assets[_investments[msg.sender][i]];
+  //      result[i] = asset;
+  //    }
+  //
+  //    return result;
+  //  }
+
+  struct RewardInfo {
+    uint256 assetId;
+    uint256 rewardAmount;
+  }
+  function getMyRewardsPerAsset() public view returns(RewardInfo[] memory) {
+    uint count = _investments[msg.sender].length;
+    RewardInfo[] memory result = new RewardInfo[](count);
 
     for (uint i = 0; i < count; i++) {
-      Asset storage asset = assetsIds[_assetsByInvestor[msg.sender][i]];
-      result[i] = asset;
+      uint256 assetId = _investments[msg.sender][i].assetId;
+      uint256 balance = balanceOf(msg.sender, assetId);
+//      uint256 balance = _balances[assetId][msg.sender];
+      uint256 reward = balance * _assets[assetId].tokenInfo_tokenPrice * _assets[assetId].tokenInfo_apr;
+      result[i] = RewardInfo(reward, assetId);
     }
-
     return result;
   }
 }
