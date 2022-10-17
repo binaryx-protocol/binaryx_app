@@ -1,0 +1,13 @@
+.scrollTrackerBG, .scrollTracker {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: .8rem;
+  background-color: rgb(51 51 51 / 0.5);
+  z-index: 20;
+}
+
+.scrollTracker {
+  background: linear-gradient(85.42deg, rgba(0, 174, 255, 0.7) 8.17%, rgba(0, 255, 238, 0.7) 103.39%);
+}

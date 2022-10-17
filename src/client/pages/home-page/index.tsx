@@ -18,21 +18,28 @@ import IconDiscord from './components/NavSocialImage/IconDiscord';
 import IconTwitter from './components/NavSocialImage/IconTwitter';
 import IconLinkedIn from './components/NavSocialImage/IconLinkedIn';
 import IconTelegram from './components/NavSocialImage/IconTelegram';
+import ScrollTracker from './components/SrollTracker';
 
 const GoogleAnalytics = () => {
   return (
     <>
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HFY1S4EYJS"></script>
-      <script dangerouslySetInnerHTML={{ __html: `
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-HFY1S4EYJS"
+      ></script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
         gtag('config', 'G-HFY1S4EYJS');
-        ` }}
+        `,
+        }}
       />
     </>
-  )
+  );
 };
 
 const HomePage: FC = () => {
@@ -48,7 +55,7 @@ const HomePage: FC = () => {
     container1.current,
     container2.current,
     container3.current,
-    container4.current
+    container4.current,
   ];
   const animations = useRef([]);
   const section1Ref = useRef<HTMLDivElement>(null);
@@ -248,7 +255,6 @@ const HomePage: FC = () => {
 
     // const scrollPercent = getSectionScrollPercent();
 
-
     if (section && animation) {
       const scrollPosition = getScrollPosition();
       const scrollPercent = ((scrollPosition - offsetTop) * 100) / height;
@@ -275,21 +281,23 @@ const HomePage: FC = () => {
 
     // const scrollPercent = getSectionScrollPercent();
 
-
     // if (section && animation) {
     if (section) {
       const scrollPosition = getScrollPosition();
       const scrollPercent = ((scrollPosition - offsetTop) * 100) / height;
 
-
       if (isVideoAnimation) {
         const container = getContainers()[animationIndex];
         const duration = container.firstChild.duration;
-        let currentTime = (duration * scrollPercent / 100).toFixed(2);
+        let currentTime = ((duration * scrollPercent) / 100).toFixed(2);
         if (currentTime > duration) {
           currentTime = duration;
         }
-        if (currentTime && !isNaN(currentTime) && container.firstChild.currentTime !== currentTime) {
+        if (
+          currentTime &&
+          !isNaN(currentTime) &&
+          container.firstChild.currentTime !== currentTime
+        ) {
           container.firstChild.currentTime = currentTime;
         }
 
@@ -336,7 +344,8 @@ const HomePage: FC = () => {
           container: document.getElementById('animationContainer2_2'),
           autoplay: false,
         });
-      }).then(() => import('./animations/B3.json'))
+      })
+      .then(() => import('./animations/B3.json'))
       .then((module) => {
         const anim3 = module.default;
         animations.current[2] = initAnimation({
@@ -429,9 +438,8 @@ const HomePage: FC = () => {
     changeWheelSpeed(main, 0.1);
 
     if (isVideoAnimation) {
-
-      let seeked = false;
-      let lastProgress = 0;
+      const seeked = false;
+      const lastProgress = 0;
       const progressDelta = 0.1;
 
       function lerp(x, y, t) {
@@ -483,13 +491,13 @@ const HomePage: FC = () => {
       //   });
       // }
 
-      function scrollPlayV2(){
+      function scrollPlayV2() {
         var frameNumber = 0, // start video at frame 0
           // lower numbers = faster playback
           playbackConst = 500;
-        const vid = document.getElementById("video2");
-        var frameNumber  = window.pageYOffset/playbackConst;
-        vid.currentTime  = frameNumber;
+        const vid = document.getElementById('video2');
+        var frameNumber = window.pageYOffset / playbackConst;
+        vid.currentTime = frameNumber;
         // window.requestAnimationFrame(scrollPlay);
       }
 
@@ -497,7 +505,7 @@ const HomePage: FC = () => {
     } else {
       initAnimations(true);
 
-      function play(){
+      function play() {
         // const scrollPosition = getScrollPosition();
         const currentSection = getCurrentSection();
         playAnimation(currentSection);
@@ -633,7 +641,9 @@ const HomePage: FC = () => {
       container2.current.style.display =
         currentSection === 1 ? 'block' : 'none';
       container2_2.current.style.display =
-        currentSection === 1 && window.scrollY < window.innerHeight / 1.7 ? 'block' : 'none';
+        currentSection === 1 && window.scrollY < window.innerHeight / 1.7
+          ? 'block'
+          : 'none';
       container2_2.current.style.transform = `translateY(${
         currentSection === 1 ? 1 - window.scrollY * 1.8 : 0
       }px`;
@@ -729,6 +739,7 @@ const HomePage: FC = () => {
   return (
     <>
       <Navigation isDark={isBgOverlayDark} />
+      <ScrollTracker />
       <BgOverlay
         id="bg-overlay"
         isBgOverlayActive={bgOverlay.isBgOverlayActive}
@@ -741,7 +752,10 @@ const HomePage: FC = () => {
       >
         {isVideoAnimation && (
           <video preload autoPlay muted>
-            <source src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B1.mp4" type='video/mp4' />
+            <source
+              src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B1.mp4"
+              type="video/mp4"
+            />
           </video>
         )}
       </div>
@@ -755,9 +769,13 @@ const HomePage: FC = () => {
         ref={container2}
         id="animationContainer2"
       >
-
         {isVideoAnimation && (
-          <video muted playsInline id="video2" src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B2.mp4">
+          <video
+            muted
+            playsInline
+            id="video2"
+            src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B2.mp4"
+          >
             {/*<source type="video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;" src="https://www.apple.com/media/us/mac-pro/2013/16C1b6b5-1d91-4fef-891e-ff2fc1c1bb58/videos/macpro_main_desktop.mp4" />*/}
             {/*<source src="https://www.apple.com/media/us/mac-pro/2013/16C1b6b5-1d91-4fef-891e-ff2fc1c1bb58/videos/macpro_main_desktop.mp4" type='video/mp4' />*/}
             {/*<source src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B2.mp4" type='video/mp4' />*/}
@@ -797,7 +815,9 @@ const HomePage: FC = () => {
             <div className={s.sectionContent} style={{ height: windowHeight }}>
               <h1 className={s.companyTitle}>
                 <span>
-                  <b style={{ color: 'var(--font-color_blue-light)' }}>Binaryx</b>
+                  <b style={{ color: 'var(--font-color_blue-light)' }}>
+                    Binaryx
+                  </b>
                 </span>
                 <span className={s.companySubTitle}>Community-Powered</span>
                 <span className={s.companySubTitle}>
@@ -813,7 +833,11 @@ const HomePage: FC = () => {
                 >
                   Join waitlist
                 </button>
-                <button type="submit" className={s.joinCommunity} onClick={handleJoinWaitListButtonClick}>
+                <button
+                  type="submit"
+                  className={s.joinCommunity}
+                  onClick={handleJoinWaitListButtonClick}
+                >
                   Join our community
                 </button>
               </div>
@@ -963,7 +987,9 @@ const HomePage: FC = () => {
                   socialLinkImage={
                     'https://cdn-icons-png.flaticon.com/512/61/61109.png'
                   }
-                  socialLink={'https://www.linkedin.com/in/andrii-makaveli-b25259150/'}
+                  socialLink={
+                    'https://www.linkedin.com/in/andrii-makaveli-b25259150/'
+                  }
                   socialUserName={'andriy_makaveli'}
                 />
               </div>
@@ -1013,19 +1039,47 @@ const HomePage: FC = () => {
                   <nav className={s.footerNavSocial}>
                     <NavSocialImage
                       link={'https://discord.gg/kJqgYh7G9G'}
-                      icon={<IconDiscord className={s.footerNavSocialImage} width={isMobile ? 36 : 55} height={isMobile ? 26 : 40} fill="#335367" />}
+                      icon={
+                        <IconDiscord
+                          className={s.footerNavSocialImage}
+                          width={isMobile ? 36 : 55}
+                          height={isMobile ? 26 : 40}
+                          fill="#335367"
+                        />
+                      }
                     />
                     <NavSocialImage
-                      link={'https://twitter.com/realBinaryx'}
-                      icon={<IconTwitter className={s.footerNavSocialImage} width={isMobile ? 34 : 45} height={isMobile ? 25 : 41} fill="#335367" />}
+                      link={'https://twitter.com/BinaryxProtocol'}
+                      icon={
+                        <IconTwitter
+                          className={s.footerNavSocialImage}
+                          width={isMobile ? 34 : 45}
+                          height={isMobile ? 25 : 41}
+                          fill="#335367"
+                        />
+                      }
                     />
                     <NavSocialImage
                       link={'https://www.linkedin.com/company/realbinaryx/'}
-                      icon={<IconLinkedIn className={s.footerNavSocialImage} width={isMobile ? 32 : 45} height={isMobile ? 29 : 44} fill="#335367" />}
+                      icon={
+                        <IconLinkedIn
+                          className={s.footerNavSocialImage}
+                          width={isMobile ? 32 : 45}
+                          height={isMobile ? 29 : 44}
+                          fill="#335367"
+                        />
+                      }
                     />
                     <NavSocialImage
                       link={'https://t.me/binaryxnews'}
-                      icon={<IconTelegram className={s.footerNavSocialImage} width={isMobile ? 30 : 43} height={isMobile ? 30 : 43} fill="#335367" />}
+                      icon={
+                        <IconTelegram
+                          className={s.footerNavSocialImage}
+                          width={isMobile ? 30 : 43}
+                          height={isMobile ? 30 : 43}
+                          fill="#335367"
+                        />
+                      }
                     />
                   </nav>
                 </div>
