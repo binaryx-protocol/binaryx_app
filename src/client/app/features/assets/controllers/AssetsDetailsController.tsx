@@ -47,15 +47,15 @@ export const AssetsDetailsController = () => {
     description: $asset.description,
     legalDocuments: [],
     statusLabel: T.status[$asset.status],
-    country: 'string',
-    city: 'string',
-    state: 'string',
-    postalCode: 'string',
-    line1: 'string',
-    line2: 'string',
+    country: 'Indonesia',
+    city: 'Canggu',
+    state: 'Kuta Utara',
+    postalCode: '80351',
+    line1: 'Jl. Pantai Batu Bolong No.44',
+    line2: '',
     infoItems: [
-      { type: 'string', value: 'string' },
-      { type: 'string2', value: 'string2' }
+      { type: 'string', value: 'TV' },
+      { type: 'string2', value: 'WiFi' }
     ],
   }
 

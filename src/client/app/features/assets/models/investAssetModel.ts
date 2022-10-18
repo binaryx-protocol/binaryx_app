@@ -14,13 +14,12 @@ export const $onAmountChange = atom(null, async (get,set, e: UiInputChangeEvent)
   set($amount, parseInt(e.target.value));
 })
 
-export const $onSubmit = atom(null, async (get,set, { asset, id }: { asset: BcAsset, id: number }) => {
+export const $onSubmit = atom(null, async (get,set, { asset, id, amount }: { asset: BcAsset, id: number, amount: number }) => {
   await waitFor(() => {
     return get(metaMaskModel.$walletReadiness) === 'ready' && !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
   const $rpcConfig = get(rpcConfigModel.$rpcConfig)
-  const amount = get($amount)
   if (!amount) {
     throw new Error('amount is required')
   }

@@ -26,7 +26,6 @@ export const $assetComputed = atom<UiAssetComputed | null>((get) => {
     tokensLeft,
     progress,
   }
-  console.log('result', result)
   return result
 });
 
