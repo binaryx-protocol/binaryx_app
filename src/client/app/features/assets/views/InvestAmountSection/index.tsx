@@ -11,7 +11,7 @@ import * as investAssetModel from "../../models/investAssetModel";
 import {bnToInt} from "../../../../utils/objectUtils";
 import {$assetComputed} from "../../models/assetDetailsModel";
 
-const USN = 'USN';
+const USDT = 'USDT';
 // const NEAR = "NEAR";
 
 export const InvestAmountSection = () => {
@@ -77,6 +77,14 @@ export const InvestAmountSection = () => {
 
   const doInvest = () => {
     $onSubmit({ asset: $asset, id, amount: getTokenQuantity() })
+  }
+  const onCtaClick = () => {
+    if (step === 0) {
+      setStep(1);
+    }
+    if (step === 1) {
+      setStep(2);
+    }
   }
   const tokenPriceInDollars = bnToInt($asset.tokenInfo_tokenPrice) / 100
   const orderTotal = tokenPriceInDollars * getTokenQuantity();
@@ -148,14 +156,13 @@ export const InvestAmountSection = () => {
         </div>
         <div
           className={classNames(s.billingType, {
-            [s['billingType--selected']]: billingType === USN,
+            [s['billingType--selected']]: billingType === USDT,
           })}
-          onClick={() => setBillingType(USN)}
+          onClick={() => setBillingType(USDT)}
         >
-          <h5 className={s.billingTypeTitle}>USN</h5>
+          <h5 className={s.billingTypeTitle}>USDT</h5>
           <p className={s.billingTypeDesc}>
-            NEAR protocol
-            <br /> native stable-coin ($)
+            stable coin ($)
           </p>
         </div>
       </div>
@@ -208,7 +215,7 @@ export const InvestAmountSection = () => {
           })}
           disabled={disabled}
           variant="contained"
-          onClick={() => {}}
+          onClick={onCtaClick}
         >
           {text}
         </Button>
