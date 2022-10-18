@@ -160,18 +160,29 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
   struct RewardInfo {
     uint256 assetId;
     uint256 rewardAmount;
+    Asset asset;
+    uint256 multiplier;
   }
-  function getMyRewardsPerAsset() public view returns(RewardInfo[] memory) {
-    uint count = _investments[msg.sender].length;
+
+  function getMyRewardsPerAsset() public view returns(RewardInfo[] memory, uint256 totalRewards) {
+    uint256 totalRewards = 0;
+    uint256 count = _investments[msg.sender].length;
     RewardInfo[] memory result = new RewardInfo[](count);
+    uint256 yearInSeconds = 31536000;
 
     for (uint i = 0; i < count; i++) {
-      uint256 assetId = _investments[msg.sender][i].assetId;
+      Investment storage investment = _investments[msg.sender][i];
+      uint256 assetId = investment.assetId;
       uint256 balance = balanceOf(msg.sender, assetId);
-//      uint256 balance = _balances[assetId][msg.sender];
-      uint256 reward = balance * _assets[assetId].tokenInfo_tokenPrice * _assets[assetId].tokenInfo_apr;
-      result[i] = RewardInfo(reward, assetId);
+      uint256 multiplier = 0;
+      uint256 timeDiff = block.timestamp - investment.accumulatedAt;
+      if (timeDiff > 3600) {
+        multiplier = timeDiff * 1000 / yearInSeconds;
+      }
+      uint256 reward = investment.accumulatedAmount + (balance * _assets[assetId].tokenInfo_tokenPrice * _assets[assetId].tokenInfo_apr * multiplier) / 1000;
+      totalRewards = totalRewards + reward;
+      result[i] = RewardInfo(assetId, reward, _assets[assetId], multiplier);
     }
-    return result;
+    return (result, totalRewards);
   }
 }

@@ -1,4 +1,4 @@
-import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
+import { loadFixture, time } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import hre, {ethers, web3} from "hardhat";
 import {bnToInt, expectBn} from "../testUtils";
@@ -42,6 +42,7 @@ const createMany = async (sc, count, attrs: Partial<AssetInput> = {}) => {
 
 const usdtDecimals = 1e6;
 const usdtInitialBalance = 1000;
+const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
 
 describe("AssetsToken", function () {
   const expectUsdtBalance = async (usdtfToken, address, dollars) => expect(
@@ -65,7 +66,7 @@ describe("AssetsToken", function () {
       const { sc } = await loadFixture(deployFixture);
 
       const count = await sc.getAssetsCount()
-      expectBn(count, 0)
+      expectBn(count).to.eq(0)
     });
   });
 
@@ -76,14 +77,13 @@ describe("AssetsToken", function () {
       await createMany(sc, 1)
 
       const count = await sc.getAssetsCount()
-      expectBn(count, 1)
     });
     it("should mint tokens for the smart contract address", async function () {
       const { sc, otherAccount } = await loadFixture(deployFixture);
 
       await createMany(sc, 1)
       const balance = await sc.balanceOf(sc.address, 0)
-      expectBn(balance, 10_000)
+      expectBn(balance).to.eq(10_000)
     });
   });
 
@@ -146,9 +146,48 @@ describe("AssetsToken", function () {
       // expect(
       //   (assetsByInvestor).length
       // ).to.eq(2)
+    });
+  });
 
-      const myRewardsPerAsset = await sc.getMyRewardsPerAsset();
-      console.log('myRewardsPerAsset', myRewardsPerAsset)
+  describe("getMyRewardsPerAsset", function () {
+    it("should calculate", async function () {
+      const { sc, otherAccount, owner, usdtfToken } = await loadFixture(deployFixture);
+      await createMany(sc, 5)
+      await usdtfToken.approve(sc.address, 1000 * usdtDecimals)
+      await sc.investUsingUsdt(1, 1)
+      await sc.investUsingUsdt(3, 5)
+
+      let myRewardsPerAsset = await sc.getMyRewardsPerAsset();
+
+      expectBn(
+        myRewardsPerAsset[0][0].rewardAmount
+      ).to.eq(0)
+
+      expectBn(
+        myRewardsPerAsset[0][1].rewardAmount
+      ).to.eq(0)
+
+      await time.increaseTo((await time.latest()) + ONE_YEAR_IN_SECS / 2);
+      myRewardsPerAsset = await sc.getMyRewardsPerAsset();
+
+      expectBn(
+        myRewardsPerAsset[0][0].rewardAmount
+      ).to.eq(25000)
+
+      expectBn(
+        myRewardsPerAsset[0][1].rewardAmount
+      ).to.eq(125000)
+
+      await time.increaseTo((await time.latest()) + ONE_YEAR_IN_SECS / 2);
+      myRewardsPerAsset = await sc.getMyRewardsPerAsset();
+
+      expectBn(
+        myRewardsPerAsset[0][0].rewardAmount
+      ).to.eq(50000)
+
+      expectBn(
+        myRewardsPerAsset[0][1].rewardAmount
+      ).to.eq(250000)
     });
   });
 
