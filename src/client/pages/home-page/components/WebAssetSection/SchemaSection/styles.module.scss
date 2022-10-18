@@ -18,7 +18,7 @@
   overflow-x: hidden;
   //background-color: var(--background-color_dark);
 
-  @media screen and (max-height: 736px) {
+  @media screen and (max-height: 768px) {
     place-content: flex-end center;
   }
 }
@@ -29,7 +29,7 @@
   grid-template-columns: repeat(3, 1fr);
 
   @media screen and (max-width: 1024px) {
-    grid-gap: 10px;
+    grid-gap: 5px;
     grid-template-columns: 250px;
     // margin-bottom: 7px;
   }
@@ -86,25 +86,25 @@
 }
 
 .vector1Mobile {
-  top: 26%;
+  top: 22%;
+  scale: 1 0.9;
   left: 28%;
 
   @media screen and (max-height: 667px) {
-    top: 16%;
-    left: 29%;
+    top: 10%;
     scale: 1 0.8;
   }
 }
 
 .vector2Mobile {
-  bottom: -8%;
+  bottom: -15%;
   left: 2%;
-  scale: 1.1 0.83;
+  scale: 1.1 0.78;
 
   @media screen and (max-height: 667px) {
-    bottom: -50%;
+    bottom: -57%;
     left: 2%;
-    scale: 1.1 0.75;
+    scale: 1.1 0.73;
   }
 }
 
@@ -374,6 +374,7 @@
 
   .binaryxMain {
     backdrop-filter: none;
+    font-size: 16px;
   }
 }
 
@@ -384,7 +385,7 @@
 }
 
 .assetsTitle {
-  font-size: var(--font-size_medium);
+  font-size: 40px;
   text-align: center;
   font-weight: 400;
 }
@@ -394,7 +395,7 @@
     font-size: 24px;
     font-weight: 300;
     text-align: left;
-    margin-top: 0;
+    margin: 0 0 10px 0;
   }
 
   .purchasingPropertyTokens,
@@ -416,7 +417,7 @@
     grid-column: 1;
     height: 135px;
     width: 160px;
-    margin: 25px 0;
+    margin: 20px 0;
     left: 6%;
 
     @media screen and (max-height: 667px) {

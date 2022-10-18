@@ -69,10 +69,10 @@ const TimelineSection: FC<Props> = ({ className }) => {
               <h1 className={s.timelineTitle}>Timeline</h1>
             </AnimationElement>
             <AnimationElement order={15.8}>
-              {/*<h3 className={s.subTitle}>Product</h3>*/}
+              {/* <h3 className={s.subTitle}>Product</h3> */}
             </AnimationElement>
             <AnimationElement order={16.8}>
-              {/*<h3 className={s.subTitle}>Marketing</h3>*/}
+              {/* <h3 className={s.subTitle}>Marketing</h3> */}
             </AnimationElement>
             {/*<h3>Organization</h3>*/}
           </div>

@@ -114,7 +114,7 @@
   .timelineColumn {
     grid-gap: 40px;
     // grid-template-rows: 75px 80px 160px 80px;
-    grid-template-rows: 80px 80px 160px 1px;
+    grid-template-rows: 60px 80px 160px 1px;
     width: fit-content;
     // margin-right: 20px;
     margin-right: 10px;
@@ -126,7 +126,7 @@
 
   .timelineHeaders {
     position: absolute;
-    grid-template-rows: 100px 105px 187px;
+    grid-template-rows: 80px 105px 187px;
   }
 
   .timelineTitle {
