@@ -1,8 +1,8 @@
 import { atom } from 'jotai'
 import * as metaMaskModel from "../../../models/metaMaskModel";
 import * as rpcConfigModel from "../../../models/rpcConfigModel";
+import router from 'next/router'
 import {
-  AssetAddress,
   AssetStatuses,
   UiNewAssetFormValues,
   UiNewAssetForm,
@@ -12,6 +12,7 @@ import {arbClient} from "./arbClient";
 import {waitFor} from "../../../utils/pageLoadUtiils";
 import {assetValidator} from "./assetValidator";
 import {SyntheticEvent} from "react";
+import {paths} from "../../../../../../pkg/paths";
 
 const defaultAttrs = (): UiNewAssetFormValues => ({
   name: '',
@@ -46,6 +47,8 @@ export const $doCreateAsset = atom(null, async (get, set, form: UiNewAssetForm) 
     $rpcConfig,
     formValues
   );
+  alert("You will see your asset soon. Please, refresh the page.");
+  router.push(paths.listAssets());
 })
 
 export const $onFormChange = atom(null, (get, set, args: UiNewAssetFormChangeArgs) => {
