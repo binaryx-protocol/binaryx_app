@@ -509,6 +509,7 @@ const HomePage: FC = () => {
 
         playAnimation(currentSection);
         updateContainerStyles();
+        updateSectionContentStyles();
         // let frameNumber  = window.pageYOffset/playbackConst;
         // vid.currentTime  = frameNumber;
         window.requestAnimationFrame(play);
@@ -530,24 +531,24 @@ const HomePage: FC = () => {
       event.preventDefault();
       event.stopPropagation();
       const currentSection = getCurrentSection();
-      const sectionContentPrev = getSectionContents()[currentSection - 1];
-      const sectionContentNext = getSectionContents()[currentSection];
-      const scrollPercent = getSectionScrollPercent(currentSection - 1);
-      if (sectionContentPrev) {
-        const opacity =
-          scrollPercent > 90 ? 1 - (10 - (100 - scrollPercent)) / 10 : 1;
-        sectionContentPrev.style.opacity = opacity;
-      }
-      if (sectionContentNext) {
-        const opacity =
-          scrollPercent > 95 ? (5 - (100 - scrollPercent)) / 10 : 0;
-
-        sectionContentNext.style.opacity = opacity;
-      }
-      if (currentSection === 1 && scrollPercent < 50) {
-        sectionContentPrev.style.opacity =
-          scrollPercent > 5 ? (95 - (100 - scrollPercent)) / 10 : 0;
-      }
+      // const sectionContentPrev = getSectionContents()[currentSection - 1];
+      // const sectionContentNext = getSectionContents()[currentSection];
+      // const scrollPercent = getSectionScrollPercent(currentSection - 1);
+      // if (sectionContentPrev) {
+      //   const opacity =
+      //     scrollPercent > 90 ? 1 - (10 - (100 - scrollPercent)) / 10 : 1;
+      //   sectionContentPrev.style.opacity = opacity;
+      // }
+      // if (sectionContentNext) {
+      //   const opacity =
+      //     scrollPercent > 95 ? (5 - (100 - scrollPercent)) / 10 : 0;
+      //
+      //   sectionContentNext.style.opacity = opacity;
+      // }
+      // if (currentSection === 1 && scrollPercent < 50) {
+      //   sectionContentPrev.style.opacity =
+      //     scrollPercent > 5 ? (95 - (100 - scrollPercent)) / 10 : 0;
+      // }
 
       if (currentSection >= 4) {
         setIsBgOverlayDark(() => true);
@@ -664,8 +665,39 @@ const HomePage: FC = () => {
       container3.current.style.display =
         currentSection === 2 ? 'block' : 'none';
       container4.current.style.display =
-        currentSection === 3 ? 'block' : 'none';
+        currentSection >= 3 ? 'block' : 'none';
     }
+  }
+
+
+  function updateSectionContentStyles() {
+    const currentSection = getCurrentSection() - 1;
+    // const scrollPosition = getScrollPosition()
+    // const scrollPercent = getSectionScrollPercent(currentSection - 1);
+
+    getSectionContents().forEach((sectionContent, index) => {
+      if (index === currentSection) {
+        sectionContent?.classList.add(s.activeContent);
+        sectionContent?.classList.remove(s.viewedContent);
+      } else if (index < currentSection) {
+        sectionContent?.classList.remove(s.activeContent);
+        sectionContent?.classList.add(s.viewedContent);
+      } else {
+        sectionContent?.classList.remove(s.activeContent);
+        sectionContent?.classList.remove(s.viewedContent);
+      }
+    });
+
+    // if (section1ContentRef.current) {
+    //   section1ContentRef.current.style.display =
+    //     currentSection === 0 ? 'block' : 'none';
+    //   section2ContentRef.current.style.display =
+    //     currentSection === 1 ? 'block' : 'none';
+    //   section3ContentRef.current.style.display =
+    //     currentSection === 2 ? 'block' : 'none';
+    //   // section4ContentRef.current.style.display =
+    //   //   currentSection === 3 ? 'block' : 'none';
+    // }
   }
 
   function updateContainerStylesV2(currentSection) {
@@ -870,7 +902,9 @@ const HomePage: FC = () => {
             windowHeight={windowHeight}
             onButtonClick={handleJoinWaitListButtonClick}
             contentElementRef={section1ContentRef}
+            isSticky={true}
           />
+
         </div>
         <div
           id="section2"
@@ -894,7 +928,7 @@ const HomePage: FC = () => {
           <SectionElement
             heading="Boosting Economy and scaling Web3"
             description="Increasing assets ownership transferring speed with web3 infrastructure"
-            sectionHeight={sectionHeight / 1.25}
+            sectionHeight={sectionHeight / 2}
             windowHeight={windowHeight}
             contentElementRef={section3ContentRef}
             onButtonClick={handleJoinWaitListButtonClick}
@@ -915,6 +949,7 @@ const HomePage: FC = () => {
         {/*    </p>*/}
         {/*  </SectionElement>*/}
         {/*</div>*/}
+        <div className={s.sectionPadding}></div>
         <div className={s.sectionsDark}>
           <BgOverlay
             isBgOverlayActive={true}

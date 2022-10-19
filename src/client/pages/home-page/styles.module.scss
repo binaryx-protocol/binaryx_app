@@ -24,6 +24,17 @@
   }
 
 }
+
+.activeContent {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.viewedContent {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
 //
 //.section3 {
 //  margin-bottom: 500px;
@@ -31,6 +42,10 @@
 
 .section1 {
   height: 90vh;
+}
+
+.sectionPadding {
+  height: 500px;
 }
 
 .sectionsDark {
