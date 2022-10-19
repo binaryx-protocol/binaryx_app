@@ -8,13 +8,13 @@ import {BcAsset} from "../types";
 import {bnToInt} from "../../../utils/objectUtils";
 import {UiInputChangeEvent} from "../../../types/globals";
 
-export const $amount = atom(1);
+// export const $amount = atom(1);
+//
+// export const $onAmountChange = atom(null, async (get,set, e: UiInputChangeEvent) => {
+//   set($amount, parseInt(e.target.value));
+// })
 
-export const $onAmountChange = atom(null, async (get,set, e: UiInputChangeEvent) => {
-  set($amount, parseInt(e.target.value));
-})
-
-export const $onSubmit = atom(null, async (get,set, { asset, id, amount }: { asset: BcAsset, id: number, amount: number }) => {
+export const $onSubmit = atom(null, async (get,set, { asset, id, amount, then }: { asset: BcAsset, id: number, amount: number, then: () => void }) => {
   await waitFor(() => {
     return get(metaMaskModel.$walletReadiness) === 'ready' && !!get(rpcConfigModel.$rpcConfig)
   }, 3)
@@ -34,6 +34,7 @@ export const $onSubmit = atom(null, async (get,set, { asset, id, amount }: { ass
 
   // TODO 0 -> asset.id
   await arbClient.investUsingUsdt($rpcConfig, { id, tokensToBuyAmount: amount })
+  then()
 })
 
-const estimateCost = (asset: BcAsset, tokensAmount) => bnToInt(asset.tokenInfo_tokenPrice) * tokensAmount * 10e4;
+const estimateCost = (asset: BcAsset, tokensAmount) => bnToInt(asset.tokenInfo_tokenPrice) * tokensAmount * 1e4;

@@ -218,3 +218,47 @@
 .resultStep {
   width: 100%;
 }
+
+.assetMicroInfo{
+  display: flex;
+  width: 500px;
+}
+
+.assetMicroInfo__image{
+  width: 200px;
+  display: block;
+}
+
+.assetMicroInfo__description{
+  padding: 0 0 0 15px;
+}
+
+.tyStep{
+  display: flex;
+}
+
+.tyStep__info{
+  padding: 15px;
+  min-width: 550px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.tyStep__message{
+  padding: 0 0 20px 0;
+}
+
+@media (max-width: 1100px) {
+  .tyStep{
+    display: block;
+  }
+  .tyStep__info{
+    min-width: initial;
+  }
+  .assetMicroInfo{
+    padding-top: 20px;
+    display: flex;
+    width: initial;
+  }
+}

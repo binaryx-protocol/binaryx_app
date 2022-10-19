@@ -9,10 +9,10 @@ import {useAtomValue, useSetAtom} from "jotai";
 import * as assetDetailsModel from "../../models/assetDetailsModel";
 import * as investAssetModel from "../../models/investAssetModel";
 import {bnToInt} from "../../../../utils/objectUtils";
-import {$assetComputed} from "../../models/assetDetailsModel";
+import {paths} from "../../../../../../../pkg/paths";
+import Link from "next/link";
 
 const USDT = 'USDT';
-// const NEAR = "NEAR";
 
 export const InvestAmountSection = () => {
   const [tokenQuantity, setTokenQuantity] = useState<number | string>(1);
@@ -36,36 +36,6 @@ export const InvestAmountSection = () => {
     return null;
   }
 
-  // useEffect(() => {
-  //   if (signMeta === 'success') {
-  //     setStep(2);
-  //   }
-  // }, [signMeta]);
-
-  // if (!asset) {
-  //   return <div>Id not found</div>;
-  // }
-
-  //
-  // function handleSubmitButtonClick() {
-  //   switch (step) {
-  //     case 0:
-  //       setStep(1);
-  //       break;
-  //     case 1:
-  //       paymentService.handleInvest({
-  //         assetId: asset.id,
-  //         assetContractId: asset.contractId,
-  //         tokenAmount: getTokenQuantity(),
-  //         billingType,
-  //       });
-  //       break;
-  //     case 2:
-  //       router.push('/marketplace');
-  //       break;
-  //   }
-  // }
-
   function getTokenQuantity(qty = tokenQuantity): number {
     const result = typeof qty === "string" ? parseInt(qty) : qty;
     if (isNaN(result)) {
@@ -75,26 +45,41 @@ export const InvestAmountSection = () => {
     return result;
   }
 
-  const doInvest = () => {
-    $onSubmit({ asset: $asset, id, amount: getTokenQuantity() })
-  }
   const onCtaClick = () => {
     if (step === 0) {
       setStep(1);
     }
     if (step === 1) {
-      setStep(2);
+      // setStep(2)
+      $onSubmit({ asset: $asset, id, amount: getTokenQuantity(), then: () => setStep(2) })
     }
   }
   const tokenPriceInDollars = bnToInt($asset.tokenInfo_tokenPrice) / 100
   const orderTotal = tokenPriceInDollars * getTokenQuantity();
+
+  const assetMicroInfo = (
+    <div className={s.assetMicroInfo}>
+      <img className={s.assetMicroInfo__image} src="https://ns.clubmed.com/dream/RESORTS_3T___4T/Asie_et_Ocean_indien/Bali/169573-1lng9n8nnf-swhr.jpg" alt="" />
+      <div className={s.assetMicroInfo__description}>
+        <h4>
+          {$asset.name}, {$asset.title}
+        </h4>
+        <div>
+          Jl. Pantai Batu Bolong No.44
+        </div>
+        <small>
+          {$asset.description}
+        </small>
+      </div>
+    </div>
+  )
 
   function renderInitialStep() {
     return (
       <div className={s.info}>
         <div className={s.infoMain}>
           <h3 className={s.investmentSummaryTitle}>Investment Summary</h3>
-          {/*<AssetInfo asset={asset} />*/}
+          {assetMicroInfo}
         </div>
         <div className={s.controls}>
           <div className={s.tokenQuantityTitle}>Token Quantity</div>
@@ -141,7 +126,6 @@ export const InvestAmountSection = () => {
     );
   }
 
-
   function renderBillingStep() {
     return (
       <div className={s.billingStep}>
@@ -171,8 +155,21 @@ export const InvestAmountSection = () => {
 
   function renderResultStep() {
     return (
-      <div className={s.resultStep}>
-        <Result />
+      <div className={s.tyStep}>
+        <div className={s.tyStep__info}>
+          <h2>Congratulations</h2>
+          <div className={s.tyStep__message}>
+            Tokens are on the way. Please check your account.
+          </div>
+          <div>
+            <Link href={paths.account()} passHref>
+              <Button variant="contained">
+                My Account
+              </Button>
+            </Link>
+          </div>
+        </div>
+        {assetMicroInfo}
       </div>
     );
   }
@@ -229,14 +226,19 @@ export const InvestAmountSection = () => {
         <h2>Invest</h2>
         <div className={s.main}>
           {renderCurrentStep()}
-          <div className={s.orderSummary}>
-            <h3 className={s.orderSummaryTitle}>Order Summary</h3>
-            <div className={s.orderTotal}>
-              <span className={s.orderTotalTitle}>Order Total</span>
-              <span className={s.orderTotalValue}>${isNaN(orderTotal) ? 0 : orderTotal}</span>
-            </div>
-            {renderButton()}
-          </div>
+          {
+            step < 2
+              ?
+              <div className={s.orderSummary}>
+                <h3 className={s.orderSummaryTitle}>Order Summary</h3>
+                <div className={s.orderTotal}>
+                  <span className={s.orderTotalTitle}>Order Total</span>
+                  <span className={s.orderTotalValue}>${isNaN(orderTotal) ? 0 : orderTotal}</span>
+                </div>
+                {renderButton()}
+              </div>
+              : null
+          }
         </div>
       </div>
     </div>

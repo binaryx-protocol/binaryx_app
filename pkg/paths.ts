@@ -11,4 +11,7 @@ export const paths = {
   investAsset({ id }) {
     return `/assets-v2/${id}/invest`;
   },
+  account() {
+    return '/account-v2';
+  },
 };
