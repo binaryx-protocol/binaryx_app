@@ -1,8 +1,13 @@
+// @ts-nocheck
 import { FC } from 'react';
 import s from './styles.module.scss';
 import { Container } from '@mui/material';
 import NavSocialImage from '../NavSocialImage';
 import classNames from 'classnames';
+import IconDiscord from '../NavSocialImage/IconDiscord';
+import IconTwitter from '../NavSocialImage/IconTwitter';
+import IconLinkedIn from '../NavSocialImage/IconLinkedIn';
+import IconTelegram from '../NavSocialImage/IconTelegram';
 // import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
 
 type Props = {
@@ -38,31 +43,19 @@ const LandingNav: FC<Props> = ({ isDark }) => {
         <nav className={s.navSocial}>
           <NavSocialImage
             link={'https://discord.gg/kJqgYh7G9G'}
-            src={'https://cdn-icons-png.flaticon.com/512/5968/5968898.png'}
-            alt={'discord'}
-            className={s.navSocialImage}
-            width={25}
+            icon={<IconDiscord className={s.navSocialImage} />}
           />
           <NavSocialImage
             link={'https://twitter.com/realBinaryx'}
-            src={'https://cdn-icons-png.flaticon.com/512/733/733635.png'}
-            alt={'twitter'}
-            className={s.navSocialImage}
-            width={25}
+            icon={<IconTwitter className={s.navSocialImage} />}
           />
           <NavSocialImage
             link={'https://www.linkedin.com/company/realbinaryx/'}
-            src={'https://cdn-icons-png.flaticon.com/512/61/61109.png'}
-            alt={'linkedIn'}
-            className={s.navSocialImage}
-            width={25}
+            icon={<IconLinkedIn className={s.navSocialImage} />}
           />
           <NavSocialImage
             link={'https://t.me/binaryxnews'}
-            src={'https://cdn-icons-png.flaticon.com/512/2111/2111710.png'}
-            alt={'telegram'}
-            className={s.navSocialImage}
-            width={25}
+            icon={<IconTelegram className={s.navSocialImage} />}
           />
         </nav>
       </Container>

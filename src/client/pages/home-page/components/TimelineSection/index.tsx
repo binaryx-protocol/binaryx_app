@@ -69,10 +69,10 @@ const TimelineSection: FC<Props> = ({ className }) => {
               <h1 className={s.timelineTitle}>Timeline</h1>
             </AnimationElement>
             <AnimationElement order={15.8}>
-              <h3 className={s.subTitle}>Product</h3>
+              {/*<h3 className={s.subTitle}>Product</h3>*/}
             </AnimationElement>
             <AnimationElement order={16.8}>
-              <h3 className={s.subTitle}>Marketing</h3>
+              {/*<h3 className={s.subTitle}>Marketing</h3>*/}
             </AnimationElement>
             {/*<h3>Organization</h3>*/}
           </div>
@@ -82,8 +82,8 @@ const TimelineSection: FC<Props> = ({ className }) => {
               <li>MVP Building</li>
             </DescriptionBlock>
             <DescriptionBlock animationOrder={18.8}>
-              <li>– Socials launch</li>
-              <li>– First 750 members onboarded</li>
+              {/*<li>– Socials launch</li>*/}
+              {/*<li>– First 750 members onboarded</li>*/}
             </DescriptionBlock>
             {/*<DescriptionBlock>*/}
             {/*  <li>Legal set up</li>*/}
@@ -95,8 +95,8 @@ const TimelineSection: FC<Props> = ({ className }) => {
               <li>Binaryx marketplace pre-launch on Testnet v1, v2</li>
             </DescriptionBlock>
             <DescriptionBlock animationOrder={20.8}>
-              <li>&gt; 5k members onboarded</li>
-              <li>&gt; 2k KYC done</li>
+              {/*<li>&gt; 5k members onboarded</li>*/}
+              {/*<li>&gt; 2k KYC done</li>*/}
             </DescriptionBlock>
             {/*<DescriptionBlock>*/}
             {/*  <li>Seed round</li>*/}
@@ -108,8 +108,8 @@ const TimelineSection: FC<Props> = ({ className }) => {
               <li>Testnet v3 launch</li>
             </DescriptionBlock>
             <DescriptionBlock animationOrder={22.8}>
-              <li>– Academy launch</li>
-              <li>– Ambassador program launch</li>
+              {/*<li>– Academy launch</li>*/}
+              {/*<li>– Ambassador program launch</li>*/}
             </DescriptionBlock>
             {/*<DescriptionBlock>*/}
             {/*  <li>IDO</li>*/}
@@ -121,10 +121,10 @@ const TimelineSection: FC<Props> = ({ className }) => {
               <li>Binaryx marketplace official launch</li>
             </DescriptionBlock>
             <DescriptionBlock animationOrder={24.8}>
-              <li>– Airdrop for the first academy graduates</li>
-              <li>– Staking program</li>
-              <li>&gt; 70k members onboarded</li>
-              <li>&gt; 7k $aBNRX holders</li>
+              {/*<li>– Airdrop for the first academy graduates</li>*/}
+              {/*<li>– Staking program</li>*/}
+              {/*<li>&gt; 70k members onboarded</li>*/}
+              {/*<li>&gt; 7k $aBNRX holders</li>*/}
             </DescriptionBlock>
             {/*<DescriptionBlock>*/}
             {/*  <li>– Token launch</li>*/}
@@ -137,9 +137,9 @@ const TimelineSection: FC<Props> = ({ className }) => {
               <li>1 st Smart contact audit</li>
             </DescriptionBlock>
             <DescriptionBlock animationOrder={26.8}>
-              <li>Referral program launch</li>
-              <li>200k members onboarded</li>
-              <li>&gt; 20k $aBNRX holders</li>
+              {/*<li>Referral program launch</li>*/}
+              {/*<li>200k members onboarded</li>*/}
+              {/*<li>&gt; 20k $aBNRX holders</li>*/}
             </DescriptionBlock>
           </div>
           <div className={s.timelineColumn}>
@@ -148,7 +148,7 @@ const TimelineSection: FC<Props> = ({ className }) => {
               <li>Other DeFi services launch The secondary market</li>
             </DescriptionBlock>
             <DescriptionBlock animationOrder={28.8}>
-              <li>&gt; 100k $aBRX holders</li>
+              {/*<li>&gt; 100k $aBRX holders</li>*/}
             </DescriptionBlock>
           </div>
         </div>

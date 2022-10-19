@@ -14,6 +14,26 @@ import SchemaSection from './components/WebAssetSection/SchemaSection';
 import TimelineSection from './components/TimelineSection';
 import BgOverlay from './components/BgOverlay';
 import PopupMenu from './components/PopupMenu';
+import IconDiscord from './components/NavSocialImage/IconDiscord';
+import IconTwitter from './components/NavSocialImage/IconTwitter';
+import IconLinkedIn from './components/NavSocialImage/IconLinkedIn';
+import IconTelegram from './components/NavSocialImage/IconTelegram';
+
+const GoogleAnalytics = () => {
+  return (
+    <>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HFY1S4EYJS"></script>
+      <script dangerouslySetInnerHTML={{ __html: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-HFY1S4EYJS');
+        ` }}
+      />
+    </>
+  )
+};
 
 const HomePage: FC = () => {
   const [sectionHeight, setSectionHeight] = useState(
@@ -62,6 +82,7 @@ const HomePage: FC = () => {
   const [FF_LP_PARALLAX, setFF_LP_PARALLAX] = useState(true);
   const [windowHeight, setWindowHeight] = useState(null);
   const isVideoAnimation = false;
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
 
   useEffect(() => {
     setTimeout(() => {
@@ -82,7 +103,7 @@ const HomePage: FC = () => {
 
     setTimeout(() => {
       const height = FF_LP_PARALLAX
-        ? (window.innerHeight - 1) * 7
+        ? (window.innerHeight - 1) * 5
         : window.innerHeight - 1;
       setSectionHeight(height);
 
@@ -792,7 +813,7 @@ const HomePage: FC = () => {
                 >
                   Join waitlist
                 </button>
-                <button type="submit" className={s.joinCommunity}>
+                <button type="submit" className={s.joinCommunity} onClick={handleJoinWaitListButtonClick}>
                   Join our community
                 </button>
               </div>
@@ -992,42 +1013,23 @@ const HomePage: FC = () => {
                   <nav className={s.footerNavSocial}>
                     <NavSocialImage
                       link={'https://discord.gg/kJqgYh7G9G'}
-                      src={
-                        'https://cdn-icons-png.flaticon.com/512/5968/5968898.png'
-                      }
-                      alt={'discord'}
-                      className={s.footerNavSocialImage}
-                      width={40}
+                      icon={<IconDiscord className={s.footerNavSocialImage} width={isMobile ? 36 : 55} height={isMobile ? 26 : 40} fill="#335367" />}
                     />
                     <NavSocialImage
                       link={'https://twitter.com/realBinaryx'}
-                      src={
-                        'https://cdn-icons-png.flaticon.com/512/733/733635.png'
-                      }
-                      alt={'twitter'}
-                      className={s.footerNavSocialImage}
-                      width={40}
+                      icon={<IconTwitter className={s.footerNavSocialImage} width={isMobile ? 34 : 45} height={isMobile ? 25 : 41} fill="#335367" />}
                     />
                     <NavSocialImage
                       link={'https://www.linkedin.com/company/realbinaryx/'}
-                      src={
-                        'https://cdn-icons-png.flaticon.com/512/61/61109.png'
-                      }
-                      alt={'linkedIn'}
-                      className={s.footerNavSocialImage}
-                      width={40}
+                      icon={<IconLinkedIn className={s.footerNavSocialImage} width={isMobile ? 32 : 45} height={isMobile ? 29 : 44} fill="#335367" />}
                     />
                     <NavSocialImage
                       link={'https://t.me/binaryxnews'}
-                      src={
-                        'https://cdn-icons-png.flaticon.com/512/2111/2111710.png'
-                      }
-                      alt={'telegram'}
-                      className={s.footerNavSocialImage}
-                      width={40}
+                      icon={<IconTelegram className={s.footerNavSocialImage} width={isMobile ? 30 : 43} height={isMobile ? 30 : 43} fill="#335367" />}
                     />
                   </nav>
                 </div>
+                <hr className={s.footerDivider} />
                 <nav className={s.footerBottomSection}>
                   <div
                     className={classNames(
@@ -1054,6 +1056,7 @@ const HomePage: FC = () => {
             </div>
           </section>
         </div>
+        <GoogleAnalytics />
       </main>
     </>
   );

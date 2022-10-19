@@ -2,7 +2,7 @@
   max-width: var(--max-width_desktop);
   margin: auto;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     max-width: var(--max-width_mobile);
   }
 }
@@ -16,8 +16,9 @@
   position: relative;
   //background-color: var(--background-color_dark);
   z-index: 1;
+  overflow-x: hidden;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     overflow-y: scroll;
   }
 }
@@ -35,7 +36,7 @@
   top: 130px;
   grid-column: 1/8;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     top: 90px;
   }
 }
@@ -51,7 +52,7 @@
   margin: 0;
   grid-column: 1/8;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     grid-template-columns: repeat(6, 150px);
     top: 79px;
     left: unset;
@@ -75,7 +76,7 @@
   border-bottom: 20px solid transparent;
   border-left: 20px solid #008E85;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     display: none;
   }
 }
@@ -84,7 +85,7 @@
   display: grid;
   grid-gap: 0 20px;
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     grid-template-columns: repeat(6, 1fr);
     overflow: scroll hidden;
     gap: 0;
@@ -109,7 +110,7 @@
   grid-gap: 15px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .timelineColumn {
     grid-gap: 40px;
     // grid-template-rows: 75px 80px 160px 80px;
