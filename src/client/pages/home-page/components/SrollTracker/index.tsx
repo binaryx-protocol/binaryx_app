@@ -1,31 +1,38 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import s from './styles.module.scss';
 
-const ScrollTracker: FC = () => {
-  const [scrollTop, setScrollTop] = useState(0);
-  const scrollTracker = useRef(null);
+type Props = {
+  progressHeights: Array<number>;
+};
+
+const ScrollTracker: FC<Props> = ({ progressHeights }) => {
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const fullProgressHeight = progressHeights.reduce((a, b) => a + b);
 
   const onScroll = () => {
-    const windowScroll = document.documentElement.scrollTop;
+    const windowScroll = -document.documentElement.getBoundingClientRect().top;
     const height =
       document.documentElement.scrollHeight -
       document.documentElement.clientHeight;
     const scrolled = (windowScroll / height) * 100;
+    console.log(fullProgressHeight, document.documentElement.scrollHeight);
 
-    setScrollTop(scrolled);
+    if (scrolled !== fullProgressHeight)
+      progressBarRef.current.style.width = `${scrolled}%`;
   };
 
   useEffect(() => {
     document.addEventListener('scroll', onScroll);
+
     return () => document.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
     <div className={s.scrollTrackerBG}>
       <div
-        ref={scrollTracker}
+        ref={progressBarRef}
         className={s.scrollTracker}
-        style={{ width: `${scrollTop}%` }}
+        onScroll={onScroll}
       ></div>
     </div>
   );

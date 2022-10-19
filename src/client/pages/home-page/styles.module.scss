@@ -568,8 +568,8 @@
     overflow: scroll hidden;
     // scroll-snap-type: x proximity;
     gap: 10px;
-    padding: 0 0 15px 0;
-    width: 320px;
+    padding: 0;
+    max-width: 95vw;
 
     &::-webkit-scrollbar {
       height: 5px !important;

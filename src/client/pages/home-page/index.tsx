@@ -739,7 +739,17 @@ const HomePage: FC = () => {
   return (
     <>
       <Navigation isDark={isBgOverlayDark} />
-      <ScrollTracker />
+      {section1Ref.current && section2Ref.current && section3Ref.current ? (
+        <ScrollTracker
+          progressHeights={[
+            section1Ref.current.clientHeight,
+            section2Ref.current.clientHeight,
+            section3Ref.current.clientHeight,
+          ]}
+        />
+      ) : (
+        ''
+      )}
       <BgOverlay
         id="bg-overlay"
         isBgOverlayActive={bgOverlay.isBgOverlayActive}

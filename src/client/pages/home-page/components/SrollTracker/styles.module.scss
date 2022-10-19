@@ -1,12 +1,12 @@
 .scrollTrackerBG, .scrollTracker {
   position: fixed;
-  inset: 83px 0 0 0;
+  inset: auto 0 8px 0;
   height: .8rem;
-  background-color: rgb(50 50 50 / .2);
+  background-color: rgb(51 51 51 / .25);
   z-index: 20;
-
+  transition: width .1s linear, opacity .2s ease;
   @media screen and (max-width: 768px) {
-    inset: 63px 0 0 0;
+    inset: auto 0 0 0;
   }
 }
 
