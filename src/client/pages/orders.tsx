@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import { Request } from 'express';
 
 import { typedQuery } from '../app/apollo-client';
+import {ExtractPromiseType} from "../app/types/utils";
 
 export async function getServerSideProps({ req }) {
   const { data } = await typedQuery(

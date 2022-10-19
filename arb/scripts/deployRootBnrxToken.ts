@@ -9,7 +9,7 @@ requireEnvVariables(['DEVNET_PRIVKEY', 'L2RPC'])
 const bn1e18 = web3.utils.toBN(1e18);
 
 const main = async () => {
-    await arbLog('BNRXToken')
+    // await arbLog('BNRXToken')
 
     const wallet = (await hre.ethers.getSigners())[0]
     console.log('Wallet:', wallet.address)

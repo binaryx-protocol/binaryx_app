@@ -1,6 +1,7 @@
 import React from 'react';
 import { NextPage } from 'next';
 import { Request } from 'express';
+import {ExtractPromiseType} from "../app/types/utils";
 
 export async function getServerSideProps({ req }) {
   return {

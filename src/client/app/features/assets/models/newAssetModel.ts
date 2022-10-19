@@ -1,8 +1,8 @@
 import { atom } from 'jotai'
 import * as metaMaskModel from "../../../models/metaMaskModel";
 import * as rpcConfigModel from "../../../models/rpcConfigModel";
+import router from 'next/router'
 import {
-  AssetAddress,
   AssetStatuses,
   UiNewAssetFormValues,
   UiNewAssetForm,
@@ -12,15 +12,7 @@ import {arbClient} from "./arbClient";
 import {waitFor} from "../../../utils/pageLoadUtiils";
 import {assetValidator} from "./assetValidator";
 import {SyntheticEvent} from "react";
-
-const assetAddressAttrs  = (): AssetAddress => ({
-  country: 'UA',
-  state: 'Che',
-  city: 'Cherkassy',
-  postalCode: '19600',
-  addressLine1: 'Khreschatik 1',
-  addressLine2: '5th floor',
-})
+import {paths} from "../../../../../../pkg/paths";
 
 const defaultAttrs = (): UiNewAssetFormValues => ({
   name: '',
@@ -28,9 +20,9 @@ const defaultAttrs = (): UiNewAssetFormValues => ({
   title: '',
   description: '',
   status: AssetStatuses.upcoming,
-  originalOwner: '',
-  legalDocuments: '',
-  // propertyAddress: assetAddressAttrs(),
+  tokenInfo_totalSupply: 10_000, // decimals = 0
+  tokenInfo_apr: 10, // percents
+  tokenInfo_tokenPrice: 50_00, // decimals = 2
 })
 
 export const $form = atom<UiNewAssetForm>({
@@ -49,12 +41,14 @@ export const $doCreateAsset = atom(null, async (get, set, form: UiNewAssetForm) 
   const $rpcConfig = get(rpcConfigModel.$rpcConfig)
   const formValues = {
     ...form.values,
-    originalOwner: get(metaMaskModel.$metaMaskState).accounts[0]
+    // originalOwner: get(metaMaskModel.$metaMaskState).accounts[0]
   }
   await arbClient.createAsset(
     $rpcConfig,
     formValues
   );
+  alert("You will see your asset soon. Please, refresh the page.");
+  router.push(paths.listAssets());
 })
 
 export const $onFormChange = atom(null, (get, set, args: UiNewAssetFormChangeArgs) => {
