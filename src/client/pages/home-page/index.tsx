@@ -310,7 +310,6 @@ const HomePage: FC = () => {
 
   function initAnimations() {
     const isMobile = window.innerWidth < 768;
-    console.log("isMobile", isMobile);
     import(`./animations/${isMobile ? "BM1.json" : "B1.json"}`).then((module) => {
       const anim1 = module.default;
       animations.current[0] = initAnimation({
@@ -506,7 +505,6 @@ const HomePage: FC = () => {
         const scrollPercent = getSectionScrollPercent(currentSection - 1);
         const progressBarFiller = document.getElementById("progress-bar-filler");
         const percent = (scrollPercent / 3) + ((currentSection - 1) * 33.333);
-        console.log(" percent", percent);
         progressBarFiller.style.width = percent + "%";
 
         playAnimation(currentSection);
@@ -519,9 +517,13 @@ const HomePage: FC = () => {
       window.requestAnimationFrame(play);
     }
 
-    window.addEventListener('resize', () => {
-      lottie.destroy();
-      initAnimations();
+    let prevWidth = typeof window !== "undefined" ? window.innerWidth : 1000;
+    window.addEventListener('resize', (event) => {
+      if (event.target.innerWidth !== prevWidth) {
+        lottie.destroy();
+        initAnimations();
+        prevWidth = event.target.innerWidth;
+      }
     });
 
     getScrollObject().addEventListener('scroll', (event) => {
