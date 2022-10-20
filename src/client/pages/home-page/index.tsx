@@ -742,9 +742,9 @@ const HomePage: FC = () => {
       {section1Ref.current && section2Ref.current && section3Ref.current ? (
         <ScrollTracker
           progressHeights={[
-            section1Ref.current.clientHeight,
-            section2Ref.current.clientHeight,
-            section3Ref.current.clientHeight,
+            section1Ref.current.getBoundingClientRect().height,
+            section2Ref.current.getBoundingClientRect().height,
+            section3Ref.current.getBoundingClientRect().height,
           ]}
         />
       ) : (

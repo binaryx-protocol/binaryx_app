@@ -42,6 +42,11 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
     <Provider>
       <ApolloProvider client={client}>
         <ThemeProvider theme={theme}>
+          <link
+            rel="shortcut icon"
+            href="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_white_horizontal.ico"
+            type="image/x-icon"
+          />
           <script type="application/json" id="SSR_pageProps">
             {JSON.stringify(pageProps)}
           </script>
@@ -55,11 +60,7 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;700&display=swap"
           />
-          <link
-            rel="shortcut icon"
-            href="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_white_horizontal.ico"
-            type="image/x-icon"
-          />
+
           {/* <Navigation /> */}
           {/* <Home data={''} /> */}
           <WalletConnector />
