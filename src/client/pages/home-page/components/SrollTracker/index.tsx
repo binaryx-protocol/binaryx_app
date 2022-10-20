@@ -7,32 +7,43 @@ type Props = {
 
 const ScrollTracker: FC<Props> = ({ progressHeights }) => {
   const progressBarRef = useRef<HTMLDivElement>(null);
+  const scrollTrackerRef = useRef<HTMLDivElement>(null);
   const fullProgressHeight = progressHeights.reduce((a, b) => a + b);
 
+  // Logic is working only then sections are completly loaded.
+  // In the beggining it's only 837 but after some period of time it's going to work propperly
+  //! Looking for a problem
   const onScroll = () => {
     const windowScroll = -document.documentElement.getBoundingClientRect().top;
-    const height =
-      document.documentElement.scrollHeight -
-      document.documentElement.clientHeight;
-    const scrolled = (windowScroll / height) * 100;
-    console.log(fullProgressHeight, document.documentElement.scrollHeight);
+    const sectionScrolled =
+      fullProgressHeight - document.documentElement.clientHeight;
+    const scrolled = (windowScroll / sectionScrolled) * 100;
+    console.log(fullProgressHeight, progressHeights);
+    if (Math.floor(scrolled) >= 100 || Math.floor(scrolled) === 0) {
+      scrollTrackerRef.current.style.opacity = '0%';
+    } else {
+      progressBarRef.current.style.opacity = '100%';
+      scrollTrackerRef.current.style.opacity = '100%';
+    }
 
-    if (scrolled !== fullProgressHeight)
-      progressBarRef.current.style.width = `${scrolled}%`;
+    progressBarRef.current.style.width = `${scrolled}%`;
   };
 
   useEffect(() => {
     document.addEventListener('scroll', onScroll);
-
     return () => document.removeEventListener('scroll', onScroll);
   }, []);
 
   return (
-    <div className={s.scrollTrackerBG}>
+    <div
+      ref={scrollTrackerRef}
+      style={{ opacity: 0 }}
+      className={s.scrollTrackerBG}
+    >
       <div
         ref={progressBarRef}
         className={s.scrollTracker}
-        onScroll={onScroll}
+        style={{ width: 0 }}
       ></div>
     </div>
   );
