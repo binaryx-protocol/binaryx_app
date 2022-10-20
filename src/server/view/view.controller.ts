@@ -160,6 +160,11 @@ export class ViewController {
     this.nextHandler(req, res);
   }
 
+  @Get('account-v2')
+  public async accountV2(@Req() req: Request, @Res() res: Response) {
+    this.nextHandler(req, res);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   public async showProfile(@Req() req: Request, @Res() res: Response) {

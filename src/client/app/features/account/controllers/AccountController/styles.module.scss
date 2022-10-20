@@ -1,0 +1,46 @@
+.account_page {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  height: 100vh;
+  background: linear-gradient(253.14deg,
+    rgba(37, 122, 215, 0.05) 65.26%,
+    rgba(1, 248, 235, 0.05) 93.3%);
+}
+
+.mainView {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  overflow-y: auto;
+}
+
+.statisticSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-gap: 25px;
+}
+
+.orderSection {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.header {
+  display: flex;
+  min-height: 96px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.accountId {
+  display: flex;
+  align-items: center;
+}
+
+.logoutButton {
+  margin-left: 12px;
+  cursor: pointer;
+}
