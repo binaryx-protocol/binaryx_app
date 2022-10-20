@@ -4,8 +4,13 @@ import WithdrawBlock from 'components/pages/account_page/WithdrawBlock';
 import StatisticBlock from 'components/pages/account_page/StatisticBlock';
 import formatLongNumber from "../../../../utils/formatNumber";
 import OrderBlockView from "../../../../components/pages/account_page/OrderBlock/OrderBlockView";
+import * as accountModel from "../../models/accountModel";
+import {useAtomValue, useSetAtom} from "jotai";
+import {useEffect} from "react";
 
 export const AccountController = (props) => {
+  const doLoadMyRewards = useSetAtom(accountModel.$doLoadMyRewards)
+  useEffect(() => doLoadMyRewards(), []);
   const rewardsAmount = 500
 
   return (
