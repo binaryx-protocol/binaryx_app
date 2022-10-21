@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 export const paths = {
   listAssets() {
     return '/assets-v2';
@@ -5,10 +7,10 @@ export const paths = {
   newAsset() {
     return '/assets-v2/new';
   },
-  showAsset({ id }: { id: number | string }) {
+  showAsset({ id }) {
     return `/assets-v2/${id}`;
   },
-  investAsset({ id }: { id: number | string }) {
+  investAsset({ id }) {
     return `/assets-v2/${id}/invest`;
   },
   account() {
