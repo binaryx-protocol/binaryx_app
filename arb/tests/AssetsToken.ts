@@ -1,7 +1,7 @@
 import { loadFixture, time } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import hre, {ethers, web3} from "hardhat";
-import {bnToInt, expectBn} from "../testUtils";
+import {expectBn} from "../testUtils";
 import {onlyFields} from "../objectUtils";
 
 enum AssetStatuses {
@@ -45,8 +45,8 @@ const usdtInitialBalance = 1000;
 const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
 
 describe("AssetsToken", function () {
-  const expectUsdtBalance = async (usdtfToken, address, dollars) => expect(
-    bnToInt(await usdtfToken.balanceOf(address))
+  const expectUsdtBalance = async (usdtfToken, address, dollars) => expectBn(
+    await usdtfToken.balanceOf(address)
   ).to.eq(dollars * usdtDecimals)
 
   async function deployFixture() {
@@ -108,8 +108,8 @@ describe("AssetsToken", function () {
       await expectUsdtBalance(usdtfToken, owner.address, usdtInitialBalance)
       await expectUsdtBalance(usdtfToken, sc.address, 0)
 
-      expect(
-        bnToInt(await sc.balanceOf(owner.address, assetId))
+      expectBn(
+        (await sc.balanceOf(owner.address, assetId))
       ).to.eq(0)
 
       // do the action
