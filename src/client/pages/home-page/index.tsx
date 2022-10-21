@@ -992,14 +992,15 @@ const HomePage: FC = () => {
             paddingTop={windowHeight * 2}
           />
           <SchemaSection className={classNames(s.section, 'section')} />
-          <TimelineSection className={classNames(s.section, 'section')} />
+          <TimelineSection className={classNames(s.section, 'section')} minHeight={windowHeight - 300} />
           <section
             id="sectionTeam"
             className={classNames(s.section, s.ourTeam, 'section')}
           >
+
             <div
               className={s.ourTeamContainer}
-              // style={{ minHeight: windowHeight }}
+              style={{ minHeight: windowHeight }}
             >
               <h1 className={s.ourTeamTitle}>Our Team</h1>
               <div className={classNames(s.teamGallery, s.wrapper)}>

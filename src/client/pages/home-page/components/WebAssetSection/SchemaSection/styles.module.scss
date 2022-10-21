@@ -8,7 +8,8 @@
 }
 
 .webAssets {
-  display: grid;
+  display: flex;
+  align-items: center;
   place-content: center;
   position: relative;
   z-index: 1;
