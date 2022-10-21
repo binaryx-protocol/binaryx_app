@@ -147,7 +147,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
                 'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property.png'
               }
               imageDescription={'Property'}
-            ></WebAssetCard>
+            />
             <WebAssetCard
               animationOrder={10}
               className={classNames(s.propertyTokens)}
@@ -155,7 +155,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
                 'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property-tokens.png'
               }
               imageDescription={'Property Tokens'}
-            ></WebAssetCard>
+            />
             <AnimationElement
               order={12}
               className={classNames(s.vector1Desktop, s.vectorsDesktop)}
@@ -259,8 +259,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
                 'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property-rent.png'
               }
               imageDescription={'Property Rent'}
-            ></WebAssetCard>
-
+            />
             <AnimationElement order={32} className={s.rent}>
               <p>Rent Goes To Smart-Contact</p>
             </AnimationElement>

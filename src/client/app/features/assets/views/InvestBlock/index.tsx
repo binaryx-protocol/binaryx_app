@@ -1,6 +1,7 @@
 import LinearProgress from '@mui/material/LinearProgress';
 import s from './styles.module.scss';
 import Link from 'next/link';
+import {paths} from "../../../../../../../pkg/paths";
 
 type InvestBlockProps = {
   tokensLeft: number,
@@ -36,7 +37,7 @@ export const InvestBlock = ({ progress, tokensLeft, irr, coc, id }: InvestBlockP
         </div>
       </div>
       <div className={s.invest}>
-        <Link href={`/invest?assetId=${id}`}>
+        <Link href={paths.investAsset({ id })}>
           <a className={s.investButton}>INVEST</a>
         </Link>
       </div>

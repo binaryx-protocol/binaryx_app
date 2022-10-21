@@ -41,6 +41,10 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
 
   return (
     <Provider>
+      <Head>
+        <meta name="viewport" content="width=device-width, user-scalable=no" key="viewport" />
+        <title>Binaryx - Real Estate Tokenization Protocol</title>
+      </Head>
       <ApolloProvider client={client}>
         <ThemeProvider theme={theme}>
           <Head>

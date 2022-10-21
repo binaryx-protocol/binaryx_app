@@ -150,6 +150,11 @@ export class ViewController {
     this.nextHandler(req, res);
   }
 
+  @Get('assets-v2/:id/invest')
+  public async investAssetV2(@Req() req: Request, @Res() res: Response) {
+    this.nextHandler(req, res);
+  }
+
   @Get('assets-v2/:id')
   public async showAssetV2(@Req() req: Request, @Res() res: Response) {
     this.nextHandler(req, res);

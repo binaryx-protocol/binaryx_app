@@ -7,13 +7,24 @@
 }
 
 .blockContent {
-  position: sticky;
-  padding-top: 250px;
+  position: fixed;
+  padding: 250px 20px 0;
   top: 0;
+  transition: transform 0.8s, opacity 0.4s;
+  transform: translateY(100%);
+  opacity: 0;
+
 
   @media (max-width: 768px) {
-    padding-top: 70px;
+    right: 0;
+    left: 0;
+    padding: 70px 20px 0;
+    transform: translateY(100%);
   }
+}
+
+.blockContentSticky {
+  position: sticky;
 }
 
 .infoBlock {

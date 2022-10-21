@@ -1,5 +1,6 @@
 import { FC, ReactNode, RefObject } from 'react';
 import s from './styles.module.scss';
+import classNames from 'classnames';
 
 type Props = {
   heading: string;
@@ -10,6 +11,7 @@ type Props = {
   sectionHeight?: number | null;
   windowHeight?: number | null;
   contentElementRef?: RefObject<HTMLDivElement>;
+  isSticky?: boolean;
 };
 
 const SectionElement: FC<Props> = ({
@@ -21,9 +23,10 @@ const SectionElement: FC<Props> = ({
   sectionHeight,
   windowHeight,
   contentElementRef,
+  isSticky,
 }) => (
   <section id={id} className={s.block} style={{ minHeight: sectionHeight }}>
-    <div className={s.blockContent} ref={contentElementRef} style={{ height: windowHeight }}>
+    <div className={classNames(s.blockContent, { [s.blockContentSticky]: isSticky })} ref={contentElementRef} style={{ height: windowHeight }}>
       <div className={s.infoBlock}>
         {preTitle && <p className={s.weAreHere}>{preTitle}</p>}
         <h2 className={s.title}>{heading}</h2>
