@@ -22,7 +22,7 @@ import IconTelegram from './components/NavSocialImage/IconTelegram';
 const GoogleAnalytics = () => {
   return (
     <>
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HFY1S4EYJS"></script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HFY1S4EYJS" />
       <script dangerouslySetInnerHTML={{ __html: `
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
