@@ -8,6 +8,7 @@ import '../app/styles/globalVariables.css';
 import { Provider, useAtomValue, useSetAtom } from 'jotai';
 import * as featureFlagsModel from '../app/models/featureFlagsModel';
 import * as metaMaskModel from '../app/models/metaMaskModel';
+import Head from 'next/head';
 
 type Props = {
   Component: any;
@@ -42,11 +43,13 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
     <Provider>
       <ApolloProvider client={client}>
         <ThemeProvider theme={theme}>
-          <link
-            rel="shortcut icon"
-            href="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_white_horizontal.ico"
-            type="image/x-icon"
-          />
+          <Head>
+            <link
+              rel="shortcut icon"
+              href="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/favicon.ico"
+              type="image/x-icon"
+            />
+          </Head>
           <script type="application/json" id="SSR_pageProps">
             {JSON.stringify(pageProps)}
           </script>

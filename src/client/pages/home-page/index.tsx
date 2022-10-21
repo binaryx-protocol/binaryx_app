@@ -19,6 +19,7 @@ import IconTwitter from './components/NavSocialImage/IconTwitter';
 import IconLinkedIn from './components/NavSocialImage/IconLinkedIn';
 import IconTelegram from './components/NavSocialImage/IconTelegram';
 import ScrollTracker from './components/SrollTracker';
+import e from 'express';
 
 const GoogleAnalytics = () => {
   return (
@@ -739,17 +740,6 @@ const HomePage: FC = () => {
   return (
     <>
       <Navigation isDark={isBgOverlayDark} />
-      {section1Ref.current && section2Ref.current && section3Ref.current ? (
-        <ScrollTracker
-          progressHeights={[
-            section1Ref.current.getBoundingClientRect().height,
-            section2Ref.current.getBoundingClientRect().height,
-            section3Ref.current.getBoundingClientRect().height,
-          ]}
-        />
-      ) : (
-        ''
-      )}
       <BgOverlay
         id="bg-overlay"
         isBgOverlayActive={bgOverlay.isBgOverlayActive}
