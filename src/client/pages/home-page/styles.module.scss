@@ -28,6 +28,7 @@
 .activeContent {
   opacity: 1;
   transform: translateY(0);
+  transition: transform 0.8s, opacity 1.5s;
 }
 
 .viewedContent {

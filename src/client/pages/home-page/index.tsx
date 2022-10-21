@@ -84,9 +84,10 @@ const HomePage: FC = () => {
   const [FF_LP_PARALLAX, setFF_LP_PARALLAX] = useState(true);
   const [windowHeight, setWindowHeight] = useState(null);
   const isVideoAnimation = false;
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setIsMobile(typeof window !== 'undefined' && window.innerWidth <= 768);
     setTimeout(() => {
       setFF_LP_PARALLAX(getUrlParams().get('FF_LP_PARALLAX'));
       setWindowHeight(typeof window !== 'undefined' ? window.innerHeight : 800);
@@ -685,13 +686,18 @@ const HomePage: FC = () => {
 
   function updateSectionContentStyles() {
     const currentSection = getCurrentSection() - 1;
+    console.log(`currentSection ${currentSection}`);
     // const scrollPosition = getScrollPosition()
     // const scrollPercent = getSectionScrollPercent(currentSection - 1);
 
     getSectionContents().forEach((sectionContent, index) => {
       if (index === currentSection) {
-        sectionContent?.classList.add(s.activeContent);
-        sectionContent?.classList.remove(s.viewedContent);
+        if ((index === 0 && window.scrollY > 300) || index !== 0) {
+          sectionContent?.classList.add(s.activeContent);
+          sectionContent?.classList.remove(s.viewedContent);
+        } else {
+          sectionContent?.classList.remove(s.activeContent);
+        }
       } else if (index < currentSection) {
         sectionContent?.classList.remove(s.activeContent);
         sectionContent?.classList.add(s.viewedContent);
@@ -915,7 +921,7 @@ const HomePage: FC = () => {
             windowHeight={windowHeight}
             onButtonClick={handleJoinWaitListButtonClick}
             contentElementRef={section1ContentRef}
-            isSticky={true}
+            isSticky={!isMobile}
           />
 
         </div>
