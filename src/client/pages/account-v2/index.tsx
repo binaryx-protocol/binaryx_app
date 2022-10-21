@@ -1,6 +1,6 @@
 import {AccountController} from "../../app/features/account";
 
-const AccountV2 = (props) => {
+const AccountV2 = () => {
   return (
     <AccountController />
   )

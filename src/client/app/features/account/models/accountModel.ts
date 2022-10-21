@@ -6,6 +6,7 @@ import {bnToInt, onlyFields} from "../../../utils/objectUtils";
 import {rpcClient} from "./rpcClient";
 import {BigNumber} from "ethers";
 import {BcAsset} from "../../assets/types";
+import {RpcConfig} from "../../../models/rpcConfigModel";
 
 export type BcReward = {
   asset: BcAsset,
@@ -64,7 +65,7 @@ export const $doLoadMyRewards = atom(null, async (get, set) => {
     return get(metaMaskModel.$walletReadiness) === 'ready' && !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
-  const $rpcConfig = get(rpcConfigModel.$rpcConfig)
+  const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
   const response = await rpcClient.getMyRewardsPerAsset(
     $rpcConfig
   );
