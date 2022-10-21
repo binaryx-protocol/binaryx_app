@@ -19,14 +19,34 @@
     outline: none;
   }
 
-  @media screen and (max-width: 768px) {
+  @media (max-width: 768px) {
     padding: 0;
   }
 
 }
 
+.activeContent {
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform 0.8s, opacity 1.5s;
+}
+
+.viewedContent {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+//
+//.section3 {
+//  margin-bottom: 500px;
+//}
+
 .section1 {
   height: 90vh;
+}
+
+.sectionPadding {
+  height: 500px;
 }
 
 .sectionsDark {
@@ -41,15 +61,22 @@
   width: 100%;
   height: 100%;
   top: 0;
+  transition: transform 0.5s;
 
   @media (max-width: 768px) {
     //width: auto;
-    transform: scale(0.85);
-    height: 110vh;
-    width: 160%;
-    left: -20%;
+
+    //transform: scale(0.85);
+    //height: 110vh;
+    //width: 160%;
+    //left: -20%;
+
     //left: -50%;
   }
+}
+
+.containerAnimationDisappeared {
+  transform: translateX(100%);
 }
 
 .bgOverlay {
@@ -69,6 +96,58 @@
 
 .bgOverlayDark {
   background-color: #1B1B1B;
+}
+
+.progressBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 8px;
+  background-color: rgb(51 51 51 / 25%);
+  transition: 0.15s transform;
+  //z-index: 12;
+  transform: translateY(8px);
+}
+
+.progressBarActive {
+  transform: translateY(0);
+}
+
+.progressBarFiller {
+  position: fixed;
+  left: 0;
+  //right: 0;
+  bottom: 0;
+  height: 8px;
+  width: 0;
+  background: linear-gradient(85.42deg, rgba(0, 174, 255, 0.5) 8.17%, rgba(0, 255, 238, 0.5) 103.39%);
+}
+
+.progressBarItems {
+  list-style: none;
+  display: flex;
+  width: 100%;
+  height: 8px;
+  justify-content: stretch;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.progressBarItem {
+  height: 100%;
+  border-right: 1px solid #333;
+  z-index: 5;
+  border-right: 1px solid rgb(255 255 255 / 75%);
+  width: 100%;
+
+  &:last-child {
+    border-right: 0;
+  }
 }
 
 .bgOverlayItem {
@@ -211,11 +290,11 @@
 .infoSection {
   display: flex;
   height: 60px;
-  //overflow: hidden;
+  overflow: hidden;
 
   @media (max-width: 768px) {
     position: fixed;
-    bottom: 35px;
+    bottom: 27px;
     left: 0;
     right: 0;
     padding: 0 15px;;
@@ -261,7 +340,7 @@
   right: 15px;
   color: #000;
   //margin-top: 58px;
-  transform: translateY(65px);
+  transform: translateY(55px);
 
   @media (min-width: 769px) {
     display: none;
@@ -494,6 +573,16 @@
 
 .footerBottomSection {
   padding: 60px 0;
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 500px;
+  }
 }
 
 .footerBottomSectionContainer {

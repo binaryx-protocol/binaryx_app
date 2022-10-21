@@ -22,7 +22,7 @@ import IconTelegram from './components/NavSocialImage/IconTelegram';
 const GoogleAnalytics = () => {
   return (
     <>
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HFY1S4EYJS"></script>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HFY1S4EYJS" />
       <script dangerouslySetInnerHTML={{ __html: `
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -73,6 +73,8 @@ const HomePage: FC = () => {
   ];
   const currentSectionRef = useRef(0);
   const joinWaitListBtnRef = useRef(null);
+  const joinCommunityBtnRef = useRef(null);
+  const progressBarElementRef = useRef(null);
   const [bgOverlay, setBgOverlay] = useState({
     isBgOverlayActive: true,
     isBgAnimationActive: true,
@@ -82,9 +84,10 @@ const HomePage: FC = () => {
   const [FF_LP_PARALLAX, setFF_LP_PARALLAX] = useState(true);
   const [windowHeight, setWindowHeight] = useState(null);
   const isVideoAnimation = false;
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    setIsMobile(typeof window !== 'undefined' && window.innerWidth <= 768);
     setTimeout(() => {
       setFF_LP_PARALLAX(getUrlParams().get('FF_LP_PARALLAX'));
       setWindowHeight(typeof window !== 'undefined' ? window.innerHeight : 800);
@@ -103,7 +106,7 @@ const HomePage: FC = () => {
 
     setTimeout(() => {
       const height = FF_LP_PARALLAX
-        ? (window.innerHeight - 1) * 5
+        ? (window.innerHeight - 1) * 3
         : window.innerHeight - 1;
       setSectionHeight(height);
 
@@ -215,14 +218,14 @@ const HomePage: FC = () => {
         return 0;
       }
       if (scrollPosition < section?.clientHeight + section?.offsetTop) {
-        if (index === 3) {
-          return 3;
+        if (index === 4) {
+          return 4;
         }
         return index + 1;
       }
     }
 
-    return 4;
+    return 5;
   }
 
   function getSectionScrollPercent(sectionIndex = getCurrentSection()) {
@@ -308,7 +311,8 @@ const HomePage: FC = () => {
   };
 
   function initAnimations() {
-    import('./animations/B1.json').then((module) => {
+    const isMobile = window.innerWidth < 768;
+    import(`./animations/${isMobile ? "BM1.json" : "B1.json"}`).then((module) => {
       const anim1 = module.default;
       animations.current[0] = initAnimation({
         animationData: anim1,
@@ -318,7 +322,7 @@ const HomePage: FC = () => {
       });
     });
 
-    import('./animations/B2_1.json')
+    import(`./animations/${isMobile ? "BM2_1.json" : "B2_1.json"}`)
       .then((module) => {
         const anim2 = module.default;
         animations.current[1] = initAnimation({
@@ -328,7 +332,7 @@ const HomePage: FC = () => {
           renderer: 'svg',
         });
       })
-      .then(() => import('./animations/B2_2.json'))
+      .then(() => import(`./animations/${isMobile ? "BM2_2.json" : "B2_2.json"}`))
       .then((module) => {
         const anim3 = module.default;
         animations.current[4] = initAnimation({
@@ -336,7 +340,7 @@ const HomePage: FC = () => {
           container: document.getElementById('animationContainer2_2'),
           autoplay: false,
         });
-      }).then(() => import('./animations/B3.json'))
+      }).then(() => import(`./animations/${isMobile ? "BM3.json" : "B3.json"}`))
       .then((module) => {
         const anim3 = module.default;
         animations.current[2] = initAnimation({
@@ -345,7 +349,7 @@ const HomePage: FC = () => {
           autoplay: false,
         });
       })
-      .then(() => import('./animations/B4.json'))
+      .then(() => import(`./animations/${isMobile ? "BM4.json" : "B4.json"}`))
       .then((module) => {
         const anim4 = module.default;
         animations.current[3] = initAnimation({
@@ -500,8 +504,15 @@ const HomePage: FC = () => {
       function play(){
         // const scrollPosition = getScrollPosition();
         const currentSection = getCurrentSection();
+        const scrollPercent = getSectionScrollPercent(currentSection - 1);
+        const progressBarFiller = document.getElementById("progress-bar-filler");
+        const percent = (scrollPercent / 3) + ((currentSection - 1) * 33.333);
+        progressBarFiller.style.width = percent + "%";
+        progressBarElementRef.current.style.display = percent >= 100 ? "none" : "block";
+
         playAnimation(currentSection);
         updateContainerStyles();
+        updateSectionContentStyles();
         // let frameNumber  = window.pageYOffset/playbackConst;
         // vid.currentTime  = frameNumber;
         window.requestAnimationFrame(play);
@@ -510,39 +521,59 @@ const HomePage: FC = () => {
       window.requestAnimationFrame(play);
     }
 
+    let prevWidth = typeof window !== "undefined" ? window.innerWidth : 1000;
+    window.addEventListener('resize', (event) => {
+      if (event.target.innerWidth !== prevWidth) {
+        lottie.destroy();
+        initAnimations();
+        prevWidth = event.target.innerWidth;
+      }
+    });
+
     getScrollObject().addEventListener('scroll', (event) => {
       event.preventDefault();
       event.stopPropagation();
       const currentSection = getCurrentSection();
-      const sectionContentPrev = getSectionContents()[currentSection - 1];
-      const sectionContentNext = getSectionContents()[currentSection];
-      const scrollPercent = getSectionScrollPercent(currentSection - 1);
-      if (sectionContentPrev) {
-        const opacity =
-          scrollPercent > 90 ? 1 - (10 - (100 - scrollPercent)) / 10 : 1;
-        sectionContentPrev.style.opacity = opacity;
-      }
-      if (sectionContentNext) {
-        const opacity =
-          scrollPercent > 95 ? (5 - (100 - scrollPercent)) / 10 : 0;
+      // const sectionContentPrev = getSectionContents()[currentSection - 1];
+      // const sectionContentNext = getSectionContents()[currentSection];
+      // const scrollPercent = getSectionScrollPercent(currentSection - 1);
+      // if (sectionContentPrev) {
+      //   const opacity =
+      //     scrollPercent > 90 ? 1 - (10 - (100 - scrollPercent)) / 10 : 1;
+      //   sectionContentPrev.style.opacity = opacity;
+      // }
+      // if (sectionContentNext) {
+      //   const opacity =
+      //     scrollPercent > 95 ? (5 - (100 - scrollPercent)) / 10 : 0;
+      //
+      //   sectionContentNext.style.opacity = opacity;
+      // }
+      // if (currentSection === 1 && scrollPercent < 50) {
+      //   sectionContentPrev.style.opacity =
+      //     scrollPercent > 5 ? (95 - (100 - scrollPercent)) / 10 : 0;
+      // }
 
-        sectionContentNext.style.opacity = opacity;
-      }
-      if (currentSection === 1 && scrollPercent < 50) {
-        sectionContentPrev.style.opacity =
-          scrollPercent > 5 ? (95 - (100 - scrollPercent)) / 10 : 0;
-      }
-
-      if (currentSection >= 4) {
+      if (currentSection >= 5) {
         setIsBgOverlayDark(() => true);
+        joinWaitListBtnRef.current.style.display = "none";
+        joinCommunityBtnRef.current.style.display = "none";
       } else if (currentSection <= 4) {
         setIsBgOverlayDark(() => false);
+        joinWaitListBtnRef.current.style.display = "block";
+        joinCommunityBtnRef.current.style.display = "block";
       }
 
       if (window.scrollY > 500) {
         joinWaitListBtnRef.current.classList.add(s.btnJoinWaitlistNext);
       } else {
         joinWaitListBtnRef.current.classList.remove(s.btnJoinWaitlistNext);
+      }
+
+
+      if (window.scrollY > 5) {
+        progressBarElementRef.current.classList.add(s.progressBarActive);
+      } else {
+        progressBarElementRef.current.classList.remove(s.progressBarActive);
       }
 
       // updateContainerStyles();
@@ -642,8 +673,50 @@ const HomePage: FC = () => {
       container3.current.style.display =
         currentSection === 2 ? 'block' : 'none';
       container4.current.style.display =
-        currentSection === 3 ? 'block' : 'none';
+        currentSection >= 3 ? 'block' : 'none';
+
+      if (currentSection === 4) {
+        container4.current.classList.add(s.containerAnimationDisappeared)
+      } else {
+        container4.current.classList.remove(s.containerAnimationDisappeared)
+      }
     }
+  }
+
+
+  function updateSectionContentStyles() {
+    const currentSection = getCurrentSection() - 1;
+    console.log(`currentSection ${currentSection}`);
+    // const scrollPosition = getScrollPosition()
+    // const scrollPercent = getSectionScrollPercent(currentSection - 1);
+
+    getSectionContents().forEach((sectionContent, index) => {
+      if (index === currentSection) {
+        if ((index === 0 && window.scrollY > 300) || index !== 0) {
+          sectionContent?.classList.add(s.activeContent);
+          sectionContent?.classList.remove(s.viewedContent);
+        } else {
+          sectionContent?.classList.remove(s.activeContent);
+        }
+      } else if (index < currentSection) {
+        sectionContent?.classList.remove(s.activeContent);
+        sectionContent?.classList.add(s.viewedContent);
+      } else {
+        sectionContent?.classList.remove(s.activeContent);
+        sectionContent?.classList.remove(s.viewedContent);
+      }
+    });
+
+    // if (section1ContentRef.current) {
+    //   section1ContentRef.current.style.display =
+    //     currentSection === 0 ? 'block' : 'none';
+    //   section2ContentRef.current.style.display =
+    //     currentSection === 1 ? 'block' : 'none';
+    //   section3ContentRef.current.style.display =
+    //     currentSection === 2 ? 'block' : 'none';
+    //   // section4ContentRef.current.style.display =
+    //   //   currentSection === 3 ? 'block' : 'none';
+    // }
   }
 
   function updateContainerStylesV2(currentSection) {
@@ -734,6 +807,14 @@ const HomePage: FC = () => {
         isBgOverlayActive={bgOverlay.isBgOverlayActive}
         isBgAnimationActive={bgOverlay.isBgAnimationActive}
       />
+      <div className={s.progressBar} ref={progressBarElementRef}>
+        <span id="progress-bar-filler" className={s.progressBarFiller} />
+        <ul className={s.progressBarItems}>
+          <li className={s.progressBarItem} />
+          <li className={s.progressBarItem} />
+          <li className={s.progressBarItem} />
+        </ul>
+      </div>
       <div
         className={s.containerAnimation}
         ref={container1}
@@ -771,7 +852,7 @@ const HomePage: FC = () => {
         id="animationContainer3"
       />
       <div
-        className={s.containerAnimation}
+        className={classNames(s.containerAnimation, { [s.containerAnimationDisappeared]: false }) }
         ref={container4}
         id="animationContainer4"
       />
@@ -813,7 +894,7 @@ const HomePage: FC = () => {
                 >
                   Join waitlist
                 </button>
-                <button type="submit" className={s.joinCommunity} onClick={handleJoinWaitListButtonClick}>
+                <button type="submit" ref={joinCommunityBtnRef} className={s.joinCommunity} onClick={handleJoinWaitListButtonClick}>
                   Join our community
                 </button>
               </div>
@@ -840,7 +921,9 @@ const HomePage: FC = () => {
             windowHeight={windowHeight}
             onButtonClick={handleJoinWaitListButtonClick}
             contentElementRef={section1ContentRef}
+            isSticky={!isMobile}
           />
+
         </div>
         <div
           id="section2"
@@ -851,7 +934,7 @@ const HomePage: FC = () => {
             heading="The next generation DeFi experience with Real Yield"
             description="Use your property tokens to borrow and keep earning the highest yield available at the same time"
             onButtonClick={handleJoinWaitListButtonClick}
-            sectionHeight={sectionHeight}
+            sectionHeight={sectionHeight / 2}
             windowHeight={windowHeight}
             contentElementRef={section2ContentRef}
           />
@@ -859,15 +942,16 @@ const HomePage: FC = () => {
         <div
           id="section3"
           ref={section3Ref}
-          className={classNames(s.wrapper, s.section, 'section')}
+          className={classNames(s.wrapper, s.section, s.section3, 'section')}
         >
           <SectionElement
             heading="Boosting Economy and scaling Web3"
             description="Increasing assets ownership transferring speed with web3 infrastructure"
-            sectionHeight={sectionHeight}
+            sectionHeight={sectionHeight / 2}
             windowHeight={windowHeight}
             contentElementRef={section3ContentRef}
             onButtonClick={handleJoinWaitListButtonClick}
+            disappeared={isBgOverlayDark}
           />
         </div>
         {/*<div*/}
@@ -885,6 +969,7 @@ const HomePage: FC = () => {
         {/*    </p>*/}
         {/*  </SectionElement>*/}
         {/*</div>*/}
+        <div ref={section4Ref} className={s.sectionPadding} />
         <div className={s.sectionsDark}>
           <BgOverlay
             isBgOverlayActive={true}
