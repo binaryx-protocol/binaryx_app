@@ -1,21 +1,26 @@
 .yearBlock {
-  height: fit-content;
+  display: grid;
+  place-content: center;
   font-size: var(--font-size_small);
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid white;
   backdrop-filter: blur(10px);
   text-align: center;
-  padding: 20px 25px;
   width: 150px;
+  height: 70px;
   border-radius: var(--border-radius_default);
-  
+
   @media screen and (max-width: 768px) {
     width: 140px;
-    padding: 5px 25px;
+    height: 40px;
   }
 }
 
 .yearBlock .title {
   font-size: 20px;
   font-weight: 500;
+
+  @media screen and (max-width: 768px) {
+    font-size: 18px;
+  }
 }

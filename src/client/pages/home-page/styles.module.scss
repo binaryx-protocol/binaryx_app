@@ -13,7 +13,7 @@
 
 .section {
   outline: none;
-  padding: 10px 24px;
+  // padding: 10px 24px;
 
   * {
     outline: none;
@@ -381,7 +381,7 @@
   display: grid;
   place-content: center;
   //min-height: 100vh;
-  padding: 50px 0 80px;
+  padding: 50px 15px 80px;
 
   // @media (max-width: 768px) {
   //   min-height: 90vh;
@@ -633,13 +633,6 @@
     place-content: space-between;
   }
 
-
-  .companyTitle {
-    font-size: 25px;
-    position: relative;
-    top: 0;
-  }
-
   .infoSection {
     flex-direction: column;
     min-height: 120px;
@@ -660,11 +653,12 @@
   .teamGallery {
     display: grid;
     // grid-template-columns: repeat(4, 320px);
-    grid-template-columns: repeat(4, 250px);
+    grid-auto-flow: column;
     overflow: scroll hidden;
-    padding-bottom: 14px;
     // scroll-snap-type: x proximity;
     gap: 10px;
+    padding: 0;
+    max-width: 95vw;
 
     &::-webkit-scrollbar {
       height: 5px !important;
