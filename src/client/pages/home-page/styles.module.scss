@@ -60,6 +60,7 @@
   width: 100%;
   height: 100%;
   top: 0;
+  transition: transform 0.5s;
 
   @media (max-width: 768px) {
     //width: auto;
@@ -71,6 +72,10 @@
 
     //left: -50%;
   }
+}
+
+.containerAnimationDisappeared {
+  transform: translateX(100%);
 }
 
 .bgOverlay {
@@ -236,10 +241,6 @@
 .wrapper {
   max-width: var(--max-width_desktop);
   margin: auto;
-}
-
-.section3 {
-  margin-bottom: 300px;
 }
 
 .heroPageInfo {

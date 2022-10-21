@@ -216,14 +216,14 @@ const HomePage: FC = () => {
         return 0;
       }
       if (scrollPosition < section?.clientHeight + section?.offsetTop) {
-        if (index === 3) {
-          return 3;
+        if (index === 4) {
+          return 4;
         }
         return index + 1;
       }
     }
 
-    return 4;
+    return 5;
   }
 
   function getSectionScrollPercent(sectionIndex = getCurrentSection()) {
@@ -550,7 +550,7 @@ const HomePage: FC = () => {
       //     scrollPercent > 5 ? (95 - (100 - scrollPercent)) / 10 : 0;
       // }
 
-      if (currentSection >= 4) {
+      if (currentSection >= 5) {
         setIsBgOverlayDark(() => true);
       } else if (currentSection <= 4) {
         setIsBgOverlayDark(() => false);
@@ -666,6 +666,12 @@ const HomePage: FC = () => {
         currentSection === 2 ? 'block' : 'none';
       container4.current.style.display =
         currentSection >= 3 ? 'block' : 'none';
+
+      if (currentSection === 4) {
+        container4.current.classList.add(s.containerAnimationDisappeared)
+      } else {
+        container4.current.classList.remove(s.containerAnimationDisappeared)
+      }
     }
   }
 
@@ -833,7 +839,7 @@ const HomePage: FC = () => {
         id="animationContainer3"
       />
       <div
-        className={s.containerAnimation}
+        className={classNames(s.containerAnimation, { [s.containerAnimationDisappeared]: false }) }
         ref={container4}
         id="animationContainer4"
       />
@@ -932,6 +938,7 @@ const HomePage: FC = () => {
             windowHeight={windowHeight}
             contentElementRef={section3ContentRef}
             onButtonClick={handleJoinWaitListButtonClick}
+            disappeared={isBgOverlayDark}
           />
         </div>
         {/*<div*/}
@@ -949,7 +956,7 @@ const HomePage: FC = () => {
         {/*    </p>*/}
         {/*  </SectionElement>*/}
         {/*</div>*/}
-        <div className={s.sectionPadding}></div>
+        <div ref={section4Ref} className={s.sectionPadding} />
         <div className={s.sectionsDark}>
           <BgOverlay
             isBgOverlayActive={true}

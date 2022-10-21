@@ -11,7 +11,7 @@ type Props = {
   sectionHeight?: number | null;
   windowHeight?: number | null;
   contentElementRef?: RefObject<HTMLDivElement>;
-  isSticky?: boolean
+  isSticky?: boolean;
 };
 
 const SectionElement: FC<Props> = ({
