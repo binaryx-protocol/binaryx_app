@@ -73,6 +73,7 @@ const HomePage: FC = () => {
   ];
   const currentSectionRef = useRef(0);
   const joinWaitListBtnRef = useRef(null);
+  const joinCommunityBtnRef = useRef(null);
   const progressBarElementRef = useRef(null);
   const [bgOverlay, setBgOverlay] = useState({
     isBgOverlayActive: true,
@@ -506,6 +507,7 @@ const HomePage: FC = () => {
         const progressBarFiller = document.getElementById("progress-bar-filler");
         const percent = (scrollPercent / 3) + ((currentSection - 1) * 33.333);
         progressBarFiller.style.width = percent + "%";
+        progressBarElementRef.current.style.display = percent >= 100 ? "none" : "block";
 
         playAnimation(currentSection);
         updateContainerStyles();
@@ -552,8 +554,12 @@ const HomePage: FC = () => {
 
       if (currentSection >= 5) {
         setIsBgOverlayDark(() => true);
+        joinWaitListBtnRef.current.style.display = "none";
+        joinCommunityBtnRef.current.style.display = "none";
       } else if (currentSection <= 4) {
         setIsBgOverlayDark(() => false);
+        joinWaitListBtnRef.current.style.display = "block";
+        joinCommunityBtnRef.current.style.display = "block";
       }
 
       if (window.scrollY > 500) {
@@ -561,6 +567,7 @@ const HomePage: FC = () => {
       } else {
         joinWaitListBtnRef.current.classList.remove(s.btnJoinWaitlistNext);
       }
+
 
       if (window.scrollY > 5) {
         progressBarElementRef.current.classList.add(s.progressBarActive);
@@ -881,7 +888,7 @@ const HomePage: FC = () => {
                 >
                   Join waitlist
                 </button>
-                <button type="submit" className={s.joinCommunity} onClick={handleJoinWaitListButtonClick}>
+                <button type="submit" ref={joinCommunityBtnRef} className={s.joinCommunity} onClick={handleJoinWaitListButtonClick}>
                   Join our community
                 </button>
               </div>

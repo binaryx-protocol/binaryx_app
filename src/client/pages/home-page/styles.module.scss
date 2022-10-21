@@ -19,7 +19,7 @@
     outline: none;
   }
 
-  @media screen and (max-width: 768px) {
+  @media (max-width: 768px) {
     padding: 0;
   }
 
@@ -572,6 +572,16 @@
 
 .footerBottomSection {
   padding: 60px 0;
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 500px;
+  }
 }
 
 .footerBottomSectionContainer {
