@@ -1,3 +1,4 @@
+// @ts-nocheck
 import s from './AssetsDetailsController.module.scss'
 import { Gallery } from "../views/Gallery";
 import {InvestBlock} from "../views/InvestBlock";

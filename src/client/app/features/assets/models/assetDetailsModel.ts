@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {atom, PrimitiveAtom} from 'jotai'
 import * as metaMaskModel from "../../../models/metaMaskModel";
 import * as rpcConfigModel from "../../../models/rpcConfigModel";

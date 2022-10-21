@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC, useEffect, useState } from 'react';
 import s from './styles.module.scss';
 import useAssets from 'hooks/useAssets';
