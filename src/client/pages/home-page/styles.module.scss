@@ -242,6 +242,8 @@
 .wrapper {
   max-width: var(--max-width_desktop);
   margin: auto;
+  //padding-left: 15px;
+  //padding-right: 15px;
 }
 
 .heroPageInfo {
@@ -250,6 +252,7 @@
   height: 100vh;
   position: relative;
   z-index: 10;
+  padding: 0 20px;
 
   @media (max-width: 768px) {
     height: 80vh;
@@ -399,7 +402,7 @@
 .teamGallery {
   display: flex;
   justify-content: space-between;
-  width: 100vw;
+  width: 98vw;
 }
 
 .joinWaitlistContainer {
@@ -426,6 +429,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 15px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -500,12 +504,10 @@
 
 .footer {
   background: #FFF;
-  margin: 0 -25px;
-  padding: 0 25px;
+  padding: 0 15px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     margin: 0;
-    padding: 0;
   }
 }
 
@@ -623,10 +625,38 @@
   font-size: 14px;
 }
 
+
+@media screen and (max-width: 1024px) {
+  .ourTeamContainer {
+    padding: 0 15px;
+  }
+
+  .teamGallery {
+    display: grid;
+    // grid-template-columns: repeat(4, 320px);
+    grid-auto-flow: column;
+    overflow: scroll hidden;
+    // scroll-snap-type: x proximity;
+    gap: 10px;
+    padding: 0;
+    max-width: 95vw;
+    width: 100%;
+
+    &::-webkit-scrollbar {
+      height: 5px !important;
+      background-color: rgba(90, 90, 90, 0.5) !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(1, 221, 220, 1) !important;
+    }
+  }
+}
+
 @media screen and (max-width: 768px) {
   .wrapper {
     max-width: none;
-    padding: 0 20px;
+    //padding: 0;
   }
 
   .heroPageInfo {
@@ -649,26 +679,6 @@
     height: 60px;
     width: inherit;
     font-size: 16px;
-  }
-
-  .teamGallery {
-    display: grid;
-    // grid-template-columns: repeat(4, 320px);
-    grid-auto-flow: column;
-    overflow: scroll hidden;
-    // scroll-snap-type: x proximity;
-    gap: 10px;
-    padding: 0;
-    max-width: 95vw;
-
-    &::-webkit-scrollbar {
-      height: 5px !important;
-      background-color: rgba(90, 90, 90, 0.5) !important;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: rgba(1, 221, 220, 1) !important;
-    }
   }
 
   // .ourTeamTitle {

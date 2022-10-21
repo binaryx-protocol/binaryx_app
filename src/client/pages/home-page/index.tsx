@@ -1,4 +1,5 @@
 // @ts-nocheck
+import Head from 'next/head'
 import Navigation from './components/HomeNavigation';
 import { FC, useEffect, useRef, useState } from 'react';
 import SectionElement from './components/SectionElement';
@@ -1102,7 +1103,7 @@ const HomePage: FC = () => {
                       icon={<IconDiscord className={s.footerNavSocialImage} width={isMobile ? 36 : 55} height={isMobile ? 26 : 40} fill="#335367" />}
                     />
                     <NavSocialImage
-                      link={'https://twitter.com/realBinaryx'}
+                      link={'https://twitter.com/BinaryxProtocol'}
                       icon={<IconTwitter className={s.footerNavSocialImage} width={isMobile ? 34 : 45} height={isMobile ? 25 : 41} fill="#335367" />}
                     />
                     <NavSocialImage

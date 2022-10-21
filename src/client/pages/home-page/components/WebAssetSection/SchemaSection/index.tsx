@@ -144,7 +144,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               animationOrder={8}
               className={classNames(s.property)}
               imageSrc={
-                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property.svg'
+                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property2.png'
               }
               imageDescription={'Property'}
             />
@@ -152,7 +152,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               animationOrder={10}
               className={classNames(s.propertyTokens)}
               imageSrc={
-                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property-tokens.svg'
+                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property-tokens2.png'
               }
               imageDescription={'Property Tokens'}
             />

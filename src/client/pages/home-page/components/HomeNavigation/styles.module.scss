@@ -6,7 +6,7 @@
   width: 100%;
   position: fixed;
   z-index: 19;
-  padding: 0 24px;
+  padding: 0;
 
   //background-color: rgba(255, 255, 255, 0.95);
   background-color: transparent;
@@ -35,8 +35,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: var(--max-width_desktop);
-  padding: 0;
+  max-width: calc(var(--max-width_desktop));
+  padding: 0 20px;
 }
 
 .logo {

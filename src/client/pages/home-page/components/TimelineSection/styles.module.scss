@@ -2,6 +2,7 @@
   max-width: var(--max-width_desktop);
   margin: auto;
   overflow-x: scroll;
+  padding: 0 20px;
 
   @media screen and (max-width: 1024px) {
     // max-width: var(--max-width_mobile);
