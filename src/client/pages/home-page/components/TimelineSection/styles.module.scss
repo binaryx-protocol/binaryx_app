@@ -1,14 +1,17 @@
 .container {
   max-width: var(--max-width_desktop);
   margin: auto;
+  overflow-x: scroll;
+  padding: 0 20px;
 
   @media screen and (max-width: 1024px) {
-    max-width: var(--max-width_mobile);
+    // max-width: var(--max-width_mobile);
+    padding: 0 15px;
   }
 }
 
 .timeline {
-  display: grid;
+  // display: grid;
   place-items: center;
   //min-height: 80vh;
   padding: 30px 0;
@@ -114,7 +117,7 @@
   .timelineColumn {
     grid-gap: 40px;
     // grid-template-rows: 75px 80px 160px 80px;
-    grid-template-rows: 80px 80px 160px 1px;
+    grid-template-rows: 60px 80px 160px 1px;
     width: fit-content;
     // margin-right: 20px;
     margin-right: 10px;
@@ -126,7 +129,7 @@
 
   .timelineHeaders {
     position: absolute;
-    grid-template-rows: 100px 105px 187px;
+    grid-template-rows: 80px 105px 187px;
   }
 
   .timelineTitle {

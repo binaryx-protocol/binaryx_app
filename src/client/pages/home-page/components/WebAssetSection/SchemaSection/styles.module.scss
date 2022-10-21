@@ -1,6 +1,7 @@
 .container {
   max-width: var(--max-width_desktop);
   margin: auto;
+  padding: 0 5px;
 
   @media screen and (max-width: 1024px) {
     max-width: var(--max-width_mobile);
@@ -8,7 +9,8 @@
 }
 
 .webAssets {
-  display: grid;
+  display: flex;
+  align-items: center;
   place-content: center;
   position: relative;
   z-index: 1;
@@ -18,18 +20,18 @@
   overflow-x: hidden;
   //background-color: var(--background-color_dark);
 
-  @media screen and (max-height: 736px) {
+  @media screen and (max-height: 768px) {
     place-content: flex-end center;
   }
 }
 
 .webAssetsContainer {
   display: grid;
-  grid-gap: 25px;
+  grid-gap: 20px;
   grid-template-columns: repeat(3, 1fr);
 
   @media screen and (max-width: 1024px) {
-    grid-gap: 10px;
+    grid-gap: 5px;
     grid-template-columns: 250px;
     // margin-bottom: 7px;
   }
@@ -55,23 +57,23 @@
 }
 
 .vector3Desktop {
-  top: 21.4%;
+  top: 20.4%;
   right: 26%;
   scale: 1.1;
 }
 
 .vector4Desktop {
-  top: -32%;
+  top: -29%;
   left: 7%;
 }
 
 .vector5Desktop {
-  top: -32%;
+  top: -29%;
   right: 6.5%;
 }
 
 .vector6Desktop {
-  top: -32%;
+  top: -29%;
   right: 9%;
 }
 
@@ -86,25 +88,25 @@
 }
 
 .vector1Mobile {
-  top: 26%;
+  top: 22%;
+  scale: 1 0.9;
   left: 28%;
 
   @media screen and (max-height: 667px) {
-    top: 16%;
-    left: 29%;
+    top: 10%;
     scale: 1 0.8;
   }
 }
 
 .vector2Mobile {
-  bottom: -8%;
+  bottom: -15%;
   left: 2%;
-  scale: 1.1 0.83;
+  scale: 1.1 0.78;
 
   @media screen and (max-height: 667px) {
-    bottom: -50%;
+    bottom: -57%;
     left: 2%;
-    scale: 1.1 0.75;
+    scale: 1.1 0.73;
   }
 }
 
@@ -224,8 +226,7 @@
   .propertyTokens {
     background: linear-gradient(180deg, #0097F1 0%, rgba(0, 151, 241, 0) 100%),
       linear-gradient(0deg, rgba(31, 80, 115, 0.5), rgba(31, 80, 115, 0.5));
-    border: 1px solid;
-    border-image-source: linear-gradient(180deg, #0097F1 0%, rgba(0, 151, 241, 0) 100%);
+    border: 1px solid rgba(31, 80, 115, 0.5);
   }
 
   @media screen and (max-width: 1024px) {
@@ -269,9 +270,8 @@
   .stablecoins,
   .users {
     background: linear-gradient(0deg, rgba(61, 27, 99, 0.5), rgba(61, 27, 99, 0.5)),
-      linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
-    border: 1px solid;
-    border-image-source: linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
+    linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
+    border: 1px solid rgba(124, 4, 250, 0.5);
   }
 }
 
@@ -291,8 +291,7 @@
   transition: background .5s ease;
 
   .propertyRent {
-    border: 1px solid;
-    border-image-source: linear-gradient(180deg, #00DD8D 0%, rgba(0, 181, 221, 0) 100%);
+    border: 1px solid rgba(31, 91, 88, 0.5);
     background: linear-gradient(180deg, #00DD8D 0%, rgba(0, 181, 221, 0) 100%),
       linear-gradient(0deg, rgba(31, 91, 88, 0.5), rgba(31, 91, 88, 0.5));
     left: 85px;
@@ -325,8 +324,8 @@
 }
 
 .rent {
-  top: 10%;
-  left: 27.5%;
+  top: 12%;
+  left: 29.5%;
 
   @media screen and (max-width: 1024px) {
     top: unset;
@@ -337,7 +336,7 @@
 }
 
 .claim {
-  top: 7%;
+  top: 9%;
   right: 25.5%;
 
   @media screen and (max-width: 1024px) {
@@ -360,8 +359,7 @@
 
 .binaryxMarketplace {
   background-color: rgba(31, 91, 88, 0.5) !important;
-  border: 1px solid;
-  border-image-source: linear-gradient(180deg, #00B5DD 0%, rgba(0, 181, 221, 0) 100%);
+  border: 1px solid rgba(31, 91, 88, 0.5);
   border-radius: 10px !important;
   font-weight: 500;
   grid-row: 2;
@@ -374,6 +372,7 @@
 
   .binaryxMain {
     backdrop-filter: none;
+    font-size: 16px;
   }
 }
 
@@ -384,7 +383,7 @@
 }
 
 .assetsTitle {
-  font-size: var(--font-size_medium);
+  font-size: 40px;
   text-align: center;
   font-weight: 400;
 }
@@ -394,7 +393,7 @@
     font-size: 24px;
     font-weight: 300;
     text-align: left;
-    margin-top: 0;
+    margin: 0 0 10px 0;
   }
 
   .purchasingPropertyTokens,
@@ -416,7 +415,7 @@
     grid-column: 1;
     height: 135px;
     width: 160px;
-    margin: 25px 0;
+    margin: 20px 0;
     left: 6%;
 
     @media screen and (max-height: 667px) {

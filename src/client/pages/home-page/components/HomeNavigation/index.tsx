@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { FC } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import s from './styles.module.scss';
 import { Container } from '@mui/material';
 import NavSocialImage from '../NavSocialImage';
@@ -15,8 +15,28 @@ type Props = {
 };
 
 const LandingNav: FC<Props> = ({ isDark }) => {
+  const isTransparentBgRef = useRef(true);
+  const [isTransparentBg, setIsTransparentBg] = useState(true);
+
+  useEffect(() => {
+    document.addEventListener('scroll', () => {
+      console.log("scroll", window.scrollY);
+      if (window.scrollY > 0) {
+        if (isTransparentBgRef.current) {
+          isTransparentBgRef.current = false;
+          setIsTransparentBg(() => false);
+        }
+      } else {
+        if (!isTransparentBgRef.current) {
+          isTransparentBgRef.current = true;
+          setIsTransparentBg(() => true);
+        }
+      }
+    })
+  }, []);
+
   return (
-    <header className={classNames(s.header, { [s.headerDark]: isDark })}>
+    <header className={classNames(s.header, { [s.headerDark]: isDark, [s.headerTransparent]: isTransparentBg })}>
       <Container maxWidth="xl" className={s.container}>
         <div
           className={s.logoWrap}
@@ -46,7 +66,7 @@ const LandingNav: FC<Props> = ({ isDark }) => {
             icon={<IconDiscord className={s.navSocialImage} />}
           />
           <NavSocialImage
-            link={'https://twitter.com/realBinaryx'}
+            link={'https://twitter.com/BinaryxProtocol'}
             icon={<IconTwitter className={s.navSocialImage} />}
           />
           <NavSocialImage

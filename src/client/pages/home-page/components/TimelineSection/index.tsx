@@ -7,9 +7,10 @@ import DescriptionBlock from './DescriptionBlock';
 
 type Props = {
   className?: string;
+  minHeight?: string;
 };
 
-const TimelineSection: FC<Props> = ({ className }) => {
+const TimelineSection: FC<Props> = ({ className, minHeight }) => {
   const timelineGrid = useRef<HTMLDivElement>(null);
 
   const toggleClassName = (
@@ -38,7 +39,7 @@ const TimelineSection: FC<Props> = ({ className }) => {
   }, []);
 
   return (
-    <section className={classNames(s.timeline, className)}>
+    <section className={classNames(s.timeline, className)} style={{ minHeight }}>
       <div className={s.container}>
         <div ref={timelineGrid} className={s.timelineGrid}>
           <AnimationElement order={1.8} className={s.timelineSeparatorTr}>
@@ -69,10 +70,10 @@ const TimelineSection: FC<Props> = ({ className }) => {
               <h1 className={s.timelineTitle}>Timeline</h1>
             </AnimationElement>
             <AnimationElement order={15.8}>
-              {/*<h3 className={s.subTitle}>Product</h3>*/}
+              {/* <h3 className={s.subTitle}>Product</h3> */}
             </AnimationElement>
             <AnimationElement order={16.8}>
-              {/*<h3 className={s.subTitle}>Marketing</h3>*/}
+              {/* <h3 className={s.subTitle}>Marketing</h3> */}
             </AnimationElement>
             {/*<h3>Organization</h3>*/}
           </div>

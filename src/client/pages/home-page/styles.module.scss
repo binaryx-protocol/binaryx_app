@@ -2,6 +2,7 @@
 //  overflow: hidden;
 //  height: 100%;
 //}
+
 .container {
   max-width: var(--max-width_desktop);
   margin: auto;
@@ -13,20 +14,40 @@
 
 .section {
   outline: none;
-  padding: 10px 24px;
+  // padding: 10px 24px;
 
   * {
     outline: none;
   }
 
-  @media screen and (max-width: 768px) {
+  @media (max-width: 768px) {
     padding: 0;
   }
 
 }
 
+.activeContent {
+  opacity: 1;
+  transform: translateY(0);
+  transition: transform 0.8s, opacity 1.5s;
+}
+
+.viewedContent {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+//
+//.section3 {
+//  margin-bottom: 500px;
+//}
+
 .section1 {
   height: 90vh;
+}
+
+.sectionPadding {
+  height: 500px;
 }
 
 .sectionsDark {
@@ -41,15 +62,22 @@
   width: 100%;
   height: 100%;
   top: 0;
+  transition: transform 0.5s;
 
   @media (max-width: 768px) {
     //width: auto;
-    transform: scale(0.85);
-    height: 110vh;
-    width: 160%;
-    left: -20%;
+
+    //transform: scale(0.85);
+    //height: 110vh;
+    //width: 160%;
+    //left: -20%;
+
     //left: -50%;
   }
+}
+
+.containerAnimationDisappeared {
+  transform: translateX(100%);
 }
 
 .bgOverlay {
@@ -69,6 +97,58 @@
 
 .bgOverlayDark {
   background-color: #1B1B1B;
+}
+
+.progressBar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 8px;
+  background-color: rgb(51 51 51 / 25%);
+  transition: 0.15s transform;
+  //z-index: 12;
+  transform: translateY(8px);
+}
+
+.progressBarActive {
+  transform: translateY(0);
+}
+
+.progressBarFiller {
+  position: fixed;
+  left: 0;
+  //right: 0;
+  bottom: 0;
+  height: 8px;
+  width: 0;
+  background: linear-gradient(85.42deg, rgba(0, 174, 255, 0.5) 8.17%, rgba(0, 255, 238, 0.5) 103.39%);
+}
+
+.progressBarItems {
+  list-style: none;
+  display: flex;
+  width: 100%;
+  height: 8px;
+  justify-content: stretch;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.progressBarItem {
+  height: 100%;
+  border-right: 1px solid #333;
+  z-index: 5;
+  border-right: 1px solid rgb(255 255 255 / 75%);
+  width: 100%;
+
+  &:last-child {
+    border-right: 0;
+  }
 }
 
 .bgOverlayItem {
@@ -163,6 +243,8 @@
 .wrapper {
   max-width: var(--max-width_desktop);
   margin: auto;
+  //padding-left: 15px;
+  //padding-right: 15px;
 }
 
 .heroPageInfo {
@@ -171,6 +253,7 @@
   height: 100vh;
   position: relative;
   z-index: 10;
+  padding: 0 20px;
 
   @media (max-width: 768px) {
     height: 80vh;
@@ -211,11 +294,11 @@
 .infoSection {
   display: flex;
   height: 60px;
-  //overflow: hidden;
+  overflow: hidden;
 
   @media (max-width: 768px) {
     position: fixed;
-    bottom: 35px;
+    bottom: 27px;
     left: 0;
     right: 0;
     padding: 0 15px;;
@@ -261,7 +344,7 @@
   right: 15px;
   color: #000;
   //margin-top: 58px;
-  transform: translateY(65px);
+  transform: translateY(55px);
 
   @media (min-width: 769px) {
     display: none;
@@ -298,11 +381,18 @@
 //   min-height: 100%;
 // }
 
+.ourTeam {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
 .ourTeamContainer {
   display: grid;
   place-content: center;
   //min-height: 100vh;
-  padding: 50px 0 80px;
+  padding: 50px 15px 80px;
 
   // @media (max-width: 768px) {
   //   min-height: 90vh;
@@ -320,7 +410,7 @@
 .teamGallery {
   display: flex;
   justify-content: space-between;
-  width: 100vw;
+  width: 98vw;
 }
 
 .joinWaitlistContainer {
@@ -347,6 +437,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 15px;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -421,12 +512,10 @@
 
 .footer {
   background: #FFF;
-  margin: 0 -25px;
-  padding: 0 25px;
+  padding: 0 15px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     margin: 0;
-    padding: 0;
   }
 }
 
@@ -494,6 +583,17 @@
 
 .footerBottomSection {
   padding: 60px 0;
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 500px;
+    pointer-events: none;
+  }
 }
 
 .footerBottomSectionContainer {
@@ -533,22 +633,43 @@
   font-size: 14px;
 }
 
+
+@media screen and (max-width: 1024px) {
+  .ourTeamContainer {
+    padding: 0 15px;
+  }
+
+  .teamGallery {
+    display: grid;
+    // grid-template-columns: repeat(4, 320px);
+    grid-auto-flow: column;
+    overflow: scroll hidden;
+    // scroll-snap-type: x proximity;
+    gap: 10px;
+    padding: 0;
+    max-width: 95vw;
+    width: 100%;
+
+    &::-webkit-scrollbar {
+      height: 5px !important;
+      background-color: rgba(90, 90, 90, 0.5) !important;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(1, 221, 220, 1) !important;
+    }
+  }
+}
+
 @media screen and (max-width: 768px) {
   .wrapper {
     max-width: none;
-    padding: 0 20px;
+    //padding: 0;
   }
 
   .heroPageInfo {
     display: grid;
     place-content: space-between;
-  }
-
-
-  .companyTitle {
-    font-size: 25px;
-    position: relative;
-    top: 0;
   }
 
   .infoSection {
@@ -566,25 +687,6 @@
     height: 60px;
     width: inherit;
     font-size: 16px;
-  }
-
-  .teamGallery {
-    display: grid;
-    // grid-template-columns: repeat(4, 320px);
-    grid-template-columns: repeat(4, 250px);
-    overflow: scroll hidden;
-    padding-bottom: 14px;
-    // scroll-snap-type: x proximity;
-    gap: 10px;
-
-    &::-webkit-scrollbar {
-      height: 5px !important;
-      background-color: rgba(90, 90, 90, 0.5) !important;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background-color: rgba(1, 221, 220, 1) !important;
-    }
   }
 
   // .ourTeamTitle {
