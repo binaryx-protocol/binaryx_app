@@ -34,13 +34,13 @@ export const assetsManagerAbi = [
 ]
 
 export const accountManagerAbi = [
-  // `function getMyRewardsPerAsset() public view returns(uint256 totalRewards)`,
   `function getMyRewardsPerAsset() public view returns((${RewardInfo})[] memory, uint256 totalRewards)`,
 ]
 
 export const erc1155Abi = [
   "function balanceOf(address, uint256) view returns (uint)",
 ];
+
 export const erc20Abi = [
   // Some details about the token
   "function name() view returns (string)",

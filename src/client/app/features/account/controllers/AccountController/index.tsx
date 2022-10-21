@@ -10,8 +10,16 @@ import {useEffect} from "react";
 
 export const AccountController = (props) => {
   const doLoadMyRewards = useSetAtom(accountModel.$doLoadMyRewards)
-  useEffect(() => doLoadMyRewards(), []);
+  const accountInfo = useAtomValue(accountModel.$accountInfo)
+
+  useEffect(() => {
+    doLoadMyRewards()
+  }, []);
   const rewardsAmount = 500
+
+  if (!accountInfo) {
+    return null
+  }
 
   return (
     <div className={s.mainView}>
@@ -39,10 +47,10 @@ export const AccountController = (props) => {
       </div>
 
       <div className={s.orderSection}>
-        {[{ title: "Title",  }].map((asset, i) => {
+        {accountInfo.rewards.map((reward, i) => {
           return <OrderBlockView
             key={i}
-            title={asset.title}
+            title={reward.asset.title}
             imageSrc="https://ns.clubmed.com/dream/RESORTS_3T___4T/Asie_et_Ocean_indien/Bali/169573-1lng9n8nnf-swhr.jpg"
             tokens={{
               tokensUserHave: 500,
