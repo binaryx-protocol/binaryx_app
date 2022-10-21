@@ -1,8 +1,10 @@
 import s from './styles.module.scss';
-import React from 'react';
+import React, {ChangeEvent, ChangeEventHandler, SyntheticEvent} from 'react';
 import TextField from "@mui/material/TextField";
 import {UiNewAssetForm} from "../../types";
 import Box from "@mui/material/Box";
+import {UiInputChangeEvent} from "../../../../types/globals";
+import {UiForm} from "../../../../../../../pkg/formType";
 
 type AssetFormFieldsProps = {
   form: UiNewAssetForm,
@@ -10,7 +12,7 @@ type AssetFormFieldsProps = {
 }
 
 export const AssetFormFields = ({ form, onChange }: AssetFormFieldsProps) => {
-  const onChangeLocal = (e) => {
+  const onChangeLocal = (e: UiInputChangeEvent) => {
     const values = {
       ...form.values,
       [e.target.name]: e.target.value,
@@ -18,7 +20,7 @@ export const AssetFormFields = ({ form, onChange }: AssetFormFieldsProps) => {
     onChange({ values, touches: form.touches })
   }
 
-  const onBlurLocal = (e) => {
+  const onBlurLocal = (e: UiInputChangeEvent) => {
     const touches = {
       ...form.touches,
       [e.target.name]: true,
@@ -45,7 +47,7 @@ export const AssetFormFields = ({ form, onChange }: AssetFormFieldsProps) => {
   );
 };
 
-const inputProps = (form, name) => {
+const inputProps = (form: UiForm<any>, name: string) => {
   const props = {
     name,
     value: form.values[name],

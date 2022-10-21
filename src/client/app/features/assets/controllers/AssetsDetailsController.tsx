@@ -46,7 +46,7 @@ export const AssetsDetailsController = () => {
     symbol: $asset.symbol,
     description: $asset.description,
     legalDocuments: [],
-    statusLabel: T.status[$asset.status],
+    statusLabel: T.status[$asset.status as keyof typeof T.status],
     country: 'Indonesia',
     city: 'Canggu',
     state: 'Kuta Utara',

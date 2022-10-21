@@ -1,7 +1,7 @@
 import AssetContract from 'src/frontend/contracts/AssetContract';
 import UsnContract from 'src/frontend/contracts/UsnContract';
 import MainContract from '../contracts/MainContract';
-import {SyntheticEvent} from "react";
+import {ChangeEvent, SyntheticEvent} from "react";
 
 declare global {
   interface Window {
@@ -12,7 +12,8 @@ declare global {
   }
 }
 
-export type UiInputChangeEvent = SyntheticEvent & { target: HTMLInputElement }
+// export type UiInputChangeEvent = SyntheticEvent & { target: HTMLInputElement }
+export type UiInputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 
 // declare module "*.module.less" {
 //   const classes: { [key: string]: string };

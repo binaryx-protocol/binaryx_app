@@ -5,10 +5,10 @@ export const paths = {
   newAsset() {
     return '/assets-v2/new';
   },
-  showAsset({ id }) {
+  showAsset({ id }: { id: number | string }) {
     return `/assets-v2/${id}`;
   },
-  investAsset({ id }) {
+  investAsset({ id }: { id: number | string }) {
     return `/assets-v2/${id}/invest`;
   },
   account() {

@@ -3,7 +3,7 @@ import { atom } from 'jotai'
 import * as metaMaskModel from "../../../models/metaMaskModel";
 import {loadable} from "jotai/utils";
 import * as rpcConfigModel from "../../../models/rpcConfigModel";
-import { AssetStatuses} from "../types";
+import {AssetStatuses, BcAsset} from "../types";
 import {arbClient} from "./arbClient";
 
 export const $doActivate = atom(null, async (get, set, args: { id: number }) => {
@@ -34,7 +34,7 @@ export const $doDisable = atom(null, async (get, set, args: { id: number }) => {
   }
 })
 
-export const $blockchainAssetsAsync = atom<any>(async (get) => {
+export const $blockchainAssetsAsync = atom<BcAsset[]>(async (get) => {
   const $walletReadiness = get(metaMaskModel.$walletReadiness)
   get(metaMaskModel.$metaMaskState)
   const $rpcConfig = get(rpcConfigModel.$rpcConfig)

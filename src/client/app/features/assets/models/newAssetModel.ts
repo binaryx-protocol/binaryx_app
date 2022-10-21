@@ -13,6 +13,7 @@ import {waitFor} from "../../../utils/pageLoadUtiils";
 import {assetValidator} from "./assetValidator";
 import {SyntheticEvent} from "react";
 import {paths} from "../../../../../../pkg/paths";
+import {RpcConfig} from "../../../models/rpcConfigModel";
 
 const defaultAttrs = (): UiNewAssetFormValues => ({
   name: '',
@@ -38,7 +39,7 @@ export const $doCreateAsset = atom(null, async (get, set, form: UiNewAssetForm) 
     return get(metaMaskModel.$walletReadiness) === 'ready' && !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
-  const $rpcConfig = get(rpcConfigModel.$rpcConfig)
+  const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
   const formValues = {
     ...form.values,
     // originalOwner: get(metaMaskModel.$metaMaskState).accounts[0]
@@ -56,7 +57,7 @@ export const $onFormChange = atom(null, (get, set, args: UiNewAssetFormChangeArg
   set($doValidateFormValues, args)
 })
 
-export const $onMount = atom(null, (get, set, args: UiNewAssetFormChangeArgs) => {
+export const $onMount = atom(null, (get, set) => {
   set($doValidateFormValues, get($form))
 })
 
@@ -83,13 +84,11 @@ export const $doValidateFormValues = atom(null, (get, set, args: UiNewAssetFormC
     })
 })
 
-export const $onSubmit = atom(null, (get, set, e: SyntheticEvent) => {
+export const $onSubmit = atom(null, (get, set) => {
   set($form, f => ({ ...f, isSubmitTouched: true }))
 
   const form = get($form)
   if (form.isValid) {
     set($doCreateAsset, form)
   }
-  e.preventDefault();
-  return false
 })

@@ -7,6 +7,7 @@ import {arbClient} from "./arbClient";
 import {BcAsset} from "../types";
 import {bnToInt} from "../../../utils/objectUtils";
 import {UiInputChangeEvent} from "../../../types/globals";
+import {RpcConfig} from "../../../models/rpcConfigModel";
 
 // export const $amount = atom(1);
 //
@@ -19,7 +20,7 @@ export const $onSubmit = atom(null, async (get,set, { asset, id, amount, then }:
     return get(metaMaskModel.$walletReadiness) === 'ready' && !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
-  const $rpcConfig = get(rpcConfigModel.$rpcConfig)
+  const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
   if (!amount) {
     throw new Error('amount is required')
   }
@@ -37,4 +38,4 @@ export const $onSubmit = atom(null, async (get,set, { asset, id, amount, then }:
   then()
 })
 
-const estimateCost = (asset: BcAsset, tokensAmount) => bnToInt(asset.tokenInfo_tokenPrice) * tokensAmount * 1e4;
+const estimateCost = (asset: BcAsset, tokensAmount: number) => bnToInt(asset.tokenInfo_tokenPrice) * tokensAmount * 1e4;

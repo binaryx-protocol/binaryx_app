@@ -5,14 +5,14 @@ import { Request } from 'express';
 import { typedQuery } from '../app/apollo-client';
 import {ExtractPromiseType} from "../app/types/utils";
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req }: { req: Request }) {
   const { data } = await typedQuery(
     { orders: { alias: true, asset: { name: true } } },
     req,
   );
 
   return {
-    props: { user: (req as Request).user, orders: data.orders },
+    props: { user: req.user, orders: data.orders },
   };
 }
 
