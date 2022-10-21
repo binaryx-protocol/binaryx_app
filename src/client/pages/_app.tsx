@@ -8,6 +8,7 @@ import '../app/styles/globalVariables.css';
 import { Provider, useAtomValue, useSetAtom } from 'jotai';
 import * as featureFlagsModel from '../app/models/featureFlagsModel';
 import * as metaMaskModel from '../app/models/metaMaskModel';
+import Head from 'next/head';
 
 type Props = {
   Component: any;
@@ -40,6 +41,10 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
 
   return (
     <Provider>
+      <Head>
+        <meta name="viewport" content="width=device-width, user-scalable=no" key="viewport" />
+        <title>Binaryx - Real Estate Tokenization Protocol</title>
+      </Head>
       <ApolloProvider client={client}>
         <ThemeProvider theme={theme}>
           <link

@@ -8,12 +8,11 @@
 
 .blockContent {
   position: fixed;
-  padding-top: 250px;
+  padding: 250px 20px 0;
   top: 0;
   transition: transform 0.8s, opacity 0.4s;
   transform: translateY(100%);
   opacity: 0;
-
 
 
   @media (max-width: 768px) {
