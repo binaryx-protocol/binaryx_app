@@ -47,11 +47,13 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
       </Head>
       <ApolloProvider client={client}>
         <ThemeProvider theme={theme}>
-          <link
-            rel="shortcut icon"
-            href="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_white_horizontal.ico"
-            type="image/x-icon"
-          />
+          <Head>
+            <link
+              rel="shortcut icon"
+              href="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/favicon.ico"
+              type="image/x-icon"
+            />
+          </Head>
           <script type="application/json" id="SSR_pageProps">
             {JSON.stringify(pageProps)}
           </script>
