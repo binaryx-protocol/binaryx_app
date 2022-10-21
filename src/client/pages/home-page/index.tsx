@@ -1,5 +1,4 @@
 // @ts-nocheck
-import Head from 'next/head'
 import Navigation from './components/HomeNavigation';
 import { FC, useEffect, useRef, useState } from 'react';
 import SectionElement from './components/SectionElement';
@@ -23,17 +22,23 @@ import IconTelegram from './components/NavSocialImage/IconTelegram';
 const GoogleAnalytics = () => {
   return (
     <>
-      <script async src="https://www.googletagmanager.com/gtag/js?id=G-HFY1S4EYJS" />
-      <script dangerouslySetInnerHTML={{ __html: `
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-HFY1S4EYJS"
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
 
         gtag('config', 'G-HFY1S4EYJS');
-        ` }}
+        `,
+        }}
       />
     </>
-  )
+  );
 };
 
 const HomePage: FC = () => {
@@ -49,7 +54,7 @@ const HomePage: FC = () => {
     container1.current,
     container2.current,
     container3.current,
-    container4.current
+    container4.current,
   ];
   const animations = useRef([]);
   const section1Ref = useRef<HTMLDivElement>(null);
@@ -252,7 +257,6 @@ const HomePage: FC = () => {
 
     // const scrollPercent = getSectionScrollPercent();
 
-
     if (section && animation) {
       const scrollPosition = getScrollPosition();
       const scrollPercent = ((scrollPosition - offsetTop) * 100) / height;
@@ -279,21 +283,23 @@ const HomePage: FC = () => {
 
     // const scrollPercent = getSectionScrollPercent();
 
-
     // if (section && animation) {
     if (section) {
       const scrollPosition = getScrollPosition();
       const scrollPercent = ((scrollPosition - offsetTop) * 100) / height;
 
-
       if (isVideoAnimation) {
         const container = getContainers()[animationIndex];
         const duration = container.firstChild.duration;
-        let currentTime = (duration * scrollPercent / 100).toFixed(2);
+        let currentTime = ((duration * scrollPercent) / 100).toFixed(2);
         if (currentTime > duration) {
           currentTime = duration;
         }
-        if (currentTime && !isNaN(currentTime) && container.firstChild.currentTime !== currentTime) {
+        if (
+          currentTime &&
+          !isNaN(currentTime) &&
+          container.firstChild.currentTime !== currentTime
+        ) {
           container.firstChild.currentTime = currentTime;
         }
 
@@ -313,17 +319,19 @@ const HomePage: FC = () => {
 
   function initAnimations() {
     const isMobile = window.innerWidth < 768;
-    import(`./animations/${isMobile ? "BM1.json" : "B1.json"}`).then((module) => {
-      const anim1 = module.default;
-      animations.current[0] = initAnimation({
-        animationData: anim1,
-        container: document.getElementById('animationContainer1'),
-        autoplay: true,
-        renderer: 'svg',
-      });
-    });
+    import(`./animations/${isMobile ? 'BM1.json' : 'B1.json'}`).then(
+      (module) => {
+        const anim1 = module.default;
+        animations.current[0] = initAnimation({
+          animationData: anim1,
+          container: document.getElementById('animationContainer1'),
+          autoplay: true,
+          renderer: 'svg',
+        });
+      },
+    );
 
-    import(`./animations/${isMobile ? "BM2_1.json" : "B2_1.json"}`)
+    import(`./animations/${isMobile ? 'BM2_1.json' : 'B2_1.json'}`)
       .then((module) => {
         const anim2 = module.default;
         animations.current[1] = initAnimation({
@@ -333,7 +341,9 @@ const HomePage: FC = () => {
           renderer: 'svg',
         });
       })
-      .then(() => import(`./animations/${isMobile ? "BM2_2.json" : "B2_2.json"}`))
+      .then(
+        () => import(`./animations/${isMobile ? 'BM2_2.json' : 'B2_2.json'}`),
+      )
       .then((module) => {
         const anim3 = module.default;
         animations.current[4] = initAnimation({
@@ -341,7 +351,8 @@ const HomePage: FC = () => {
           container: document.getElementById('animationContainer2_2'),
           autoplay: false,
         });
-      }).then(() => import(`./animations/${isMobile ? "BM3.json" : "B3.json"}`))
+      })
+      .then(() => import(`./animations/${isMobile ? 'BM3.json' : 'B3.json'}`))
       .then((module) => {
         const anim3 = module.default;
         animations.current[2] = initAnimation({
@@ -350,7 +361,7 @@ const HomePage: FC = () => {
           autoplay: false,
         });
       })
-      .then(() => import(`./animations/${isMobile ? "BM4.json" : "B4.json"}`))
+      .then(() => import(`./animations/${isMobile ? 'BM4.json' : 'B4.json'}`))
       .then((module) => {
         const anim4 = module.default;
         animations.current[3] = initAnimation({
@@ -434,7 +445,6 @@ const HomePage: FC = () => {
     changeWheelSpeed(main, 0.1);
 
     if (isVideoAnimation) {
-
       let seeked = false;
       let lastProgress = 0;
       const progressDelta = 0.1;
@@ -488,13 +498,13 @@ const HomePage: FC = () => {
       //   });
       // }
 
-      function scrollPlayV2(){
+      function scrollPlayV2() {
         var frameNumber = 0, // start video at frame 0
           // lower numbers = faster playback
           playbackConst = 500;
-        const vid = document.getElementById("video2");
-        var frameNumber  = window.pageYOffset/playbackConst;
-        vid.currentTime  = frameNumber;
+        const vid = document.getElementById('video2');
+        var frameNumber = window.pageYOffset / playbackConst;
+        vid.currentTime = frameNumber;
         // window.requestAnimationFrame(scrollPlay);
       }
 
@@ -502,14 +512,17 @@ const HomePage: FC = () => {
     } else {
       initAnimations(true);
 
-      function play(){
+      function play() {
         // const scrollPosition = getScrollPosition();
         const currentSection = getCurrentSection();
         const scrollPercent = getSectionScrollPercent(currentSection - 1);
-        const progressBarFiller = document.getElementById("progress-bar-filler");
-        const percent = (scrollPercent / 3) + ((currentSection - 1) * 33.333);
-        progressBarFiller.style.width = percent + "%";
-        progressBarElementRef.current.style.display = percent >= 100 ? "none" : "block";
+        const progressBarFiller = document.getElementById(
+          'progress-bar-filler',
+        );
+        const percent = scrollPercent / 3 + (currentSection - 1) * 33.333;
+        progressBarFiller.style.width = percent + '%';
+        progressBarElementRef.current.style.display =
+          percent >= 100 ? 'none' : 'block';
 
         playAnimation(currentSection);
         updateContainerStyles();
@@ -522,7 +535,7 @@ const HomePage: FC = () => {
       window.requestAnimationFrame(play);
     }
 
-    let prevWidth = typeof window !== "undefined" ? window.innerWidth : 1000;
+    let prevWidth = typeof window !== 'undefined' ? window.innerWidth : 1000;
     window.addEventListener('resize', (event) => {
       if (event.target.innerWidth !== prevWidth) {
         lottie.destroy();
@@ -556,12 +569,12 @@ const HomePage: FC = () => {
 
       if (currentSection >= 5) {
         setIsBgOverlayDark(() => true);
-        joinWaitListBtnRef.current.style.display = "none";
-        joinCommunityBtnRef.current.style.display = "none";
+        joinWaitListBtnRef.current.style.display = 'none';
+        joinCommunityBtnRef.current.style.display = 'none';
       } else if (currentSection <= 4) {
         setIsBgOverlayDark(() => false);
-        joinWaitListBtnRef.current.style.display = "block";
-        joinCommunityBtnRef.current.style.display = "block";
+        joinWaitListBtnRef.current.style.display = 'block';
+        joinCommunityBtnRef.current.style.display = 'block';
       }
 
       if (window.scrollY > 500) {
@@ -569,7 +582,6 @@ const HomePage: FC = () => {
       } else {
         joinWaitListBtnRef.current.classList.remove(s.btnJoinWaitlistNext);
       }
-
 
       if (window.scrollY > 5) {
         progressBarElementRef.current.classList.add(s.progressBarActive);
@@ -665,7 +677,9 @@ const HomePage: FC = () => {
       container2.current.style.display =
         currentSection === 1 ? 'block' : 'none';
       container2_2.current.style.display =
-        currentSection === 1 && window.scrollY < window.innerHeight / 1.7 ? 'block' : 'none';
+        currentSection === 1 && window.scrollY < window.innerHeight / 1.7
+          ? 'block'
+          : 'none';
       container2_2.current.style.transform = `translateY(${
         currentSection === 1 ? 1 - window.scrollY * 1.8 : 0
       }px`;
@@ -673,17 +687,15 @@ const HomePage: FC = () => {
       //   currentSection === 1 ? 1 - scrollPercent / 100 : 1;
       container3.current.style.display =
         currentSection === 2 ? 'block' : 'none';
-      container4.current.style.display =
-        currentSection >= 3 ? 'block' : 'none';
+      container4.current.style.display = currentSection >= 3 ? 'block' : 'none';
 
       if (currentSection === 4) {
-        container4.current.classList.add(s.containerAnimationDisappeared)
+        container4.current.classList.add(s.containerAnimationDisappeared);
       } else {
-        container4.current.classList.remove(s.containerAnimationDisappeared)
+        container4.current.classList.remove(s.containerAnimationDisappeared);
       }
     }
   }
-
 
   function updateSectionContentStyles() {
     const currentSection = getCurrentSection() - 1;
@@ -823,7 +835,10 @@ const HomePage: FC = () => {
       >
         {isVideoAnimation && (
           <video preload autoPlay muted>
-            <source src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B1.mp4" type='video/mp4' />
+            <source
+              src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B1.mp4"
+              type="video/mp4"
+            />
           </video>
         )}
       </div>
@@ -837,9 +852,13 @@ const HomePage: FC = () => {
         ref={container2}
         id="animationContainer2"
       >
-
         {isVideoAnimation && (
-          <video muted playsInline id="video2" src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B2.mp4">
+          <video
+            muted
+            playsInline
+            id="video2"
+            src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B2.mp4"
+          >
             {/*<source type="video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;" src="https://www.apple.com/media/us/mac-pro/2013/16C1b6b5-1d91-4fef-891e-ff2fc1c1bb58/videos/macpro_main_desktop.mp4" />*/}
             {/*<source src="https://www.apple.com/media/us/mac-pro/2013/16C1b6b5-1d91-4fef-891e-ff2fc1c1bb58/videos/macpro_main_desktop.mp4" type='video/mp4' />*/}
             {/*<source src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B2.mp4" type='video/mp4' />*/}
@@ -853,7 +872,9 @@ const HomePage: FC = () => {
         id="animationContainer3"
       />
       <div
-        className={classNames(s.containerAnimation, { [s.containerAnimationDisappeared]: false }) }
+        className={classNames(s.containerAnimation, {
+          [s.containerAnimationDisappeared]: false,
+        })}
         ref={container4}
         id="animationContainer4"
       />
@@ -879,7 +900,9 @@ const HomePage: FC = () => {
             <div className={s.sectionContent} style={{ height: windowHeight }}>
               <h1 className={s.companyTitle}>
                 <span>
-                  <b style={{ color: 'var(--font-color_blue-light)' }}>Binaryx</b>
+                  <b style={{ color: 'var(--font-color_blue-light)' }}>
+                    Binaryx
+                  </b>
                 </span>
                 <span className={s.companySubTitle}>Community-Powered</span>
                 <span className={s.companySubTitle}>
@@ -895,7 +918,12 @@ const HomePage: FC = () => {
                 >
                   Join waitlist
                 </button>
-                <button type="submit" ref={joinCommunityBtnRef} className={s.joinCommunity} onClick={handleJoinWaitListButtonClick}>
+                <button
+                  type="submit"
+                  ref={joinCommunityBtnRef}
+                  className={s.joinCommunity}
+                  onClick={handleJoinWaitListButtonClick}
+                >
                   Join our community
                 </button>
               </div>
@@ -924,7 +952,6 @@ const HomePage: FC = () => {
             contentElementRef={section1ContentRef}
             isSticky={!isMobile}
           />
-
         </div>
         <div
           id="section2"
@@ -993,16 +1020,16 @@ const HomePage: FC = () => {
             paddingTop={windowHeight * 2}
           />
           <SchemaSection className={classNames(s.section, 'section')} />
-          <TimelineSection className={classNames(s.section, 'section')} minHeight={windowHeight - 300} />
+          <TimelineSection
+            className={classNames(s.section, 'section')}
+            minHeight={windowHeight - 300}
+          />
           <section
             id="sectionTeam"
             className={classNames(s.section, s.ourTeam, 'section')}
             style={{ minHeight: windowHeight }}
           >
-            <div
-              className={s.ourTeamContainer}
-
-            >
+            <div className={s.ourTeamContainer}>
               <h1 className={s.ourTeamTitle}>Our Team</h1>
               <div className={classNames(s.teamGallery, s.wrapper)}>
                 <TeamBlock
@@ -1050,7 +1077,9 @@ const HomePage: FC = () => {
                   socialLinkImage={
                     'https://cdn-icons-png.flaticon.com/512/61/61109.png'
                   }
-                  socialLink={'https://www.linkedin.com/in/andrii-makaveli-b25259150/'}
+                  socialLink={
+                    'https://www.linkedin.com/in/andrii-makaveli-b25259150/'
+                  }
                   socialUserName={'andriy_makaveli'}
                 />
               </div>
@@ -1100,19 +1129,47 @@ const HomePage: FC = () => {
                   <nav className={s.footerNavSocial}>
                     <NavSocialImage
                       link={'https://discord.gg/kJqgYh7G9G'}
-                      icon={<IconDiscord className={s.footerNavSocialImage} width={isMobile ? 36 : 55} height={isMobile ? 26 : 40} fill="#335367" />}
+                      icon={
+                        <IconDiscord
+                          className={s.footerNavSocialImage}
+                          width={isMobile ? 36 : 55}
+                          height={isMobile ? 26 : 40}
+                          fill="#335367"
+                        />
+                      }
                     />
                     <NavSocialImage
                       link={'https://twitter.com/BinaryxProtocol'}
-                      icon={<IconTwitter className={s.footerNavSocialImage} width={isMobile ? 34 : 45} height={isMobile ? 25 : 41} fill="#335367" />}
+                      icon={
+                        <IconTwitter
+                          className={s.footerNavSocialImage}
+                          width={isMobile ? 34 : 45}
+                          height={isMobile ? 25 : 41}
+                          fill="#335367"
+                        />
+                      }
                     />
                     <NavSocialImage
                       link={'https://www.linkedin.com/company/realbinaryx/'}
-                      icon={<IconLinkedIn className={s.footerNavSocialImage} width={isMobile ? 32 : 45} height={isMobile ? 29 : 44} fill="#335367" />}
+                      icon={
+                        <IconLinkedIn
+                          className={s.footerNavSocialImage}
+                          width={isMobile ? 32 : 45}
+                          height={isMobile ? 29 : 44}
+                          fill="#335367"
+                        />
+                      }
                     />
                     <NavSocialImage
                       link={'https://t.me/binaryxnews'}
-                      icon={<IconTelegram className={s.footerNavSocialImage} width={isMobile ? 30 : 43} height={isMobile ? 30 : 43} fill="#335367" />}
+                      icon={
+                        <IconTelegram
+                          className={s.footerNavSocialImage}
+                          width={isMobile ? 30 : 43}
+                          height={isMobile ? 30 : 43}
+                          fill="#335367"
+                        />
+                      }
                     />
                   </nav>
                 </div>
