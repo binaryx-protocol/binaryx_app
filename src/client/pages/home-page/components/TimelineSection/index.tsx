@@ -35,6 +35,7 @@ const TimelineSection: FC<Props> = ({ className, minHeight }) => {
       }
       if (entry.isIntersecting) observer.unobserve(entry.target);
     });
+    // @ts-ignore
     observer.observe(timelineGrid.current);
   }, []);
 

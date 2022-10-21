@@ -3,9 +3,9 @@ import { NextPage } from 'next';
 import { Request } from 'express';
 import {ExtractPromiseType} from "../app/types/utils";
 
-export async function getServerSideProps({ req }) {
+export async function getServerSideProps({ req }: { req: Request }) {
   return {
-    props: { user: (req as Request).user },
+    props: { user: req.user },
   };
 }
 

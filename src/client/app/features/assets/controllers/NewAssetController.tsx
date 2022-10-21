@@ -3,7 +3,7 @@ import * as newAssetModel from "../models/newAssetModel";
 import {useAtomValue, useSetAtom} from "jotai";
 import {AssetFormFields} from "../views/AssetFormFields";
 import Button from "@mui/material/Button";
-import {useEffect} from "react";
+import {SyntheticEvent, useEffect} from "react";
 import Link from "next/link";
 import {paths} from "../../../../../../pkg/paths";
 
@@ -13,7 +13,15 @@ export const NewAssetController = () => {
   const onSubmit = useSetAtom(newAssetModel.$onSubmit)
   const onMount = useSetAtom(newAssetModel.$onMount)
 
-  useEffect(onMount, [])
+  useEffect(() => {
+    onMount()
+  }, [])
+
+  const onSubmitLocal = (e: SyntheticEvent) => {
+    e.preventDefault()
+    onSubmit()
+    return false
+  }
 
   return (
     <div className={s.page}>
@@ -25,7 +33,7 @@ export const NewAssetController = () => {
             </Button>
           </Link>
         </div>
-        <form noValidate onSubmit={onSubmit}>
+        <form noValidate onSubmit={onSubmitLocal}>
           <AssetFormFields form={form} onChange={onFormChange} />
 
           <div className={s.formActions}>

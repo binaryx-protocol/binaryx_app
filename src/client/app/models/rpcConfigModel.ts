@@ -93,7 +93,7 @@ const configByDomain = typeof window !== 'undefined' ?
   }[window.location.hostname]
   : null
 
-export const $rpcConfig = atom<RpcConfig | null>(configByDomain)
+export const $rpcConfig = atom<RpcConfig | null>(configByDomain || null)
 
 export const getProvider = () => new ethers.providers.Web3Provider(window.ethereum)
 
