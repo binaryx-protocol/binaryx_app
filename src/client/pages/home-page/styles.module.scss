@@ -2,6 +2,7 @@
 //  overflow: hidden;
 //  height: 100%;
 //}
+
 .container {
   max-width: var(--max-width_desktop);
   margin: auto;
@@ -379,6 +380,12 @@
 // .ourTeam {
 //   min-height: 100%;
 // }
+
+.ourTeam {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+}
 
 .ourTeamContainer {
   display: grid;

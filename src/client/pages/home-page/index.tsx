@@ -801,7 +801,7 @@ const HomePage: FC = () => {
   const handleJoinWaitListButtonClick = () => setIsShowing(!isShowing);
 
   return (
-    <>
+    <div className={s.homePage}>
       <Navigation isDark={isBgOverlayDark} />
       <BgOverlay
         id="bg-overlay"
@@ -997,11 +997,11 @@ const HomePage: FC = () => {
           <section
             id="sectionTeam"
             className={classNames(s.section, s.ourTeam, 'section')}
+            style={{ minHeight: windowHeight }}
           >
-
             <div
               className={s.ourTeamContainer}
-              style={{ minHeight: windowHeight }}
+
             >
               <h1 className={s.ourTeamTitle}>Our Team</h1>
               <div className={classNames(s.teamGallery, s.wrapper)}>
@@ -1145,7 +1145,7 @@ const HomePage: FC = () => {
         </div>
         <GoogleAnalytics />
       </main>
-    </>
+    </div>
   );
 };
 
