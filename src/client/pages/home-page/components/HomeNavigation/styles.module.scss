@@ -27,6 +27,10 @@
   }
 }
 
+.headerTransparent {
+  backdrop-filter: none;
+}
+
 .header .container {
   display: flex;
   align-items: center;

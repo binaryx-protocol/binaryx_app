@@ -8,10 +8,13 @@ import * as assetDetailsModel from "../models/assetDetailsModel";
 import {useAtomValue, useSetAtom} from "jotai";
 import {useEffect} from "react";
 import {useRouter} from "next/router";
+import {bnToInt} from "../../../utils/objectUtils";
 
 export const AssetsDetailsController = () => {
   const id = parseInt(useRouter().query.id as string);
   const $asset = useAtomValue(assetDetailsModel.$asset)
+  const $assetMetaData = useAtomValue(assetDetailsModel.$assetMetaData)
+  const $assetComputed = useAtomValue(assetDetailsModel.$assetComputed)
   const $doLoadAsset = useSetAtom(assetDetailsModel.$doLoadAsset)
 
   useEffect(() => {
@@ -20,7 +23,7 @@ export const AssetsDetailsController = () => {
     }
   }, [id])
 
-  if (!$asset) {
+  if (!$asset || !$assetMetaData || !$assetComputed) {
     return null // TODO skeleton loader
   }
 
@@ -31,10 +34,10 @@ export const AssetsDetailsController = () => {
     { src: 'https://assets.architecturaldigest.in/photos/60083c58d0435267a8df8fdc/master/w_1920,h_1080,c_limit/Bali-villa-Uluwatu-SAOTA.jpg' },
   ]
   const investInfo = {
-    tokensLeft: 12500,
-    progress: 23,
+    tokensLeft: $assetComputed.tokensLeft,
+    progress: $assetComputed.progress,
     irr: 4,
-    coc: 15,
+    coc: bnToInt($asset.tokenInfo_apr),
     id,
   }
   const assetInfo = {
@@ -42,17 +45,17 @@ export const AssetsDetailsController = () => {
     name: $asset.name,
     symbol: $asset.symbol,
     description: $asset.description,
-    legalDocuments: $asset.legalDocuments,
+    legalDocuments: [],
     statusLabel: T.status[$asset.status],
-    country: 'string',
-    city: 'string',
-    state: 'string',
-    postalCode: 'string',
-    line1: 'string',
-    line2: 'string',
+    country: 'Indonesia',
+    city: 'Canggu',
+    state: 'Kuta Utara',
+    postalCode: '80351',
+    line1: 'Jl. Pantai Batu Bolong No.44',
+    line2: '',
     infoItems: [
-      { type: 'string', value: 'string' },
-      { type: 'string2', value: 'string2' }
+      { type: 'string', value: 'TV' },
+      { type: 'string2', value: 'WiFi' }
     ],
   }
 

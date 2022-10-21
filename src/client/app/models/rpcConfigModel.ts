@@ -1,4 +1,5 @@
 import { atom } from 'jotai'
+import {ethers} from "ethers";
 
 type NewRpcChain = {
   chainId: string
@@ -93,4 +94,6 @@ const configByDomain = typeof window !== 'undefined' ?
   : null
 
 export const $rpcConfig = atom<RpcConfig | null>(configByDomain)
+
+export const getProvider = () => new ethers.providers.Web3Provider(window.ethereum)
 
