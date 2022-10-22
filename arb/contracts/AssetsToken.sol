@@ -19,7 +19,8 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
   IERC20 usdt;
 
   mapping(uint256 => Asset) public _assets;
-  mapping(address => Investment[]) public _investments;
+  mapping(address => mapping(uint256 => Investment)) public _investments; // user => { assetId => Investment }
+  mapping(address => uint256[]) public _investmentsIds;
   Counters.Counter private _assetsCounter;
 
   constructor(address usdtfA) ERC1155("") {
@@ -127,9 +128,14 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
     _safeTransferFrom(address(this), msg.sender, assetId, assetTokensToBuy, "");
 
     // save investment
-    _investments[msg.sender].push(
-      Investment(assetId, 0, block.timestamp)
-    );
+    if (_investments[msg.sender][assetId].assetId > 0) {
+      _investments[msg.sender][assetId].assetId = assetId;
+      _investments[msg.sender][assetId].accumulatedAmount = 0; // TODO calculate
+      _investments[msg.sender][assetId].accumulatedAt = block.timestamp;
+    } else {
+      _investmentsIds[msg.sender].push(assetId);
+      _investments[msg.sender][assetId] = Investment(assetId, 0, block.timestamp);
+    }
   }
 
   //  function assetsByInvestor() public view returns(Asset[] memory) {
@@ -166,13 +172,14 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
 
   function getMyRewardsPerAsset() public view returns(RewardInfo[] memory, uint256 totalRewards) {
     uint256 totalRewards = 0;
-    uint256 count = _investments[msg.sender].length;
+    uint256 count = _investmentsIds[msg.sender].length;
     RewardInfo[] memory result = new RewardInfo[](count);
     uint256 yearInSeconds = 31536000;
 
+
     for (uint i = 0; i < count; i++) {
-      Investment storage investment = _investments[msg.sender][i];
-      uint256 assetId = investment.assetId;
+      uint256 assetId = _investmentsIds[msg.sender][i];
+      Investment storage investment = _investments[msg.sender][assetId];
       uint256 balance = balanceOf(msg.sender, assetId);
       uint256 multiplier = 0;
       uint256 timeDiff = block.timestamp - investment.accumulatedAt;

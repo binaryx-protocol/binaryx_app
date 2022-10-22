@@ -155,7 +155,8 @@ describe("AssetsToken", function () {
       await createMany(sc, 5)
       await usdtfToken.approve(sc.address, 1000 * usdtDecimals)
       await sc.investUsingUsdt(1, 1)
-      await sc.investUsingUsdt(3, 5)
+      await sc.investUsingUsdt(3, 1)
+      await sc.investUsingUsdt(3, 4)
 
       let myRewardsPerAsset = await sc.getMyRewardsPerAsset();
 
@@ -188,6 +189,10 @@ describe("AssetsToken", function () {
       expectBn(
         myRewardsPerAsset[0][1].rewardAmount
       ).to.eq(250000)
+
+      expect(
+        myRewardsPerAsset[0].length
+      ).to.eq(2)
     });
   });
 

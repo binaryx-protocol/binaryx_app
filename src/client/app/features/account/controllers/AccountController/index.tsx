@@ -6,6 +6,7 @@ import OrderBlockView from "../../../../components/pages/account_page/OrderBlock
 import * as accountModel from "../../models/accountModel";
 import {useAtomValue, useSetAtom} from "jotai";
 import {useEffect} from "react";
+import {paths} from "../../../../../../../pkg/paths";
 
 export const AccountController = () => {
   const doLoadMyRewards = useSetAtom(accountModel.$doLoadMyRewards)
@@ -55,7 +56,7 @@ export const AccountController = () => {
               tokensUserHave: -1,
               tokensFullAmount: reward.asset.tokenInfo_totalSupply,
             }}
-            boughtHouseLink={'#'}
+            boughtHouseLink={paths.showAsset({ id: reward.assetId })}
             cocReturn={reward.asset.tokenInfo_apr}
             currentValue={-1}
             currentRentBalance={reward.rewardAmount}
