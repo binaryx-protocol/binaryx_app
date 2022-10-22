@@ -50,7 +50,7 @@ const usnContractService = {
   }): Promise<string> {
     const contract = await this.getContract(CONTRACT_KEY);
 
-    return contract.contract.ft_transfer_call(contractParams).catch(error => console.error(error));
+    return contract.contract.ft_transfer_call(contractParams).catch((error: any) => console.error(error));
   },
 };
 

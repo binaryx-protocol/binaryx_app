@@ -1,5 +1,6 @@
+import {BigNumber} from "ethers";
 
-export const onlyFields = <T>(object): T => Object.entries(object).reduce((acc, [name, value]) => {
+export const onlyFields = <T>(object: any): T => Object.entries(object).reduce((acc, [name, value]) => {
   if (!name.match(/^[0-9]+$/)) {
     acc[name] = value;
   }
@@ -7,10 +8,10 @@ export const onlyFields = <T>(object): T => Object.entries(object).reduce((acc, 
     acc[name] = onlyFields(acc[name])
   }
   return acc;
-}, {}) as T
+}, {} as any) as T
 
-const isObject = (v) => typeof v === 'object' && Object.keys(v).some(k => !k.match(/^[0-9]+$/))
+const isObject = (v: any) => typeof v === 'object' && Object.keys(v).some(k => !k.match(/^[0-9]+$/))
 
-export const bnToInt = (bn) => {
+export const bnToInt = (bn: BigNumber) => {
   return parseInt(bn._hex, 16)
 }

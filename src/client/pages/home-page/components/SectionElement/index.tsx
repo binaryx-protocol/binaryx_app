@@ -14,6 +14,7 @@ type Props = {
   isSticky?: boolean;
 };
 
+
 const SectionElement: FC<Props> = ({
   heading,
   preTitle,
@@ -25,7 +26,9 @@ const SectionElement: FC<Props> = ({
   contentElementRef,
   isSticky,
 }) => (
+  // @ts-ignore
   <section id={id} className={s.block} style={{ minHeight: sectionHeight }}>
+    {/* @ts-ignore */}
     <div className={classNames(s.blockContent, { [s.blockContentSticky]: isSticky })} ref={contentElementRef} style={{ height: windowHeight }}>
       <div className={s.infoBlock}>
         {preTitle && <p className={s.weAreHere}>{preTitle}</p>}

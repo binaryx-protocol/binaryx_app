@@ -35,7 +35,7 @@ export const arbClient = {
 
     await usdtfTokenSigned.approve($rpcConfig.assetsTokenAddress, amountInMicro)
   },
-  getManagerSc($rpcConfig) {
+  getManagerSc($rpcConfig: RpcConfig) {
     const provider = getProvider()
     const abi = [
       ...erc1155Abi,

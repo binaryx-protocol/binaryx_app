@@ -11,7 +11,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import useAssets from 'hooks/useAssets';
 import { useRouter } from 'next/router';
 
-const Item = ({ item, onClick }) => {
+const Item = ({ item, onClick }: any) => {
   const progress = 100 - (item.tokensLeft * 100) / item.tokenTotalSupply;
 
   return (
@@ -120,7 +120,7 @@ const Marketplace = () => {
   const router = useRouter();
   const { assets = [] } = useAssets();
 
-  function handleItemClick(item) {
+  function handleItemClick(item: any) {
     router.push(`/assets/${item.id}`);
   }
 

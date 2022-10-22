@@ -69,7 +69,7 @@ export const $walletConnect = atom(
 
             await ethereum.request({ method: 'eth_requestAccounts' })
                 .then(onAccountsConnectOrDisconnect)
-                .catch((err) => {
+                .catch((err: any) => {
                     if (err.code === 4001) {
                         // EIP-1193 userRejectedRequest error
                         // If this happens, the user rejected the connection request.
@@ -82,7 +82,7 @@ export const $walletConnect = atom(
             if (!isDoneAction('addRpc')) {
                 await ethereum.request({ method: 'wallet_addEthereumChain', params: [rpcConfig.chain] })
                     .then(() => completeAction('addRpc'))
-                    .catch((err) => {
+                    .catch((err: any) => {
                         console.error(err);
                     });
 
@@ -91,7 +91,7 @@ export const $walletConnect = atom(
             if (!isDoneAction('addBnrxRootToken')) {
                 await ethereum.request({ method: 'wallet_watchAsset', params: rpcConfig.bnrxRootToken })
                     .then(() => completeAction('addBnrxRootToken'))
-                    .catch((err) => {
+                    .catch((err: any) => {
                         console.error(err);
                     });
             }

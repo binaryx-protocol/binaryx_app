@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {atom, PrimitiveAtom} from 'jotai'
 import * as metaMaskModel from "../../../models/metaMaskModel";
 import * as rpcConfigModel from "../../../models/rpcConfigModel";
@@ -5,6 +6,7 @@ import {BcAsset, BcAssetMetaData, UiAssetComputed} from "../types";
 import {arbClient} from "./arbClient";
 import {waitFor} from "../../../utils/pageLoadUtiils";
 import {bnToInt, onlyFields} from "../../../utils/objectUtils";
+import {RpcConfig} from "../../../models/rpcConfigModel";
 
 // stores
 export const $asset = atom(null) as PrimitiveAtom<BcAsset | null>;
@@ -36,7 +38,7 @@ export const $doLoadAsset = atom(null, async (get,set, args: { id: number }) => 
   }, 3)
 
   // TODO - move provider into RPC
-  const $rpcConfig = get(rpcConfigModel.$rpcConfig)
+  const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
   const bcAsset = await arbClient.getAsset(
     $rpcConfig,
     { id: args.id }

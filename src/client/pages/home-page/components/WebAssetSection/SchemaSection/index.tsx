@@ -35,14 +35,17 @@ const SchemaSection: FC<Props> = ({ className }) => {
       }
       if (entry.isIntersecting) observer.unobserve(entry.target);
     });
+    // @ts-ignore
     observer.observe(webAssetContainer.current);
   }, []);
 
   const onMouseEnter = (id: string, className: string) => {
+    // @ts-ignore
     document.getElementById(id).classList.toggle(className);
   };
 
   const onMouseLeave = (id: string, className: string) => {
+    // @ts-ignore
     document.getElementById(id).classList.toggle(className);
   };
 

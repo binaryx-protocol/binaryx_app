@@ -25,7 +25,7 @@ export const AdminAssetsListController = () => {
           <div>
             {
               $walletReadiness === 'ready'
-                ? $metaMaskState.accounts[0]
+                ? $metaMaskState.accounts?.[0]
                 : (
                   <Button variant="outlined" onClick={$walletConnect}>
                     Connect Wallet
@@ -70,7 +70,7 @@ export const AdminAssetsListController = () => {
                   <small>{blockchainAsset.description}</small>
                 </div>
                 <div>
-                  {T.status[blockchainAsset.status]}{' '}
+                  {T.status[blockchainAsset.status as keyof typeof T.status]}{' '}
                   {
                     blockchainAsset.status === AssetStatuses.upcoming
                     ? <Button variant="outlined" size="small" onClick={() => $doActivate({ id: i })}>
