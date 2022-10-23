@@ -15,7 +15,6 @@ export const AccountController = () => {
   useEffect(() => {
     doLoadMyRewards()
   }, []);
-  const rewardsAmount = 500
 
   if (!accountInfo) {
     return null
@@ -36,13 +35,13 @@ export const AccountController = () => {
       <h1 className={s.heading}>Account</h1>
 
       <div className={s.statisticSection}>
-        <WithdrawBlock amountOfMoney={rewardsAmount} />
+        <WithdrawBlock amountOfMoney={accountInfo.totalRewards} />
 
         <StatisticBlock
-          currentAccountValue={'N/A'}
-          totalRentEarned={-1}
-          propertiesEarned={accountInfo.totalRewards}
-          totalPropertyValue={'N/A'}
+          currentAccountValue={accountInfo.totalValue + accountInfo.totalRewards - accountInfo.totalEarned}
+          totalRentEarned={accountInfo.totalEarned}
+          propertiesEarned={accountInfo.rewards.length}
+          totalPropertyValue={accountInfo.totalValue}
         />
       </div>
 
@@ -53,14 +52,14 @@ export const AccountController = () => {
             title={reward.asset.title}
             imageSrc="https://ns.clubmed.com/dream/RESORTS_3T___4T/Asie_et_Ocean_indien/Bali/169573-1lng9n8nnf-swhr.jpg"
             tokens={{
-              tokensUserHave: -1,
+              tokensUserHave: reward.balance,
               tokensFullAmount: reward.asset.tokenInfo_totalSupply,
             }}
             boughtHouseLink={paths.showAsset({ id: reward.assetId })}
             cocReturn={reward.asset.tokenInfo_apr}
-            currentValue={-1}
+            currentValue={reward.computed.currentValue}
             currentRentBalance={reward.rewardAmount}
-            totalRentEarned={-1}
+            // totalRentEarned={-1}
           />;
         })}
       </div>

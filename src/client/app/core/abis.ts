@@ -8,11 +8,13 @@ const AssetStruct = `
     uint256 tokenInfo_apr,
     uint256 tokenInfo_tokenPrice
 `
+
 const RewardInfo = `
     uint256 assetId,
     uint256 rewardAmount,
     (${AssetStruct}) asset,
     uint256 multiplier,
+    uint256 balance
 `
 
 export const assetsManagerAbi = [
@@ -34,7 +36,7 @@ export const assetsManagerAbi = [
 ]
 
 export const accountManagerAbi = [
-  `function getMyRewardsPerAsset() public view returns((${RewardInfo})[] memory, uint256 totalRewards)`,
+  `function getMyRewardsPerAsset() public view returns((${RewardInfo})[] memory, uint256 totalRewards, uint256 totalClaimed)`,
 ]
 
 export const erc1155Abi = [

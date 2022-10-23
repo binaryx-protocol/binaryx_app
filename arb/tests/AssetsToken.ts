@@ -161,6 +161,14 @@ describe("AssetsToken", function () {
       let myRewardsPerAsset = await sc.getMyRewardsPerAsset();
 
       expectBn(
+        myRewardsPerAsset[0][0].balance
+      ).to.eq(1)
+
+      expectBn(
+        myRewardsPerAsset[0][1].balance
+      ).to.eq(5)
+
+      expectBn(
         myRewardsPerAsset[0][0].rewardAmount
       ).to.eq(0)
 

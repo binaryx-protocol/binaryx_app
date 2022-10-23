@@ -9,10 +9,11 @@ import {BcAsset} from "../../assets/types";
 import {RpcConfig} from "../../../models/rpcConfigModel";
 
 export type BcReward = {
-  asset: BcAsset,
-  assetId: BigNumber,
-  multiplier: BigNumber,
-  rewardAmount: BigNumber,
+  asset: BcAsset
+  assetId: BigNumber
+  multiplier: BigNumber
+  rewardAmount: BigNumber
+  balance: BigNumber
 }
 
 export type BcRewardsResponse = [
@@ -21,26 +22,34 @@ export type BcRewardsResponse = [
 ]
 
 export type UIAsset = {
-  name: string,
-  symbol: string,
-  title: string,
-  description: string,
-  status: number,
-  tokenInfo_totalSupply: number,
-  tokenInfo_apr: number,
-  tokenInfo_tokenPrice: number,
+  name: string
+  symbol: string
+  title: string
+  description: string
+  status: number
+  tokenInfo_totalSupply: number
+  tokenInfo_apr: number
+  tokenInfo_tokenPrice: number
 }
 
 export type UIReward = {
-  asset: UIAsset,
-  assetId: number,
-  multiplier: number,
-  rewardAmount: number,
+  asset: UIAsset
+  assetId: number
+  multiplier: number
+  rewardAmount: number
+  balance: number
+  computed: UIRewardComputed
+}
+
+export type UIRewardComputed = {
+  currentValue: number
 }
 
 export type UiAccountInfo = {
-  rewards: UIReward[],
+  rewards: UIReward[]
   totalRewards: number
+  totalValue: number
+  totalEarned: number
 }
 
 // stores
@@ -56,6 +65,8 @@ export const $accountInfo = atom<UiAccountInfo | null>((get) => {
   return {
     rewards,
     totalRewards: apiRewardsResponse[1].toNumber(),
+    totalValue: rewards.reduce((acc, r) => acc + r.computed.currentValue, 0),
+    totalEarned: 0 // TODO
   }
 });
 
@@ -69,7 +80,7 @@ export const $doLoadMyRewards = atom(null, async (get, set) => {
   const response = await rpcClient.getMyRewardsPerAsset(
     $rpcConfig
   );
-  console.log('response', response)
+  console.log('response', response);
 
   set($apiRewardsResponse, response);
 })
@@ -88,4 +99,10 @@ const transformRewardBcToUi = (r: BcReward): UIReward => ({
   assetId: r.assetId.toNumber(),
   rewardAmount: r.rewardAmount.toNumber(),
   multiplier: r.multiplier.toNumber(),
+  balance: r.balance.toNumber(),
+  computed: computeReward(r),
+})
+
+const computeReward = (r: BcReward) => ({
+  currentValue: r.balance.toNumber() * r.asset.tokenInfo_tokenPrice.toNumber() / 1e2,
 })

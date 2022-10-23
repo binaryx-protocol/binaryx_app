@@ -14,7 +14,7 @@ const defaultAttrs = (): UiNewAssetFormValues => ({
   title: '123',
   description: '123',
   status: AssetStatuses.upcoming,
-  tokenInfo_totalSupply: 10_000, // decimals = 0
+  tokenInfo_totalSupply: 20_000, // decimals = 0
   tokenInfo_apr: 10, // percents
   tokenInfo_tokenPrice: 50_00, // decimals = 2
 })
@@ -43,8 +43,8 @@ const main = async () => {
   ).connect(wallet)
   const usdt = await UsdtfToken.attach(usdtAddress)
 
-  await usdt.approve(assetsToken.address, 1000000 * 1e4)
-  await assetsToken.investUsingUsdt(0, 1)
+  await usdt.approve(assetsToken.address, 3000000 * 1e4)
+  await assetsToken.investUsingUsdt(0, 50)
 }
 
 main()
