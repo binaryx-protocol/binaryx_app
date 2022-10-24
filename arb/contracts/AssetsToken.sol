@@ -21,6 +21,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
   mapping(uint256 => Asset) public _assets;
   mapping(address => mapping(uint256 => Investment)) public _investments; // user => { assetId => Investment }
   mapping(address => uint256[]) public _investmentsIds;
+  mapping(address => uint256) public _claimed;
   Counters.Counter private _assetsCounter;
 
   constructor(address usdtfA) ERC1155("") {
@@ -191,5 +192,32 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
       result[i] = RewardInfo(assetId, reward, _assets[assetId], multiplier, balance);
     }
     return (result, totalRewards, 0);
+  }
+
+  function predictTotalReward() public view returns(uint256 totalReward) {
+    uint256 totalRewards = 0;
+    uint256 count = _investmentsIds[msg.sender].length;
+    uint256 yearInSeconds = 31536000;
+
+    for (uint i = 0; i < count; i++) {
+      uint256 assetId = _investmentsIds[msg.sender][i];
+      Investment storage investment = _investments[msg.sender][assetId];
+      uint256 balance = balanceOf(msg.sender, assetId);
+      uint256 multiplier = 0;
+      uint256 timeDiff = block.timestamp - investment.accumulatedAt;
+      if (timeDiff > 3600) {
+        multiplier = timeDiff * 1000 / yearInSeconds;
+      }
+      uint256 reward = investment.accumulatedAmount + (balance * _assets[assetId].tokenInfo_tokenPrice * _assets[assetId].tokenInfo_apr * multiplier) / 1000;
+      totalRewards = totalRewards + reward;
+    }
+    return totalRewards;
+  }
+
+  function claimRewardsInUsdt() public {
+    uint256 maxAmountInCents = predictTotalReward();
+    uint256 usdtAmountInMicro = maxAmountInCents;
+    usdt.transfer(msg.sender, usdtAmountInMicro);
+    _claimed[msg.sender] += usdtAmountInMicro;
   }
 }

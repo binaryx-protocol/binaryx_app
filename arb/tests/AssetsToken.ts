@@ -268,4 +268,21 @@ describe("AssetsToken", function () {
       expect(async () => await sc.getAsset(1000000)).to.throw
     });
   });
+
+  describe("claimRewardsInUsdt", function () {
+    it("should withdraw and give USDT", async function () {
+      const { sc, owner, otherAccount, usdtfToken } = await loadFixture(deployFixture);
+      await createMany(sc, 1)
+      await usdtfToken.approve(sc.address, 1000 * usdtDecimals)
+
+      await sc.investUsingUsdt(0, 1)
+      await time.increaseTo((await time.latest()) + ONE_YEAR_IN_SECS / 2);
+
+      await expectUsdtBalance(usdtfToken, owner.address, usdtInitialBalance - 50)
+      await expectUsdtBalance(usdtfToken, sc.address, 50)
+      // 25000
+      usdtfToken.transfer(sc.address, 250 * usdtDecimals)
+      const r = await sc.claimRewardsInUsdt()
+    });
+  });
 });
