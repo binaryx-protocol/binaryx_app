@@ -19,7 +19,7 @@ type AssetInput = {
   status: number,
   tokenInfo_totalSupply: number,
   tokenInfo_apr: number,
-  tokenInfo_tokenPrice: number,
+  tokenInfo_tokenPriceDe6: number,
 }
 
 const defaultAttrs = (): AssetInput => ({
@@ -30,7 +30,7 @@ const defaultAttrs = (): AssetInput => ({
   status: AssetStatuses.upcoming,
   tokenInfo_totalSupply: 10_000, // decimals = 0
   tokenInfo_apr: 10, // percents
-  tokenInfo_tokenPrice: 50_00, // decimals = 2
+  tokenInfo_tokenPriceDe6: 50 * 1e6, // decimals = 6
 })
 
 const createMany = async (sc, count, attrs: Partial<AssetInput> = {}) => {
@@ -42,7 +42,7 @@ const createMany = async (sc, count, attrs: Partial<AssetInput> = {}) => {
 
 const usdtDecimals = 1e6;
 const usdtInitialBalance = 1000;
-const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
+const ONE_YEAR_IN_SECS = 31536000;
 
 describe("AssetsToken", function () {
   const expectUsdtBalance = async (usdtfToken, address, dollars) => expectBn(
@@ -269,7 +269,7 @@ describe("AssetsToken", function () {
     });
   });
 
-  describe("claimRewardsInUsdt", function () {
+  describe.only("claimRewardsInUsdt", function () {
     it("should withdraw and give USDT", async function () {
       const { sc, owner, otherAccount, usdtfToken } = await loadFixture(deployFixture);
       await createMany(sc, 1)
@@ -277,16 +277,24 @@ describe("AssetsToken", function () {
       await sc.investUsingUsdt(0, 1)
 
       // 250.00 is accumulated by this time
-      await time.increaseTo((await time.latest()) + ONE_YEAR_IN_SECS / 2);
-      await usdtfToken.transfer(sc.address, 250 * usdtDecimals)
-      await expectUsdtBalance(usdtfToken, owner.address, usdtInitialBalance - 300)
+      await time.increaseTo((await time.latest()) + ONE_YEAR_IN_SECS);
+      await usdtfToken.transfer(sc.address, 5 * usdtDecimals)
+      await expectUsdtBalance(usdtfToken, owner.address, usdtInitialBalance - 55)
+
+      const predictTotalReward = await sc.predictTotalReward();
+      expectBn(
+        predictTotalReward
+      ).to.eq(5 * usdtDecimals)
 
       const r = await sc.claimRewardsInUsdt()
 
       await expectUsdtBalance(usdtfToken, owner.address, usdtInitialBalance - 50)
 
-      //
+      const myRewardsPerAsset = await sc.getMyRewardsPerAsset();
 
+      expectBn(
+        myRewardsPerAsset.totalClaimedDe6
+      ).to.eq(5 * usdtDecimals)
     });
   });
 });

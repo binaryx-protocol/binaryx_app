@@ -80,6 +80,7 @@ export const $doLoadMyRewards = atom(null, async (get, set) => {
   const response = await rpcClient.getMyRewardsPerAsset(
     $rpcConfig
   );
+  console.log('response', response)
   set($apiRewardsResponse, response);
 })
 

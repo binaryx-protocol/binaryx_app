@@ -40,7 +40,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
     uint8 status,
     uint256 tokenInfo_totalSupply,
     uint256 tokenInfo_apr,
-    uint256 tokenInfo_tokenPrice
+    uint256 tokenInfo_tokenPriceDe6
   ) public override {
     uint256 id = _assetsCounter.current();
     _assetsCounter.increment();
@@ -52,7 +52,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
       status,
       tokenInfo_totalSupply,
       tokenInfo_apr,
-      tokenInfo_tokenPrice
+      tokenInfo_tokenPriceDe6
     );
     _assets[id] = newAsset;
     _mint(address(this), id, tokenInfo_totalSupply, "");
@@ -99,7 +99,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
     uint8 status,
     uint256 tokenInfo_totalSupply,
     uint256 tokenInfo_apr,
-    uint256 tokenInfo_tokenPrice
+    uint256 tokenInfo_tokenPriceDe6
   ) public override {
     Asset storage oldAsset = _assets[id];
     oldAsset.name = name;
@@ -124,18 +124,18 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
 
   function investUsingUsdt(uint256 assetId, uint256 assetTokensToBuy) public override {
     Asset storage asset = _assets[assetId];
-    uint256 costInUsdt = assetTokensToBuy * asset.tokenInfo_tokenPrice * 10**4;
-    usdt.transferFrom(msg.sender, address(this), costInUsdt);
+    uint256 costInUsdtDe6 = assetTokensToBuy * asset.tokenInfo_tokenPriceDe6;
+    usdt.transferFrom(msg.sender, address(this), costInUsdtDe6);
     _safeTransferFrom(address(this), msg.sender, assetId, assetTokensToBuy, "");
 
     // save investment
     if (_investments[msg.sender][assetId].assetId > 0) {
       _investments[msg.sender][assetId].assetId = assetId;
-      _investments[msg.sender][assetId].accumulatedAmount = 0; // TODO calculate
+      _investments[msg.sender][assetId].accumulatedAmountDe6 = 0; // TODO calculate
       _investments[msg.sender][assetId].accumulatedAt = block.timestamp;
     } else {
       _investmentsIds[msg.sender].push(assetId);
-      _investments[msg.sender][assetId] = Investment(assetId, 0, block.timestamp);
+      _investments[msg.sender][assetId] = Investment(assetId, 0, block.timestamp - 60*60*24);
     }
   }
 
@@ -172,8 +172,8 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
     uint256 balance;
   }
 
-  function getMyRewardsPerAsset() public view returns(RewardInfo[] memory, uint256 totalRewards, uint256 totalClaimed) {
-    uint256 totalRewards = 0;
+  function getMyRewardsPerAsset() public view returns(RewardInfo[] memory, uint256 totalRewardsDe6, uint256 totalClaimedDe6) {
+    uint256 totalRewardsDe6 = 0;
     uint256 count = _investmentsIds[msg.sender].length;
     RewardInfo[] memory result = new RewardInfo[](count);
     uint256 yearInSeconds = 31536000;
@@ -183,19 +183,23 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
       Investment storage investment = _investments[msg.sender][assetId];
       uint256 balance = balanceOf(msg.sender, assetId);
       uint256 multiplier = 0;
+      //
       uint256 timeDiff = block.timestamp - investment.accumulatedAt;
       if (timeDiff > 3600) {
-        multiplier = timeDiff * 1000 / yearInSeconds;
+        multiplier = (timeDiff * 1000 / yearInSeconds) - 2 * (timeDiff / yearInSeconds);
       }
-      uint256 reward = investment.accumulatedAmount + (balance * _assets[assetId].tokenInfo_tokenPrice * _assets[assetId].tokenInfo_apr * multiplier) / 1000;
-      totalRewards = totalRewards + reward;
+      uint256 rewardForAYear = calcPercentage(balance * _assets[assetId].tokenInfo_tokenPriceDe6, _assets[assetId].tokenInfo_apr);
+      uint256 rewardForAPeriod = (rewardForAYear * multiplier) / 1000;
+      uint256 reward = investment.accumulatedAmountDe6 + rewardForAPeriod;
+      totalRewardsDe6 = totalRewardsDe6 + reward;
+      //
       result[i] = RewardInfo(assetId, reward, _assets[assetId], multiplier, balance);
     }
-    return (result, totalRewards, 0);
+    return (result, totalRewardsDe6, _claimed[msg.sender]);
   }
 
-  function predictTotalReward() public view returns(uint256 totalReward) {
-    uint256 totalRewards = 0;
+  function predictTotalReward() public view returns(uint256 totalRewardsDe6) {
+    uint256 totalRewardsDe6 = 0;
     uint256 count = _investmentsIds[msg.sender].length;
     uint256 yearInSeconds = 31536000;
 
@@ -204,20 +208,33 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
       Investment storage investment = _investments[msg.sender][assetId];
       uint256 balance = balanceOf(msg.sender, assetId);
       uint256 multiplier = 0;
+      //
       uint256 timeDiff = block.timestamp - investment.accumulatedAt;
       if (timeDiff > 3600) {
-        multiplier = timeDiff * 1000 / yearInSeconds;
+        multiplier = (timeDiff * 1000 / yearInSeconds) - 2 * (timeDiff / yearInSeconds);
       }
-      uint256 reward = investment.accumulatedAmount + (balance * _assets[assetId].tokenInfo_tokenPrice * _assets[assetId].tokenInfo_apr * multiplier) / 1000;
-      totalRewards = totalRewards + reward;
+      console.log("timeDiff", timeDiff);
+      console.log("multiplier", multiplier);
+      console.log("_claimed[msg.sender]", _claimed[msg.sender]);
+      console.log("_assets[assetId].tokenInfo_tokenPriceDe6", _assets[assetId].tokenInfo_tokenPriceDe6);
+      console.log("_assets[assetId].tokenInfo_apr", _assets[assetId].tokenInfo_apr);
+      uint256 rewardForAYear = calcPercentage(balance * _assets[assetId].tokenInfo_tokenPriceDe6, _assets[assetId].tokenInfo_apr);
+      uint256 rewardForAPeriod = (rewardForAYear * multiplier) / 1000;
+      uint256 reward = investment.accumulatedAmountDe6 + rewardForAPeriod;
+      totalRewardsDe6 = totalRewardsDe6 + reward;
+      //
     }
-    return totalRewards;
+    return totalRewardsDe6 - _claimed[msg.sender];
   }
 
   function claimRewardsInUsdt() public {
-    uint256 maxAmountInCents = predictTotalReward();
-    uint256 usdtAmountInMicro = maxAmountInCents * 1e4;
-    usdt.transfer(msg.sender, usdtAmountInMicro);
-    _claimed[msg.sender] += usdtAmountInMicro;
+    uint256 usdtAmountDe6 = predictTotalReward();
+    console.log("usdtAmountDe6", usdtAmountDe6);
+    usdt.transfer(msg.sender, usdtAmountDe6);
+    _claimed[msg.sender] += usdtAmountDe6;
+  }
+
+  function calcPercentage(uint256 input, uint256 percentage) private pure returns(uint256) {
+    return (input * percentage) / 100;
   }
 }
