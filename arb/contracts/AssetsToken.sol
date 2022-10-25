@@ -135,7 +135,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
       _investments[msg.sender][assetId].accumulatedAt = block.timestamp;
     } else {
       _investmentsIds[msg.sender].push(assetId);
-      _investments[msg.sender][assetId] = Investment(assetId, 0, block.timestamp - 60*60*24);
+      _investments[msg.sender][assetId] = Investment(assetId, 0, block.timestamp);
     }
   }
 
@@ -166,7 +166,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
 
   struct RewardInfo {
     uint256 assetId;
-    uint256 rewardAmount;
+    uint256 rewardAmountDe6;
     Asset asset;
     uint256 multiplier;
     uint256 balance;
@@ -186,7 +186,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
       //
       uint256 timeDiff = block.timestamp - investment.accumulatedAt;
       if (timeDiff > 3600) {
-        multiplier = (timeDiff * 1000 / yearInSeconds) - 2 * (timeDiff / yearInSeconds);
+        multiplier = (timeDiff * 1000 / yearInSeconds);
       }
       uint256 rewardForAYear = calcPercentage(balance * _assets[assetId].tokenInfo_tokenPriceDe6, _assets[assetId].tokenInfo_apr);
       uint256 rewardForAPeriod = (rewardForAYear * multiplier) / 1000;
@@ -211,13 +211,8 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
       //
       uint256 timeDiff = block.timestamp - investment.accumulatedAt;
       if (timeDiff > 3600) {
-        multiplier = (timeDiff * 1000 / yearInSeconds) - 2 * (timeDiff / yearInSeconds);
+        multiplier = (timeDiff * 1000 / yearInSeconds);
       }
-      console.log("timeDiff", timeDiff);
-      console.log("multiplier", multiplier);
-      console.log("_claimed[msg.sender]", _claimed[msg.sender]);
-      console.log("_assets[assetId].tokenInfo_tokenPriceDe6", _assets[assetId].tokenInfo_tokenPriceDe6);
-      console.log("_assets[assetId].tokenInfo_apr", _assets[assetId].tokenInfo_apr);
       uint256 rewardForAYear = calcPercentage(balance * _assets[assetId].tokenInfo_tokenPriceDe6, _assets[assetId].tokenInfo_apr);
       uint256 rewardForAPeriod = (rewardForAYear * multiplier) / 1000;
       uint256 reward = investment.accumulatedAmountDe6 + rewardForAPeriod;
@@ -229,7 +224,6 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
 
   function claimRewardsInUsdt() public {
     uint256 usdtAmountDe6 = predictTotalReward();
-    console.log("usdtAmountDe6", usdtAmountDe6);
     usdt.transfer(msg.sender, usdtAmountDe6);
     _claimed[msg.sender] += usdtAmountDe6;
   }

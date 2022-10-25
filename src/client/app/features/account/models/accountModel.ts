@@ -29,7 +29,7 @@ export type UIAsset = {
   status: number
   tokenInfo_totalSupply: number
   tokenInfo_apr: number
-  tokenInfo_tokenPrice: number
+  tokenInfo_tokenPriceDe6: number
 }
 
 export type UIReward = {
@@ -100,7 +100,7 @@ const transformAssetBcToUi = (bcAsset: BcAsset): UIAsset => {
     ...bcAsset,
     tokenInfo_totalSupply: bcAsset.tokenInfo_totalSupply.toNumber(),
     tokenInfo_apr: bcAsset.tokenInfo_apr.toNumber(),
-    tokenInfo_tokenPrice: bcAsset.tokenInfo_tokenPrice.toNumber(),
+    tokenInfo_tokenPriceDe6: bcAsset.tokenInfo_tokenPriceDe6.toNumber(),
   }
 }
 
@@ -114,5 +114,5 @@ const transformRewardBcToUi = (r: BcReward): UIReward => ({
 })
 
 const computeReward = (r: BcReward) => ({
-  currentValue: r.balance.toNumber() * r.asset.tokenInfo_tokenPrice.toNumber() / 1e2,
+  currentValue: r.balance.toNumber() * r.asset.tokenInfo_tokenPriceDe6.toNumber() / 1e6,
 })
