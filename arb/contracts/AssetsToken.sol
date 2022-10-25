@@ -126,6 +126,8 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
     Asset storage asset = _assets[assetId];
     uint256 costInUsdtDe6 = assetTokensToBuy * asset.tokenInfo_tokenPriceDe6;
     usdt.transferFrom(msg.sender, address(this), costInUsdtDe6);
+    console.log("assetTokensToBuy", assetTokensToBuy, assetId);
+    console.log("asd", balanceOf(address(this), assetId));
     _safeTransferFrom(address(this), msg.sender, assetId, assetTokensToBuy, "");
 
     // save investment
@@ -135,7 +137,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
       _investments[msg.sender][assetId].accumulatedAt = block.timestamp;
     } else {
       _investmentsIds[msg.sender].push(assetId);
-      _investments[msg.sender][assetId] = Investment(assetId, 0, block.timestamp);
+      _investments[msg.sender][assetId] = Investment(assetId, 0, block.timestamp - 60*60*24);
     }
   }
 
@@ -193,7 +195,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
       uint256 reward = investment.accumulatedAmountDe6 + rewardForAPeriod;
       totalRewardsDe6 = totalRewardsDe6 + reward;
       //
-      result[i] = RewardInfo(assetId, reward, _assets[assetId], multiplier, balance - 60*60*24);
+      result[i] = RewardInfo(assetId, reward, _assets[assetId], multiplier, balance);
     }
     return (result, totalRewardsDe6, _claimed[msg.sender]);
   }
