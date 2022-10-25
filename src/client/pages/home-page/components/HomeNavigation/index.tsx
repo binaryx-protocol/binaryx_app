@@ -15,11 +15,11 @@ type Props = {
 
 const LandingNav: FC<Props> = ({ isDark }) => {
   const isTransparentBgRef = useRef(true);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const btnBurgerMenuRef = useRef<HTMLDivElement>(null);
   const [isTransparentBg, setIsTransparentBg] = useState(true);
   const [headerOpened, setHeaderIsOpened] = useState(false);
 
-  const headerRef = useRef<HTMLDivElement>(null);
-  const btnBurgerMenuRef = useRef<HTMLDivElement>(null);
   const onClickBurgerMenu = () => {
     setHeaderIsOpened(!headerOpened);
     if (!headerOpened) {
@@ -35,6 +35,13 @@ const LandingNav: FC<Props> = ({ isDark }) => {
       btnBurgerMenuRef.current?.classList.toggle(s.opened);
     }
     document.body.style.overflow = !headerOpened ? 'hidden' : 'scroll';
+  };
+
+  const onClickLogo = () => {
+    (window as Window).scrollTo(0, 0);
+    if (headerOpened) {
+      onClickBurgerMenu();
+    }
   };
 
   useEffect(() => {
@@ -62,34 +69,22 @@ const LandingNav: FC<Props> = ({ isDark }) => {
         [s.headerTransparent]: isTransparentBg,
       })}
     >
-      <Container maxWidth="xl" className={s.container}>
+      <div className={s.navContainer}>
         <div className={s.logoWrap}>
           <img
-            src={`https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_white_horizontal.svg`}
+            src={`https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_${
+              !isDark ? 'black' : 'white'
+            }_horizontal.svg`}
             alt="company_logo"
-            className={classNames(s.logo, { [s.logoActive]: isDark })}
-            onClick={() => {
-              (window as Window).scrollTo(0, 0);
-              if (headerOpened) {
-                onClickBurgerMenu();
-              }
-            }}
-          />
-          <img
-            src={`https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg`}
-            alt="company_logo"
-            className={classNames(s.logo, { [s.logoActive]: !isDark })}
-            onClick={() => {
-              (window as Window).scrollTo(0, 0);
-              if (headerOpened) {
-                onClickBurgerMenu();
-              }
-            }}
+            className={classNames(s.logo)}
+            onClick={onClickLogo}
           />
           <div onClick={onClickBurgerMenu} className={s.btnBurgerMenuClickable}>
             <div ref={btnBurgerMenuRef} className={s.btnBurgerMenu}></div>
           </div>
         </div>
+      </div>
+      <Container maxWidth="xl" className={s.container}>
         <nav className={s.navLinks}>
           <hr className={s.separator} />
           <MenuElement link={'/home'} body={'Home'} />
@@ -106,19 +101,19 @@ const LandingNav: FC<Props> = ({ isDark }) => {
         <nav className={s.navSocial}>
           <NavSocialImage
             link={'https://discord.gg/kJqgYh7G9G'}
-            icon={<IconDiscord className={s.navSocialImage} />}
+            icon={<IconDiscord />}
           />
           <NavSocialImage
             link={'https://twitter.com/BinaryxProtocol'}
-            icon={<IconTwitter className={s.navSocialImage} />}
+            icon={<IconTwitter />}
           />
           <NavSocialImage
             link={'https://www.linkedin.com/company/realbinaryx/'}
-            icon={<IconLinkedIn className={s.navSocialImage} />}
+            icon={<IconLinkedIn />}
           />
           <NavSocialImage
             link={'https://t.me/binaryxnews'}
-            icon={<IconTelegram className={s.navSocialImage} />}
+            icon={<IconTelegram />}
           />
         </nav>
       </Container>
