@@ -273,16 +273,20 @@ describe("AssetsToken", function () {
     it("should withdraw and give USDT", async function () {
       const { sc, owner, otherAccount, usdtfToken } = await loadFixture(deployFixture);
       await createMany(sc, 1)
-      await usdtfToken.approve(sc.address, 1000 * usdtDecimals)
-
+      await usdtfToken.approve(sc.address, 50 * usdtDecimals)
       await sc.investUsingUsdt(0, 1)
+
+      // 250.00 is accumulated by this time
       await time.increaseTo((await time.latest()) + ONE_YEAR_IN_SECS / 2);
+      await usdtfToken.transfer(sc.address, 250 * usdtDecimals)
+      await expectUsdtBalance(usdtfToken, owner.address, usdtInitialBalance - 300)
+
+      const r = await sc.claimRewardsInUsdt()
 
       await expectUsdtBalance(usdtfToken, owner.address, usdtInitialBalance - 50)
-      await expectUsdtBalance(usdtfToken, sc.address, 50)
-      // 25000
-      usdtfToken.transfer(sc.address, 250 * usdtDecimals)
-      const r = await sc.claimRewardsInUsdt()
+
+      //
+
     });
   });
 });

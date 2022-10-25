@@ -216,7 +216,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
 
   function claimRewardsInUsdt() public {
     uint256 maxAmountInCents = predictTotalReward();
-    uint256 usdtAmountInMicro = maxAmountInCents;
+    uint256 usdtAmountInMicro = maxAmountInCents * 1e4;
     usdt.transfer(msg.sender, usdtAmountInMicro);
     _claimed[msg.sender] += usdtAmountInMicro;
   }
