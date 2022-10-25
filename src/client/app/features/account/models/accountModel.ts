@@ -18,7 +18,8 @@ export type BcReward = {
 
 export type BcRewardsResponse = [
   BcReward[],
-  BigNumber
+  BigNumber,
+  BigNumber,
 ]
 
 export type UIAsset = {
@@ -62,11 +63,12 @@ export const $accountInfo = atom<UiAccountInfo | null>((get) => {
     return null
   }
   const rewards = apiRewardsResponse[0].map(transformRewardBcToUi).map<UIReward>(onlyFields)
+  const totalEarned = apiRewardsResponse[2].toNumber() / 1e6
   return {
     rewards,
-    totalRewards: apiRewardsResponse[1].toNumber(),
+    totalRewards: apiRewardsResponse[1].toNumber() / 1e6 - totalEarned,
     totalValue: rewards.reduce((acc, r) => acc + r.computed.currentValue, 0),
-    totalEarned: 0 // TODO
+    totalEarned,
   }
 });
 
@@ -100,19 +102,19 @@ const transformAssetBcToUi = (bcAsset: BcAsset): UIAsset => {
     ...bcAsset,
     tokenInfo_totalSupply: bcAsset.tokenInfo_totalSupply.toNumber(),
     tokenInfo_apr: bcAsset.tokenInfo_apr.toNumber(),
-    tokenInfo_tokenPriceDe6: bcAsset.tokenInfo_tokenPriceDe6.toNumber(),
+    tokenInfo_tokenPriceDe6: bcAsset.tokenInfo_tokenPriceDe6.toNumber() / 1e6,
   }
 }
 
 const transformRewardBcToUi = (r: BcReward): UIReward => ({
   asset: transformAssetBcToUi(r.asset),
   assetId: r.assetId.toNumber(),
-  rewardAmountDe6: r.rewardAmountDe6.toNumber(),
+  rewardAmountDe6: r.rewardAmountDe6.toNumber() / 1e6,
   multiplier: r.multiplier.toNumber(),
   balance: r.balance.toNumber(),
   computed: computeReward(r),
 })
 
 const computeReward = (r: BcReward) => ({
-  currentValue: r.balance.toNumber() * r.asset.tokenInfo_tokenPriceDe6.toNumber(),
+  currentValue: r.balance.toNumber() * r.asset.tokenInfo_tokenPriceDe6.toNumber() / 1e6,
 })
