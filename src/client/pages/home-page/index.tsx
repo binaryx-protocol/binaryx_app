@@ -445,8 +445,8 @@ const HomePage: FC = () => {
     changeWheelSpeed(main, 0.1);
 
     if (isVideoAnimation) {
-      let seeked = false;
-      let lastProgress = 0;
+      const seeked = false;
+      const lastProgress = 0;
       const progressDelta = 0.1;
 
       function lerp(x, y, t) {

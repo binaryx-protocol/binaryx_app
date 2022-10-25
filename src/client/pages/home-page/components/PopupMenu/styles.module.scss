@@ -22,10 +22,6 @@
   z-index: 25;
   animation: backdrop-filter .5s cubic-bezier(0.215, 0.610, 0.355, 1) forwards;
 
-  @media screen and (max-width: 768px) {
-    height: calc(100vh + 70px);
-  }
-
   @media screen and (max-height: 667px) {
     height: 100vh;
   }

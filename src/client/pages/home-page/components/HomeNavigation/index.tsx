@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { FC, useEffect, useRef, useState } from 'react';
 import s from './styles.module.scss';
 import { Container } from '@mui/material';
@@ -8,7 +7,7 @@ import IconDiscord from '../NavSocialImage/IconDiscord';
 import IconTwitter from '../NavSocialImage/IconTwitter';
 import IconLinkedIn from '../NavSocialImage/IconLinkedIn';
 import IconTelegram from '../NavSocialImage/IconTelegram';
-// import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
+import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
 
 type Props = {
   isDark?: boolean;
@@ -17,10 +16,30 @@ type Props = {
 const LandingNav: FC<Props> = ({ isDark }) => {
   const isTransparentBgRef = useRef(true);
   const [isTransparentBg, setIsTransparentBg] = useState(true);
+  const [headerOpened, setHeaderIsOpened] = useState(false);
+
+  const headerRef = useRef<HTMLDivElement>(null);
+  const btnBurgerMenuRef = useRef<HTMLDivElement>(null);
+  const onClickBurgerMenu = () => {
+    setHeaderIsOpened(!headerOpened);
+    if (!headerOpened) {
+      headerRef.current?.classList.toggle(s.opened);
+      btnBurgerMenuRef.current?.classList.toggle(s.opened);
+    } else {
+      headerRef.current?.classList.toggle(s.opened);
+      btnBurgerMenuRef.current?.classList.toggle(s.closing);
+      setTimeout(
+        () => btnBurgerMenuRef.current?.classList.toggle(s.closing),
+        500,
+      );
+      btnBurgerMenuRef.current?.classList.toggle(s.opened);
+    }
+    document.body.style.overflow = !headerOpened ? 'hidden' : 'scroll';
+  };
 
   useEffect(() => {
     document.addEventListener('scroll', () => {
-      console.log("scroll", window.scrollY);
+      // console.log('scroll', window.scrollY);
       if (window.scrollY > 0) {
         if (isTransparentBgRef.current) {
           isTransparentBgRef.current = false;
@@ -32,34 +51,58 @@ const LandingNav: FC<Props> = ({ isDark }) => {
           setIsTransparentBg(() => true);
         }
       }
-    })
+    });
   }, []);
 
   return (
-    <header className={classNames(s.header, { [s.headerDark]: isDark, [s.headerTransparent]: isTransparentBg })}>
+    <header
+      ref={headerRef}
+      className={classNames(s.header, {
+        [s.headerDark]: isDark,
+        [s.headerTransparent]: isTransparentBg,
+      })}
+    >
       <Container maxWidth="xl" className={s.container}>
-        <div
-          className={s.logoWrap}
-          onClick={() => (window as Window).scrollTo(0, 0)}
-        >
+        <div className={s.logoWrap}>
           <img
             src={`https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_white_horizontal.svg`}
             alt="company_logo"
             className={classNames(s.logo, { [s.logoActive]: isDark })}
+            onClick={() => {
+              (window as Window).scrollTo(0, 0);
+              if (headerOpened) {
+                onClickBurgerMenu();
+              }
+            }}
           />
           <img
             src={`https://binaryxestate.s3.eu-central-1.amazonaws.com/images/common/logo_black_horizontal.svg`}
             alt="company_logo"
             className={classNames(s.logo, { [s.logoActive]: !isDark })}
+            onClick={() => {
+              (window as Window).scrollTo(0, 0);
+              if (headerOpened) {
+                onClickBurgerMenu();
+              }
+            }}
           />
+          <div onClick={onClickBurgerMenu} className={s.btnBurgerMenuClickable}>
+            <div ref={btnBurgerMenuRef} className={s.btnBurgerMenu}></div>
+          </div>
         </div>
-        {/* <nav className={s.navLinks}>
+        <nav className={s.navLinks}>
+          <hr className={s.separator} />
           <MenuElement link={'/home'} body={'Home'} />
+          <hr className={s.separator} />
           <MenuElement link={'#'} body={'About'} />
+          <hr className={s.separator} />
           <MenuElement link={'#'} body={'Learn'} />
+          <hr className={s.separator} />
           <MenuElement link={'#'} body={'More'} />
+          <hr className={s.separator} />
           <MenuElement link={'#'} body={'Company'} />
-        </nav> */}
+          <hr className={s.separator} />
+        </nav>
         <nav className={s.navSocial}>
           <NavSocialImage
             link={'https://discord.gg/kJqgYh7G9G'}
