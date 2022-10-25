@@ -12,7 +12,7 @@ export type BcReward = {
   asset: BcAsset
   assetId: BigNumber
   multiplier: BigNumber
-  rewardAmount: BigNumber
+  rewardAmountDe6: BigNumber
   balance: BigNumber
 }
 
@@ -36,7 +36,7 @@ export type UIReward = {
   asset: UIAsset
   assetId: number
   multiplier: number
-  rewardAmount: number
+  rewardAmountDe6: number
   balance: number
   computed: UIRewardComputed
 }
@@ -107,12 +107,12 @@ const transformAssetBcToUi = (bcAsset: BcAsset): UIAsset => {
 const transformRewardBcToUi = (r: BcReward): UIReward => ({
   asset: transformAssetBcToUi(r.asset),
   assetId: r.assetId.toNumber(),
-  rewardAmount: r.rewardAmount.toNumber(),
+  rewardAmountDe6: r.rewardAmountDe6.toNumber(),
   multiplier: r.multiplier.toNumber(),
   balance: r.balance.toNumber(),
   computed: computeReward(r),
 })
 
 const computeReward = (r: BcReward) => ({
-  currentValue: r.balance.toNumber() * r.asset.tokenInfo_tokenPriceDe6.toNumber() / 1e6,
+  currentValue: r.balance.toNumber() * r.asset.tokenInfo_tokenPriceDe6.toNumber(),
 })

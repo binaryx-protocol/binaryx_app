@@ -6,12 +6,12 @@ const AssetStruct = `
     uint8 status,
     uint256 tokenInfo_totalSupply,
     uint256 tokenInfo_apr,
-    uint256 tokenInfo_tokenPrice
+    uint256 tokenInfo_tokenPriceDe6
 `
 
 const RewardInfo = `
     uint256 assetId,
-    uint256 rewardAmount,
+    uint256 rewardAmountDe6,
     (${AssetStruct}) asset,
     uint256 multiplier,
     uint256 balance
@@ -26,7 +26,7 @@ export const assetsManagerAbi = [
     uint8 status,
     uint256 tokenInfo_totalSupply,
     uint256 tokenInfo_apr,
-    uint256 tokenInfo_tokenPrice
+    uint256 tokenInfo_tokenPriceDe6
   ) public`
   ,
   `function listAssets() public view returns((${AssetStruct})[] memory)`,
@@ -36,7 +36,7 @@ export const assetsManagerAbi = [
 ]
 
 export const accountManagerAbi = [
-  `function getMyRewardsPerAsset() public view returns((${RewardInfo})[] memory, uint256 totalRewards, uint256 totalClaimed)`,
+  `function getMyRewardsPerAsset() public view returns((${RewardInfo})[] memory, uint256 totalRewardsDe6, uint256 totalClaimedDe6)`,
   `function claimRewardsInUsdt() public`,
 ]
 

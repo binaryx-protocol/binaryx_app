@@ -42,8 +42,8 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
     uint256 tokenInfo_apr,
     uint256 tokenInfo_tokenPriceDe6
   ) public override {
-    uint256 id = _assetsCounter.current();
     _assetsCounter.increment();
+    uint256 id = _assetsCounter.current();
     Asset memory newAsset = Asset(
       name,
       symbol,
@@ -193,7 +193,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
       uint256 reward = investment.accumulatedAmountDe6 + rewardForAPeriod;
       totalRewardsDe6 = totalRewardsDe6 + reward;
       //
-      result[i] = RewardInfo(assetId, reward, _assets[assetId], multiplier, balance);
+      result[i] = RewardInfo(assetId, reward, _assets[assetId], multiplier, balance - 60*60*24);
     }
     return (result, totalRewardsDe6, _claimed[msg.sender]);
   }

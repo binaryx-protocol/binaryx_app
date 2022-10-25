@@ -12,6 +12,7 @@ export const AccountController = () => {
   const doLoadMyRewards = useSetAtom(accountModel.$doLoadMyRewards)
   const doClaimMyRewards = useSetAtom(accountModel.$doClaimMyRewards)
   const accountInfo = useAtomValue(accountModel.$accountInfo)
+  console.log('accountInfo', accountInfo)
 
   useEffect(() => {
     doLoadMyRewards()
@@ -63,7 +64,7 @@ export const AccountController = () => {
             boughtHouseLink={paths.showAsset({ id: reward.assetId })}
             cocReturn={reward.asset.tokenInfo_apr}
             currentValue={reward.computed.currentValue}
-            currentRentBalance={reward.rewardAmount}
+            currentRentBalance={reward.rewardAmountDe6}
             // totalRentEarned={-1}
           />;
         })}
