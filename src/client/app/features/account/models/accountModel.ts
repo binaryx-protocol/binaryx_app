@@ -80,9 +80,18 @@ export const $doLoadMyRewards = atom(null, async (get, set) => {
   const response = await rpcClient.getMyRewardsPerAsset(
     $rpcConfig
   );
-  console.log('response', response);
-
   set($apiRewardsResponse, response);
+})
+
+export const $doClaimMyRewards = atom(null, async (get, set) => {
+  await waitFor(() => {
+    return get(metaMaskModel.$walletReadiness) === 'ready' && !!get(rpcConfigModel.$rpcConfig)
+  }, 3)
+
+  const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
+  await rpcClient.claimRewardsInUsdt(
+    $rpcConfig
+  );
 })
 
 const transformAssetBcToUi = (bcAsset: BcAsset): UIAsset => {

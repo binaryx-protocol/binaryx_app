@@ -43,7 +43,7 @@ const main = async () => {
   ).connect(wallet)
   const usdt = await UsdtfToken.attach(usdtAddress)
 
-  await usdt.approve(assetsToken.address, 3000000 * 1e4)
+  await usdt.approve(assetsToken.address, 50*50 * 1e6)
   await assetsToken.investUsingUsdt(0, 50)
 }
 

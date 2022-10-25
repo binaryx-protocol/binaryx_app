@@ -10,11 +10,16 @@ import {paths} from "../../../../../../../pkg/paths";
 
 export const AccountController = () => {
   const doLoadMyRewards = useSetAtom(accountModel.$doLoadMyRewards)
+  const doClaimMyRewards = useSetAtom(accountModel.$doClaimMyRewards)
   const accountInfo = useAtomValue(accountModel.$accountInfo)
 
   useEffect(() => {
     doLoadMyRewards()
   }, []);
+
+  const onWithdraw = () => {
+    doClaimMyRewards()
+  }
 
   if (!accountInfo) {
     return null
@@ -35,7 +40,7 @@ export const AccountController = () => {
       <h1 className={s.heading}>Account</h1>
 
       <div className={s.statisticSection}>
-        <WithdrawBlock amountOfMoney={accountInfo.totalRewards} />
+        <WithdrawBlock amountOfMoney={accountInfo.totalRewards} onWithdraw={onWithdraw} />
 
         <StatisticBlock
           currentAccountValue={accountInfo.totalValue + accountInfo.totalRewards - accountInfo.totalEarned}
