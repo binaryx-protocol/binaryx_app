@@ -47,7 +47,7 @@
 }
 
 .sectionPadding {
-  height: 500px;
+  height: 100vh;
 }
 
 .sectionsDark {
@@ -405,6 +405,11 @@
   font-weight: 400;
   text-align: center;
   margin: 30px 0 0 0;
+
+
+   @media (max-width: 768px) {
+     font-size: 24px;
+   }
 }
 
 .teamGallery {
