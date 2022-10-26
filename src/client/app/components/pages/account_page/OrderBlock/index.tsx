@@ -85,7 +85,7 @@ const OrderBlock: FC<Props> = ({ asset, accountId }) => {
       cocReturn={formatLongNumber(apr || asset.coc, { toFixed: 2 })}
       currentValue={tokenAmount * (parseFloat(asset.tokenPrice) / 10 ** 18)}
       currentRentBalance={(rewardsAmount / 10 ** 18).toFixed(3)}
-      totalRentEarned={(assetTotalRentEarned / 10 ** 18).toFixed(3)}
+      // totalRentEarned={(assetTotalRentEarned / 10 ** 18).toFixed(3)}
     />
   );
 };
