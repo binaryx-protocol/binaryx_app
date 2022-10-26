@@ -13,6 +13,14 @@
   font-size: 14px;
 }
 
+.webAssetCard img {
+  width: 32px;
+
+  @media screen and (max-width: 1024px) {
+    width: 22px;
+  }
+}
+
 .description {
   margin-bottom: 0;
 }

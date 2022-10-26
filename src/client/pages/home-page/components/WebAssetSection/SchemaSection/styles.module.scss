@@ -1,6 +1,6 @@
 .container {
   max-width: var(--max-width_desktop);
-  margin: auto;
+  margin: 0 auto;
   padding: 0 5px;
 
   @media screen and (max-width: 1024px) {
@@ -8,9 +8,22 @@
   }
 }
 
+.textContainer {
+  max-width: var(--max-width_desktop);
+  margin: 0 auto;
+  width: 100%;
+
+  @media screen and (max-width: 1024px) {
+    max-width: none;
+    padding: 0 15px;
+  }
+}
+
 .webAssets {
   display: flex;
   align-items: center;
+  flex-direction: column;
+  justify-content: center;
   place-content: center;
   position: relative;
   z-index: 1;
@@ -33,6 +46,8 @@
   @media screen and (max-width: 1024px) {
     grid-gap: 5px;
     grid-template-columns: 250px;
+
+    margin-left: -50px;
     // margin-bottom: 7px;
   }
 }
@@ -224,17 +239,24 @@
 
   .property,
   .propertyTokens {
-    background: linear-gradient(180deg, #0097F1 0%, rgba(0, 151, 241, 0) 100%),
-      linear-gradient(0deg, rgba(31, 80, 115, 0.5), rgba(31, 80, 115, 0.5));
-    border: 1px solid rgba(31, 80, 115, 0.5);
+    border: 1px solid rgba(0, 151, 241, 1);
+    //border: linear-gradient(180deg, #0097F1 0%, rgba(0, 151, 241, 0) 100%),
+    //  linear-gradient(0deg, rgba(31, 80, 115, 0.5), rgba(31, 80, 115, 0.5));
+    background: rgba(31, 80, 115, 0.5);
+    backdrop-filter: blur(2.5px);
   }
 
   @media screen and (max-width: 1024px) {
     grid-row: 1;
     grid-gap: 0;
     place-items: center;
+
+    .property img {
+      width: 22px;
+    }
   }
 }
+
 
 .propertyTokenization.propertyTokenizationSelected {
   background: rgba(31, 80, 115, 0.5);
@@ -269,9 +291,12 @@
   .propertyToken,
   .stablecoins,
   .users {
-    background: linear-gradient(0deg, rgba(61, 27, 99, 0.5), rgba(61, 27, 99, 0.5)),
-    linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
-    border: 1px solid rgba(124, 4, 250, 0.5);
+    //background: linear-gradient(0deg, rgba(61, 27, 99, 0.5), rgba(61, 27, 99, 0.5)),
+    //linear-gradient(180deg, #7C04FA 0%, rgba(124, 4, 250, 0) 100%);
+    //border: 1px solid rgba(124, 4, 250, 0.5);
+    border: 1px solid rgba(124, 4, 250, 1);
+    background: rgba(61, 27, 99, 0.5);
+    backdrop-filter: blur(2.5px);
   }
 }
 
@@ -291,9 +316,14 @@
   transition: background .5s ease;
 
   .propertyRent {
-    border: 1px solid rgba(31, 91, 88, 0.5);
-    background: linear-gradient(180deg, #00DD8D 0%, rgba(0, 181, 221, 0) 100%),
-      linear-gradient(0deg, rgba(31, 91, 88, 0.5), rgba(31, 91, 88, 0.5));
+    //border: 1px solid rgba(31, 91, 88, 0.5);
+    //background: linear-gradient(180deg, #00DD8D 0%, rgba(0, 181, 221, 0) 100%),
+    //  linear-gradient(0deg, rgba(31, 91, 88, 0.5), rgba(31, 91, 88, 0.5));
+
+    border: 1px solid rgba(0, 221, 141, 1);
+    background: rgba(31, 91, 88, 0.5);
+    backdrop-filter: blur(2.5px);
+
     left: 85px;
 
     @media screen and (max-width: 786px) {
@@ -359,7 +389,8 @@
 
 .binaryxMarketplace {
   background-color: rgba(31, 91, 88, 0.5) !important;
-  border: 1px solid rgba(31, 91, 88, 0.5);
+  //border: 1px solid rgba(31, 91, 88, 0.5);
+  border: 1px solid rgba(0, 181, 221, 1) !important;
   border-radius: 10px !important;
   font-weight: 500;
   grid-row: 2;
@@ -370,9 +401,18 @@
   position: relative;
   z-index: 1;
 
+
   .binaryxMain {
     backdrop-filter: none;
     font-size: 16px;
+
+    p {
+      line-height: 103%;
+    }
+
+    img {
+      width: 33px;
+    }
   }
 }
 
@@ -386,15 +426,27 @@
   font-size: 40px;
   text-align: center;
   font-weight: 400;
+  width: 100%;
+
+  @media (max-width: 480px) {
+    text-align: left;
+  }
+
+  br {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 1024px) {
   .assetsTitle {
     font-size: 24px;
     font-weight: 300;
-    text-align: left;
     margin: 0 0 10px 0;
     margin-bottom: 40px;
+
+    br {
+      display: block;
+    }
   }
 
   .purchasingPropertyTokens,

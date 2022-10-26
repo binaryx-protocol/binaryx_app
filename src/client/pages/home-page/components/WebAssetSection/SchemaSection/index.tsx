@@ -52,8 +52,10 @@ const SchemaSection: FC<Props> = ({ className }) => {
   return (
     <section className={classNames(s.webAssets, className)}>
       {/*<BgOverlay isBgOverlayActive={true} isBgAnimationActive={true} isBgOverlayAbsolute={true} />*/}
+      <div className={s.textContainer}>
+        <h1 className={s.assetsTitle}>Welcome To The Era Of <br />WEB3 Assets</h1>
+      </div>
       <div className={s.container}>
-        <h1 className={s.assetsTitle}>Welcome To The Era Of WEB3 Assets</h1>
         <div ref={webAssetContainer} className={s.webAssetsContainer}>
           <WebAssetBlock
             className={classNames(s.webAssetsLegend)}
@@ -119,7 +121,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               animationOrder={0}
               className={classNames(s.binaryxMain)}
               imageSrc={
-                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/binaryx-logo.png'
+                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/binaryx-logo3.png'
               }
               imageDescription={'Binaryx Marketplace'}
             ></WebAssetCard>
@@ -147,7 +149,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               animationOrder={8}
               className={classNames(s.property)}
               imageSrc={
-                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property.png'
+                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property3.png'
               }
               imageDescription={'Property'}
             />
@@ -155,7 +157,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               animationOrder={10}
               className={classNames(s.propertyTokens)}
               imageSrc={
-                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property-tokens.png'
+                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property-tokens3.png'
               }
               imageDescription={'Property Tokens'}
             />
@@ -193,7 +195,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               animationOrder={16}
               className={s.propertyToken}
               imageSrc={
-                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property-token.png'
+                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property-token3.png'
               }
               imageDescription={'Property Token'}
             ></WebAssetCard>
@@ -201,7 +203,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               animationOrder={18}
               className={s.stablecoins}
               imageSrc={
-                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/stablecoins.png'
+                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/stablecoins3.png'
               }
               imageDescription={'Stablecoins'}
             ></WebAssetCard>
@@ -209,7 +211,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               animationOrder={20}
               className={s.users}
               imageSrc={
-                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/users.png'
+                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/users3.png'
               }
               imageDescription={'Users'}
             ></WebAssetCard>
@@ -259,7 +261,7 @@ const SchemaSection: FC<Props> = ({ className }) => {
               animationOrder={28}
               className={s.propertyRent}
               imageSrc={
-                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property-rent.png'
+                'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/desktop/web3-icons/property-rent3.png'
               }
               imageDescription={'Property Rent'}
             />
