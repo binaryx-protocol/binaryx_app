@@ -82,9 +82,9 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
     uint count = _assetsCounter.current();
     Asset[] memory result = new Asset[](count);
 
-    for (uint i = 0; i < count; i++) {
+    for (uint i = 1; i <= count; i++) {
       Asset storage asset = _assets[i];
-      result[i] = asset;
+      result[i-1] = asset;
     }
 
     return result;
