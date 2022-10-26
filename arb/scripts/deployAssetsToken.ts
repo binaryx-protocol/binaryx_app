@@ -1,3 +1,5 @@
+import {AssetStatuses, UiNewAssetFormValues} from "../../src/client/app/features/assets/types";
+
 const hre = require('hardhat')
 const { ethers, web3 } = require('hardhat')
 

@@ -13,7 +13,7 @@ interface IAssetsTokenManager {
 
     uint256 tokenInfo_totalSupply;
     uint256 tokenInfo_apr;
-    uint256 tokenInfo_tokenPrice;
+    uint256 tokenInfo_tokenPriceDe6;
 
     //        PropertyAddress propertyAddress;
     //    PropertyInfo propertyInfo;
@@ -89,7 +89,7 @@ interface IAssetsTokenManager {
     uint8 status,
     uint256 tokenInfo_totalSupply,
     uint256 tokenInfo_apr,
-    uint256 tokenInfo_tokenPrice
+    uint256 tokenInfo_tokenPriceDe6
   ) external;
 
   function listAssets() external view returns(Asset[] memory);
@@ -106,7 +106,7 @@ interface IAssetsTokenManager {
     uint8 status,
     uint256 tokenInfo_totalSupply,
     uint256 tokenInfo_apr,
-    uint256 tokenInfo_tokenPrice
+    uint256 tokenInfo_tokenPriceDe6
   ) external;
 
   // TODO add batch

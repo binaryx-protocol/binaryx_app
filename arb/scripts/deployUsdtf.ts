@@ -6,7 +6,7 @@ require('dotenv').config()
 
 requireEnvVariables(['DEVNET_PRIVKEY', 'L2RPC'])
 
-const usdtPrecision = web3.utils.toBN(10e6);
+const usdtPrecision = web3.utils.toBN(1e6);
 
 const main = async () => {
   const wallet = (await hre.ethers.getSigners())[0]

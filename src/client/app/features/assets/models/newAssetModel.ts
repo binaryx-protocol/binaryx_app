@@ -23,7 +23,7 @@ const defaultAttrs = (): UiNewAssetFormValues => ({
   status: AssetStatuses.upcoming,
   tokenInfo_totalSupply: 10_000, // decimals = 0
   tokenInfo_apr: 10, // percents
-  tokenInfo_tokenPrice: 50_00, // decimals = 2
+  tokenInfo_tokenPriceDe6: 50_00, // decimals = 2
 })
 
 export const $form = atom<UiNewAssetForm>({

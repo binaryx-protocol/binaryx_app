@@ -2,17 +2,18 @@ import { FC } from 'react';
 import s from './styles.module.scss';
 
 type Props = {
-  amountOfMoney: number;
+  amountOfMoney: number
+  onWithdraw: () => void
 };
 
-const WithdrawBlock: FC<Props> = (data: Props) => {
+const WithdrawBlock: FC<Props> = ({ amountOfMoney, onWithdraw }: Props) => {
   return (
     <section className={s.withdraw}>
       <div className={s.info}>
         <p>Current Rent Balance (USD)</p>
         <div className={s.withdrawBottom}>
-          <h2>${data.amountOfMoney}</h2>
-          <button className={s.withdrawBtn}>Withdraw</button>
+          <h2>${amountOfMoney}</h2>
+          <button className={s.withdrawBtn} onClick={onWithdraw}>Withdraw</button>
         </div>
       </div>
     </section>
