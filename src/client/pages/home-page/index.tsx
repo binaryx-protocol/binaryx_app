@@ -873,7 +873,7 @@ const HomePage: FC = () => {
         id="animationContainer3"
       />
       <div
-        className={classNames(s.containerAnimation, {
+        className={classNames(s.containerAnimation, s.containerAnimation4, {
           [s.containerAnimationDisappeared]: false,
         })}
         ref={container4}
