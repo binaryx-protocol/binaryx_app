@@ -9,6 +9,7 @@ type Props = {
   isBgOverlayAbsolute?: boolean;
   paddingTop?: number;
   height?: number;
+  className?: string;
 };
 
 const BgOverlay: FC<Props> = ({
@@ -17,12 +18,13 @@ const BgOverlay: FC<Props> = ({
   isBgAnimationActive,
   isBgOverlayAbsolute,
   paddingTop,
-  height
+  height,
+  className
 }) => {
   return (
     <div
       id={id}
-      className={classNames(s.bgOverlay, {
+      className={classNames(s.bgOverlay, className, {
         [s.bgOverlayActive]: isBgOverlayActive,
         [s.bgOverlayAbsolute]: isBgOverlayAbsolute,
         // [s.bgOverlayDark]: isBgOverlayDark,

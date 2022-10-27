@@ -15,10 +15,22 @@
 
 .bgOverlayActive {
   opacity: 1;
+
+  @media (max-width: 1024px) {
+    transform: scale(0.5);
+    margin-top: -47px;
+    opacity: 0.8;
+  }
 }
 
 .bgOverlayDark {
   background-color: #1B1B1B;
+
+  .bgOverlayActive {
+    @media (max-width: 1024px) {
+      margin-top: -134px;
+    }
+  }
 }
 
 .bgOverlayItem {

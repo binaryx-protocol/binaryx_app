@@ -541,6 +541,7 @@ const HomePage: FC = () => {
         lottie.destroy();
         initAnimations();
         prevWidth = event.target.innerWidth;
+        setIsMobile(typeof window !== 'undefined' && window.innerWidth <= 1024);
       }
     });
 
@@ -1004,6 +1005,7 @@ const HomePage: FC = () => {
             isBgAnimationActive={true}
             isBgOverlayAbsolute={true}
             height={windowHeight}
+            className={s.bgOverlaySchema}
           />
           <BgOverlay
             isBgOverlayActive={true}
