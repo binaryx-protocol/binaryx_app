@@ -1,4 +1,5 @@
 import {UiForm} from "../../../../../pkg/formType";
+import {BigNumber} from "ethers";
 
 export enum AssetStatuses {
   'upcoming' = 1,
@@ -7,28 +8,19 @@ export enum AssetStatuses {
   'disabled'= 4,
 }
 
-export type AssetAddress = {
-  country: string
-  state: string
-  city: string
-  postalCode: string
-  addressLine1: string
-  addressLine2: string
-}
-
 export type BcAsset = {
   name: string,
   symbol: string,
   title: string,
   description: string,
   status: number,
-  tokenInfo_totalSupply: number,
-  tokenInfo_apr: number,
-  tokenInfo_tokenPrice: number,
+  tokenInfo_totalSupply: BigNumber,
+  tokenInfo_apr: BigNumber,
+  tokenInfo_tokenPriceDe6: BigNumber,
 }
 
 export type BcAssetMetaData = {
-  tokensLeft: number,
+  tokensLeft: BigNumber,
 }
 
 export type UiAssetComputed = {
@@ -45,7 +37,7 @@ export type UiNewAssetFormValues = {
   status: number,
   tokenInfo_totalSupply: number,
   tokenInfo_apr: number,
-  tokenInfo_tokenPrice: number,
+  tokenInfo_tokenPriceDe6: number,
 }
 
 export type UiNewAssetForm = UiForm<UiNewAssetFormValues>

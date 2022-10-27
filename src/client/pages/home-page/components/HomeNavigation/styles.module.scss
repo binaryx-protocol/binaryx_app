@@ -159,6 +159,10 @@
   justify-content: space-between;
   max-width: calc(var(--max-width_desktop));
   padding: 0 20px;
+
+  @media (max-width: 768px) {
+    padding: 0 15px;
+  }
 }
 
 .logo {

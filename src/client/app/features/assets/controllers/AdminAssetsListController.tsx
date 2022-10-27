@@ -58,10 +58,10 @@ export const AdminAssetsListController = () => {
 
         <div className={styles.crudList}>
           {
-            blockchainAssets && blockchainAssets.map((blockchainAsset, i) => (
-              <div className={styles.crudListItem} key={i}>
+            blockchainAssets && blockchainAssets.map((blockchainAsset, index) => (
+              <div className={styles.crudListItem} key={index}>
                 <h2>
-                  #{i} {blockchainAsset.name} ({blockchainAsset.symbol})
+                  #{index+1} {blockchainAsset.name} ({blockchainAsset.symbol})
                 </h2>
                 <p>
                   {blockchainAsset.title}
@@ -73,15 +73,15 @@ export const AdminAssetsListController = () => {
                   {T.status[blockchainAsset.status as keyof typeof T.status]}{' '}
                   {
                     blockchainAsset.status === AssetStatuses.upcoming
-                    ? <Button variant="outlined" size="small" onClick={() => $doActivate({ id: i })}>
+                    ? <Button variant="outlined" size="small" onClick={() => $doActivate({ id: index+1 })}>
                         Activate
                       </Button>
-                      : <Button variant="outlined" size="small" onClick={() => $doDisable({ id: i })}>
+                      : <Button variant="outlined" size="small" onClick={() => $doDisable({ id: index+1 })}>
                         Disable
                       </Button>
                   }
                   {' '}
-                  <Link href={paths.showAsset({ id: i })} passHref>
+                  <Link href={paths.showAsset({ id: index+1 })} passHref>
                     <Button variant="outlined" size="small">
                       Invest
                     </Button>

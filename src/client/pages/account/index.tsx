@@ -100,7 +100,7 @@ const Account: NextPage<{ data: string }> = (props) => {
         <h1 className={s.heading}>Account</h1>
 
         <div className={s.statisticSection}>
-          <WithdrawBlock amountOfMoney={rewardsAmount / 10 ** 18} />
+          <WithdrawBlock amountOfMoney={rewardsAmount / 10 ** 18} onWithdraw={() => {}} />
 
           <StatisticBlock
             currentAccountValue={'N/A'}

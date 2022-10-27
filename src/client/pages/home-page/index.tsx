@@ -541,6 +541,8 @@ const HomePage: FC = () => {
         lottie.destroy();
         initAnimations();
         prevWidth = event.target.innerWidth;
+        setIsMobile(typeof window !== 'undefined' && window.innerWidth <= 1024);
+        setWindowHeight(typeof window !== 'undefined' ? window.innerHeight : 800);
       }
     });
 
@@ -872,7 +874,7 @@ const HomePage: FC = () => {
         id="animationContainer3"
       />
       <div
-        className={classNames(s.containerAnimation, {
+        className={classNames(s.containerAnimation, s.containerAnimation4, {
           [s.containerAnimationDisappeared]: false,
         })}
         ref={container4}
@@ -1004,6 +1006,7 @@ const HomePage: FC = () => {
             isBgAnimationActive={true}
             isBgOverlayAbsolute={true}
             height={windowHeight}
+            className={s.bgOverlaySchema}
           />
           <BgOverlay
             isBgOverlayActive={true}
@@ -1022,7 +1025,7 @@ const HomePage: FC = () => {
           <SchemaSection className={classNames(s.section, 'section')} />
           <TimelineSection
             className={classNames(s.section, 'section')}
-            minHeight={windowHeight - 300}
+            minHeight={windowHeight}
           />
           <section
             id="sectionTeam"

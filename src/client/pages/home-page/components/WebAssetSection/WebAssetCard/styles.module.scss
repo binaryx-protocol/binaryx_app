@@ -4,8 +4,8 @@
   align-items: center;
   flex-direction: column;
   text-align: center;
-  width: 170px;
-  height: 110px;
+  width: 140px;
+  height: 84px;
   border-radius: var(--border-radius_default);
   position: relative;
   z-index: 2;
@@ -13,8 +13,17 @@
   font-size: 14px;
 }
 
+.webAssetCard img {
+  width: 32px;
+
+  @media screen and (max-width: 1024px) {
+    width: 22px;
+  }
+}
+
 .description {
   margin-bottom: 0;
+  margin-top: 3px;
 }
 
 @media screen and (max-width: 1024px) {

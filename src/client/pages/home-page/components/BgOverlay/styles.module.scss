@@ -15,10 +15,22 @@
 
 .bgOverlayActive {
   opacity: 1;
+
+  @media (max-width: 1024px) {
+    transform: scale(0.5);
+    margin-top: -47px;
+    opacity: 0.8;
+  }
 }
 
 .bgOverlayDark {
   background-color: #1B1B1B;
+
+  .bgOverlayActive {
+    @media (max-width: 1024px) {
+      margin-top: -134px;
+    }
+  }
 }
 
 .bgOverlayItem {
@@ -27,35 +39,41 @@
 }
 
 .bgOverlayItem1 {
-  width: 355px;
-  height: 355px;
+  width: 22%;
+  height: 35%;
+  min-width: 355px;
+  min-height: 355px;
   background: #2A87DC;
   filter: blur(200px);
   position: absolute;
-  right: 212px;
-  top: 312px;
+  right: 14%;
+  top: 33%;
   animation: bgOverlayAnimate1 4s infinite;
 }
 
 .bgOverlayItem2 {
-  width: 355px;
-  height: 355px;
+  width: 22%;
+  height: 35%;
+  min-width: 355px;
+  min-height: 355px;
   background: #6F63BC;
   filter: blur(200px);
   position: absolute;
-  right: 0;
-  top: 232px;
+  right: 5%;
+  top: 25%;
   animation: bgOverlayAnimate2 5s infinite;
 }
 
 .bgOverlayItem3 {
-  width: 184px;
-  height: 184px;
+  width: 12%;
+  height: 19%;
+  min-width: 184px;
+  min-height: 184px;
   background: #1EBAD2;
   filter: blur(200px);
   position: absolute;
-  right: 476px;
-  top: 257px;
+  right: 30%;
+  top: 27%;
   animation: bgOverlayAnimate3 3s infinite;
 }
 

@@ -1,7 +1,7 @@
 import { loadFixture, time } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import hre, {ethers, web3} from "hardhat";
-import {bnToInt, expectBn} from "../testUtils";
+import {expectBn} from "../testUtils";
 import {onlyFields} from "../objectUtils";
 
 enum AssetStatuses {
@@ -19,7 +19,7 @@ type AssetInput = {
   status: number,
   tokenInfo_totalSupply: number,
   tokenInfo_apr: number,
-  tokenInfo_tokenPrice: number,
+  tokenInfo_tokenPriceDe6: number,
 }
 
 const defaultAttrs = (): AssetInput => ({
@@ -30,7 +30,7 @@ const defaultAttrs = (): AssetInput => ({
   status: AssetStatuses.upcoming,
   tokenInfo_totalSupply: 10_000, // decimals = 0
   tokenInfo_apr: 10, // percents
-  tokenInfo_tokenPrice: 50_00, // decimals = 2
+  tokenInfo_tokenPriceDe6: 50 * 1e6, // decimals = 6
 })
 
 const createMany = async (sc, count, attrs: Partial<AssetInput> = {}) => {
@@ -42,11 +42,11 @@ const createMany = async (sc, count, attrs: Partial<AssetInput> = {}) => {
 
 const usdtDecimals = 1e6;
 const usdtInitialBalance = 1000;
-const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
+const ONE_YEAR_IN_SECS = 31536000;
 
 describe("AssetsToken", function () {
-  const expectUsdtBalance = async (usdtfToken, address, dollars) => expect(
-    bnToInt(await usdtfToken.balanceOf(address))
+  const expectUsdtBalance = async (usdtfToken, address, dollars) => expectBn(
+    await usdtfToken.balanceOf(address)
   ).to.eq(dollars * usdtDecimals)
 
   async function deployFixture() {
@@ -108,8 +108,8 @@ describe("AssetsToken", function () {
       await expectUsdtBalance(usdtfToken, owner.address, usdtInitialBalance)
       await expectUsdtBalance(usdtfToken, sc.address, 0)
 
-      expect(
-        bnToInt(await sc.balanceOf(owner.address, assetId))
+      expectBn(
+        (await sc.balanceOf(owner.address, assetId))
       ).to.eq(0)
 
       // do the action
@@ -155,39 +155,41 @@ describe("AssetsToken", function () {
       await createMany(sc, 5)
       await usdtfToken.approve(sc.address, 1000 * usdtDecimals)
       await sc.investUsingUsdt(1, 1)
-      await sc.investUsingUsdt(3, 5)
+      await sc.investUsingUsdt(3, 1)
+      await sc.investUsingUsdt(3, 4)
 
       let myRewardsPerAsset = await sc.getMyRewardsPerAsset();
 
       expectBn(
-        myRewardsPerAsset[0][0].rewardAmount
+        myRewardsPerAsset[0][0].balance
+      ).to.eq(1)
+
+      expectBn(
+        myRewardsPerAsset[0][1].balance
+      ).to.eq(5)
+
+      expectBn(
+        myRewardsPerAsset[0][0].rewardAmountDe6
       ).to.eq(0)
 
       expectBn(
-        myRewardsPerAsset[0][1].rewardAmount
+        myRewardsPerAsset[0][1].rewardAmountDe6
       ).to.eq(0)
 
-      await time.increaseTo((await time.latest()) + ONE_YEAR_IN_SECS / 2);
+      await time.increaseTo((await time.latest()) + ONE_YEAR_IN_SECS);
       myRewardsPerAsset = await sc.getMyRewardsPerAsset();
 
       expectBn(
-        myRewardsPerAsset[0][0].rewardAmount
-      ).to.eq(25000)
+        myRewardsPerAsset[0][0].rewardAmountDe6
+      ).to.eq(5 * usdtDecimals)
 
       expectBn(
-        myRewardsPerAsset[0][1].rewardAmount
-      ).to.eq(125000)
+        myRewardsPerAsset[0][1].rewardAmountDe6
+      ).to.eq(25 * usdtDecimals)
 
-      await time.increaseTo((await time.latest()) + ONE_YEAR_IN_SECS / 2);
-      myRewardsPerAsset = await sc.getMyRewardsPerAsset();
-
-      expectBn(
-        myRewardsPerAsset[0][0].rewardAmount
-      ).to.eq(50000)
-
-      expectBn(
-        myRewardsPerAsset[0][1].rewardAmount
-      ).to.eq(250000)
+      expect(
+        myRewardsPerAsset[0].length
+      ).to.eq(2)
     });
   });
 
@@ -253,6 +255,29 @@ describe("AssetsToken", function () {
       await createMany(sc, 1)
 
       expect(async () => await sc.getAsset(1000000)).to.throw
+    });
+  });
+
+  describe("claimRewardsInUsdt", function () {
+    it("should withdraw and give USDT", async function () {
+      const { sc, owner, otherAccount, usdtfToken } = await loadFixture(deployFixture);
+      await createMany(sc, 1)
+      await usdtfToken.transfer(sc.address, 5 * usdtDecimals)
+      await usdtfToken.approve(sc.address, 50 * usdtDecimals)
+      await sc.investUsingUsdt(0, 1)
+
+      // 5.00 is accumulated by this time
+      await time.increaseTo((await time.latest()) + ONE_YEAR_IN_SECS);
+      await expectUsdtBalance(usdtfToken, owner.address, usdtInitialBalance - 55)
+
+      await sc.claimRewardsInUsdt() // BOOM
+
+      await expectUsdtBalance(usdtfToken, owner.address, usdtInitialBalance - 50)
+
+      // const myRewardsPerAsset = await sc.getMyRewardsPerAsset();
+      // expectBn(
+      //   myRewardsPerAsset.totalClaimedDe6
+      // ).to.eq(5 * usdtDecimals)
     });
   });
 });

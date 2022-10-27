@@ -32,31 +32,31 @@ export type RpcConfig = {
   assetsTokenAddress: string
 }
 
-const l2Rinkeby: RpcConfig = {
+const l2Goerli: RpcConfig = {
   chain: {
-    chainId: `0x${Number(421611).toString(16)}`,
-    blockExplorerUrls: ['https://rinkeby-explorer.arbitrum.io/#/'],
-    chainName: 'Arbitrum Rinkeby',
+    chainId: `0x${Number(421613).toString(16)}`,
+    blockExplorerUrls: ['https://goerli-rollup-explorer.arbitrum.io/'],
+    chainName: 'ARB Goerli',
     // iconUrls: [],
     nativeCurrency: {
       name: 'ETH',
       symbol: 'ETH',
       decimals: 18
     },
-    rpcUrls: ['https://rinkeby.arbitrum.io/rpc']
+    rpcUrls: ['https://goerli-rollup.arbitrum.io/rpc']
   },
   bnrxRootToken: {
     type: 'ERC20',
     options: {
-      address: '0x4e8C6307AF6fC893D76dfAD9198bcE29601Db057',
+      address: '0x7c5180280464edddb48464112bb06a4a136cbdbb', // NOT REAL YET
       symbol: 'BNRX',
       decimals: 18,
       image: '',
     },
   },
-  assetsTokenAddress: '',
-  usdtL1Address: '0xD92E713d051C37EbB2561803a3b5FBAbc4962431', // Rinkeby
-  usdtL2Address: '0x66b49d8593aAcD1b52b045d9834eBD5E8F02bf07', // Arb Rinkeby
+  assetsTokenAddress: '0x4e8C6307AF6fC893D76dfAD9198bcE29601Db057',
+  usdtL1Address: '0x5AB6F31B29Fc2021436B3Be57dE83Ead3286fdc7',
+  usdtL2Address: '0x7c5180280464edddb48464112bb06a4a136cbdbb',
 }
 
 const localhost: RpcConfig = {
@@ -89,7 +89,9 @@ const localhost: RpcConfig = {
 
 const configByDomain = typeof window !== 'undefined' ?
   {
-    'localhost': localhost,
+    // 'localhost': localhost,
+    'localhost': l2Goerli,
+    'i2.binaryx.com': l2Goerli,
   }[window.location.hostname]
   : null
 
