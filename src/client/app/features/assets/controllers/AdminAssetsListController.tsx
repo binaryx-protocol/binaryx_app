@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import styles from './AdminAssetsListController.module.scss'
 import Button from "@mui/material/Button";
-import * as metaMaskModel from "../../../models/metaMaskModel";
+import * as metaMaskModel from "../../../core/models/metaMaskModel";
 import * as assetsModel from "../models/assetsListModel";
 import {useAtomValue, useSetAtom} from "jotai";
 import {AssetStatuses} from "../types";
@@ -15,6 +15,8 @@ export const AdminAssetsListController = () => {
   const $walletReadiness = useAtomValue(metaMaskModel.$walletReadiness)
   const $metaMaskState = useAtomValue(metaMaskModel.$metaMaskState)
   const blockchainAssets = $blockchainAssets.state === 'hasData' ? $blockchainAssets.data : null
+
+  console.log('$metaMaskState', $metaMaskState)
 
   return (
     <>

@@ -1,6 +1,6 @@
 import { atom } from 'jotai'
-import * as metaMaskModel from "../../../models/metaMaskModel";
-import * as rpcConfigModel from "../../../models/rpcConfigModel";
+import * as metaMaskModel from "../../../core/models/metaMaskModel";
+import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import router from 'next/router'
 import {
   AssetStatuses,
@@ -13,7 +13,7 @@ import {waitFor} from "../../../utils/pageLoadUtiils";
 import {assetValidator} from "./assetValidator";
 import {SyntheticEvent} from "react";
 import {paths} from "../../../../../../pkg/paths";
-import {RpcConfig} from "../../../models/rpcConfigModel";
+import {RpcConfig} from "../../../core/models/rpcConfigModel";
 
 const defaultAttrs = (): UiNewAssetFormValues => ({
   name: '',

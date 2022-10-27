@@ -2,13 +2,13 @@
 import {atom} from 'jotai'
 import {SyntheticEvent} from "react";
 import {waitFor} from "../../../utils/pageLoadUtiils";
-import * as metaMaskModel from "../../../models/metaMaskModel";
-import * as rpcConfigModel from "../../../models/rpcConfigModel";
+import * as metaMaskModel from "../../../core/models/metaMaskModel";
+import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import {arbClient} from "./arbClient";
 import {BcAsset} from "../types";
 import {bnToInt} from "../../../utils/objectUtils";
 import {UiInputChangeEvent} from "../../../types/globals";
-import {RpcConfig} from "../../../models/rpcConfigModel";
+import {RpcConfig} from "../../../core/models/rpcConfigModel";
 
 // export const $amount = atom(1);
 //

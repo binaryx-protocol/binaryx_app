@@ -1,5 +1,5 @@
 import { atom } from 'jotai'
-import getUrlParams from '../utils/getUrlParams';
+import getUrlParams from '../../utils/getUrlParams';
 
 type FeatureFlags = {
     FF_MM: boolean;

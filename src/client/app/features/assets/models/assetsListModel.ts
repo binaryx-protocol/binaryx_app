@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { atom } from 'jotai'
-import * as metaMaskModel from "../../../models/metaMaskModel";
+import * as metaMaskModel from "../../../core/models/metaMaskModel";
 import {loadable} from "jotai/utils";
-import * as rpcConfigModel from "../../../models/rpcConfigModel";
+import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import {AssetStatuses, BcAsset} from "../types";
 import {arbClient} from "./arbClient";
 

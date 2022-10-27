@@ -1,12 +1,12 @@
 // @ts-nocheck
 import {atom, PrimitiveAtom} from 'jotai'
-import * as metaMaskModel from "../../../models/metaMaskModel";
-import * as rpcConfigModel from "../../../models/rpcConfigModel";
+import * as metaMaskModel from "../../../core/models/metaMaskModel";
+import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import {BcAsset, BcAssetMetaData, UiAssetComputed} from "../types";
 import {arbClient} from "./arbClient";
 import {waitFor} from "../../../utils/pageLoadUtiils";
 import {bnToInt, onlyFields} from "../../../utils/objectUtils";
-import {RpcConfig} from "../../../models/rpcConfigModel";
+import {RpcConfig} from "../../../core/models/rpcConfigModel";
 
 // stores
 export const $asset = atom(null) as PrimitiveAtom<BcAsset | null>;
