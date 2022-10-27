@@ -17,10 +17,12 @@
   // display: grid;
   place-items: center;
   //min-height: 80vh;
-  padding: 30px 0;
+  padding: 30px 0 0;
   color: white;
   position: relative;
   //background-color: var(--background-color_dark);
+  display: flex;
+  align-items: center;
   z-index: 1;
   overflow-x: hidden;
 

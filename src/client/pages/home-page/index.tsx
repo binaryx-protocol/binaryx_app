@@ -542,6 +542,7 @@ const HomePage: FC = () => {
         initAnimations();
         prevWidth = event.target.innerWidth;
         setIsMobile(typeof window !== 'undefined' && window.innerWidth <= 1024);
+        setWindowHeight(typeof window !== 'undefined' ? window.innerHeight : 800);
       }
     });
 
@@ -1024,7 +1025,7 @@ const HomePage: FC = () => {
           <SchemaSection className={classNames(s.section, 'section')} />
           <TimelineSection
             className={classNames(s.section, 'section')}
-            minHeight={windowHeight - 300}
+            minHeight={windowHeight}
           />
           <section
             id="sectionTeam"
