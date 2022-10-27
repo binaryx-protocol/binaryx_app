@@ -12,12 +12,13 @@ type Props = {
 
 const SchemaSection: FC<Props> = ({ className }) => {
   const webAssetContainer = useRef<HTMLDivElement>(null);
+  const isMobile = true;
 
   const toggleClassName = (
     className: string,
     entry: IntersectionObserverEntry,
   ) => {
-    const parentBlocks = entry.target.children;
+    const parentBlocks = entry?.target?.children || [];
     for (let i = 0; i < parentBlocks.length; i++) {
       parentBlocks[i].classList.toggle(className, entry.isIntersecting);
       const childBlocks = entry.target.children[i].children;
@@ -33,10 +34,10 @@ const SchemaSection: FC<Props> = ({ className }) => {
       if (isDesktop) {
         toggleClassName(s.isShow, entry);
       }
-      if (entry.isIntersecting) observer.unobserve(entry.target);
+      if (entry.isIntersecting) observer?.unobserve(entry.target);
     });
     // @ts-ignore
-    observer.observe(webAssetContainer.current);
+    observer?.observe(webAssetContainer.current);
   }, []);
 
   const onMouseEnter = (id: string, className: string) => {
@@ -48,6 +49,21 @@ const SchemaSection: FC<Props> = ({ className }) => {
     // @ts-ignore
     document.getElementById(id).classList.toggle(className);
   };
+
+  if (isMobile) {
+    return (
+      <section className={classNames(s.webAssets, className)}>
+        {/*<BgOverlay isBgOverlayActive={true} isBgAnimationActive={true} isBgOverlayAbsolute={true} />*/}
+        <div className={s.textContainer}>
+          <h1 className={s.assetsTitle}>Welcome To The Era Of <br />WEB3 Assets</h1>
+        </div>
+        <div className={s.container}>
+          <img className={s.mobileSchemaImage} src="https://binaryxestate.s3.eu-central-1.amazonaws.com/images/landing-page/web3Assets/mobile/lp-schema-mobile-large.png" />
+        </div>
+        <div ref={webAssetContainer} className={s.webAssetsContainer} />
+      </section>
+    );
+  }
 
   return (
     <section className={classNames(s.webAssets, className)}>

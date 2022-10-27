@@ -19,6 +19,12 @@
   }
 }
 
+
+.mobileSchemaImage {
+  max-width: 100%;
+  max-height: 100vh;
+}
+
 .webAssets {
   display: flex;
   align-items: center;
@@ -455,8 +461,7 @@
   .assetsTitle {
     font-size: 24px;
     font-weight: 300;
-    margin: 0 0 10px 0;
-    margin-bottom: 40px;
+    margin: 40px 0 40px 0;
 
     br {
       display: block;
