@@ -541,6 +541,7 @@ const HomePage: FC = () => {
         lottie.destroy();
         initAnimations();
         prevWidth = event.target.innerWidth;
+        setIsMobile(typeof window !== 'undefined' && window.innerWidth <= 1024);
       }
     });
 

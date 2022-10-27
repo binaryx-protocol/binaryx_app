@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import s from './styles.module.scss';
 import Props from '../WebAssetBlock';
@@ -12,7 +12,17 @@ type Props = {
 
 const SchemaSection: FC<Props> = ({ className }) => {
   const webAssetContainer = useRef<HTMLDivElement>(null);
-  const isMobile = true;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsMobile(typeof window !== 'undefined' && window.innerWidth <= 1024);
+
+      window.addEventListener('resize', () => {
+        setIsMobile(typeof window !== 'undefined' && window.innerWidth <= 1024);
+      });
+    }, 0);
+  }, []);
 
   const toggleClassName = (
     className: string,

@@ -84,7 +84,7 @@ const TimelineSection: FC<Props> = ({ className, minHeight }) => {
               <li>MVP Building</li>
             </DescriptionBlock>
             <DescriptionBlock animationOrder={18.8}>
-              {/*<li>– Socials launch</li>*/}
+              <li>Socials launch</li>
               {/*<li>– First 750 members onboarded</li>*/}
             </DescriptionBlock>
             {/*<DescriptionBlock>*/}
@@ -94,10 +94,10 @@ const TimelineSection: FC<Props> = ({ className, minHeight }) => {
           <div className={s.timelineColumn}>
             <YearBlock year={'Q1 2023'} animationOrder={10.8} />
             <DescriptionBlock animationOrder={19.8}>
-              <li>Binaryx marketplace pre-launch on Testnet v1, v2</li>
+              <li>Binaryx marketplace launch on Testnet </li>
             </DescriptionBlock>
             <DescriptionBlock animationOrder={20.8}>
-              {/*<li>&gt; 5k members onboarded</li>*/}
+              <li>Launch on Bali, Indonesia market</li>
               {/*<li>&gt; 2k KYC done</li>*/}
             </DescriptionBlock>
             {/*<DescriptionBlock>*/}
@@ -107,10 +107,10 @@ const TimelineSection: FC<Props> = ({ className, minHeight }) => {
           <div className={s.timelineColumn}>
             <YearBlock year={'Q2 2023'} animationOrder={11.8} />
             <DescriptionBlock animationOrder={21.8}>
-              <li>Testnet v3 launch</li>
+              <li>Binaryx marketplace official launch</li>
             </DescriptionBlock>
             <DescriptionBlock animationOrder={22.8}>
-              {/*<li>– Academy launch</li>*/}
+              <li>Lending Protocol launch on testnet</li>
               {/*<li>– Ambassador program launch</li>*/}
             </DescriptionBlock>
             {/*<DescriptionBlock>*/}
@@ -120,13 +120,10 @@ const TimelineSection: FC<Props> = ({ className, minHeight }) => {
           <div className={s.timelineColumn}>
             <YearBlock year={'Q3 2023'} animationOrder={12.8} />
             <DescriptionBlock animationOrder={23.8}>
-              <li>Binaryx marketplace official launch</li>
+              <li>Lending Protocol launch</li>
             </DescriptionBlock>
             <DescriptionBlock animationOrder={24.8}>
-              {/*<li>– Airdrop for the first academy graduates</li>*/}
-              {/*<li>– Staking program</li>*/}
-              {/*<li>&gt; 70k members onboarded</li>*/}
-              {/*<li>&gt; 7k $aBNRX holders</li>*/}
+              <li>Launch on Dubai, UAE market</li>
             </DescriptionBlock>
             {/*<DescriptionBlock>*/}
             {/*  <li>– Token launch</li>*/}
@@ -136,7 +133,7 @@ const TimelineSection: FC<Props> = ({ className, minHeight }) => {
           <div className={s.timelineColumn}>
             <YearBlock year={'Q4 2023'} animationOrder={13.8} />
             <DescriptionBlock animationOrder={25.8}>
-              <li>1 st Smart contact audit</li>
+              <li>The secondary market launch</li>
             </DescriptionBlock>
             <DescriptionBlock animationOrder={26.8}>
               {/*<li>Referral program launch</li>*/}
@@ -147,9 +144,10 @@ const TimelineSection: FC<Props> = ({ className, minHeight }) => {
           <div className={s.timelineColumn}>
             <YearBlock year={2024} animationOrder={14.8} />
             <DescriptionBlock animationOrder={27.8}>
-              <li>Other DeFi services launch The secondary market</li>
+              <li>Launchpad official launch on mainnet</li>
             </DescriptionBlock>
             <DescriptionBlock animationOrder={28.8}>
+              <li>Launch on the European market</li>
               {/*<li>&gt; 100k $aBRX holders</li>*/}
             </DescriptionBlock>
           </div>
