@@ -41,13 +41,13 @@ export const AssetFormFields = ({ form, onChange }: AssetFormFieldsProps) => {
         <TextField label="Description" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'description')} />
         <TextField label="Total Supply" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'tokenInfo_totalSupply')} />
         <TextField label="APR (%)" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'tokenInfo_apr')} />
-        <TextField label="Token Price ($)" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'tokenInfo_tokenPrice')} />
+        <TextField label="Token Price ($)" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'tokenInfo_tokenPriceDe6')} />
       </Box>
     </div>
   );
 };
 
-const inputProps = (form: UiForm<any>, name: string) => {
+const inputProps = (form: UiForm<any>, name: keyof UiNewAssetForm['values']) => {
   const props = {
     name,
     value: form.values[name],

@@ -1,5 +1,3 @@
-import {UiNewAssetForm} from "../src/client/app/features/assets/types";
-
 export type UiFormErrors<TValues> = {
   [Property in keyof TValues]?: string[]
 }
@@ -14,4 +12,8 @@ export type UiForm<TValues> = {
   touches: UiFormTouches<TValues>
   isValid: boolean
   isSubmitTouched: boolean
+}
+
+export type UiFormValidatorRules<TValues> = {
+  [Property in keyof TValues]?: string[]
 }

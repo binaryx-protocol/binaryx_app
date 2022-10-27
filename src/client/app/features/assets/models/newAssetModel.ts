@@ -23,7 +23,7 @@ const defaultAttrs = (): UiNewAssetFormValues => ({
   status: AssetStatuses.upcoming,
   tokenInfo_totalSupply: 10_000, // decimals = 0
   tokenInfo_apr: 10, // percents
-  tokenInfo_tokenPriceDe6: 50_00, // decimals = 2
+  tokenInfo_tokenPriceDe6: 5 * 1e6, // decimals = 6
 })
 
 export const $form = atom<UiNewAssetForm>({
@@ -42,7 +42,6 @@ export const $doCreateAsset = atom(null, async (get, set, form: UiNewAssetForm) 
   const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
   const formValues = {
     ...form.values,
-    // originalOwner: get(metaMaskModel.$metaMaskState).accounts[0]
   }
   await arbClient.createAsset(
     $rpcConfig,
@@ -90,5 +89,7 @@ export const $onSubmit = atom(null, (get, set) => {
   const form = get($form)
   if (form.isValid) {
     set($doCreateAsset, form)
+  } else {
+    console.log('form', form)
   }
 })
