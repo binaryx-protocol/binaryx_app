@@ -112,17 +112,15 @@
 .timelineHeaders {
   display: grid;
   // grid-template-rows: 140px 80px 160px 80px;
-  grid-template-rows: 140px 80px 160px;
+  grid-template-rows: 140px 110px 110px;
   grid-gap: 15px;
 }
 
 @media screen and (max-width: 1024px) {
   .timelineColumn {
-    grid-gap: 40px;
-    // grid-template-rows: 75px 80px 160px 80px;
-    grid-template-rows: 60px 80px 160px 1px;
+    grid-gap: 15px;
+    grid-template-rows: 84px 100px 100px 1px;
     width: fit-content;
-    // margin-right: 20px;
     margin-right: 10px;
 
     &:last-child {
