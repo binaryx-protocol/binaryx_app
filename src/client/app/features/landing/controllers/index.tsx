@@ -1,23 +1,22 @@
 // @ts-nocheck
-import Navigation from './components/HomeNavigation';
+import Navigation from 'features/landing/views/HomeNavigation';
 import { FC, useEffect, useRef, useState } from 'react';
-import SectionElement from './components/SectionElement';
+import SectionElement from 'features/landing/views/SectionElement';
 import s from './styles.module.scss';
-import TeamBlock from './components/TeamBlock';
-import NavSocialImage from './components/NavSocialImage';
+import TeamBlock from 'features/landing/views/TeamBlock';
+import NavSocialImage from 'features/landing/views/NavSocialImage';
 import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
 import lottie from 'lottie-web';
 import classNames from 'classnames';
 import getCookie from 'utils/getCookie';
-import getUrlParams from 'utils/getUrlParams';
-import SchemaSection from './components/WebAssetSection/SchemaSection';
-import TimelineSection from './components/TimelineSection';
-import BgOverlay from './components/BgOverlay';
-import PopupMenu from './components/PopupMenu';
-import IconDiscord from './components/NavSocialImage/IconDiscord';
-import IconTwitter from './components/NavSocialImage/IconTwitter';
-import IconLinkedIn from './components/NavSocialImage/IconLinkedIn';
-import IconTelegram from './components/NavSocialImage/IconTelegram';
+import SchemaSection from 'features/landing/views/WebAssetSection/SchemaSection';
+import TimelineSection from 'features/landing/views/TimelineSection';
+import BgOverlay from 'features/landing/views/BgOverlay';
+import PopupMenu from 'features/landing/views/PopupMenu';
+import IconDiscord from 'features/landing/views/NavSocialImage/IconDiscord';
+import IconTwitter from 'features/landing/views/NavSocialImage/IconTwitter';
+import IconLinkedIn from 'features/landing/views/NavSocialImage/IconLinkedIn';
+import IconTelegram from 'features/landing/views/NavSocialImage/IconTelegram';
 
 const GoogleAnalytics = () => {
   return (
@@ -77,98 +76,26 @@ const HomePage: FC = () => {
     section3ContentRef.current,
     section4ContentRef.current,
   ];
-  const currentSectionRef = useRef(0);
   const joinWaitListBtnRef = useRef(null);
   const joinCommunityBtnRef = useRef(null);
   const progressBarElementRef = useRef(null);
-  const [bgOverlay, setBgOverlay] = useState({
-    isBgOverlayActive: true,
-    isBgAnimationActive: true,
-    isBgOverlayDark: false,
-  });
   const [isBgOverlayDark, setIsBgOverlayDark] = useState(false);
-  const [FF_LP_PARALLAX, setFF_LP_PARALLAX] = useState(true);
   const [windowHeight, setWindowHeight] = useState(null);
-  const isVideoAnimation = false;
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     setIsMobile(typeof window !== 'undefined' && window.innerWidth <= 768);
     setTimeout(() => {
-      setFF_LP_PARALLAX(getUrlParams().get('FF_LP_PARALLAX'));
       setWindowHeight(typeof window !== 'undefined' ? window.innerHeight : 800);
     }, 0);
   }, []);
 
   useEffect(() => {
-    if (!FF_LP_PARALLAX) {
-      document.body.style.overflow = 'hidden';
-      document.body.style.height = '100%';
-      document.body.parentElement.style.overflow = 'hidden';
-      document.body.parentElement.style.height = '100%';
-    } else {
-      document.body.style.scrollBehavior = 'smooth';
-    }
+    document.body.style.scrollBehavior = 'smooth';
 
     setTimeout(() => {
-      const height = FF_LP_PARALLAX
-        ? (window.innerHeight - 1) * 3
-        : window.innerHeight - 1;
+      const height = (window.innerHeight - 1) * 3;
       setSectionHeight(height);
-
-      if (FF_LP_PARALLAX) {
-        return;
-      }
-
-      setTimeout(() => {
-        import('fullpage.js').then((module) => {
-          const fullpage = module.default;
-
-          (window as any).fullpageObject = new fullpage('#main', {
-            //options here
-            autoScrolling: false,
-            scrollHorizontally: true,
-            scrollingSpeed: 1500,
-            fitToSectionDelay: 0,
-            css3: false,
-            lazyLoading: false,
-            fitToSection: false,
-            // anchors: [],
-            // normalScrollElements: "#sectionWaitlist, #sectionTeam",
-            onLeave: (origin, destination, direction) => {
-              const nextSection = destination.index;
-              updateContainerStylesV2(nextSection);
-              currentSectionRef.current = nextSection;
-              const animation = animations.current[nextSection];
-              const nextValue =
-                [1, 2, 3].includes(nextSection) && direction === 'up'
-                  ? 1100
-                  : 0;
-              animation?.goToAndPlay(nextValue);
-
-              // setIsBgOverlayActive(() => nextSection !== 0);
-              // setIsBgAnimationActive(() => nextSection !== 4);
-              // setIsBgOverlayDark(() => nextSection >= 4);
-
-              setBgOverlay({
-                isBgOverlayActive: nextSection !== 0,
-                isBgAnimationActive: true,
-                isBgOverlayDark: nextSection >= 4,
-              });
-            },
-            afterLoad: () => {
-              const main = document.getElementById('main');
-              main.style.height = '100vh';
-              main.style.overflow = 'scroll';
-
-              document.querySelector('.fp-watermark')?.remove();
-              setSectionHeight(
-                FF_LP_PARALLAX ? window.innerHeight * 10 : window.innerHeight,
-              );
-            },
-          });
-        });
-      }, 0);
     }, 0);
   }, []);
 
@@ -191,26 +118,17 @@ const HomePage: FC = () => {
       autoplay,
       animationData,
       rendererSettings: {
-        // preserveAspectRatio: 'xMidYMid meet',
         preserveAspectRatio: isDesktop ? 'xMaxYMax slice' : 'xMaxYMid slice',
       },
     });
   };
 
   function getScrollPosition() {
-    if (FF_LP_PARALLAX) {
-      return window.scrollY;
-    }
-
-    return document.getElementById('main')?.scrollTop;
+    return window.scrollY;
   }
 
   function getScrollObject() {
-    if (FF_LP_PARALLAX) {
-      return document;
-    }
-
-    return document.getElementById('main');
+    return document;
   }
 
   function getCurrentSection() {
@@ -255,8 +173,6 @@ const HomePage: FC = () => {
     const offsetTop = section?.offsetTop;
     const height = section?.clientHeight;
 
-    // const scrollPercent = getSectionScrollPercent();
-
     if (section && animation) {
       const scrollPosition = getScrollPosition();
       const scrollPercent = ((scrollPosition - offsetTop) * 100) / height;
@@ -272,54 +188,9 @@ const HomePage: FC = () => {
     }
   };
 
-  const playVideoAnimation = (animationIndex: number) => {
-    if (animationIndex === 0) {
-      return;
-    }
-    const animation = animations.current[animationIndex];
-    const section = getSections()[animationIndex - 1];
-    const offsetTop = section?.offsetTop;
-    const height = section?.clientHeight;
-
-    // const scrollPercent = getSectionScrollPercent();
-
-    // if (section && animation) {
-    if (section) {
-      const scrollPosition = getScrollPosition();
-      const scrollPercent = ((scrollPosition - offsetTop) * 100) / height;
-
-      if (isVideoAnimation) {
-        const container = getContainers()[animationIndex];
-        const duration = container.firstChild.duration;
-        let currentTime = ((duration * scrollPercent) / 100).toFixed(2);
-        if (currentTime > duration) {
-          currentTime = duration;
-        }
-        if (
-          currentTime &&
-          !isNaN(currentTime) &&
-          container.firstChild.currentTime !== currentTime
-        ) {
-          container.firstChild.currentTime = currentTime;
-        }
-
-        return;
-      }
-
-      const maxFrames = animation.totalFrames;
-      let frame = (maxFrames * scrollPercent) / 100;
-
-      if (frame > maxFrames) {
-        frame = maxFrames;
-      }
-
-      animation.goToAndStop(frame, true);
-    }
-  };
-
   function initAnimations() {
     const isMobile = window.innerWidth < 768;
-    import(`./animations/${isMobile ? 'BM1.json' : 'B1.json'}`).then(
+    import(`features/landing/animations/${isMobile ? 'BM1.json' : 'B1.json'}`).then(
       (module) => {
         const anim1 = module.default;
         animations.current[0] = initAnimation({
@@ -331,7 +202,7 @@ const HomePage: FC = () => {
       },
     );
 
-    import(`./animations/${isMobile ? 'BM2_1.json' : 'B2_1.json'}`)
+    import(`features/landing/animations/${isMobile ? 'BM2_1.json' : 'B2_1.json'}`)
       .then((module) => {
         const anim2 = module.default;
         animations.current[1] = initAnimation({
@@ -342,7 +213,7 @@ const HomePage: FC = () => {
         });
       })
       .then(
-        () => import(`./animations/${isMobile ? 'BM2_2.json' : 'B2_2.json'}`),
+        () => import(`features/landing/animations/${isMobile ? 'BM2_2.json' : 'B2_2.json'}`),
       )
       .then((module) => {
         const anim3 = module.default;
@@ -352,7 +223,7 @@ const HomePage: FC = () => {
           autoplay: false,
         });
       })
-      .then(() => import(`./animations/${isMobile ? 'BM3.json' : 'B3.json'}`))
+      .then(() => import(`features/landing/animations/${isMobile ? 'BM3.json' : 'B3.json'}`))
       .then((module) => {
         const anim3 = module.default;
         animations.current[2] = initAnimation({
@@ -361,7 +232,7 @@ const HomePage: FC = () => {
           autoplay: false,
         });
       })
-      .then(() => import(`./animations/${isMobile ? 'BM4.json' : 'B4.json'}`))
+      .then(() => import(`features/landing/animations/${isMobile ? 'BM4.json' : 'B4.json'}`))
       .then((module) => {
         const anim4 = module.default;
         animations.current[3] = initAnimation({
@@ -372,168 +243,27 @@ const HomePage: FC = () => {
       });
   }
 
-  function initVideoAnimations() {
-    // container0.current
-  }
-
-  function changeWheelSpeed(container, speedY) {
-    if (FF_LP_PARALLAX) {
-      return;
-    }
-    let scrollY = 0;
-
-    const handleScrollReset = function () {
-      scrollY = container.scrollTop;
-    };
-    const handleMouseWheel = function (e) {
-      e.preventDefault();
-      scrollY += speedY * e.deltaY;
-      if (scrollY < 0) {
-        scrollY = 0;
-      } else {
-        const limitY = container.scrollHeight - container.clientHeight;
-        if (scrollY > limitY) {
-          scrollY = limitY;
-        }
-      }
-      container.scrollTop = scrollY;
-
-      const currentSection = getCurrentSection();
-      const isBgOverlayDark = currentSection >= 4;
-      // if (isBgOverlayDark !== bgOverlay.isBgOverlayDark) {
-      //   setBgOverlay({
-      //     isBgOverlayActive: true,
-      //     isBgAnimationActive: true,
-      //     isBgOverlayDark
-      //   });
-      // }
-    };
-
-    container.addEventListener('mouseup', handleScrollReset, {
-      passive: false,
-    });
-    container.addEventListener('mousedown', handleScrollReset, {
-      passive: false,
-    });
-    container.addEventListener('mousewheel', handleMouseWheel, {
-      passive: false,
-    });
-
-    let removed = false;
-
-    return function () {
-      if (removed) {
-        return;
-      }
-
-      container.removeEventListener('mouseup', handleScrollReset, {
-        passive: false,
-      });
-      container.removeEventListener('mousedown', handleScrollReset, {
-        passive: false,
-      });
-      container.removeEventListener('mousewheel', handleMouseWheel, {
-        passive: false,
-      });
-
-      removed = true;
-    };
-  }
-
   useEffect(() => {
-    const main = document.getElementById('main');
-    changeWheelSpeed(main, 0.1);
+    initAnimations(true);
 
-    if (isVideoAnimation) {
-      let seeked = false;
-      let lastProgress = 0;
-      const progressDelta = 0.1;
+    function play() {
+      const currentSection = getCurrentSection();
+      const scrollPercent = getSectionScrollPercent(currentSection - 1);
+      const progressBarFiller = document.getElementById(
+        'progress-bar-filler',
+      );
+      const percent = scrollPercent / 3 + (currentSection - 1) * 33.333;
+      progressBarFiller.style.width = percent + '%';
+      progressBarElementRef.current.style.display =
+        percent >= 100 ? 'none' : 'block';
 
-      function lerp(x, y, t) {
-        return (1 - t) * x + t * y;
-      }
-
-      // function scrollPlay(){
-      //   if (!seeked) {
-      //     return;
-      //   }
-      //   seeked = false;
-      //   const currentSection = getCurrentSection();
-      //   // const currentSection = 1;
-      //   const container = getContainers()[currentSection];
-      //   // const container = container1.current;
-      //   const video = container.firstChild;
-      //   const duration = video.duration;
-      //   const scrollProgress = scrollTop / 1000;
-      //   const scrollPercent = getSectionScrollPercent(currentSection - 1);
-      //   const progress =
-      //     Math.round(
-      //       // Smoothly approach scroll progress instead of instantly
-      //       lerp(lastProgress, scrollProgress, progressDelta) * 100
-      //     ) / 100;
-      //   let currentTime = progress;
-      //   // let currentTime = (duration * scrollPercent / 100).toFixed(2);
-      //   // console.log(`scrollPercent: ${scrollPercent} \n currentTime: ${currentTime} \n duration: ${duration} \n currentSection: ${currentSection}`);
-      //   // console.log("frame container", container);
-      //   if (currentTime > duration) {
-      //     currentTime = duration;
-      //   }
-      //   // console.log("container.firstChild.currentTime", typeof container.firstChild.currentTime, typeof currentTime);
-      //   // if (container.firstChild.currentTime.toString() !== currentTime) {
-      //   console.log(`currentTime ${currentTime}`);
-      //   // if (currentTime && !isNaN(currentTime) && container.firstChild.currentTime !== currentTime) {
-      //   //   container.firstChild.currentTime = currentTime;
-      //   // }
-      //   // }
-      //   if (currentTime) {
-      //     video.currentTime = currentTime;
-      //     lastProgress = currentTime;
-      //     console.log(`currentTime ${currentTime}`);
-      //   }
-      //   window.requestAnimationFrame(scrollPlay);
-      //
-      //   container1.current.addEventListener("seeked", () => {
-      //     console.log("seeked");
-      //     seeked = true;
-      //   });
-      // }
-
-      function scrollPlayV2() {
-        var frameNumber = 0, // start video at frame 0
-          // lower numbers = faster playback
-          playbackConst = 500;
-        const vid = document.getElementById('video2');
-        var frameNumber = window.pageYOffset / playbackConst;
-        vid.currentTime = frameNumber;
-        // window.requestAnimationFrame(scrollPlay);
-      }
-
-      // window.requestAnimationFrame(scrollPlayV2);
-    } else {
-      initAnimations(true);
-
-      function play() {
-        // const scrollPosition = getScrollPosition();
-        const currentSection = getCurrentSection();
-        const scrollPercent = getSectionScrollPercent(currentSection - 1);
-        const progressBarFiller = document.getElementById(
-          'progress-bar-filler',
-        );
-        const percent = scrollPercent / 3 + (currentSection - 1) * 33.333;
-        progressBarFiller.style.width = percent + '%';
-        progressBarElementRef.current.style.display =
-          percent >= 100 ? 'none' : 'block';
-
-        playAnimation(currentSection);
-        updateContainerStyles();
-        updateSectionContentStyles();
-        // let frameNumber  = window.pageYOffset/playbackConst;
-        // vid.currentTime  = frameNumber;
-        window.requestAnimationFrame(play);
-      }
-
+      playAnimation(currentSection);
+      updateContainerStyles();
+      updateSectionContentStyles();
       window.requestAnimationFrame(play);
     }
+
+    window.requestAnimationFrame(play);
 
     let prevWidth = typeof window !== 'undefined' ? window.innerWidth : 1000;
     window.addEventListener('resize', (event) => {
@@ -550,24 +280,6 @@ const HomePage: FC = () => {
       event.preventDefault();
       event.stopPropagation();
       const currentSection = getCurrentSection();
-      // const sectionContentPrev = getSectionContents()[currentSection - 1];
-      // const sectionContentNext = getSectionContents()[currentSection];
-      // const scrollPercent = getSectionScrollPercent(currentSection - 1);
-      // if (sectionContentPrev) {
-      //   const opacity =
-      //     scrollPercent > 90 ? 1 - (10 - (100 - scrollPercent)) / 10 : 1;
-      //   sectionContentPrev.style.opacity = opacity;
-      // }
-      // if (sectionContentNext) {
-      //   const opacity =
-      //     scrollPercent > 95 ? (5 - (100 - scrollPercent)) / 10 : 0;
-      //
-      //   sectionContentNext.style.opacity = opacity;
-      // }
-      // if (currentSection === 1 && scrollPercent < 50) {
-      //   sectionContentPrev.style.opacity =
-      //     scrollPercent > 5 ? (95 - (100 - scrollPercent)) / 10 : 0;
-      // }
 
       if (currentSection >= 5) {
         setIsBgOverlayDark(() => true);
@@ -591,59 +303,11 @@ const HomePage: FC = () => {
         progressBarElementRef.current.classList.remove(s.progressBarActive);
       }
 
-      // updateContainerStyles();
-
-      // playAnimation(currentSection);
-
       updateOverlayStyles();
-
-      // for (const section of getSections()) {
-      //   const sectionContentElement = section?.querySelector('.blockContent');
-      //   sectionContentElement.style.opacity = scrollPercent >= 90 ? 0.5 : 1;
-      // }
-
-      // console.log(
-      //   `currentSection ${currentSection} / scrollPercent ${scrollPercent}`,
-      // );
     });
 
     updateContainerStyles();
   }, []);
-
-  // useEffect(function testVideo() {
-  //   const scroller = document.querySelector("body");
-  //   const video = document.querySelector("#video2");
-  //   let seeked = false;
-  //
-  //   let lastProgress = 0;
-  //   const progressDelta = 0.1;
-  //
-  //   function lerp(x, y, t) {
-  //     return (1 - t) * x + t * y;
-  //   }
-  //
-  //   (function tick() {
-  //     requestAnimationFrame(tick);
-  //     if (!seeked) return;
-  //     seeked = false;
-  //     const { scrollHeight, clientHeight, scrollTop } = scroller;
-  //     const maxScroll = 10000; //scrollHeight - clientHeight;
-  //     const scrollProgress = scrollTop / Math.max(maxScroll, 1);
-  //     // Round to 2 decimal places
-  //     const progress =
-  //       Math.round(
-  //         // Smoothly approach scroll progress instead of instantly
-  //         lerp(lastProgress, scrollProgress, progressDelta) * 100
-  //       ) / 100;
-  //     video.currentTime = video.duration * progress;
-  //     lastProgress = progress;
-  //   })();
-  //
-  //   video.addEventListener("seeked", () => {
-  //     seeked = true;
-  //   });
-  //   video.currentTime = 0.001;
-  // }, []);
 
   function updateOverlayStyles() {
     const overlay = document.getElementById('bg-overlay');
@@ -654,24 +318,15 @@ const HomePage: FC = () => {
     overlay.style.transition = 'none';
     if (scrollPercent > 0) {
       overlay.style.backgroundColor = `rgba(27, 27, 27, ${scrollPercent / 100}`;
-      const animationOpacity = 1 - scrollPercent / 100;
-      container3.current.style.opacity = animationOpacity;
+      container3.current.style.opacity = 1 - scrollPercent / 100;
     } else {
       overlay.style.backgroundColor = 'rgba(27, 27, 27, 0)';
       container3.current.style.opacity = 1;
     }
   }
 
-  function handleSectionScroll() {
-    const currentSection = getCurrentSection();
-    const section = getSections()[currentSection + 1];
-    section?.scrollIntoView();
-  }
-
   function updateContainerStyles() {
     const currentSection = getCurrentSection();
-    // const scrollPosition = getScrollPosition()
-    const scrollPercent = getSectionScrollPercent(currentSection - 1);
 
     if (container1.current) {
       container1.current.style.display =
@@ -685,8 +340,6 @@ const HomePage: FC = () => {
       container2_2.current.style.transform = `translateY(${
         currentSection === 1 ? 1 - window.scrollY * 1.8 : 0
       }px`;
-      // container2_2.current.style.opacity =
-      //   currentSection === 1 ? 1 - scrollPercent / 100 : 1;
       container3.current.style.display =
         currentSection === 2 ? 'block' : 'none';
       container4.current.style.display = currentSection >= 3 ? 'block' : 'none';
@@ -701,9 +354,6 @@ const HomePage: FC = () => {
 
   function updateSectionContentStyles() {
     const currentSection = getCurrentSection() - 1;
-    console.log(`currentSection ${currentSection}`);
-    // const scrollPosition = getScrollPosition()
-    // const scrollPercent = getSectionScrollPercent(currentSection - 1);
 
     getSectionContents().forEach((sectionContent, index) => {
       if (index === currentSection) {
@@ -721,30 +371,6 @@ const HomePage: FC = () => {
         sectionContent?.classList.remove(s.viewedContent);
       }
     });
-
-    // if (section1ContentRef.current) {
-    //   section1ContentRef.current.style.display =
-    //     currentSection === 0 ? 'block' : 'none';
-    //   section2ContentRef.current.style.display =
-    //     currentSection === 1 ? 'block' : 'none';
-    //   section3ContentRef.current.style.display =
-    //     currentSection === 2 ? 'block' : 'none';
-    //   // section4ContentRef.current.style.display =
-    //   //   currentSection === 3 ? 'block' : 'none';
-    // }
-  }
-
-  function updateContainerStylesV2(currentSection) {
-    if (container1.current) {
-      container1.current.style.display =
-        currentSection === 0 ? 'block' : 'none';
-      container2.current.style.display =
-        currentSection === 1 ? 'block' : 'none';
-      container3.current.style.display =
-        currentSection === 2 ? 'block' : 'none';
-      container4.current.style.display =
-        currentSection === 3 ? 'block' : 'none';
-    }
   }
 
   function handleFormSubmit(event) {
@@ -819,8 +445,8 @@ const HomePage: FC = () => {
       <Navigation isDark={isBgOverlayDark} />
       <BgOverlay
         id="bg-overlay"
-        isBgOverlayActive={bgOverlay.isBgOverlayActive}
-        isBgAnimationActive={bgOverlay.isBgAnimationActive}
+        isBgOverlayActive={true}
+        isBgAnimationActive={true}
       />
       <div className={s.progressBar} ref={progressBarElementRef}>
         <span id="progress-bar-filler" className={s.progressBarFiller} />
@@ -834,16 +460,7 @@ const HomePage: FC = () => {
         className={s.containerAnimation}
         ref={container1}
         id="animationContainer1"
-      >
-        {isVideoAnimation && (
-          <video preload autoPlay muted>
-            <source
-              src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B1.mp4"
-              type="video/mp4"
-            />
-          </video>
-        )}
-      </div>
+      />
       <div
         className={s.containerAnimation}
         ref={container2_2}
@@ -853,21 +470,7 @@ const HomePage: FC = () => {
         className={s.containerAnimation}
         ref={container2}
         id="animationContainer2"
-      >
-        {isVideoAnimation && (
-          <video
-            muted
-            playsInline
-            id="video2"
-            src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B2.mp4"
-          >
-            {/*<source type="video/mp4; codecs=&quot;avc1.42E01E, mp4a.40.2&quot;" src="https://www.apple.com/media/us/mac-pro/2013/16C1b6b5-1d91-4fef-891e-ff2fc1c1bb58/videos/macpro_main_desktop.mp4" />*/}
-            {/*<source src="https://www.apple.com/media/us/mac-pro/2013/16C1b6b5-1d91-4fef-891e-ff2fc1c1bb58/videos/macpro_main_desktop.mp4" type='video/mp4' />*/}
-            {/*<source src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B2.mp4" type='video/mp4' />*/}
-            {/*<source src="https://binaryxestate.s3.eu-central-1.amazonaws.com/videos/landing-page/B2.webm" type='video/webm' />*/}
-          </video>
-        )}
-      </div>
+      />
       <div
         className={s.containerAnimation}
         ref={container3}
@@ -885,12 +488,9 @@ const HomePage: FC = () => {
         setIsShowing={setIsShowing}
         handleFormSubmit={handleFormSubmit}
       />
-      {/*<main id="main" className={classNames(s.heroPage, { [s.heroPageParallax]: FF_LP_PARALLAX})} style={{ height: FF_LP_PARALLAX ? "auto" : "100vh", overflow: FF_LP_PARALLAX ? "auto" : "scroll" }}>*/}
       <main
         id="main"
-        className={classNames(s.heroPage, s.heroPageParallax, {
-          [s.heroPageParallax]: FF_LP_PARALLAX,
-        })}
+        className={classNames(s.heroPage, s.heroPageParallax)}
       >
         <div
           id="section1"
@@ -931,12 +531,6 @@ const HomePage: FC = () => {
               </div>
             </div>
           </section>
-          {/*</div>*/}
-          {/*<div*/}
-          {/*  id="section2"*/}
-          {/*  ref={section2Ref}*/}
-          {/*  className={classNames(s.wrapper, s.section, 'section')}*/}
-          {/*>*/}
           <SectionElement
             heading="Expensive asset value already in past"
             description={
@@ -984,21 +578,6 @@ const HomePage: FC = () => {
             disappeared={isBgOverlayDark}
           />
         </div>
-        {/*<div*/}
-        {/*  id="section4"*/}
-        {/*  ref={section4Ref}*/}
-        {/*  className={classNames(s.wrapper, s.section, 'section')}*/}
-        {/*>*/}
-        {/*  <SectionElement*/}
-        {/*    heading="Boosting Economy and scaling Web3"*/}
-        {/*    sectionHeight={sectionHeight}*/}
-        {/*    onButtonClick={handleJoinWaitListButtonClick}*/}
-        {/*  >*/}
-        {/*    <p className={s.description}>*/}
-        {/*      Increasing assets ownership transferring speed with web3 infrastracture*/}
-        {/*    </p>*/}
-        {/*  </SectionElement>*/}
-        {/*</div>*/}
         <div ref={section4Ref} className={s.sectionPadding} />
         <div className={s.sectionsDark}>
           <BgOverlay
@@ -1124,8 +703,6 @@ const HomePage: FC = () => {
                   </form>
                 </div>
               </div>
-              {/* </section> */}
-              {/*<section className={classNames(s.section, s.footerSection, "section")}>*/}
               <footer className={s.footer}>
                 <div className={classNames(s.footerContainer, s.wrapper)}>
                   <h1 className={s.footerHeading}>Let's Keep in Touch With:</h1>
