@@ -1,13 +1,10 @@
 // @ts-nocheck
 import {atom} from 'jotai'
-import {SyntheticEvent} from "react";
 import {waitFor} from "../../../utils/pageLoadUtiils";
-import * as metaMaskModel from "../../../core/models/metaMaskModel";
 import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import {arbClient} from "./arbClient";
 import {BcAsset} from "../types";
 import {bnToInt} from "../../../utils/objectUtils";
-import {UiInputChangeEvent} from "../../../types/globals";
 import {RpcConfig} from "../../../core/models/rpcConfigModel";
 
 // export const $amount = atom(1);
@@ -18,7 +15,7 @@ import {RpcConfig} from "../../../core/models/rpcConfigModel";
 
 export const $onSubmit = atom(null, async (get,set, { asset, id, amount, then }: { asset: BcAsset, id: number, amount: number, then: () => void }) => {
   await waitFor(() => {
-    return get(metaMaskModel.$walletReadiness) === 'ready' && !!get(rpcConfigModel.$rpcConfig)
+    return !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
   const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig

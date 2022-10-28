@@ -12,12 +12,13 @@ export const AdminAssetsListController = () => {
   const $doActivate = useSetAtom(assetsModel.$doActivate)
   const $doDisable = useSetAtom(assetsModel.$doDisable)
   const $walletConnect = useSetAtom(metaMaskModel.$walletConnect)
-  const $walletReadiness = useAtomValue(metaMaskModel.$walletReadiness)
   const $metaMaskState = useAtomValue(metaMaskModel.$metaMaskState)
+  const $isAccountConnected = useAtomValue(metaMaskModel.$isAccountConnected)
   const $errorMessages = useAtomValue(metaMaskModel.$errorMessages)
   const blockchainAssets = $blockchainAssets.state === 'hasData' ? $blockchainAssets.data : null
 
-  console.log('$metaMaskState', $metaMaskState)
+  const walletAddress = $metaMaskState.values.accounts?.[0] || ''
+  const walletAddressFormatted = walletAddress.substr(0, 5) + '...' + walletAddress.substr(walletAddress.length-3, 3)
 
   return (
     <>
@@ -27,8 +28,8 @@ export const AdminAssetsListController = () => {
           <div>Binaryx</div>
           <div>
             {
-              $walletReadiness === 'ready'
-                ? $metaMaskState.values.accounts?.[0]
+              $isAccountConnected
+                ? walletAddressFormatted
                 : (
                   <Button variant="outlined" onClick={$walletConnect}>
                     Connect Wallet

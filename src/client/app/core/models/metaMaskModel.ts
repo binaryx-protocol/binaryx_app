@@ -14,7 +14,7 @@ const KNOWN_CHAINS = {
 }
 
 type KnownChainId = keyof typeof KNOWN_CHAINS
-type WalletReadiness = 'init' | 'ready' | 'hasError'
+type WalletProgress = 'init' | 'inProgress' | 'finished'
 
 type UiMetaMaskValues = {
   accounts: string[] | null
@@ -22,31 +22,38 @@ type UiMetaMaskValues = {
   isConnected: boolean | null
 }
 
-type UiMetaMaskForm = UiForm<UiMetaMaskValues>
+type UiMetaMaskForm = Omit<UiForm<UiMetaMaskValues>, 'isSubmitTouched' | 'touches'> & {
+  progress: WalletProgress,
+}
 
+// stores
 export const $metaMaskState = atom<UiMetaMaskForm>({
   values: {
     accounts: null,
     chainId: null,
     isConnected: null,
   },
-  touches: {}, // not used
   errors: {},
   isValid: false,
-  isSubmitTouched: false, // means user ended connection flow with a success or rejection
+  progress: 'init',
 })
 
+// computed
 export const $errorMessages = atom<string[]>((get) => {
+  const rpcConfig = get($rpcConfig) as RpcConfig
+  const withVariables = (v: string) => v.replace('{chainName}', rpcConfig.chain.chainName) // meh...
+
   const messages: string[] = []
   const s = get($metaMaskState)
-  if (!s.isSubmitTouched) {
+
+  if (s.progress !== 'finished') {
     return messages;
-  }
-  if (s.errors.chainId) {
-    s.errors.chainId.forEach((key) => messages.push(T[key as keyof typeof T]))
   }
   if (s.errors.accounts) {
     s.errors.accounts.forEach((key) => messages.push(T[key as keyof typeof T]))
+  }
+  if (s.errors.chainId) {
+    s.errors.chainId.forEach((key) => messages.push(withVariables(T[key as keyof typeof T])))
   }
   if (s.errors.isConnected) {
     s.errors.isConnected.forEach((key) => messages.push(T[key as keyof typeof T]))
@@ -54,6 +61,12 @@ export const $errorMessages = atom<string[]>((get) => {
   return messages
 })
 
+export const $isAccountConnected = atom<boolean>((get) => {
+  const s = get($metaMaskState)
+  return !!s.values.accounts?.[0]
+})
+
+// setters
 export const $doUpdateValues = atom(
   null,
   (get, set, object: Partial<UiMetaMaskValues>) => {
@@ -76,11 +89,11 @@ export const $doValidate = atom(
   null,
   (get, set, values: UiMetaMaskValues) => {
     const errors: UiFormErrors<UiMetaMaskValues> = {}
-    if (values.chainId !== get($rpcConfig)?.chain.chainId) {
-      errors.chainId = ['CHAIN_INVALID']
-    }
     if (!values.accounts?.[0]) {
       errors.accounts = ['ACCOUNT_NOT_CONNECTED']
+    }
+    if (values.chainId !== get($rpcConfig)?.chain.chainId) {
+      errors.chainId = ['CHAIN_INVALID']
     }
     if (!values.isConnected) {
       errors.accounts = ['EXTENSION_IS_NOT_INTSALLED'] // TODO test
@@ -98,26 +111,17 @@ export const $doValidate = atom(
     )
   })
 
-export const $doExitTheFlow = atom(
+export const $doSetProgress = atom(
   null,
-  (get, set) => {
+  (get, set, arg: WalletProgress) => {
     set(
       $metaMaskState,
       {
         ...get($metaMaskState),
-        isSubmitTouched: true,
+        progress: arg,
       },
     )
   })
-
-
-export const $walletReadiness = atom<WalletReadiness>((get) => {
-  const s = get($metaMaskState)
-  if (s.isValid) {
-    return 'ready'
-  }
-  return 'init'
-})
 
 export const $onBrowserInit = atom(
   null,
@@ -129,89 +133,95 @@ export const $onBrowserInit = atom(
 export const $walletConnect = atom(
   null,
   async (get, set) => {
-    console.log('$walletConnect')
+    if (get($metaMaskState).progress === 'inProgress') {
+      console.log('Do not RUSH!');
+      return;
+    }
+    set($doSetProgress, 'inProgress')
 
     await waitFor(() => !!get($rpcConfig))
     const rpcConfig = get($rpcConfig) as RpcConfig
 
-    const main = async () => {
-      const ethereum = window.ethereum
+    const ethereum = window.ethereum
 
-      // callbacks
-      const onAccountsConnectOrDisconnect = (accounts: string[]) => {
-        set($doUpdateValues, { accounts })
-      }
-      const onChainIdChange = (chainId: KnownChainId) => {
-        set($doUpdateValues, { chainId })
-      }
-
-      // listeners
-      ethereum.on('accountsChanged', onAccountsConnectOrDisconnect);
-      ethereum.on('chainChanged', onChainIdChange);
-
-      // initial values
-      set($doUpdateValues, { isConnected: ethereum.isConnected() })
-
-      // connect account
-      await ethereum.request({ method: 'eth_accounts' })
-        .then(onAccountsConnectOrDisconnect)
-
-      const isAuthorized = !!get($metaMaskState).values.accounts?.[0]
-
-      if (!isAuthorized) {
-        await ethereum.request({method: 'eth_requestAccounts'})
-          .then(onAccountsConnectOrDisconnect)
-          .catch((err: any) => {
-            if (err.code === 4001) {
-              // EIP-1193 userRejectedRequest error
-              // If this happens, the user rejected the connection request.
-              console.log('Please connect to MetaMask.');
-            } else {
-              console.warn(err);
-            }
-          });
-      }
-
-      const isAuthorizedFinally = !!get($metaMaskState).values.accounts?.[0]
-
-      if (!isAuthorizedFinally) {
-        set($doExitTheFlow)
-        return;
-      }
-
-      // Add chain (network)
-      await ethereum.request({ method: 'eth_chainId' })
-        .then(onChainIdChange)
-
-      if (!isDoneAction('addRpc')) {
-        await ethereum.request({ method: 'wallet_addEthereumChain', params: [rpcConfig.chain] })
-          .then(() => completeAction('addRpc'))
-          .catch((err: any) => {
-            console.warn(err);
-          });
-      }
-
-      await new Promise(r => setTimeout(r, 200)) // This is NOT a workaround. Just for a better UX. The line can be removed.
-      await waitFor(() => !!get($metaMaskState).values.chainId)
-
-      // const isChainValid = get($metaMaskState).values.chainId === rpcConfig.chain.chainId
-
-      set($doExitTheFlow)
-
-      // !!! Simply uncomment once we start to work with root token
-
-      // Add root asset token
-      // if (!isDoneAction('addBnrxRootToken')) {
-      //   console.log('wallet_watchAsset')
-      //   await ethereum.request({ method: 'wallet_watchAsset', params: rpcConfig.bnrxRootToken })
-      //     .then(() => completeAction('addBnrxRootToken'))
-      //     .catch((err: any) => {
-      //       console.error(err);
-      //     });
-      // }
+    // callbacks
+    const onAccountsConnectOrDisconnect = (accounts: string[]) => {
+      set($doUpdateValues, { accounts })
+    }
+    const onChainIdChange = (chainId: KnownChainId) => {
+      set($doUpdateValues, { chainId })
     }
 
-    main()
+    // listeners
+    ethereum.on('accountsChanged', onAccountsConnectOrDisconnect);
+    ethereum.on('chainChanged', onChainIdChange);
+
+    // initial values
+    set($doUpdateValues, { isConnected: ethereum.isConnected() })
+
+    // connect account
+    await ethereum.request({ method: 'eth_accounts' })
+      .then(onAccountsConnectOrDisconnect)
+
+    const isAuthorized = !!get($metaMaskState).values.accounts?.[0]
+
+    if (!isAuthorized) {
+      try {
+        await ethereum.request({method: 'eth_requestAccounts'})
+          .then(onAccountsConnectOrDisconnect)
+      } catch (err: any) {
+        if (err.code === 4001) {
+          // EIP-1193 userRejectedRequest error
+          // If this happens, the user rejected the connection request.
+          console.log('Please connect to MetaMask.');
+        } else {
+          console.warn(err);
+        }
+        set($doSetProgress, 'finished')
+        return;
+      }
+    }
+
+    // Switch chain / Add & switch if it's a new chain (network)
+    await ethereum.request({ method: 'eth_chainId' })
+      .then(onChainIdChange)
+
+    let isChainAdded = true // we do not know yet
+    try {
+      await ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: rpcConfig.chain.chainId }],
+      });
+    } catch (switchError) {
+      // This error code indicates that the chain has not been added to MetaMask.
+      if (switchError.code === 4902) {
+        isChainAdded = false // now we know
+      } else {
+        console.warn(switchError)
+      }
+    }
+    if (!isChainAdded) {
+        try {
+          await ethereum.request({ method: 'wallet_addEthereumChain', params: [rpcConfig.chain] })
+        } catch (err: any) {
+          set($doSetProgress, 'finished')
+          return;
+        }
+    }
+
+    set($doSetProgress, 'finished')
+
+    // !!! Simply uncomment once we start to work with root token
+
+    // Add root asset token
+    // if (!isDoneAction('addBnrxRootToken')) {
+    //   console.log('wallet_watchAsset')
+    //   await ethereum.request({ method: 'wallet_watchAsset', params: rpcConfig.bnrxRootToken })
+    //     .then(() => completeAction('addBnrxRootToken'))
+    //     .catch((err: any) => {
+    //       console.error(err);
+    //     });
+    // }
 
     // NOTE: more docs at https://ethereum.org/en/developers/docs/apis/json-rpc/#web3_clientversion
 
@@ -223,6 +233,6 @@ export const $walletConnect = atom(
 
 const T = {
   'ACCOUNT_NOT_CONNECTED': 'Please, connect your wallet',
-  'CHAIN_INVALID': 'Please, select the right network',
+  'CHAIN_INVALID': 'Please, select the right network ({chainName})',
   'EXTENSION_IS_NOT_INTSALLED': 'Please, install MetaMask',
 }
