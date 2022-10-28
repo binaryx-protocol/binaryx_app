@@ -1,3 +1,7 @@
+.assetListController {
+  background-color: #F5F5F5;
+}
+
 .crudTopNav{
   display: flex;
   align-items: center;
@@ -11,12 +15,13 @@
 
 .container{
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: 2000px;
   padding: 0 10px;
 }
 
 .header{
   border-bottom: 1px solid #eee;
+  background: #FFF;
 }
 
 .headerNav{
