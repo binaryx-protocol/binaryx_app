@@ -1,4 +1,3 @@
-import { FC } from 'react';
 import s from './styles.module.scss';
 import ProgressBar from '../../ProgressBar';
 import classNames from 'classnames';
@@ -20,7 +19,7 @@ type Props = {
 const imagePlaceholder =
   'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/marketplace/icons/image-placeholder.svg';
 
-const AssetListItem: FC<Props> = ({
+const AssetListItem = ({
   status,
   image,
   title,
@@ -30,13 +29,13 @@ const AssetListItem: FC<Props> = ({
   tokensLeft,
   tokensTotal,
   collected,
-}) => {
+}: Props) => {
   return (
     <div className={s.assetListItem}>
       <div className={s.imageWrap}>
         <div className={classNames(s.status,
-          { [s.statusActive]: status?.toLowerCase() === "active" },
-          { [s.statusUpcoming]: status?.toLowerCase() === "upcoming" }
+          { [s.status__active]: status?.toLowerCase() === "active" },
+          { [s.status__upcoming]: status?.toLowerCase() === "upcoming" }
         )}>{status}</div>
         <div
           className={classNames(s.image, { [s.imagePlaceholder]: !image.src?.length })}

@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import s from './styles.module.scss';
 
 type Props = {
@@ -6,7 +6,7 @@ type Props = {
 };
 
 
-const AssetList: FC<Props> = ({ children }) => {
+const AssetList = ({ children }: Props) => {
   return (
     <div className={s.assetList}>
       {children}
