@@ -6,6 +6,8 @@ import * as assetsModel from "../models/assetsListModel";
 import {useAtomValue, useSetAtom} from "jotai";
 import {AssetStatuses} from "../types";
 import {paths} from "../../../../../../pkg/paths";
+import AssetList from '../views/AssetList';
+import AssetListItem from '../views/AssetList/AssetListItem';
 
 export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
@@ -17,7 +19,7 @@ export const AdminAssetsListController = () => {
   const blockchainAssets = $blockchainAssets.state === 'hasData' ? $blockchainAssets.data : null
 
   return (
-    <>
+    <div className={styles.assetListController}>
       <div className={styles.header}>
         <div className={styles.container}>
           <div className={styles.headerNav}>
@@ -39,7 +41,7 @@ export const AdminAssetsListController = () => {
       <div className={styles.container}>
         <div className={styles.crudTopNav}>
           <h1>
-            Assets
+            Marketplace
           </h1>
           <div>
             <Link href={'/'} passHref>
@@ -91,8 +93,55 @@ export const AdminAssetsListController = () => {
             ))
           }
         </div>
+
+        <AssetList>
+          <AssetListItem
+            status="Active"
+            image={{ src: "" }}
+            title="621 E Le Claire Rd"
+            subTitle="Eldridge, IA 52748"
+            irr={20.5}
+            coc={15.2}
+            tokensLeft={4502}
+            tokensTotal={10000}
+            collected={45}
+          />
+          <AssetListItem
+            status="Upcoming"
+            image={{ src: "" }}
+            title="621 E Le Claire Rd"
+            subTitle="Eldridge, IA 52748"
+            irr={20.5}
+            coc={15.2}
+            tokensLeft={4502}
+            tokensTotal={10000}
+            collected={45}
+          />
+          <AssetListItem
+            status="Upcoming"
+            image={{ src: "" }}
+            title="621 E Le Claire Rd"
+            subTitle="Eldridge, IA 52748"
+            irr={20.5}
+            coc={15.2}
+            tokensLeft={4502}
+            tokensTotal={10000}
+            collected={45}
+          />
+          <AssetListItem
+            status="Upcoming"
+            image={{ src: "" }}
+            title="621 E Le Claire Rd"
+            subTitle="Eldridge, IA 52748"
+            irr={20.5}
+            coc={15.2}
+            tokensLeft={4502}
+            tokensTotal={10000}
+            collected={45}
+          />
+        </AssetList>
       </div>
-    </>
+    </div>
   )
 }
 
