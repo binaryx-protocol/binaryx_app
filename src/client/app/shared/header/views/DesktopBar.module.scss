@@ -1,0 +1,19 @@
+.root{
+  height: 64px;
+  border-bottom: 1px solid #EFF2F5;
+  background-color: #fff;
+}
+
+.container{
+  max-width: 1700px;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.logo{
+  height: 32px;
+  display: block;
+}

@@ -1,11 +1,12 @@
 import { NextPage } from 'next';
 import {AdminAssetsListController} from "features/assets";
+import {HeaderController} from "../../app/shared/header";
 
-const Assets: NextPage<any> = (props) => {
+const Assets: NextPage<any> = () => {
   return (
     <>
-        {/*{JSON.stringify(props)}*/}
-        <AdminAssetsListController />
+      <HeaderController />
+      <AdminAssetsListController />
     </>
   );
 };
