@@ -1,23 +1,23 @@
 // @ts-nocheck
-import Navigation from './components/HomeNavigation';
+import Navigation from 'features/landing/views/HomeNavigation';
 import { FC, useEffect, useRef, useState } from 'react';
-import SectionElement from './components/SectionElement';
+import SectionElement from 'features/landing/views/SectionElement';
 import s from './styles.module.scss';
-import TeamBlock from './components/TeamBlock';
-import NavSocialImage from './components/NavSocialImage';
+import TeamBlock from 'features/landing/views/TeamBlock';
+import NavSocialImage from 'features/landing/views/NavSocialImage';
 import MenuElement from 'components/pages/account_page/AccountMenu/MenuElement';
 import lottie from 'lottie-web';
 import classNames from 'classnames';
 import getCookie from 'utils/getCookie';
 import getUrlParams from 'utils/getUrlParams';
-import SchemaSection from './components/WebAssetSection/SchemaSection';
-import TimelineSection from './components/TimelineSection';
-import BgOverlay from './components/BgOverlay';
-import PopupMenu from './components/PopupMenu';
-import IconDiscord from './components/NavSocialImage/IconDiscord';
-import IconTwitter from './components/NavSocialImage/IconTwitter';
-import IconLinkedIn from './components/NavSocialImage/IconLinkedIn';
-import IconTelegram from './components/NavSocialImage/IconTelegram';
+import SchemaSection from 'features/landing/views/WebAssetSection/SchemaSection';
+import TimelineSection from 'features/landing/views/TimelineSection';
+import BgOverlay from 'features/landing/views/BgOverlay';
+import PopupMenu from 'features/landing/views/PopupMenu';
+import IconDiscord from 'features/landing/views/NavSocialImage/IconDiscord';
+import IconTwitter from 'features/landing/views/NavSocialImage/IconTwitter';
+import IconLinkedIn from 'features/landing/views/NavSocialImage/IconLinkedIn';
+import IconTelegram from 'features/landing/views/NavSocialImage/IconTelegram';
 
 const GoogleAnalytics = () => {
   return (
@@ -319,7 +319,7 @@ const HomePage: FC = () => {
 
   function initAnimations() {
     const isMobile = window.innerWidth < 768;
-    import(`./animations/${isMobile ? 'BM1.json' : 'B1.json'}`).then(
+    import(`features/landing/animations/${isMobile ? 'BM1.json' : 'B1.json'}`).then(
       (module) => {
         const anim1 = module.default;
         animations.current[0] = initAnimation({
@@ -331,7 +331,7 @@ const HomePage: FC = () => {
       },
     );
 
-    import(`./animations/${isMobile ? 'BM2_1.json' : 'B2_1.json'}`)
+    import(`features/landing/animations/${isMobile ? 'BM2_1.json' : 'B2_1.json'}`)
       .then((module) => {
         const anim2 = module.default;
         animations.current[1] = initAnimation({
@@ -342,7 +342,7 @@ const HomePage: FC = () => {
         });
       })
       .then(
-        () => import(`./animations/${isMobile ? 'BM2_2.json' : 'B2_2.json'}`),
+        () => import(`features/landing/animations/${isMobile ? 'BM2_2.json' : 'B2_2.json'}`),
       )
       .then((module) => {
         const anim3 = module.default;
@@ -352,7 +352,7 @@ const HomePage: FC = () => {
           autoplay: false,
         });
       })
-      .then(() => import(`./animations/${isMobile ? 'BM3.json' : 'B3.json'}`))
+      .then(() => import(`features/landing/animations/${isMobile ? 'BM3.json' : 'B3.json'}`))
       .then((module) => {
         const anim3 = module.default;
         animations.current[2] = initAnimation({
@@ -361,7 +361,7 @@ const HomePage: FC = () => {
           autoplay: false,
         });
       })
-      .then(() => import(`./animations/${isMobile ? 'BM4.json' : 'B4.json'}`))
+      .then(() => import(`features/landing/animations/${isMobile ? 'BM4.json' : 'B4.json'}`))
       .then((module) => {
         const anim4 = module.default;
         animations.current[3] = initAnimation({
