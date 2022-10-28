@@ -1,11 +1,10 @@
 import { NextPage } from 'next';
-import HomePage from './home-page';
+import LandingPage from '../app/features/landing/controllers';
 
-const Home: NextPage<{ data: string }> = (props) => {
-  const { data } = props;
+const Home: NextPage<{ data: string }> = (_) => {
   return (
     <>
-      <HomePage /> {data}
+      <LandingPage />
     </>
   );
 };

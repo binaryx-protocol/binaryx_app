@@ -1,4 +1,15 @@
 :root {
+  --color-primary: #101113;
+  --color-primary-bg: #EFF2F5;
+  --color-border: #EFF2F5;
+  --color-text-primary: #000000;
+  --color-text-secondary: #58667E;
+
+  --font-family--primary: 'Manrope', sans-serif;
+
+
+
+  /* TODO: Refactor CSS vars below */
   --font-size_big: 64px;
   --font-size_medium: 36px;
   --font-size_small: 18px;
@@ -21,5 +32,5 @@
   --max-width_desktop: 1200px;
   --max-width_mobile: 320px;
 
-  --animation-delay: 180ms;
+  --animation-delay: 60ms;
 }
