@@ -14,6 +14,7 @@ export const AdminAssetsListController = () => {
   const $walletConnect = useSetAtom(metaMaskModel.$walletConnect)
   const $walletReadiness = useAtomValue(metaMaskModel.$walletReadiness)
   const $metaMaskState = useAtomValue(metaMaskModel.$metaMaskState)
+  const $errorMessages = useAtomValue(metaMaskModel.$errorMessages)
   const blockchainAssets = $blockchainAssets.state === 'hasData' ? $blockchainAssets.data : null
 
   console.log('$metaMaskState', $metaMaskState)
@@ -27,7 +28,7 @@ export const AdminAssetsListController = () => {
           <div>
             {
               $walletReadiness === 'ready'
-                ? $metaMaskState.accounts?.[0]
+                ? $metaMaskState.values.accounts?.[0]
                 : (
                   <Button variant="outlined" onClick={$walletConnect}>
                     Connect Wallet
@@ -37,6 +38,9 @@ export const AdminAssetsListController = () => {
           </div>
           </div>
         </div>
+      </div>
+      <div>
+        {$errorMessages.join(', ')}
       </div>
       <div className={styles.container}>
         <div className={styles.crudTopNav}>
