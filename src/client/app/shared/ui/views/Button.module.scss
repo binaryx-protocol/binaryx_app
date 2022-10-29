@@ -1,12 +1,26 @@
 .root{
   height: 40px;
+  cursor: pointer;
   line-height: 40px;
-  padding: 0 12px;
+  padding: 0 16px;
   font-family: var(--font-family--primary);
+  border: none;
 
   background-color: var(--color-primary);
   color: var(--color-primary-bg);
 
   font-size: 14px;
   font-weight: 600;
+
+  border-radius: 12px;
+}
+
+a.root{
+  display: block;
+  text-decoration: none;
+}
+
+.light{
+  background-color: var(--color-primary-bg);
+  color: var(--color-primary);
 }

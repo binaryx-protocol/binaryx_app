@@ -14,6 +14,48 @@
 }
 
 .logo{
-  height: 32px;
-  display: block;
+  img{
+    height: 32px;
+    display: block;
+  }
+}
+
+.nav{
+  margin-left: 120px;
+  a{
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    padding: 10px 22px;
+    font-size: 14px;
+  }
+}
+
+.buttons{
+  margin: 0 -4px;
+
+  > *{
+    margin: 0 4px;
+  }
+}
+
+.accountAddress{
+  margin-left: 20px;
+}
+
+// TODO this is a TMP solution. Waiting for mobile design
+@media (max-width: 1024px) {
+  .root{
+    height: initial;
+  }
+  .container{
+    padding: 10px 10px;
+    display: block;
+  }
+  .nav{
+    margin: 5px -20px;
+
+    a {
+      display: inline-block;
+    }
+  }
 }
