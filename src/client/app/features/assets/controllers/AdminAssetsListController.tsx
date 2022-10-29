@@ -16,6 +16,8 @@ export const AdminAssetsListController = () => {
   const $errorMessages = useAtomValue(metaMaskModel.$errorMessages)
   const blockchainAssets = $blockchainAssets.state === 'hasData' ? $blockchainAssets.data : null
 
+  console.log('blockchainAssets', blockchainAssets)
+
   return (
     <div className={s.assetListController}>
       <div className={s.errors}>
@@ -29,54 +31,24 @@ export const AdminAssetsListController = () => {
           </h1>
         </div>
 
-        <div className={s.crudList}>
+        <AssetList>
           {
             blockchainAssets && blockchainAssets.map((blockchainAsset, index) => (
-              <div className={s.crudListItem} key={index}>
-                <h2>
-                  #{index+1} {blockchainAsset.name} ({blockchainAsset.symbol})
-                </h2>
-                <p>
-                  {blockchainAsset.title}
-                </p>
-                <div>
-                  <small>{blockchainAsset.description}</small>
-                </div>
-                <div>
-                  {T.status[blockchainAsset.status as keyof typeof T.status]}{' '}
-                  {
-                    blockchainAsset.status === AssetStatuses.upcoming
-                    ? <Button variant="outlined" size="small" onClick={() => $doActivate({ id: index+1 })}>
-                        Activate
-                      </Button>
-                      : <Button variant="outlined" size="small" onClick={() => $doDisable({ id: index+1 })}>
-                        Disable
-                      </Button>
-                  }
-                  {' '}
-                  <Link href={paths.showAsset({ id: index+1 })} passHref>
-                    <Button variant="outlined" size="small">
-                      Invest
-                    </Button>
-                  </Link>
-                </div>
-              </div>
+              <AssetListItem
+                key={index}
+                id={index+1}
+                status={T.status[blockchainAsset.status as keyof typeof T.status]}
+                image={{ src: "" }}
+                title={blockchainAsset.title}
+                subTitle={blockchainAsset.description}
+                irr={20.5}
+                coc={blockchainAsset.tokenInfo_apr.toNumber()}
+                tokensLeft={1000}
+                tokensTotal={blockchainAsset.tokenInfo_totalSupply.toNumber()}
+                collected={10}
+              />
             ))
           }
-        </div>
-
-        <AssetList>
-          <AssetListItem
-            status="Active"
-            image={{ src: "" }}
-            title="621 E Le Claire Rd"
-            subTitle="Eldridge, IA 52748"
-            irr={20.5}
-            coc={15.2}
-            tokensLeft={4502}
-            tokensTotal={10000}
-            collected={45}
-          />
         </AssetList>
       </div>
     </div>
