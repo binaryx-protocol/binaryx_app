@@ -32,6 +32,8 @@
 
 .buttons{
   margin: 0 -4px;
+  display: flex;
+  align-items: center;
 
   > *{
     margin: 0 4px;
@@ -39,7 +41,13 @@
 }
 
 .accountAddress{
+  margin-top: 5px;
+  margin-left: 10px;
+}
+.wallet{
   margin-left: 20px;
+  display: flex;
+  align-items: center;
 }
 
 // TODO this is a TMP solution. Waiting for mobile design
