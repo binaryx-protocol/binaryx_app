@@ -17,6 +17,7 @@ export type BcAsset = {
   tokenInfo_totalSupply: BigNumber,
   tokenInfo_apr: BigNumber,
   tokenInfo_tokenPriceDe6: BigNumber,
+  propertyInfo_images: string,
 }
 
 export type BcAssetMetaData = {
@@ -38,6 +39,7 @@ export type UiNewAssetFormValues = {
   tokenInfo_totalSupply: number,
   tokenInfo_apr: number,
   tokenInfo_tokenPriceDe6: number,
+  propertyInfo_images: string,
 }
 
 export type UiNewAssetForm = UiForm<UiNewAssetFormValues>

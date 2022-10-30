@@ -1,7 +1,7 @@
 import {getProvider, RpcConfig} from "../../../core/models/rpcConfigModel";
 import {ethers} from "ethers";
 import {BcAsset, BcAssetMetaData, UiNewAssetFormValues} from "../types";
-import {assetsManagerAbi, erc1155Abi, erc20Abi} from "./abis";
+import {assetsManagerAbi, erc1155Abi, erc20Abi} from "../../../core/abis";
 
 export const arbClient = {
   async createAsset($rpcConfig: RpcConfig, formValues: UiNewAssetFormValues): Promise<void> {

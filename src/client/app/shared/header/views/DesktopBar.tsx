@@ -27,7 +27,7 @@ export const DesktopBar = ({ account, onWalletConnect, hasAddress }: Props) => {
               Home
             </a>
           </Link>
-          <Link href={paths.home()} passHref>
+          <Link href={paths.listAssets()} passHref>
             <a>
               Marketplace
             </a>

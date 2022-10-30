@@ -22,6 +22,7 @@ const defaultAttrs = (): UiNewAssetFormValues => ({
   tokenInfo_totalSupply: 10_000, // decimals = 0
   tokenInfo_apr: 10, // percents
   tokenInfo_tokenPriceDe6: 5 * 1e6, // decimals = 6
+  propertyInfo_images: 'https://ns.clubmed.com/dream/RESORTS_3T___4T/Asie_et_Ocean_indien/Bali/169573-1lng9n8nnf-swhr.jpg',
 })
 
 export const $form = atom<UiNewAssetForm>({

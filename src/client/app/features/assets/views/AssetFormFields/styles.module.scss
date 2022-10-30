@@ -10,3 +10,14 @@
 .root{
   margin: 0 -7px;
 }
+
+.images{
+  padding: 0 4px;
+
+  img{
+    display: inline-block;
+    margin: 0 3px;
+    border-radius: 6px;
+    width: 100px;
+  }
+}
