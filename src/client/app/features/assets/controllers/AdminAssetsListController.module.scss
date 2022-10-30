@@ -1,5 +1,6 @@
 .assetListController {
   background-color: #F5F5F5;
+  min-height: calc(100vh - 64px);
 }
 
 .crudTopNav{
@@ -18,7 +19,7 @@
 
 .container{
   margin: 0 auto;
-  max-width: 2000px;
+  max-width: 1340px;
   padding: 0 10px;
 }
 
@@ -44,4 +45,22 @@
   border: 1px solid #eee;
   border-radius: 10px;
   padding: 10px;
+}
+
+@media(max-width: 1450px) {
+  .container{
+    max-width: 1010px;
+  }
+}
+
+@media(max-width: 1024px) {
+  .container{
+    max-width: 670px;
+  }
+}
+
+@media(max-width: 768px) {
+  .container{
+    max-width: 350px;
+  }
 }

@@ -38,7 +38,7 @@ export const AdminAssetsListController = () => {
                 key={index}
                 id={index+1}
                 status={T.status[blockchainAsset.status as keyof typeof T.status]}
-                image={{ src: "" }}
+                image={{ src: blockchainAsset.propertyInfo_images.split(',')[0] }}
                 title={blockchainAsset.title}
                 subTitle={blockchainAsset.description}
                 irr={20.5}

@@ -42,8 +42,8 @@ export const AssetFormFields = ({ form, onChange }: AssetFormFieldsProps) => {
         <TextField label="Images (separated by ',')" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'propertyInfo_images')} />
         <div className={s.images}>
           {
-            form.values.propertyInfo_images.split(',').map((url) => (
-              <img src={url} alt="" />
+            form.values.propertyInfo_images.split(',').map((url, i) => (
+              <img key={i} src={url} alt="" />
             ))
           }
         </div>
