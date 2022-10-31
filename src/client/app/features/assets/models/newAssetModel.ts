@@ -1,6 +1,5 @@
 import { atom } from 'jotai'
-import * as metaMaskModel from "../../../models/metaMaskModel";
-import * as rpcConfigModel from "../../../models/rpcConfigModel";
+import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import router from 'next/router'
 import {
   AssetStatuses,
@@ -11,9 +10,8 @@ import {
 import {arbClient} from "./arbClient";
 import {waitFor} from "../../../utils/pageLoadUtiils";
 import {assetValidator} from "./assetValidator";
-import {SyntheticEvent} from "react";
 import {paths} from "../../../../../../pkg/paths";
-import {RpcConfig} from "../../../models/rpcConfigModel";
+import {RpcConfig} from "../../../core/models/rpcConfigModel";
 
 const defaultAttrs = (): UiNewAssetFormValues => ({
   name: '',
@@ -24,6 +22,7 @@ const defaultAttrs = (): UiNewAssetFormValues => ({
   tokenInfo_totalSupply: 10_000, // decimals = 0
   tokenInfo_apr: 10, // percents
   tokenInfo_tokenPriceDe6: 5 * 1e6, // decimals = 6
+  propertyInfo_images: 'https://ns.clubmed.com/dream/RESORTS_3T___4T/Asie_et_Ocean_indien/Bali/169573-1lng9n8nnf-swhr.jpg',
 })
 
 export const $form = atom<UiNewAssetForm>({
@@ -36,7 +35,7 @@ export const $form = atom<UiNewAssetForm>({
 
 export const $doCreateAsset = atom(null, async (get, set, form: UiNewAssetForm) => {
   await waitFor(() => {
-    return get(metaMaskModel.$walletReadiness) === 'ready' && !!get(rpcConfigModel.$rpcConfig)
+    return !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
   const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig

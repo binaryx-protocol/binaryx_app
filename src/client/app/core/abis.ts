@@ -6,7 +6,8 @@ const AssetStruct = `
     uint8 status,
     uint256 tokenInfo_totalSupply,
     uint256 tokenInfo_apr,
-    uint256 tokenInfo_tokenPriceDe6
+    uint256 tokenInfo_tokenPriceDe6,
+    string memory propertyInfo_images
 `
 
 const RewardInfo = `
@@ -26,7 +27,8 @@ export const assetsManagerAbi = [
     uint8 status,
     uint256 tokenInfo_totalSupply,
     uint256 tokenInfo_apr,
-    uint256 tokenInfo_tokenPriceDe6
+    uint256 tokenInfo_tokenPriceDe6,
+    string memory propertyInfo_images
   ) public`
   ,
   `function listAssets() public view returns((${AssetStruct})[] memory)`,

@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import styles from './AdminAssetsListController.module.scss'
+import s from './AdminAssetsListController.module.scss'
 import Button from "@mui/material/Button";
-import * as metaMaskModel from "../../../models/metaMaskModel";
+import * as metaMaskModel from "../../../core/models/metaMaskModel";
 import * as assetsModel from "../models/assetsListModel";
 import {useAtomValue, useSetAtom} from "jotai";
 import {AssetStatuses} from "../types";
@@ -13,132 +13,42 @@ export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
   const $doActivate = useSetAtom(assetsModel.$doActivate)
   const $doDisable = useSetAtom(assetsModel.$doDisable)
-  const $walletConnect = useSetAtom(metaMaskModel.$walletConnect)
-  const $walletReadiness = useAtomValue(metaMaskModel.$walletReadiness)
-  const $metaMaskState = useAtomValue(metaMaskModel.$metaMaskState)
+  const $errorMessages = useAtomValue(metaMaskModel.$errorMessages)
   const blockchainAssets = $blockchainAssets.state === 'hasData' ? $blockchainAssets.data : null
 
+  console.log('blockchainAssets', blockchainAssets)
+
   return (
-    <div className={styles.assetListController}>
-      <div className={styles.header}>
-        <div className={styles.container}>
-          <div className={styles.headerNav}>
-          <div>Binaryx</div>
-          <div>
-            {
-              $walletReadiness === 'ready'
-                ? $metaMaskState.accounts?.[0]
-                : (
-                  <Button variant="outlined" onClick={$walletConnect}>
-                    Connect Wallet
-                  </Button>
-                )
-            }
-          </div>
-          </div>
-        </div>
+    <div className={s.assetListController}>
+      <div className={s.errors}>
+        {$errorMessages.join(', ')}
       </div>
-      <div className={styles.container}>
-        <div className={styles.crudTopNav}>
+      <div className={s.container}>
+
+        <div className={s.crudTopNav}>
           <h1>
             Marketplace
           </h1>
-          <div>
-            <Link href={'/'} passHref>
-              <Button variant="outlined">
-                Home
-              </Button>
-            </Link>
-            {' '}
-            <Link href={paths.newAsset()} passHref>
-              <Button variant="outlined">
-                ADD
-              </Button>
-            </Link>
-          </div>
-        </div>
-
-        <div className={styles.crudList}>
-          {
-            blockchainAssets && blockchainAssets.map((blockchainAsset, index) => (
-              <div className={styles.crudListItem} key={index}>
-                <h2>
-                  #{index+1} {blockchainAsset.name} ({blockchainAsset.symbol})
-                </h2>
-                <p>
-                  {blockchainAsset.title}
-                </p>
-                <div>
-                  <small>{blockchainAsset.description}</small>
-                </div>
-                <div>
-                  {T.status[blockchainAsset.status as keyof typeof T.status]}{' '}
-                  {
-                    blockchainAsset.status === AssetStatuses.upcoming
-                    ? <Button variant="outlined" size="small" onClick={() => $doActivate({ id: index+1 })}>
-                        Activate
-                      </Button>
-                      : <Button variant="outlined" size="small" onClick={() => $doDisable({ id: index+1 })}>
-                        Disable
-                      </Button>
-                  }
-                  {' '}
-                  <Link href={paths.showAsset({ id: index+1 })} passHref>
-                    <Button variant="outlined" size="small">
-                      Invest
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-            ))
-          }
         </div>
 
         <AssetList>
-          <AssetListItem
-            status="Active"
-            image={{ src: "" }}
-            title="621 E Le Claire Rd"
-            subTitle="Eldridge, IA 52748"
-            irr={20.5}
-            coc={15.2}
-            tokensLeft={4502}
-            tokensTotal={10000}
-            collected={45}
-          />
-          <AssetListItem
-            status="Upcoming"
-            image={{ src: "" }}
-            title="621 E Le Claire Rd"
-            subTitle="Eldridge, IA 52748"
-            irr={20.5}
-            coc={15.2}
-            tokensLeft={4502}
-            tokensTotal={10000}
-            collected={45}
-          />
-          <AssetListItem
-            status="Upcoming"
-            image={{ src: "" }}
-            title="621 E Le Claire Rd"
-            subTitle="Eldridge, IA 52748"
-            irr={20.5}
-            coc={15.2}
-            tokensLeft={4502}
-            tokensTotal={10000}
-            collected={45}
-          />
-          <AssetListItem
-            status="Upcoming"
-            image={{ src: "" }}
-            title="621 E Le Claire Rd"
-            subTitle="Eldridge, IA 52748"
-            irr={20.5}
-            coc={15.2}
-            tokensLeft={4502}
-            tokensTotal={10000}
-            collected={45}
-          />
+          {
+            blockchainAssets && blockchainAssets.map((blockchainAsset, index) => (
+              <AssetListItem
+                key={index}
+                id={index+1}
+                status={T.status[blockchainAsset.status as keyof typeof T.status]}
+                image={{ src: blockchainAsset.propertyInfo_images.split(',')[0] }}
+                title={blockchainAsset.title}
+                subTitle={blockchainAsset.description}
+                irr={20.5}
+                coc={blockchainAsset.tokenInfo_apr.toNumber()}
+                tokensLeft={1000}
+                tokensTotal={blockchainAsset.tokenInfo_totalSupply.toNumber()}
+                collected={10}
+              />
+            ))
+          }
         </AssetList>
       </div>
     </div>

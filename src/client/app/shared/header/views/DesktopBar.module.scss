@@ -1,0 +1,69 @@
+.root{
+  height: 64px;
+  border-bottom: 1px solid #EFF2F5;
+  background-color: #fff;
+}
+
+.container{
+  max-width: 1700px;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.logo{
+  img{
+    height: 32px;
+    display: block;
+  }
+}
+
+.nav{
+  margin-left: 120px;
+  a{
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    padding: 10px 22px;
+    font-size: 14px;
+  }
+}
+
+.buttons{
+  margin: 0 -4px;
+  display: flex;
+  align-items: center;
+
+  > *{
+    margin: 0 4px;
+  }
+}
+
+.accountAddress{
+  margin-top: 5px;
+  margin-left: 10px;
+}
+.wallet{
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+}
+
+// TODO this is a TMP solution. Waiting for mobile design
+@media (max-width: 1024px) {
+  .root{
+    height: initial;
+  }
+  .container{
+    padding: 10px 10px;
+    display: block;
+  }
+  .nav{
+    margin: 5px -20px;
+
+    a {
+      display: inline-block;
+    }
+  }
+}

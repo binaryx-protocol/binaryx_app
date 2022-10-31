@@ -2,10 +2,8 @@ import s from './NewAssetController.module.scss'
 import * as newAssetModel from "../models/newAssetModel";
 import {useAtomValue, useSetAtom} from "jotai";
 import {AssetFormFields} from "../views/AssetFormFields";
-import Button from "@mui/material/Button";
 import {SyntheticEvent, useEffect} from "react";
-import Link from "next/link";
-import {paths} from "../../../../../../pkg/paths";
+import {Button} from "../../../shared/ui/views/Button";
 
 export const NewAssetController = () => {
   const form = useAtomValue(newAssetModel.$form)
@@ -26,18 +24,10 @@ export const NewAssetController = () => {
   return (
     <div className={s.page}>
       <div className={s.container}>
-        <div className={s.formNav}>
-          <Link href={paths.listAssets()} passHref>
-            <Button variant="outlined">
-              Back
-            </Button>
-          </Link>
-        </div>
         <form noValidate onSubmit={onSubmitLocal}>
           <AssetFormFields form={form} onChange={onFormChange} />
-
           <div className={s.formActions}>
-            <Button variant="contained" type="submit" size="large">
+            <Button type="submit">
               Create
             </Button>
           </div>

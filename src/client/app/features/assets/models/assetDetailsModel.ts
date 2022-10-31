@@ -1,12 +1,11 @@
 // @ts-nocheck
 import {atom, PrimitiveAtom} from 'jotai'
-import * as metaMaskModel from "../../../models/metaMaskModel";
-import * as rpcConfigModel from "../../../models/rpcConfigModel";
+import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import {BcAsset, BcAssetMetaData, UiAssetComputed} from "../types";
 import {arbClient} from "./arbClient";
 import {waitFor} from "../../../utils/pageLoadUtiils";
 import {bnToInt, onlyFields} from "../../../utils/objectUtils";
-import {RpcConfig} from "../../../models/rpcConfigModel";
+import {RpcConfig} from "../../../core/models/rpcConfigModel";
 
 // stores
 export const $asset = atom(null) as PrimitiveAtom<BcAsset | null>;
@@ -33,8 +32,9 @@ export const $assetComputed = atom<UiAssetComputed | null>((get) => {
 
 // setters
 export const $doLoadAsset = atom(null, async (get,set, args: { id: number }) => {
+  // TODO check what if no MM connected
   await waitFor(() => {
-    return get(metaMaskModel.$walletReadiness) === 'ready' && !!get(rpcConfigModel.$rpcConfig)
+    return !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
   // TODO - move provider into RPC

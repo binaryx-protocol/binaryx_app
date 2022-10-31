@@ -1,6 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 export const paths = {
+  home() {
+    return '/';
+  },
   listAssets() {
     return '/assets-v2';
   },

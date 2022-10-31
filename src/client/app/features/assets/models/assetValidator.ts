@@ -14,6 +14,7 @@ const schema: UiFormValidatorRules<UiNewAssetFormValues> = {
   tokenInfo_totalSupply: ['required'],
   tokenInfo_apr: ['required'],
   tokenInfo_tokenPriceDe6: ['required'],
+  propertyInfo_images: ['required'],
 }
 
 export const assetValidator = {

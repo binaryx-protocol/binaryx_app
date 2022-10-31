@@ -40,7 +40,8 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
     uint8 status,
     uint256 tokenInfo_totalSupply,
     uint256 tokenInfo_apr,
-    uint256 tokenInfo_tokenPriceDe6
+    uint256 tokenInfo_tokenPriceDe6,
+    string memory propertyInfo_images
   ) public override {
     _assetsCounter.increment();
     uint256 id = _assetsCounter.current();
@@ -52,7 +53,8 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
       status,
       tokenInfo_totalSupply,
       tokenInfo_apr,
-      tokenInfo_tokenPriceDe6
+      tokenInfo_tokenPriceDe6,
+      propertyInfo_images
     );
     _assets[id] = newAsset;
     _mint(address(this), id, tokenInfo_totalSupply, "");
@@ -137,7 +139,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
       _investments[msg.sender][assetId].accumulatedAt = block.timestamp;
     } else {
       _investmentsIds[msg.sender].push(assetId);
-      _investments[msg.sender][assetId] = Investment(assetId, 0, block.timestamp - 60*60*24);
+      _investments[msg.sender][assetId] = Investment(assetId, 0, block.timestamp);
     }
   }
 
