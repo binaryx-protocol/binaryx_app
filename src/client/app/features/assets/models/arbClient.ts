@@ -9,9 +9,6 @@ export const arbClient = {
       ...Object.values(formValues)
     )
   },
-  async listAssets($rpcConfig: RpcConfig) {
-    return await this.getManagerSc($rpcConfig).listAssets()
-  },
   async setStatus($rpcConfig: RpcConfig, args: { id: number, status: number }) {
     return await this.getManagerSc($rpcConfig).setStatus(args.id, args.status)
   },

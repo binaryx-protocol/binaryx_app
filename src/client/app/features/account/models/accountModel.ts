@@ -75,7 +75,7 @@ export const $accountInfo = atom<UiAccountInfo | null>((get) => {
 // setters
 export const $doLoadMyRewards = atom(null, async (get, set) => {
   await waitFor(() => {
-    return get(metaMaskModel.$walletReadiness) === 'ready' && !!get(rpcConfigModel.$rpcConfig)
+    return !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
   const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
@@ -88,7 +88,7 @@ export const $doLoadMyRewards = atom(null, async (get, set) => {
 
 export const $doClaimMyRewards = atom(null, async (get, set) => {
   await waitFor(() => {
-    return get(metaMaskModel.$walletReadiness) === 'ready' && !!get(rpcConfigModel.$rpcConfig)
+    return !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
   const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
