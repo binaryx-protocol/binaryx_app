@@ -5,7 +5,8 @@ import {Contract, ethers} from "ethers";
 import {BcAsset} from "../types";
 
 type AssetManager = Contract & {
-  listAssets: () => Promise<BcAsset[]>
+  listAssets: () => Promise<[BcAsset[], any]>
+  balanceOfBatch: (ids: number[]) => Promise<any>
 }
 
 export const $assetsTokenSmartContract = atom<AssetManager>((get) => {

@@ -31,7 +31,7 @@ export const $doDisable = atom(null, async (get, set, args: { id: number }) => {
   }
 })
 
-export const $blockchainAssetsAsync = atom<Promise<BcAsset[]>>(async (get) => {
+export const $blockchainAssetsAsync = atom<Promise<[BcAsset[], any]>>(async (get) => {
   const manager = get($assetsTokenSmartContract)
   return await manager.listAssets()
 })

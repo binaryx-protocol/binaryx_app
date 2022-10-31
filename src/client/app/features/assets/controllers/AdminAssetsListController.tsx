@@ -20,6 +20,7 @@ export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
   // const $errorMessages = useAtomValue(metaMaskModel.$errorMessages)
   const blockchainAssets = $blockchainAssets.state === 'hasData' ? $blockchainAssets.data : null
+  const [assets, balances] = blockchainAssets || []
 
   return (
     <div className={s.root}>
@@ -41,7 +42,7 @@ export const AdminAssetsListController = () => {
                 Marketplace
               </h1>
             </div>
-            <AssetList assets={blockchainAssets} />
+            <AssetList assets={assets || []} balances={balances || []} />
           </div>
         </div>
       </Container>

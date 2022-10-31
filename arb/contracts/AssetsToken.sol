@@ -42,7 +42,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
     uint256 tokenInfo_apr,
     uint256 tokenInfo_tokenPriceDe6,
     string memory propertyInfo_images
-  ) public override {
+  ) public {
     _assetsCounter.increment();
     uint256 id = _assetsCounter.current();
     Asset memory newAsset = Asset(
@@ -80,16 +80,21 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
     return 0xbc197c81;
   }
 
-  function listAssets() public override view returns(Asset[] memory) {
+  function listAssets() public view returns(Asset[] memory, uint256[] memory) {
     uint count = _assetsCounter.current();
     Asset[] memory result = new Asset[](count);
+    uint256[] memory balances = new uint256[](count);
 
     for (uint i = 1; i <= count; i++) {
       Asset storage asset = _assets[i];
       result[i-1] = asset;
+      balances[i-1] = balanceOf(address(this), i);
     }
 
-    return result;
+    return (
+      result,
+      balances
+    );
   }
 
   function updateAsset(
@@ -102,7 +107,7 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
     uint256 tokenInfo_totalSupply,
     uint256 tokenInfo_apr,
     uint256 tokenInfo_tokenPriceDe6
-  ) public override {
+  ) public {
     Asset storage oldAsset = _assets[id];
     oldAsset.name = name;
     oldAsset.symbol = symbol;
@@ -111,20 +116,20 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
     oldAsset.status = status;
   }
 
-  function setStatus(uint256 id, uint8 status) public override {
+  function setStatus(uint256 id, uint8 status) public {
     _assets[id].status = status;
   }
 
-  function getAssetsCount() public view override returns(uint256) {
+  function getAssetsCount() public view returns(uint256) {
     return _assetsCounter.current();
   }
 
-  function getAsset(uint256 id) public view override returns(Asset memory) {
+  function getAsset(uint256 id) public view returns(Asset memory) {
     require(bytes(_assets[id].name).length > 0, "Not found");
     return _assets[id];
   }
 
-  function investUsingUsdt(uint256 assetId, uint256 assetTokensToBuy) public override {
+  function investUsingUsdt(uint256 assetId, uint256 assetTokensToBuy) public {
     Asset storage asset = _assets[assetId];
     uint256 costInUsdtDe6 = assetTokensToBuy * asset.tokenInfo_tokenPriceDe6;
     usdt.transferFrom(msg.sender, address(this), costInUsdtDe6);
@@ -142,31 +147,6 @@ contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestment
       _investments[msg.sender][assetId] = Investment(assetId, 0, block.timestamp);
     }
   }
-
-  //  function assetsByInvestor() public view returns(Asset[] memory) {
-  //    uint count = _investments[msg.sender].length;
-  //    Asset[] memory result = new Asset[](count);
-  //
-  //    for (uint i = 0; i < count; i++) {
-  //      Asset storage asset = _assets[_investments[msg.sender][i].assetId];
-  //      result[i] = asset;
-  //    }
-  //
-  //    return result;
-  //  }
-
-  //  function estimateMyReward() public view returns(Asset[] memory) {
-  //    uint count = _investments[msg.sender].length;
-  //    Asset[] memory result = new Asset[](count);
-  //
-  //    for (uint i = 0; i < count; i++) {
-  //      _balances[id][account]
-  //      Asset storage asset = _assets[_investments[msg.sender][i]];
-  //      result[i] = asset;
-  //    }
-  //
-  //    return result;
-  //  }
 
   struct RewardInfo {
     uint256 assetId;
