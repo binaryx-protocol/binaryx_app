@@ -5,7 +5,6 @@ type Props = {
   children: ReactNode
 };
 
-
 const AssetList = ({ children }: Props) => {
   return (
     <div className={s.assetList}>

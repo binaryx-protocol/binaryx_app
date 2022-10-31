@@ -15,6 +15,8 @@ interface IAssetsTokenManager {
     uint256 tokenInfo_apr;
     uint256 tokenInfo_tokenPriceDe6;
 
+    string propertyInfo_images;
+
     //        PropertyAddress propertyAddress;
     //    PropertyInfo propertyInfo;
     //    TokenInfo tokenInfo;
@@ -89,7 +91,8 @@ interface IAssetsTokenManager {
     uint8 status,
     uint256 tokenInfo_totalSupply,
     uint256 tokenInfo_apr,
-    uint256 tokenInfo_tokenPriceDe6
+    uint256 tokenInfo_tokenPriceDe6,
+    string memory propertyInfo_images
   ) external;
 
   function listAssets() external view returns(Asset[] memory);

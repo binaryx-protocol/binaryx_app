@@ -1,12 +1,12 @@
 import {atom, PrimitiveAtom} from 'jotai'
-import * as metaMaskModel from "../../../models/metaMaskModel";
-import * as rpcConfigModel from "../../../models/rpcConfigModel";
+import * as metaMaskModel from "../../../core/models/metaMaskModel";
+import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import {waitFor} from "../../../utils/pageLoadUtiils";
 import {bnToInt, onlyFields} from "../../../utils/objectUtils";
 import {rpcClient} from "./rpcClient";
 import {BigNumber} from "ethers";
 import {BcAsset} from "../../assets/types";
-import {RpcConfig} from "../../../models/rpcConfigModel";
+import {RpcConfig} from "../../../core/models/rpcConfigModel";
 
 export type BcReward = {
   asset: BcAsset

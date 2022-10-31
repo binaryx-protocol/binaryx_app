@@ -20,6 +20,7 @@ type AssetInput = {
   tokenInfo_totalSupply: number,
   tokenInfo_apr: number,
   tokenInfo_tokenPriceDe6: number,
+  propertyInfo_images: string,
 }
 
 const defaultAttrs = (): AssetInput => ({
@@ -31,6 +32,7 @@ const defaultAttrs = (): AssetInput => ({
   tokenInfo_totalSupply: 10_000, // decimals = 0
   tokenInfo_apr: 10, // percents
   tokenInfo_tokenPriceDe6: 50 * 1e6, // decimals = 6
+  propertyInfo_images: 'https://ns.clubmed.com/dream/RESORTS_3T___4T/Asie_et_Ocean_indien/Bali/169573-1lng9n8nnf-swhr.jpg,https://api.time.com/wp-content/uploads/2022/07/Worlds-Greatest-Places-2022-BaliIndonesia.jpeg'
 })
 
 const createMany = async (sc, count, attrs: Partial<AssetInput> = {}) => {
@@ -82,7 +84,7 @@ describe("AssetsToken", function () {
       const { sc, otherAccount } = await loadFixture(deployFixture);
 
       await createMany(sc, 1)
-      const balance = await sc.balanceOf(sc.address, 0)
+      const balance = await sc.balanceOf(sc.address, 1)
       expectBn(balance).to.eq(10_000)
     });
   });
@@ -103,7 +105,7 @@ describe("AssetsToken", function () {
       const { sc, otherAccount, owner, usdtfToken } = await loadFixture(deployFixture);
       await createMany(sc, 1)
 
-      const assetId = 0;
+      const assetId = 1;
 
       await expectUsdtBalance(usdtfToken, owner.address, usdtInitialBalance)
       await expectUsdtBalance(usdtfToken, sc.address, 0)
@@ -227,8 +229,8 @@ describe("AssetsToken", function () {
       await createMany(sc, 1)
 
       const resources = await sc.listAssets()
-      const id = 0
-      const resource = onlyFields<AssetInput>(resources[id])
+      const id = 1
+      const resource = onlyFields<AssetInput>(resources[0])
       expect(resource.status).to.eq(AssetStatuses.upcoming)
 
       await sc.setStatus(
@@ -237,7 +239,7 @@ describe("AssetsToken", function () {
       )
 
       const resources2 = await sc.listAssets()
-      const resource2 = resources2[id]
+      const resource2 = resources2[0]
       expect(resource2.status).to.eq(AssetStatuses.active)
     });
   });
@@ -247,7 +249,7 @@ describe("AssetsToken", function () {
       const { sc, otherAccount } = await loadFixture(deployFixture);
       await createMany(sc, 1)
 
-      const resource = await sc.getAsset(0)
+      const resource = await sc.getAsset(1)
       expect(resource).to.exist
     });
     it("if not found", async function () {
@@ -264,7 +266,7 @@ describe("AssetsToken", function () {
       await createMany(sc, 1)
       await usdtfToken.transfer(sc.address, 5 * usdtDecimals)
       await usdtfToken.approve(sc.address, 50 * usdtDecimals)
-      await sc.investUsingUsdt(0, 1)
+      await sc.investUsingUsdt(1, 1)
 
       // 5.00 is accumulated by this time
       await time.increaseTo((await time.latest()) + ONE_YEAR_IN_SECS);

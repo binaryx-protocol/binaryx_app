@@ -89,8 +89,8 @@ const localhost: RpcConfig = {
 
 const configByDomain = typeof window !== 'undefined' ?
   {
-    // 'localhost': localhost,
-    'localhost': l2Goerli,
+    'localhost': localhost,
+    // 'localhost': l2Goerli,
     'i2.binaryx.com': l2Goerli,
   }[window.location.hostname]
   : null

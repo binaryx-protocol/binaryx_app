@@ -6,8 +6,8 @@ import client from '../app/apollo-client';
 import { createTheme, ThemeProvider } from '@mui/material';
 import '../app/styles/globalVariables.css';
 import { Provider, useAtomValue, useSetAtom } from 'jotai';
-import * as featureFlagsModel from '../app/models/featureFlagsModel';
-import * as metaMaskModel from '../app/models/metaMaskModel';
+import * as featureFlagsModel from '../app/core/models/featureFlagsModel';
+import * as metaMaskModel from '../app/core/models/metaMaskModel';
 import Head from 'next/head';
 
 type Props = {

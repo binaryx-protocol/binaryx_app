@@ -1,6 +1,6 @@
 import {ethers} from "ethers";
 import {accountManagerAbi, assetsManagerAbi, erc1155Abi} from "./abis";
-import {getProvider, RpcConfig} from "../models/rpcConfigModel";
+import {getProvider, RpcConfig} from "./models/rpcConfigModel";
 
 export const getAssetsManagerSc = ($rpcConfig: RpcConfig) => {
   const provider = getProvider()

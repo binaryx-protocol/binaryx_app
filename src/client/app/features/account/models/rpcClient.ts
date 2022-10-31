@@ -1,4 +1,4 @@
-import {RpcConfig} from "../../../models/rpcConfigModel";
+import {RpcConfig} from "../../../core/models/rpcConfigModel";
 import {getAssetsManagerSc} from "../../../core/smartContractsFactory";
 
 export const rpcClient = {
