@@ -1,0 +1,13 @@
+.sideMenu {
+  max-width: 240px;
+  padding: 16px;
+  height: calc(100vh - 100px);
+  background-color: var(--color--primary-bg);
+  border-radius: 16px;
+  border: 1px solid var(--color--border);
+}
+
+.navList {
+  list-style: none;
+  padding: 0;
+}

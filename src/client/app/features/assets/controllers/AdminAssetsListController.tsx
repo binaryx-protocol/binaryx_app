@@ -8,6 +8,15 @@ import {AssetStatuses} from "../types";
 import {paths} from "../../../../../../pkg/paths";
 import AssetList from '../views/AssetList';
 import AssetListItem from '../views/AssetList/AssetListItem';
+import SideMenu from '../views/SideMenu';
+import SideMenuNavItem from '../views/SideMenu/SideMenuNavItem';
+import IconProperty from '../views/SideMenu/icons/IconProperty';
+import IconSettings from '../views/SideMenu/icons/IconSettings';
+import IconCoins from '../views/SideMenu/icons/IconCoins';
+import IconGift from '../views/SideMenu/icons/IconGift';
+import IconHistory from '../views/SideMenu/icons/IconHistory';
+import IconNotification from '../views/SideMenu/icons/IconNotification';
+import SideMenuDivider from '../views/SideMenu/SideMenuDivider';
 
 export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
@@ -31,6 +40,15 @@ export const AdminAssetsListController = () => {
           </h1>
         </div>
 
+        <SideMenu>
+          <SideMenuNavItem icon={<IconProperty />} title="Asset Overview" url="/account-v2" />
+          <SideMenuNavItem icon={<IconCoins />} title="Marketplace" url="/assets-v2" />
+          <SideMenuNavItem icon={<IconGift />} title="Refer and Earn" url="#" />
+          <SideMenuNavItem icon={<IconHistory />} title="Transaction" url="#" />
+          <SideMenuDivider />
+          <SideMenuNavItem icon={<IconSettings />} title="Settings" url="#" />
+          <SideMenuNavItem icon={<IconNotification />} title="Notifications" url="#" />
+        </SideMenu>
         <AssetList>
           {
             blockchainAssets && blockchainAssets.map((blockchainAsset, index) => (
