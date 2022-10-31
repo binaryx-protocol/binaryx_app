@@ -1,10 +1,9 @@
-// @ts-nocheck
 import {atom, PrimitiveAtom} from 'jotai'
 import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import {BcAsset, BcAssetMetaData, UiAssetComputed} from "../types";
 import {arbClient} from "./arbClient";
 import {waitFor} from "../../../utils/pageLoadUtiils";
-import {bnToInt, onlyFields} from "../../../utils/objectUtils";
+import {onlyFields} from "../../../utils/objectUtils";
 import {RpcConfig} from "../../../core/models/rpcConfigModel";
 
 // stores
@@ -18,8 +17,8 @@ export const $assetComputed = atom<UiAssetComputed | null>((get) => {
   if (!asset || !assetMetaData) {
     return null
   }
-  const tokensTotalSupply = bnToInt(asset.tokenInfo_totalSupply)
-  const tokensLeft = bnToInt(assetMetaData.tokensLeft)
+  const tokensTotalSupply = asset.tokenInfo_totalSupply.toNumber()
+  const tokensLeft = assetMetaData.tokensLeft.toNumber()
   const tokensSold = tokensTotalSupply - tokensLeft
   const progress = (tokensSold / tokensTotalSupply)
   const result = {
@@ -50,6 +49,6 @@ export const $doLoadAsset = atom(null, async (get,set, args: { id: number }) => 
     { id: args.id }
   );
 
-  set($asset, onlyFields(bcAsset));
+  set($asset, bcAsset);
   set($assetMetaData, tokenInfo);
 })
