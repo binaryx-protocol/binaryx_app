@@ -37,6 +37,7 @@ export const $blockchainAssetsAsync = atom<BcAsset[]>(async (get) => {
   const $rpcConfig = get(rpcConfigModel.$rpcConfig)
 
   if ($rpcConfig) {
+    console.log('listAssets')
     return await arbClient.listAssets($rpcConfig)
   } else {
     throw new Error("Wallet is not connected or config is not provided");
