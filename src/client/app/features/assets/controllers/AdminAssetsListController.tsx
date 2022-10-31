@@ -28,46 +28,46 @@ export const AdminAssetsListController = () => {
   console.log('blockchainAssets', blockchainAssets)
 
   return (
-    <div className={s.assetListController}>
-      <div className={s.errors}>
-        {$errorMessages.join(', ')}
-      </div>
+    <div className={s.root}>
       <div className={s.container}>
+        <div className={s.contentWrapper}>
+          <SideMenu className={s.pageMenu}>
+            <SideMenuNavItem icon={<IconProperty />} title="Asset Overview" url="/account-v2" />
+            <SideMenuNavItem icon={<IconCoins />} title="Marketplace" url="/assets-v2" />
+            <SideMenuNavItem icon={<IconGift />} title="Refer and Earn" url="#" />
+            <SideMenuNavItem icon={<IconHistory />} title="Transaction" url="#" />
+            <SideMenuDivider />
+            <SideMenuNavItem icon={<IconSettings />} title="Settings" url="#" />
+            <SideMenuNavItem icon={<IconNotification />} title="Notifications" url="#" />
+          </SideMenu>
 
-        <div className={s.crudTopNav}>
-          <h1>
-            Marketplace
-          </h1>
+          <div className={s.pageContent}>
+            <div className={s.crudTopNav}>
+              <h1>
+                Marketplace
+              </h1>
+            </div>
+            <AssetList>
+              {
+                blockchainAssets && blockchainAssets.map((blockchainAsset, index) => (
+                  <AssetListItem
+                    key={index}
+                    id={index+1}
+                    status={T.status[blockchainAsset.status as keyof typeof T.status]}
+                    image={{ src: blockchainAsset.propertyInfo_images.split(',')[0] }}
+                    title={blockchainAsset.title}
+                    subTitle={blockchainAsset.description}
+                    irr={20.5}
+                    coc={blockchainAsset.tokenInfo_apr.toNumber()}
+                    tokensLeft={1000}
+                    tokensTotal={blockchainAsset.tokenInfo_totalSupply.toNumber()}
+                    collected={10}
+                  />
+                ))
+              }
+            </AssetList>
+          </div>
         </div>
-
-        <SideMenu>
-          <SideMenuNavItem icon={<IconProperty />} title="Asset Overview" url="/account-v2" />
-          <SideMenuNavItem icon={<IconCoins />} title="Marketplace" url="/assets-v2" />
-          <SideMenuNavItem icon={<IconGift />} title="Refer and Earn" url="#" />
-          <SideMenuNavItem icon={<IconHistory />} title="Transaction" url="#" />
-          <SideMenuDivider />
-          <SideMenuNavItem icon={<IconSettings />} title="Settings" url="#" />
-          <SideMenuNavItem icon={<IconNotification />} title="Notifications" url="#" />
-        </SideMenu>
-        <AssetList>
-          {
-            blockchainAssets && blockchainAssets.map((blockchainAsset, index) => (
-              <AssetListItem
-                key={index}
-                id={index+1}
-                status={T.status[blockchainAsset.status as keyof typeof T.status]}
-                image={{ src: blockchainAsset.propertyInfo_images.split(',')[0] }}
-                title={blockchainAsset.title}
-                subTitle={blockchainAsset.description}
-                irr={20.5}
-                coc={blockchainAsset.tokenInfo_apr.toNumber()}
-                tokensLeft={1000}
-                tokensTotal={blockchainAsset.tokenInfo_totalSupply.toNumber()}
-                collected={10}
-              />
-            ))
-          }
-        </AssetList>
       </div>
     </div>
   )
