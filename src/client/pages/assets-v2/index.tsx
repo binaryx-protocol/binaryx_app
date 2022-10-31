@@ -1,15 +1,16 @@
 import { NextPage } from 'next';
 import {AdminAssetsListController} from "features/assets";
-import {HeaderController} from "../../app/shared/header";
+import {DefaultLayout} from "../../app/shared/layout/DefaultLayout";
 
-const Assets: NextPage<any> = () => {
+const Assets = () => {
   return (
     <>
-      <HeaderController />
       <AdminAssetsListController />
     </>
   );
 };
+
+Assets.Layout = DefaultLayout;
 
 // export const getStaticProps = async (sProps) => {
 //   console.log('sProps', sProps)

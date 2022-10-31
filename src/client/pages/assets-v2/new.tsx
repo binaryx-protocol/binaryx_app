@@ -1,14 +1,14 @@
-import { NextPage } from 'next';
 import {NewAssetController} from "features/assets";
-import {HeaderController} from "../../app/shared/header";
+import {DefaultLayout} from "../../app/shared/layout/DefaultLayout";
 
-const Assets: NextPage<any> = () => {
+const Assets = () => {
   return (
     <>
-      <HeaderController />
       <NewAssetController />
     </>
   );
 };
+
+Assets.Layout = DefaultLayout;
 
 export default Assets;

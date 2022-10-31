@@ -23,10 +23,13 @@ const theme = createTheme({
   },
 });
 
+const NoLayout = ({ children }: { children: any }) => children;
+
 const MyApp: FC<Props> = ({ Component, pageProps }) => {
   const [showAdminMenu, setShowAdminMenu] = useState(false);
   const includeHubSpotTrackingScript = process.env.NODE_ENV === 'production';
   const includeHotjarScript = process.env.NODE_ENV === 'production';
+  const Layout = Component.Layout || NoLayout;
 
   useEffect(() => {
     console.log('APP INIT');
@@ -72,7 +75,9 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
           {/* <Navigation /> */}
           {/* <Home data={''} /> */}
           <WalletConnector />
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
           {showAdminMenu && <AdminMenu />}
         </ThemeProvider>
         {includeHubSpotTrackingScript && (

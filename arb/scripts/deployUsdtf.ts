@@ -17,7 +17,7 @@ const main = async () => {
     await ethers.getContractFactory('UsdtfToken')
   ).connect(wallet)
 
-  const usdtfToken = await UsdtfToken.deploy(web3.utils.toBN(10000).mul(usdtPrecision).toString(), [])
+  const usdtfToken = await UsdtfToken.deploy(web3.utils.toBN(1_000_000).mul(usdtPrecision).toString(), [])
   await usdtfToken.deployed()
 
   console.log(`usdtfToken deployed to ${usdtfToken.address}`)
