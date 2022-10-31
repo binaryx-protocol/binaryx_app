@@ -3,8 +3,8 @@ import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import {BcAsset, BcAssetMetaData, UiAssetComputed} from "../types";
 import {arbClient} from "./arbClient";
 import {waitFor} from "../../../utils/pageLoadUtiils";
-import {onlyFields} from "../../../utils/objectUtils";
 import {RpcConfig} from "../../../core/models/rpcConfigModel";
+import {$assetsTokenSmartContract} from "./smartContractsFactory";
 
 // stores
 export const $asset = atom(null) as PrimitiveAtom<BcAsset | null>;
@@ -36,19 +36,13 @@ export const $doLoadAsset = atom(null, async (get,set, args: { id: number }) => 
     return !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
-  // TODO - move provider into RPC
-  const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
-  const bcAsset = await arbClient.getAsset(
-    $rpcConfig,
-    { id: args.id }
-  );
-
-  // TODO - move provider into RPC
-  const tokenInfo = await arbClient.getAssetTokenInfo(
-    $rpcConfig,
-    { id: args.id }
-  );
+  const rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
+  const manager = get($assetsTokenSmartContract)
+  const bcAsset = await manager.getAsset(args.id);
+  const tokensLeft = await manager.balanceOf(rpcConfig.assetsTokenAddress, args.id)
 
   set($asset, bcAsset);
-  set($assetMetaData, tokenInfo);
+  set($assetMetaData, {
+    tokensLeft
+  });
 })
