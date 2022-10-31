@@ -1,8 +1,12 @@
-.assetList {
+.grid {
   display: grid;
-  grid-gap: 15px;
   grid-template-columns: 25% 25% 25% 25%;
   padding: 0 0 15px 0;
+  margin: -7px;
+}
+
+.gridItem{
+  padding: 7px;
 }
 
 @media(max-width: 1450px) {

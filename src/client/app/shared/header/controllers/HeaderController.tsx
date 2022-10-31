@@ -8,6 +8,8 @@ export const HeaderController = () => {
   const $isAccountConnected = useAtomValue(metaMaskModel.$isAccountConnected)
   // const $errorMessages = useAtomValue(metaMaskModel.$errorMessages)
 
+  console.log('$metaMaskState.values.accounts', $metaMaskState.values.accounts)
+
   const walletAddress = $metaMaskState.values.accounts?.[0] || ''
   const walletAddressFormatted = walletAddress.substr(0, 5) + '...' + walletAddress.substr(walletAddress.length-3, 3)
 

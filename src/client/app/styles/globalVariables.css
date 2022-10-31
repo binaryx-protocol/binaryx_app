@@ -35,3 +35,8 @@
 
   --animation-delay: 60ms;
 }
+
+html, body{
+  min-width: 1600px;
+  overflow-x: auto;
+}
