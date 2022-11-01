@@ -54,9 +54,9 @@ const l2Goerli: RpcConfig = {
       image: '',
     },
   },
-  assetsTokenAddress: '0x4e8C6307AF6fC893D76dfAD9198bcE29601Db057',
-  usdtL1Address: '0x5AB6F31B29Fc2021436B3Be57dE83Ead3286fdc7',
-  usdtL2Address: '0x7c5180280464edddb48464112bb06a4a136cbdbb',
+  assetsTokenAddress: '0x578102fF3886048c61f365A30897f455A19F0F06',
+  usdtL1Address: '', // not used yet
+  usdtL2Address: '0xE026Ff21848c092C75775a0EfF84da486FD58cc9',
 }
 
 const localhost: RpcConfig = {
@@ -89,8 +89,8 @@ const localhost: RpcConfig = {
 
 const configByDomain = typeof window !== 'undefined' ?
   {
-    'localhost': localhost,
-    // 'localhost': l2Goerli,
+    // 'localhost': localhost,
+    'localhost': l2Goerli,
     'i2.binaryx.com': l2Goerli,
   }[window.location.hostname]
   : null
