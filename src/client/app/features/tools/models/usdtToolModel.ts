@@ -1,12 +1,12 @@
 import { atom } from 'jotai'
-import {NewRpcToken} from "../../../core/models/rpcConfigModel";
+import {$rpcConfig, NewRpcToken, RpcConfig} from "../../../core/models/rpcConfigModel";
 import {completeAction, isDoneAction} from "../../../utils/isDoneActionLs";
 import {$usdtSmartContract} from "../../../shared/usdtToken/smartContractsFactory";
 
 const usdtToolToken: NewRpcToken = {
   type: 'ERC20',
   options: {
-    address: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
+    address: '',
     symbol: 'USDTT',
     decimals: 6,
     image: '',
@@ -20,6 +20,8 @@ export const $doMint = atom(
     const ethereum = window.ethereum
 
     if (!isDoneAction('addUsdtToolToken')) {
+      const rpcConfig = get($rpcConfig) as RpcConfig
+      usdtToolToken.options.address = rpcConfig.usdtL2Address
       await ethereum.request({ method: 'wallet_watchAsset', params: usdtToolToken })
         .then(() => completeAction('addUsdtToolToken'))
         .catch((err: any) => {
