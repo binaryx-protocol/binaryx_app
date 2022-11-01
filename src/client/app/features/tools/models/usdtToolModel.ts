@@ -1,9 +1,7 @@
 import { atom } from 'jotai'
-import {waitFor} from "../../../utils/pageLoadUtiils";
-import {$rpcConfig, NewRpcToken, RpcConfig} from "../../../core/models/rpcConfigModel";
+import {NewRpcToken} from "../../../core/models/rpcConfigModel";
 import {completeAction, isDoneAction} from "../../../utils/isDoneActionLs";
-import {$usdtToolSmartContract} from "./smartContractsFactory";
-import {$isAccountConnected} from "../../../core/models/metaMaskModel";
+import {$usdtSmartContract} from "../../../shared/usdtToken/smartContractsFactory";
 
 const usdtToolToken: NewRpcToken = {
   type: 'ERC20',
@@ -15,11 +13,10 @@ const usdtToolToken: NewRpcToken = {
   },
 }
 
-export const $doWatchUsdtTool = atom(
+export const $doMint = atom(
   null,
-  async (get, set) => {
-    await waitFor(() => !!get($rpcConfig))
-    const rpcConfig = get($rpcConfig) as RpcConfig
+  async (get, set, { amount }: { amount: number }) => {
+    // watch
     const ethereum = window.ethereum
 
     if (!isDoneAction('addUsdtToolToken')) {
@@ -29,15 +26,9 @@ export const $doWatchUsdtTool = atom(
           console.error(err);
         });
     }
-  }
-)
 
-export const $doMint = atom(
-  null,
-  async (get, set, { amount }: { amount: number }) => {
-    await waitFor(() => get($isAccountConnected))
-
-    const manager = get($usdtToolSmartContract)
+    // mint
+    const manager = get($usdtSmartContract)
     await manager.demoMint(amount)
   }
 )

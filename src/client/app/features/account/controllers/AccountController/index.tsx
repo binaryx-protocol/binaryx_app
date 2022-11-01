@@ -28,16 +28,6 @@ export const AccountController = () => {
 
   return (
     <div className={s.mainView}>
-      <header className={s.header}>
-        <div className={s.accountId}>
-          0x...
-          <LogoutIcon
-            className={s.logoutButton}
-            role="button"
-            onClick={() => {}}
-          />
-        </div>
-      </header>
       <h1 className={s.heading}>Account</h1>
 
       <div className={s.statisticSection}>

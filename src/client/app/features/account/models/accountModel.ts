@@ -1,12 +1,12 @@
 import {atom, PrimitiveAtom} from 'jotai'
-import * as metaMaskModel from "../../../core/models/metaMaskModel";
 import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import {waitFor} from "../../../utils/pageLoadUtiils";
-import {bnToInt, onlyFields} from "../../../utils/objectUtils";
-import {rpcClient} from "./rpcClient";
+import {onlyFields} from "../../../utils/objectUtils";
+// import {rpcClient} from "./rpcClient";
 import {BigNumber} from "ethers";
 import {BcAsset} from "../../assets/types";
 import {RpcConfig} from "../../../core/models/rpcConfigModel";
+import {$assetsTokenSmartContract} from "../../assets/models/smartContractsFactory";
 
 export type BcReward = {
   asset: BcAsset
@@ -78,11 +78,8 @@ export const $doLoadMyRewards = atom(null, async (get, set) => {
     return !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
-  const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
-  const response = await rpcClient.getMyRewardsPerAsset(
-    $rpcConfig
-  );
-  console.log('response', response)
+  const sc = get($assetsTokenSmartContract)
+  const response = await sc.getMyRewardsPerAsset();
   set($apiRewardsResponse, response);
 })
 
@@ -91,10 +88,8 @@ export const $doClaimMyRewards = atom(null, async (get, set) => {
     return !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
-  const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
-  await rpcClient.claimRewardsInUsdt(
-    $rpcConfig
-  );
+  const sc = get($assetsTokenSmartContract)
+  await sc.claimRewardsInUsdt();
 })
 
 const transformAssetBcToUi = (bcAsset: BcAsset): UIAsset => {

@@ -53,10 +53,12 @@ export const DesktopBar = ({ account, onWalletConnect, hasAddress }: Props) => {
           {
             hasAddress
               ? (
-                <span className={s.wallet}>
-                  <WalletIcon />
-                  <span className={s.accountAddress}>{account}</span>
-                </span>
+                <Link href={paths.account()} passHref>
+                  <a className={s.wallet}>
+                    <WalletIcon />
+                    <span className={s.accountAddress}>{account}</span>
+                  </a>
+                </Link>
               )
               :
               <Button onClick={onWalletConnect}>

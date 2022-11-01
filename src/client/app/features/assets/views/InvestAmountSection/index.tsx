@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import s from './styles.module.scss';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
@@ -8,6 +8,7 @@ import * as assetDetailsModel from "../../models/assetDetailsModel";
 import * as investAssetModel from "../../models/investAssetModel";
 import {paths} from "../../../../../../../pkg/paths";
 import Link from "next/link";
+import {$usdtBalance} from "../../../../shared/usdtToken/smartContractsFactory";
 
 const USDT = 'USDT';
 
@@ -22,6 +23,8 @@ export const InvestAmountSection = () => {
   const $assetComputed = useAtomValue(assetDetailsModel.$assetComputed)
   const $doLoadAsset = useSetAtom(assetDetailsModel.$doLoadAsset)
   const $onSubmit = useSetAtom(investAssetModel.$onSubmit)
+  const usdtBalance = useAtomValue($usdtBalance)
+  const balance = usdtBalance.state === 'hasData' ? usdtBalance.data : 0;
 
   useEffect(() => {
     if (Number.isInteger(id)) {
@@ -145,6 +148,7 @@ export const InvestAmountSection = () => {
           <p className={s.billingTypeDesc}>
             stable coin ($)
           </p>
+          <div className={s.yourBalance}>Your balance: ${balance}</div>
         </div>
       </div>
     );
