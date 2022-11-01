@@ -14,7 +14,7 @@ type NewRpcChain = {
   iconUrls?: string[]
 }
 
-type NewRpcToken = {
+export type NewRpcToken = {
   type: 'ERC20' | 'ERC777' | 'ERC1155',
   options: {
     address: string,

@@ -3,6 +3,7 @@ import {$rpcConfig, getProvider, RpcConfig} from "../../../core/models/rpcConfig
 import {accountManagerAbi, assetsManagerAbi, erc1155Abi} from "../../../core/abis";
 import {Contract, ethers} from "ethers";
 import {BcAsset} from "../types";
+import {$isAccountConnected} from "../../../core/models/metaMaskModel";
 
 type AssetManager = Contract & {
   listAssets: () => Promise<[BcAsset[], any]>
@@ -11,6 +12,7 @@ type AssetManager = Contract & {
 
 export const $assetsTokenSmartContract = atom<AssetManager>((get) => {
   const rpcConfig = get($rpcConfig) as RpcConfig
+  const isAccountConnected = get($isAccountConnected)
   const provider = getProvider()
   const abi = [
     ...erc1155Abi,
@@ -18,8 +20,7 @@ export const $assetsTokenSmartContract = atom<AssetManager>((get) => {
     ...accountManagerAbi,
   ]
   const smartContract = new ethers.Contract(rpcConfig.assetsTokenAddress, abi, provider);
-  const signer = provider.getSigner()
-  if (signer._address) {
+  if (isAccountConnected) {
     return smartContract.connect(provider.getSigner()) as AssetManager
   } else {
     return smartContract as AssetManager

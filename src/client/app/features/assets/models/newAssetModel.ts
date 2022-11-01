@@ -12,6 +12,7 @@ import {waitFor} from "../../../utils/pageLoadUtiils";
 import {assetValidator} from "./assetValidator";
 import {paths} from "../../../../../../pkg/paths";
 import {RpcConfig} from "../../../core/models/rpcConfigModel";
+import {$assetsTokenSmartContract} from "./smartContractsFactory";
 
 const defaultAttrs = (): UiNewAssetFormValues => ({
   name: '',
@@ -34,19 +35,12 @@ export const $form = atom<UiNewAssetForm>({
 })
 
 export const $doCreateAsset = atom(null, async (get, set, form: UiNewAssetForm) => {
-  await waitFor(() => {
-    return !!get(rpcConfigModel.$rpcConfig)
-  }, 3)
-
-  const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
   const formValues = {
     ...form.values,
     tokenInfo_tokenPriceDe6: form.values.tokenInfo_tokenPriceDe6 * 1e6
   }
-  await arbClient.createAsset(
-    $rpcConfig,
-    formValues
-  );
+  const manager = get($assetsTokenSmartContract)
+  await manager.createAsset(...Object.values(formValues));
   alert("You will see your asset soon. Please, refresh the page.");
   router.push(paths.listAssets());
 })
