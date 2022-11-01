@@ -155,6 +155,33 @@ export const $walletConnect = atom(
     ethereum.on('accountsChanged', onAccountsConnectOrDisconnect);
     ethereum.on('chainChanged', onChainIdChange);
 
+    // Switch chain / Add & switch if it's a new chain (network)
+    await ethereum.request({ method: 'eth_chainId' })
+      .then(onChainIdChange)
+
+    let isChainAdded = true // we do not know yet
+    try {
+      await ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: rpcConfig.chain.chainId }],
+      });
+    } catch (switchError) {
+      // This error code indicates that the chain has not been added to MetaMask.
+      if (switchError.code === 4902) {
+        isChainAdded = false // now we know
+      } else {
+        console.warn(switchError)
+      }
+    }
+    if (!isChainAdded) {
+      try {
+        await ethereum.request({ method: 'wallet_addEthereumChain', params: [rpcConfig.chain] })
+      } catch (err: any) {
+        set($doSetProgress, 'finished')
+        return;
+      }
+    }
+
     // connect account
     await ethereum.request({ method: 'eth_accounts' })
       .then(onAccountsConnectOrDisconnect)
@@ -176,33 +203,6 @@ export const $walletConnect = atom(
         set($doSetProgress, 'finished')
         return;
       }
-    }
-
-    // Switch chain / Add & switch if it's a new chain (network)
-    await ethereum.request({ method: 'eth_chainId' })
-      .then(onChainIdChange)
-
-    let isChainAdded = true // we do not know yet
-    try {
-      await ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: rpcConfig.chain.chainId }],
-      });
-    } catch (switchError) {
-      // This error code indicates that the chain has not been added to MetaMask.
-      if (switchError.code === 4902) {
-        isChainAdded = false // now we know
-      } else {
-        console.warn(switchError)
-      }
-    }
-    if (!isChainAdded) {
-        try {
-          await ethereum.request({ method: 'wallet_addEthereumChain', params: [rpcConfig.chain] })
-        } catch (err: any) {
-          set($doSetProgress, 'finished')
-          return;
-        }
     }
 
     // etc
