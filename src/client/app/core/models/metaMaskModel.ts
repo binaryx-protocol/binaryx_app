@@ -1,6 +1,5 @@
 import { atom } from 'jotai'
 import {$rpcConfig, RpcConfig} from "./rpcConfigModel";
-import {completeAction, isDoneAction} from "../../utils/isDoneActionLs";
 import {waitFor} from "../../utils/pageLoadUtiils";
 import {UiForm, UiFormErrors} from "../../../../../pkg/formType";
 
@@ -95,9 +94,9 @@ export const $doValidate = atom(
     if (values.chainId !== get($rpcConfig)?.chain.chainId) {
       errors.chainId = ['CHAIN_INVALID']
     }
-    if (!values.isConnected) {
-      errors.accounts = ['EXTENSION_IS_NOT_INTSALLED'] // TODO test
-    }
+    // if (!values.isConnected) {
+    //   errors.isConnected = ['EXTENSION_IS_NOT_INTSALLED'] // TODO test
+    // }
     const isValid = Object.values(errors).length === 0;
 
     const form = {
@@ -156,9 +155,6 @@ export const $walletConnect = atom(
     ethereum.on('accountsChanged', onAccountsConnectOrDisconnect);
     ethereum.on('chainChanged', onChainIdChange);
 
-    // initial values
-    set($doUpdateValues, { isConnected: ethereum.isConnected() })
-
     // connect account
     await ethereum.request({ method: 'eth_accounts' })
       .then(onAccountsConnectOrDisconnect)
@@ -209,6 +205,10 @@ export const $walletConnect = atom(
         }
     }
 
+    // etc
+    set($doUpdateValues, { isConnected: ethereum.isConnected() })
+
+    // exit
     set($doSetProgress, 'finished')
 
     // !!! Simply uncomment once we start to work with root token
