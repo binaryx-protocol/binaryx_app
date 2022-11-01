@@ -1,8 +1,9 @@
 import { FC } from 'react';
+import { truncuteCents } from 'utils/formatNumber';
 import s from './styles.module.scss';
 
 type Props = {
-  currentAccountValue: number | string;
+  currentAccountValue: number;
   totalRentEarned: number | string;
   propertiesEarned: number | string;
   totalPropertyValue: number | string;
@@ -13,7 +14,7 @@ const StatisticBlock: FC<Props> = (data: Props) => {
     <section className={s.statistics}>
       <div className="current-account-value">
         <p>Current Account Value</p>
-        <h2>${data.currentAccountValue}</h2>
+        <h2>${truncuteCents(data.currentAccountValue)}</h2>
       </div>
       <div className="total-rent-earned">
         <p>Total Rent Earned</p>

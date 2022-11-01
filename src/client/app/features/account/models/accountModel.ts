@@ -7,6 +7,7 @@ import {BigNumber} from "ethers";
 import {BcAsset} from "../../assets/types";
 import {RpcConfig} from "../../../core/models/rpcConfigModel";
 import {$assetsTokenSmartContract} from "../../assets/models/smartContractsFactory";
+import formatLongNumber from "../../../utils/formatNumber";
 
 export type BcReward = {
   asset: BcAsset
@@ -64,9 +65,10 @@ export const $accountInfo = atom<UiAccountInfo | null>((get) => {
   }
   const rewards = apiRewardsResponse[0].map(transformRewardBcToUi).map<UIReward>(onlyFields)
   const totalEarned = apiRewardsResponse[2].toNumber() / 1e6
+  const totalRewards = apiRewardsResponse[1].toNumber() / 1e6 - totalEarned
   return {
     rewards,
-    totalRewards: apiRewardsResponse[1].toNumber() / 1e6 - totalEarned,
+    totalRewards: totalRewards,
     totalValue: rewards.reduce((acc, r) => acc + r.computed.currentValue, 0),
     totalEarned,
   }

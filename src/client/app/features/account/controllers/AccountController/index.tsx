@@ -12,7 +12,6 @@ export const AccountController = () => {
   const doLoadMyRewards = useSetAtom(accountModel.$doLoadMyRewards)
   const doClaimMyRewards = useSetAtom(accountModel.$doClaimMyRewards)
   const accountInfo = useAtomValue(accountModel.$accountInfo)
-  console.log('accountInfo', accountInfo)
 
   useEffect(() => {
     doLoadMyRewards()
