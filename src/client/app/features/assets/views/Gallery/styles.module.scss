@@ -1,7 +1,5 @@
 .gallery {
   display: flex;
-  gap: 10px;
-  padding: 10px;
   height: 270px;
   width: 100%;
   border-bottom: 1px solid #e4e4e4;
@@ -10,6 +8,10 @@
 .imageWrap {
   width: 100%;
   overflow: hidden;
+
+  &:not(:last-child) {
+    border-right: 1px solid transparent;
+  }
 }
 
 .image {
@@ -17,7 +19,6 @@
   height: 100%;
   cursor: pointer;
   transition: all .3s ease;
-  border-radius: 5px;
   object-fit: cover;
 }
 

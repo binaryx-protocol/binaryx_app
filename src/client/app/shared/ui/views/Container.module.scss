@@ -2,6 +2,9 @@
   margin: 0 auto;
   max-width: 1660px;
   padding: 0 10px;
+
+  // temp, until mob version is implemented
+  min-width: 1200px;
 }
 
 @media(max-width: 1450px) {

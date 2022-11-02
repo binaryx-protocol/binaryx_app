@@ -57,12 +57,20 @@
   justify-content: space-between;
 }
 
+.titles {
+  max-width: 75%;
+}
+
 .title {
   font-weight: 700;
   font-size: 16px;
   line-height: 24px;
   color: var(--color-text-primary);
   margin: 0 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .subTitle {
@@ -70,6 +78,10 @@
   line-height: 24px;
   color: var(--color-text-secondary);
   margin: 0 0 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .titles {
@@ -85,6 +97,7 @@
   flex-direction: column;
   justify-content: space-between;
   padding-bottom: 12px;
+  white-space: nowrap;
 }
 
 .irrValue {
