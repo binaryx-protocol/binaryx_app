@@ -7,7 +7,7 @@ export const DefaultLayout = ({ children }: { children: any }) => {
   const errors = useAtomValue($errorMessages)
 
   return (
-    <>
+    <div className={s.defaultLayout}>
       <HeaderController />
       {
         errors && errors.length
@@ -17,6 +17,6 @@ export const DefaultLayout = ({ children }: { children: any }) => {
           : null
       }
       {children}
-    </>
+    </div>
   )
 }
