@@ -67,10 +67,8 @@
   line-height: 24px;
   color: var(--color-text-primary);
   margin: 0 0 4px;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
 }
 
 .subTitle {
@@ -78,14 +76,12 @@
   line-height: 24px;
   color: var(--color-text-secondary);
   margin: 0 0 12px;
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
+  max-height: 55px;
 }
 
 .titles {
-
+  height: 88px;
 }
 
 .earnings {
@@ -95,9 +91,12 @@
   color: var(--color-text-secondary);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding-bottom: 12px;
-  white-space: nowrap;
+  justify-content: flex-start;
+  min-width: 72px;
+}
+
+.irr {
+  margin-bottom: 4px;
 }
 
 .irrValue {

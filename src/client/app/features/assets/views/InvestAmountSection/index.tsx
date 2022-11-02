@@ -130,9 +130,9 @@ export const InvestAmountSection = () => {
     return (
       <div className={s.billingStep}>
         <div className={classNames(s.billingType, s['billingType--disabled'])}>
-          <h5 className={s.billingTypeTitle}>NEAR</h5>
+          <h5 className={s.billingTypeTitle}>ETH</h5>
           <p className={s.billingTypeDesc}>
-            NEAR protocol
+            Ethereum
             <br />
             native token (N)
             <br />(<i>temporary unavailable</i>)

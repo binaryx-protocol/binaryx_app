@@ -9,21 +9,21 @@
   padding: 7px;
 }
 
-@media(max-width: 1450px) {
-  .assetList {
+@media (max-width: 1450px) {
+  .grid {
     grid-template-columns: 33.3% 33.3% 33.3%;
   }
 }
 
-@media(max-width: 1024px) {
-  .assetList{
-    grid-template-columns: 50% 50%;
-  }
-}
-
-@media(max-width: 768px) {
-  .assetList{
-    grid-template-columns: 100%;
-  }
-}
+//@media (max-width: 1024px) {
+//  .grid{
+//    grid-template-columns: 50% 50%;
+//  }
+//}
+//
+//@media (max-width: 768px) {
+//  .grid{
+//    grid-template-columns: 100%;
+//  }
+//}
 
