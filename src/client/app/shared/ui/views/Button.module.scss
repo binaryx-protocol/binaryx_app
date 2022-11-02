@@ -7,7 +7,7 @@
   border: none;
 
   background-color: var(--color-primary);
-  color: var(--color-primary-bg);
+  color: var(--color--primary-bg);
 
   font-size: 14px;
   font-weight: 600;
@@ -21,6 +21,6 @@ a.root{
 }
 
 .light{
-  background-color: var(--color-primary-bg);
+  background-color: var(--color--secondary-bg);
   color: var(--color-primary);
 }

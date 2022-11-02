@@ -12,6 +12,7 @@ import {waitFor} from "../../../utils/pageLoadUtiils";
 import {assetValidator} from "./assetValidator";
 import {paths} from "../../../../../../pkg/paths";
 import {RpcConfig} from "../../../core/models/rpcConfigModel";
+import {$assetsTokenSmartContract} from "./smartContractsFactory";
 
 const defaultAttrs = (): UiNewAssetFormValues => ({
   name: '',
@@ -21,7 +22,7 @@ const defaultAttrs = (): UiNewAssetFormValues => ({
   status: AssetStatuses.upcoming,
   tokenInfo_totalSupply: 10_000, // decimals = 0
   tokenInfo_apr: 10, // percents
-  tokenInfo_tokenPriceDe6: 5 * 1e6, // decimals = 6
+  tokenInfo_tokenPriceDe6: 5, // decimals = 6
   propertyInfo_images: 'https://ns.clubmed.com/dream/RESORTS_3T___4T/Asie_et_Ocean_indien/Bali/169573-1lng9n8nnf-swhr.jpg',
 })
 
@@ -34,18 +35,12 @@ export const $form = atom<UiNewAssetForm>({
 })
 
 export const $doCreateAsset = atom(null, async (get, set, form: UiNewAssetForm) => {
-  await waitFor(() => {
-    return !!get(rpcConfigModel.$rpcConfig)
-  }, 3)
-
-  const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
   const formValues = {
     ...form.values,
+    tokenInfo_tokenPriceDe6: form.values.tokenInfo_tokenPriceDe6 * 1e6
   }
-  await arbClient.createAsset(
-    $rpcConfig,
-    formValues
-  );
+  const manager = get($assetsTokenSmartContract)
+  await manager.createAsset(...Object.values(formValues));
   alert("You will see your asset soon. Please, refresh the page.");
   router.push(paths.listAssets());
 })

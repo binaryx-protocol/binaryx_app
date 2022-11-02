@@ -2,6 +2,7 @@ import s from "./DesktopBar.module.scss";
 import {Button} from "../../ui/views/Button";
 import {paths} from "../../../../../../pkg/paths";
 import Link from "next/link";
+import {Container} from "../../ui/views/Container";
 
 type Props = {
   account: string
@@ -12,7 +13,7 @@ type Props = {
 export const DesktopBar = ({ account, onWalletConnect, hasAddress }: Props) => {
   return (
     <div className={s.root}>
-      <div className={s.container}>
+      <Container className={s.container}>
         <Link href={paths.home()} passHref>
           <a className={s.logo}>
             <img
@@ -52,10 +53,12 @@ export const DesktopBar = ({ account, onWalletConnect, hasAddress }: Props) => {
           {
             hasAddress
               ? (
-                <span className={s.wallet}>
-                  <WalletIcon />
-                  <span className={s.accountAddress}>{account}</span>
-                </span>
+                <Link href={paths.account()} passHref>
+                  <a className={s.wallet}>
+                    <WalletIcon />
+                    <span className={s.accountAddress}>{account}</span>
+                  </a>
+                </Link>
               )
               :
               <Button onClick={onWalletConnect}>
@@ -63,7 +66,7 @@ export const DesktopBar = ({ account, onWalletConnect, hasAddress }: Props) => {
               </Button>
           }
         </div>
-      </div>
+      </Container>
     </div>
   )
 }

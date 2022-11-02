@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import s from './styles.module.scss';
+import {truncuteCents} from "../../../../utils/formatNumber";
 
 type Props = {
   amountOfMoney: number
@@ -12,7 +13,7 @@ const WithdrawBlock: FC<Props> = ({ amountOfMoney, onWithdraw }: Props) => {
       <div className={s.info}>
         <p>Current Rent Balance (USD)</p>
         <div className={s.withdrawBottom}>
-          <h2>${amountOfMoney}</h2>
+          <h2>${truncuteCents(amountOfMoney)}</h2>
           <button className={s.withdrawBtn} onClick={onWithdraw}>Withdraw</button>
         </div>
       </div>

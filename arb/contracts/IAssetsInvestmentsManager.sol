@@ -7,6 +7,4 @@ interface IAssetsInvestmentsManager {
     uint256 accumulatedAmountDe6;
     uint256 accumulatedAt;
   }
-  function investUsingUsdt(uint256 assetId, uint256 assetTokensToBuy) external;
-//  function assetsByInvestor() external;
 }

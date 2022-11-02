@@ -18,7 +18,9 @@ function getFlag(flagName: string) {
     return getFlagFromUrl(flagName) || localStorage.getItem(flagName);
 }
 
+const isStaging = typeof window !== 'undefined' &&  window.location.hostname === 'i2.binaryx.com'
+
 export const $featureFlags = atom<FeatureFlags>({
-    FF_MM: getFlag('FF_MM') === 'true',
+    FF_MM: isStaging || getFlag('FF_MM') === 'true',
     FF_LP_PARALLAX: getFlag('FF_LP_PARALLAX') === 'true'
 })

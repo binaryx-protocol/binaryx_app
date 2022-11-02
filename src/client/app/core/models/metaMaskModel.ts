@@ -1,6 +1,5 @@
 import { atom } from 'jotai'
 import {$rpcConfig, RpcConfig} from "./rpcConfigModel";
-import {completeAction, isDoneAction} from "../../utils/isDoneActionLs";
 import {waitFor} from "../../utils/pageLoadUtiils";
 import {UiForm, UiFormErrors} from "../../../../../pkg/formType";
 
@@ -95,9 +94,9 @@ export const $doValidate = atom(
     if (values.chainId !== get($rpcConfig)?.chain.chainId) {
       errors.chainId = ['CHAIN_INVALID']
     }
-    if (!values.isConnected) {
-      errors.accounts = ['EXTENSION_IS_NOT_INTSALLED'] // TODO test
-    }
+    // if (!values.isConnected) {
+    //   errors.isConnected = ['EXTENSION_IS_NOT_INTSALLED'] // TODO test
+    // }
     const isValid = Object.values(errors).length === 0;
 
     const form = {
@@ -156,8 +155,32 @@ export const $walletConnect = atom(
     ethereum.on('accountsChanged', onAccountsConnectOrDisconnect);
     ethereum.on('chainChanged', onChainIdChange);
 
-    // initial values
-    set($doUpdateValues, { isConnected: ethereum.isConnected() })
+    // Switch chain / Add & switch if it's a new chain (network)
+    await ethereum.request({ method: 'eth_chainId' })
+      .then(onChainIdChange)
+
+    let isChainAdded = true // we do not know yet
+    try {
+      await ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: rpcConfig.chain.chainId }],
+      });
+    } catch (switchError) {
+      // This error code indicates that the chain has not been added to MetaMask.
+      if (switchError.code === 4902) {
+        isChainAdded = false // now we know
+      } else {
+        console.warn(switchError)
+      }
+    }
+    if (!isChainAdded) {
+      try {
+        await ethereum.request({ method: 'wallet_addEthereumChain', params: [rpcConfig.chain] })
+      } catch (err: any) {
+        set($doSetProgress, 'finished')
+        return;
+      }
+    }
 
     // connect account
     await ethereum.request({ method: 'eth_accounts' })
@@ -182,33 +205,10 @@ export const $walletConnect = atom(
       }
     }
 
-    // Switch chain / Add & switch if it's a new chain (network)
-    await ethereum.request({ method: 'eth_chainId' })
-      .then(onChainIdChange)
+    // etc
+    set($doUpdateValues, { isConnected: ethereum.isConnected() })
 
-    let isChainAdded = true // we do not know yet
-    try {
-      await ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: rpcConfig.chain.chainId }],
-      });
-    } catch (switchError) {
-      // This error code indicates that the chain has not been added to MetaMask.
-      if (switchError.code === 4902) {
-        isChainAdded = false // now we know
-      } else {
-        console.warn(switchError)
-      }
-    }
-    if (!isChainAdded) {
-        try {
-          await ethereum.request({ method: 'wallet_addEthereumChain', params: [rpcConfig.chain] })
-        } catch (err: any) {
-          set($doSetProgress, 'finished')
-          return;
-        }
-    }
-
+    // exit
     set($doSetProgress, 'finished')
 
     // !!! Simply uncomment once we start to work with root token

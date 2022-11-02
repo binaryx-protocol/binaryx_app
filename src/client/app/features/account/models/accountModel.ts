@@ -1,12 +1,13 @@
 import {atom, PrimitiveAtom} from 'jotai'
-import * as metaMaskModel from "../../../core/models/metaMaskModel";
 import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import {waitFor} from "../../../utils/pageLoadUtiils";
-import {bnToInt, onlyFields} from "../../../utils/objectUtils";
-import {rpcClient} from "./rpcClient";
+import {onlyFields} from "../../../utils/objectUtils";
+// import {rpcClient} from "./rpcClient";
 import {BigNumber} from "ethers";
 import {BcAsset} from "../../assets/types";
 import {RpcConfig} from "../../../core/models/rpcConfigModel";
+import {$assetsTokenSmartContract} from "../../assets/models/smartContractsFactory";
+import formatLongNumber from "../../../utils/formatNumber";
 
 export type BcReward = {
   asset: BcAsset
@@ -64,9 +65,10 @@ export const $accountInfo = atom<UiAccountInfo | null>((get) => {
   }
   const rewards = apiRewardsResponse[0].map(transformRewardBcToUi).map<UIReward>(onlyFields)
   const totalEarned = apiRewardsResponse[2].toNumber() / 1e6
+  const totalRewards = apiRewardsResponse[1].toNumber() / 1e6 - totalEarned
   return {
     rewards,
-    totalRewards: apiRewardsResponse[1].toNumber() / 1e6 - totalEarned,
+    totalRewards: totalRewards,
     totalValue: rewards.reduce((acc, r) => acc + r.computed.currentValue, 0),
     totalEarned,
   }
@@ -75,26 +77,21 @@ export const $accountInfo = atom<UiAccountInfo | null>((get) => {
 // setters
 export const $doLoadMyRewards = atom(null, async (get, set) => {
   await waitFor(() => {
-    return get(metaMaskModel.$walletReadiness) === 'ready' && !!get(rpcConfigModel.$rpcConfig)
+    return !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
-  const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
-  const response = await rpcClient.getMyRewardsPerAsset(
-    $rpcConfig
-  );
-  console.log('response', response)
+  const sc = get($assetsTokenSmartContract)
+  const response = await sc.getMyRewardsPerAsset();
   set($apiRewardsResponse, response);
 })
 
 export const $doClaimMyRewards = atom(null, async (get, set) => {
   await waitFor(() => {
-    return get(metaMaskModel.$walletReadiness) === 'ready' && !!get(rpcConfigModel.$rpcConfig)
+    return !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
-  const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
-  await rpcClient.claimRewardsInUsdt(
-    $rpcConfig
-  );
+  const sc = get($assetsTokenSmartContract)
+  await sc.claimRewardsInUsdt();
 })
 
 const transformAssetBcToUi = (bcAsset: BcAsset): UIAsset => {

@@ -12,7 +12,6 @@ export const AccountController = () => {
   const doLoadMyRewards = useSetAtom(accountModel.$doLoadMyRewards)
   const doClaimMyRewards = useSetAtom(accountModel.$doClaimMyRewards)
   const accountInfo = useAtomValue(accountModel.$accountInfo)
-  console.log('accountInfo', accountInfo)
 
   useEffect(() => {
     doLoadMyRewards()
@@ -28,16 +27,6 @@ export const AccountController = () => {
 
   return (
     <div className={s.mainView}>
-      <header className={s.header}>
-        <div className={s.accountId}>
-          0x...
-          <LogoutIcon
-            className={s.logoutButton}
-            role="button"
-            onClick={() => {}}
-          />
-        </div>
-      </header>
       <h1 className={s.heading}>Account</h1>
 
       <div className={s.statisticSection}>

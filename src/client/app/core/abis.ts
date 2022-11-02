@@ -31,7 +31,7 @@ export const assetsManagerAbi = [
     string memory propertyInfo_images
   ) public`
   ,
-  `function listAssets() public view returns((${AssetStruct})[] memory)`,
+  `function listAssets() public view returns((${AssetStruct})[] memory, uint256[] memory)`,
   `function getAsset(uint256 id) public view returns((${AssetStruct}) memory)`,
   `function setStatus(uint256 id, uint8 status)`,
   `function investUsingUsdt(uint256 assetId, uint256 assetTokensToBuy)`,

@@ -1,17 +1,14 @@
-// @ts-nocheck
-import { FC, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import s from './styles.module.scss';
-import useAssets from 'hooks/useAssets';
 import { useRouter } from 'next/router';
 import classNames from 'classnames';
 import Button from '@mui/material/Button';
-import Result from "../../../../components/pages/invest/Result";
 import {useAtomValue, useSetAtom} from "jotai";
 import * as assetDetailsModel from "../../models/assetDetailsModel";
 import * as investAssetModel from "../../models/investAssetModel";
-import {bnToInt} from "../../../../utils/objectUtils";
 import {paths} from "../../../../../../../pkg/paths";
 import Link from "next/link";
+import {$usdtBalance} from "../../../../shared/usdtToken/smartContractsFactory";
 
 const USDT = 'USDT';
 
@@ -26,6 +23,8 @@ export const InvestAmountSection = () => {
   const $assetComputed = useAtomValue(assetDetailsModel.$assetComputed)
   const $doLoadAsset = useSetAtom(assetDetailsModel.$doLoadAsset)
   const $onSubmit = useSetAtom(investAssetModel.$onSubmit)
+  const usdtBalance = useAtomValue($usdtBalance)
+  const balance = usdtBalance.state === 'hasData' ? usdtBalance.data : 0;
 
   useEffect(() => {
     if (Number.isInteger(id)) {
@@ -55,7 +54,7 @@ export const InvestAmountSection = () => {
       $onSubmit({ asset: $asset, id, amount: getTokenQuantity(), then: () => setStep(2) })
     }
   }
-  const tokenPriceInDollars = bnToInt($asset.tokenInfo_tokenPrice) / 100
+  const tokenPriceInDollars = $asset.tokenInfo_tokenPriceDe6.toNumber() / 1e6
   const orderTotal = tokenPriceInDollars * getTokenQuantity();
 
   const assetMicroInfo = (
@@ -121,7 +120,7 @@ export const InvestAmountSection = () => {
             </button>
           </div>
           <div>${tokenPriceInDollars} / Token</div>
-          <div>{$assetComputed.tokensLeft} available</div>
+          <div>{$assetComputed?.tokensLeft} available</div>
         </div>
       </div>
     );
@@ -149,6 +148,7 @@ export const InvestAmountSection = () => {
           <p className={s.billingTypeDesc}>
             stable coin ($)
           </p>
+          <div className={s.yourBalance}>Your balance: ${balance}</div>
         </div>
       </div>
     );

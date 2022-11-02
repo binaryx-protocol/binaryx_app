@@ -1,17 +1,11 @@
-import s from './NewAssetController.module.scss'
-import {useAtomValue, useSetAtom} from "jotai";
-import Button from "@mui/material/Button";
-import {useEffect} from "react";
-import Link from "next/link";
-import {paths} from "../../../../../../pkg/paths";
-import {useRouter} from "next/router";
-import * as assetDetailsModel from "../models/assetDetailsModel";
-import * as investAssetModel from "../models/investAssetModel";
-import TextField from "@mui/material/TextField";
 import {InvestAmountSection} from "../views/InvestAmountSection";
+import {useAtomValue} from "jotai";
+import * as metaMaskModel from "../../../core/models/metaMaskModel";
 
 export const InvestController = () => {
-  return <InvestAmountSection />
+  const isAccountConnected = useAtomValue(metaMaskModel.$isAccountConnected)
+
+  return isAccountConnected ? <InvestAmountSection /> : <div style={{ padding: '10px', textAlign: 'center' }}>Loading</div>
 }
 
 const T = {

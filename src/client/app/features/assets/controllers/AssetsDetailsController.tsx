@@ -1,8 +1,7 @@
-// @ts-nocheck
 import s from './AssetsDetailsController.module.scss'
 import { Gallery } from "../views/Gallery";
 import {InvestBlock} from "../views/InvestBlock";
-import Container from "@mui/material/Container";
+import MuiContainer from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import {AssetInfo} from "../views/AssetInfo";
 import * as assetDetailsModel from "../models/assetDetailsModel";
@@ -63,7 +62,7 @@ export const AssetsDetailsController = () => {
   return (
     <div className={s.asset}>
       <Gallery images={images} />
-      <Container maxWidth="lg">
+      <MuiContainer maxWidth="lg">
         <Grid container spacing={0} maxWidth={1600}>
           <Grid item xs={8}>
             <AssetInfo {...assetInfo} />
@@ -72,7 +71,7 @@ export const AssetsDetailsController = () => {
             <InvestBlock {...investInfo} />
           </Grid>
         </Grid>
-      </Container>
+      </MuiContainer>
     </div>
   )
 }

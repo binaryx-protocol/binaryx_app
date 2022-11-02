@@ -4,9 +4,11 @@ import {useAtomValue, useSetAtom} from "jotai";
 import {AssetFormFields} from "../views/AssetFormFields";
 import {SyntheticEvent, useEffect} from "react";
 import {Button} from "../../../shared/ui/views/Button";
+import * as metaMaskModel from "../../../core/models/metaMaskModel";
 
 export const NewAssetController = () => {
   const form = useAtomValue(newAssetModel.$form)
+  const isAccountConnected = useAtomValue(metaMaskModel.$isAccountConnected)
   const onFormChange = useSetAtom(newAssetModel.$onFormChange)
   const onSubmit = useSetAtom(newAssetModel.$onSubmit)
   const onMount = useSetAtom(newAssetModel.$onMount)
@@ -24,14 +26,20 @@ export const NewAssetController = () => {
   return (
     <div className={s.page}>
       <div className={s.container}>
-        <form noValidate onSubmit={onSubmitLocal}>
-          <AssetFormFields form={form} onChange={onFormChange} />
-          <div className={s.formActions}>
-            <Button type="submit">
-              Create
-            </Button>
-          </div>
-        </form>
+        {
+          isAccountConnected
+            ? (
+              <form noValidate onSubmit={onSubmitLocal}>
+                <AssetFormFields form={form} onChange={onFormChange} />
+                <div className={s.formActions}>
+                  <Button type="submit">
+                    Create
+                  </Button>
+                </div>
+              </form>
+            )
+            : "Please connect your wallet first"
+        }
       </div>
     </div>
   )

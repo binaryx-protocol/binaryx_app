@@ -103,7 +103,7 @@ const Account: NextPage<{ data: string }> = (props) => {
           <WithdrawBlock amountOfMoney={rewardsAmount / 10 ** 18} onWithdraw={() => {}} />
 
           <StatisticBlock
-            currentAccountValue={'N/A'}
+            currentAccountValue={0}
             totalRentEarned={(totalRentEarned / 10 ** 18).toFixed(3)}
             propertiesEarned={assetContractIds.length}
             totalPropertyValue={'N/A'}

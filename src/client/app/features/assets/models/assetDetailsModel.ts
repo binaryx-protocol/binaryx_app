@@ -1,11 +1,10 @@
-// @ts-nocheck
 import {atom, PrimitiveAtom} from 'jotai'
 import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import {BcAsset, BcAssetMetaData, UiAssetComputed} from "../types";
 import {arbClient} from "./arbClient";
 import {waitFor} from "../../../utils/pageLoadUtiils";
-import {bnToInt, onlyFields} from "../../../utils/objectUtils";
 import {RpcConfig} from "../../../core/models/rpcConfigModel";
+import {$assetsTokenSmartContract} from "./smartContractsFactory";
 
 // stores
 export const $asset = atom(null) as PrimitiveAtom<BcAsset | null>;
@@ -18,8 +17,8 @@ export const $assetComputed = atom<UiAssetComputed | null>((get) => {
   if (!asset || !assetMetaData) {
     return null
   }
-  const tokensTotalSupply = bnToInt(asset.tokenInfo_totalSupply)
-  const tokensLeft = bnToInt(assetMetaData.tokensLeft)
+  const tokensTotalSupply = asset.tokenInfo_totalSupply.toNumber()
+  const tokensLeft = assetMetaData.tokensLeft.toNumber()
   const tokensSold = tokensTotalSupply - tokensLeft
   const progress = (tokensSold / tokensTotalSupply)
   const result = {
@@ -37,19 +36,13 @@ export const $doLoadAsset = atom(null, async (get,set, args: { id: number }) => 
     return !!get(rpcConfigModel.$rpcConfig)
   }, 3)
 
-  // TODO - move provider into RPC
-  const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
-  const bcAsset = await arbClient.getAsset(
-    $rpcConfig,
-    { id: args.id }
-  );
+  const rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
+  const manager = get($assetsTokenSmartContract)
+  const bcAsset = await manager.getAsset(args.id);
+  const tokensLeft = await manager.balanceOf(rpcConfig.assetsTokenAddress, args.id)
 
-  // TODO - move provider into RPC
-  const tokenInfo = await arbClient.getAssetTokenInfo(
-    $rpcConfig,
-    { id: args.id }
-  );
-
-  set($asset, onlyFields(bcAsset));
-  set($assetMetaData, tokenInfo);
+  set($asset, bcAsset);
+  set($assetMetaData, {
+    tokensLeft
+  });
 })

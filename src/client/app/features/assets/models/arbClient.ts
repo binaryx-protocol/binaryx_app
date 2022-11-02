@@ -9,9 +9,6 @@ export const arbClient = {
       ...Object.values(formValues)
     )
   },
-  async listAssets($rpcConfig: RpcConfig) {
-    return await this.getManagerSc($rpcConfig).listAssets()
-  },
   async setStatus($rpcConfig: RpcConfig, args: { id: number, status: number }) {
     return await this.getManagerSc($rpcConfig).setStatus(args.id, args.status)
   },
@@ -35,11 +32,14 @@ export const arbClient = {
   },
   getManagerSc($rpcConfig: RpcConfig) {
     const provider = getProvider()
+    console.log('provider1', provider)
     const abi = [
       ...erc1155Abi,
       ...assetsManagerAbi,
     ]
     const manager = new ethers.Contract($rpcConfig.assetsTokenAddress, abi, provider);
-    return manager.connect(provider.getSigner())
+    const signer = provider.getSigner()
+    console.log('signer1', signer)
+    return manager.connect(signer)
   }
 }
