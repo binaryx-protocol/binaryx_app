@@ -54,7 +54,7 @@ const l2Goerli: RpcConfig = {
       image: '',
     },
   },
-  assetsTokenAddress: '0x578102fF3886048c61f365A30897f455A19F0F06',
+  assetsTokenAddress: '0x721BCc10F12dc1E456aa882A9D10aF4570BaCaC1',
   usdtL1Address: '', // not used yet
   usdtL2Address: '0xE026Ff21848c092C75775a0EfF84da486FD58cc9',
 }
