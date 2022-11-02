@@ -11,11 +11,9 @@ type AssetManager = Contract & {
 }
 
 export const $assetsTokenSmartContract = atom<AssetManager>((get) => {
-  console.log('$assetsTokenSmartContract')
   const rpcConfig = get($rpcConfig) as RpcConfig
   const isAccountConnected = get($isAccountConnected)
   const provider = getProvider()
-  console.log('provider', provider)
   const abi = [
     ...erc1155Abi,
     ...assetsManagerAbi,

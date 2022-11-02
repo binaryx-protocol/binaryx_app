@@ -8,16 +8,49 @@ require('dotenv').config()
 
 requireEnvVariables(['DEVNET_PRIVKEY', 'L2RPC', 'USDT_A'])
 
-const defaultAttrs = (): UiNewAssetFormValues => ({
-  name: 'Test',
-  symbol: ' TST',
-  title: '123',
-  description: '123',
+const defaultAttrs1 = (): UiNewAssetFormValues => ({
+  name: 'Villa Kami',
+  symbol: 'BNA1',
+  title: 'Villa Kami',
+  description: 'Serene location in the quiet village of Padonan, Canggu',
   status: AssetStatuses.upcoming,
   tokenInfo_totalSupply: 10_000, // decimals = 0
-  tokenInfo_apr: 10, // percents
+  tokenInfo_apr: 12, // percents
   tokenInfo_tokenPriceDe6: 50 * 1e6,
-  propertyInfo_images: 'https://ns.clubmed.com/dream/RESORTS_3T___4T/Asie_et_Ocean_indien/Bali/169573-1lng9n8nnf-swhr.jpg'
+  propertyInfo_images: 'https://cdn.villa-bali.com/cache/1024/villas/villa-kami/villa-kami-villa-kami-13-5e6609646bb2f.jpg'
+})
+const defaultAttrs2 = (): UiNewAssetFormValues => ({
+  name: 'Villa Camilla 2',
+  symbol: 'BNA2',
+  title: 'Villa Camilla 2',
+  description: 'Ideally located in central Canggu',
+  status: AssetStatuses.upcoming,
+  tokenInfo_totalSupply: 20000, // decimals = 0
+  tokenInfo_apr: 10, // percents
+  tokenInfo_tokenPriceDe6: 25 * 1e6,
+  propertyInfo_images: 'https://cdn.villa-bali.com/cache/1024/villas/villa-camilla-2/villa-camilla-2-34d3ed7d-6c7c-4dec-a789-431778c5f5b8-633a5e3c55b6a.jpg,https://cdn.villa-bali.com/cache/1024/villas/villa-camilla-2/villa-camilla-2-br-1-1-633a5e45d3f96.jpg'
+})
+const defaultAttrs3 = (): UiNewAssetFormValues => ({
+  name: 'Villa Lapis 1',
+  symbol: 'BNA3',
+  title: 'Villa Lapis 1',
+  description: 'A breezy and contemporary villa with an open layout design',
+  status: AssetStatuses.upcoming,
+  tokenInfo_totalSupply: 20_000, // decimals = 0
+  tokenInfo_apr: 15, // percents
+  tokenInfo_tokenPriceDe6: 50 * 1e6,
+  propertyInfo_images: 'https://cdn.villa-bali.com/cache/1024/villas/villa-lapis-1/villa-lapis-1-villa-lapis-daylight-5-631552df9400c.jpg'
+})
+const defaultAttrs4 = (): UiNewAssetFormValues => ({
+  name: 'Villa Nelayan',
+  symbol: 'BNA4',
+  title: 'Villa Nelayan',
+  description: '300m away from Nelayan Beach',
+  status: AssetStatuses.upcoming,
+  tokenInfo_totalSupply: 5000, // decimals = 0
+  tokenInfo_apr: 20, // percents
+  tokenInfo_tokenPriceDe6: 50 * 1e6,
+  propertyInfo_images: 'https://cdn.villa-bali.com/cache/1024/villas/villa-nelayan/villa-nelayan-lux-7115-5ca1692cc9bef.jpg'
 })
 
 const main = async () => {
@@ -39,10 +72,17 @@ const main = async () => {
   ).connect(wallet)
   const usdt = await UsdtfToken.attach(usdtAddress)
 
-  await assetsToken.createAsset(...Object.values(defaultAttrs()))
+  await assetsToken.createAsset(...Object.values(defaultAttrs1()))
   await usdt.approve(assetsToken.address, 500 * 1e6)
   await assetsToken.investUsingUsdt(1, 5)
+
+  await assetsToken.createAsset(...Object.values(defaultAttrs2()))
+  await assetsToken.createAsset(...Object.values(defaultAttrs3()))
+  await assetsToken.createAsset(...Object.values(defaultAttrs4()))
+
+
   await usdt.transfer(assetsToken.address, 500 * 1e6)
+
 }
 
 main()
