@@ -36,7 +36,7 @@ export const AssetsDetailsController = () => {
   const investInfo = {
     tokensLeft: $assetComputed.tokensLeft,
     progress: $assetComputed.progress,
-    irr: 4,
+    irr: 20.5,
     coc: bnToInt($asset.tokenInfo_apr),
     id,
   }

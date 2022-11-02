@@ -134,7 +134,7 @@ export const InvestAmountSection = () => {
           <p className={s.billingTypeDesc}>
             Ethereum
             <br />
-            native token (N)
+            native token
             <br />(<i>temporary unavailable</i>)
           </p>
         </div>
