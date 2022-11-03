@@ -3,15 +3,15 @@
 ```mermaid
 sequenceDiagram
   participant User
-  participant WebBrowser
+  participant WebApp
   participant RPC
-  User->>WebBrowser: navigate to /account
-  WebBrowser->>RPC: getRewars()
-  RPC-->>WebBrowser: (Asset[], Reward[], totalReward, totalEarned)
+  User->>WebApp: navigate to /account
+  WebApp->>RPC: getRewards()
+  RPC-->>WebApp: (Asset[], Reward[], totalReward, totalEarned)
   Note right of RPC: Reward: amount in USD per asset, tokens bought
   
-  User->>WebBrowser: tap "Withdraw"
-  WebBrowser->>RPC: CreateTrx to withdraw some USD amount
+  User->>WebApp: tap "Withdraw"
+  WebApp->>RPC: CreateTrx to withdraw some USD amount
   RPC-->>RPC: Send the user USD, totalEarned+=amount
   
 ```
