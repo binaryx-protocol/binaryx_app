@@ -97,5 +97,24 @@ const configByDomain = typeof window !== 'undefined' ?
 
 export const $rpcConfig = atom<RpcConfig | null>(configByDomain || null)
 
-export const getProvider = () => new ethers.providers.Web3Provider(window.ethereum)
+export const $rpcProvider = atom<ethers.providers.JsonRpcProvider | null>((get) => {
+  const rpcConfig = get($rpcConfig)
+  if (!rpcConfig) {
+    return null
+  }
+  if (window.ethereum) {
+    return new ethers.providers.Web3Provider(window.ethereum)
+  } else {
+    return new ethers.providers.JsonRpcProvider(rpcConfig.chain.rpcUrls[0])
+  }
+})
+
+export const getProvider = () => {
+  console.warn('Deprecated! Use $rpcProvider instead.')
+  if (window.ethereum) {
+    return new ethers.providers.Web3Provider(window.ethereum)
+  } else {
+    return new ethers.providers.JsonRpcProvider();
+  }
+}
 
