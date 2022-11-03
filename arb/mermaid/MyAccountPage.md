@@ -6,7 +6,7 @@ sequenceDiagram
   participant WebApp
   participant RPC
   User->>WebApp: navigate to /account
-  WebApp->>RPC: getRewars()
+  WebApp->>RPC: getRewards()
   RPC-->>WebApp: (Asset[], Reward[], totalReward, totalEarned)
   Note right of RPC: Reward: amount in USD per asset, tokens bought
   
