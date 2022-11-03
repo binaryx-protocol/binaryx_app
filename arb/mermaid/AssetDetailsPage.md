@@ -1,17 +1,20 @@
-# My Account Page
+# Asset Details Page
 
 ```mermaid
 sequenceDiagram
-  participant User
-  participant WebBrowser
-  participant RPC
-  User->>WebBrowser: navigate to /account
-  WebBrowser->>RPC: getRewars()
-  RPC-->>WebBrowser: (Asset[], Reward[], totalReward, totalEarned)
-  Note right of RPC: Reward: amount in USD per asset, tokens bought
-  
-  User->>WebBrowser: tap "Withdraw"
-  WebBrowser->>RPC: CreateTrx to withdraw some USD amount
-  RPC-->>RPC: Send the user USD, totalEarned+=amount
-  
+
+participant WebApp
+participant RPC
+participant Wallet
+WebApp->>RPC: getAsset(id)
+RPC-->>WebApp: (Asset)
+Note right of RPC: Asset: public data<br>(name, images, etc)
+WebApp->>Wallet: Connect user & Network
+Wallet-->>WebApp: Web3 Provider
+
+WebApp->>RPC: getAssetBalance(id)
+RPC-->>WebApp: (Balance)
+Note right of RPC: Balance: user context<br>(tokens bought, rewards, etc)
+WebApp-->>WebApp: Hit "Invest"
+Note right of WebApp: "Navigates to the Invest Page"
 ```
