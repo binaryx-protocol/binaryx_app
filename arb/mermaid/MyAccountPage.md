@@ -1,4 +1,4 @@
-# My Account Page
+# Asset Details Page
 
 ```mermaid
 sequenceDiagram
@@ -18,6 +18,3 @@ Note right of RPC: Balance: user context<br>(tokens bought, rewards, etc)
 WebApp-->>WebApp: Hit "Invest"
 Note right of WebApp: "Navigates to the Invest Page"
 ```
-
-# Refs
-https://creately.com/blog/diagrams/sequence-diagram-tutorial/

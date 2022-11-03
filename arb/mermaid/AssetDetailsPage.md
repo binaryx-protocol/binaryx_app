@@ -1,10 +1,9 @@
-# Asset Detail Page
+# My Account Page
 
 ```mermaid
 sequenceDiagram
   participant User
   participant WebBrowser
-  participant Wallet
   participant RPC
   User->>WebBrowser: navigate to /account
   WebBrowser->>RPC: getRewars()
@@ -16,6 +15,3 @@ sequenceDiagram
   RPC-->>RPC: Send the user USD, totalEarned+=amount
   
 ```
-
-# Refs
-https://creately.com/blog/diagrams/sequence-diagram-tutorial/
