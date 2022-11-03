@@ -2,22 +2,16 @@
 
 ```mermaid
 sequenceDiagram
-
-participant WebApp
-participant RPC
-participant Wallet
-WebApp->>RPC: getAsset(id)
-RPC-->>WebApp: (Asset)
-Note right of RPC: Asset: public data<br>(name, images, etc)
-WebApp->>Wallet: Connect user & Network
-Wallet-->>WebApp: Web3 Provider
-
-WebApp->>RPC: getAssetBalance(id)
-RPC-->>WebApp: (Balance)
-Note right of RPC: Balance: user context<br>(tokens bought, rewards, etc)
-WebApp-->>WebApp: Hit "Invest"
-Note right of WebApp: "Navigates to the Invest Page"
+  participant User
+  participant WebApp
+  participant RPC
+  User->>WebApp: navigate to /account
+  WebApp->>RPC: getRewards()
+  RPC-->>WebApp: (Asset[], Reward[], totalReward, totalEarned)
+  Note right of RPC: Reward: amount in USD per asset, tokens bought
+  
+  User->>WebApp: tap "Withdraw"
+  WebApp->>RPC: CreateTrx to withdraw some USD amount
+  RPC-->>RPC: Send the user USD, totalEarned+=amount
+  
 ```
-
-# Refs
-https://creately.com/blog/diagrams/sequence-diagram-tutorial/
