@@ -1,7 +1,7 @@
 import { atom } from 'jotai'
 import {$rpcConfig, NewRpcToken, RpcConfig} from "../../../core/models/rpcConfigModel";
 import {completeAction, isDoneAction} from "../../../utils/isDoneActionLs";
-import {$usdtSmartContract} from "../../../shared/usdtToken/smartContractsFactory";
+import {$usdtSmartContractSigned} from "../../../shared/usdtToken/smartContractsFactory";
 
 const usdtToolToken: NewRpcToken = {
   type: 'ERC20',
@@ -30,7 +30,7 @@ export const $doMint = atom(
     }
 
     // mint
-    const manager = get($usdtSmartContract)
+    const manager = get($usdtSmartContractSigned)
     await manager.demoMint(amount)
   }
 )

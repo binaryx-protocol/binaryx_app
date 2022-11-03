@@ -26,7 +26,7 @@ export const AccountController = () => {
   };
 
   if (!accountInfo) {
-    return 'Please connect your wallet first';
+    return <>Please connect your wallet first</>;
   }
 
   return (
