@@ -1,5 +1,4 @@
 import s from './styles.module.scss';
-import LogoutIcon from '@mui/icons-material/Logout';
 import WithdrawBlock from 'components/pages/account_page/WithdrawBlock';
 import StatisticBlock from 'components/pages/account_page/StatisticBlock';
 import OrderBlockView from '../../../../components/pages/account_page/OrderBlock/OrderBlockView';
@@ -8,22 +7,26 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 import { paths } from '../../../../../../../pkg/paths';
 import { Container } from '../../../../shared/ui/views/Container';
+import {$isAccountConnected} from "../../../../core/models/metaMaskModel";
 
 export const AccountController = () => {
   const doLoadMyRewards = useSetAtom(accountModel.$doLoadMyRewards);
   const doClaimMyRewards = useSetAtom(accountModel.$doClaimMyRewards);
   const accountInfo = useAtomValue(accountModel.$accountInfo);
+  const isAccountConnected = useAtomValue($isAccountConnected);
 
   useEffect(() => {
-    doLoadMyRewards();
-  }, []);
+    if (isAccountConnected) {
+      doLoadMyRewards();
+    }
+  }, [isAccountConnected]);
 
   const onWithdraw = () => {
     doClaimMyRewards();
   };
 
   if (!accountInfo) {
-    return null;
+    return 'Please connect your wallet first';
   }
 
   return (

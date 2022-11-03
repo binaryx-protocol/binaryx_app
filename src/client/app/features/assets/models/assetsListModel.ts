@@ -1,38 +1,25 @@
 import { atom } from 'jotai'
 import {loadable} from "jotai/utils";
-import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
-import {AssetStatuses, BcAsset} from "../types";
-import {arbClient} from "./arbClient";
-import {$assetsTokenSmartContract} from "./smartContractsFactory";
+import {BcAsset} from "../types";
+import {$assetsTokenSmartContractPublic, AssetManager} from "./smartContractsFactory";
+import {waitFor} from "../../../utils/pageLoadUtiils";
 
-export const $doActivate = atom(null, async (get, set, args: { id: number }) => {
-  const $rpcConfig = get(rpcConfigModel.$rpcConfig)
+// export const $doActivate = atom(null, async (get, set, args: { id: number }) => {
+//   const $rpcConfig = get(rpcConfigModel.$rpcConfig)
+//
+//   if ($rpcConfig) {
+//     await arbClient.setStatus(
+//       $rpcConfig,
+//       { id: args.id, status: AssetStatuses.active },
+//     );
+//   } else {
+//     throw new Error("Wallet is not connected or config is not provided");
+//   }
+// })
 
-  if ($rpcConfig) {
-    await arbClient.setStatus(
-      $rpcConfig,
-      { id: args.id, status: AssetStatuses.active },
-    );
-  } else {
-    throw new Error("Wallet is not connected or config is not provided");
-  }
-})
-
-export const $doDisable = atom(null, async (get, set, args: { id: number }) => {
-  const $rpcConfig = get(rpcConfigModel.$rpcConfig)
-
-  if ($rpcConfig) {
-    await arbClient.setStatus(
-      $rpcConfig,
-      { id: args.id, status: AssetStatuses.disabled },
-    );
-  } else {
-    throw new Error("Wallet is not connected or config is not provided");
-  }
-})
-
-export const $blockchainAssetsAsync = atom<Promise<[BcAsset[], any]>>(async (get) => {
-  const manager = get($assetsTokenSmartContract)
+export const $blockchainAssetsAsync = atom<Promise<[BcAsset[], any] | null>>(async (get) => {
+  await waitFor(() => !!get($assetsTokenSmartContractPublic))
+  const manager = get($assetsTokenSmartContractPublic) as AssetManager
   return await manager.listAssets()
 })
 
