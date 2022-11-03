@@ -3,18 +3,12 @@
 ```mermaid
 sequenceDiagram
 
+participant User
 participant WebApp
 participant RPC
-participant Wallet
+User->>WebApp: Navigate to /assets/:id
 WebApp->>RPC: getAsset(id)
-RPC-->>WebApp: (Asset)
-Note right of RPC: Asset: public data<br>(name, images, etc)
-WebApp->>Wallet: Connect user & Network
-Wallet-->>WebApp: Web3 Provider
-
-WebApp->>RPC: getAssetBalance(id)
-RPC-->>WebApp: (Balance)
-Note right of RPC: Balance: user context<br>(tokens bought, rewards, etc)
-WebApp-->>WebApp: Hit "Invest"
-Note right of WebApp: "Navigates to the Invest Page"
+RPC-->>WebApp: (Asset, TokenInfo)
+Note right of RPC: TokenInfo: tokensBought, tokensLeft
+WebApp-->>User: Show asset public data and TokenInfo
 ```
