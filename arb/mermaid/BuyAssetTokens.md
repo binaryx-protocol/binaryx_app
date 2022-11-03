@@ -1,4 +1,4 @@
-#Buy Tokens Flow
+#Buy Asset Tokens Flow
 
 ## 
 ```mermaid
