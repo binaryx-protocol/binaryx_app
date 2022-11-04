@@ -13,6 +13,7 @@
 
 .logo{
   padding-bottom: 3px;
+  padding-left: 10px;
   img{
     height: 32px;
     display: block;
@@ -30,7 +31,6 @@
 }
 
 .buttons{
-  padding-right: 15px;
   margin: 0 -4px;
   display: flex;
   align-items: center;
@@ -50,21 +50,4 @@
   align-items: center;
   text-decoration: none;
   color: inherit;
-}
-
-// TODO this is a TMP solution. Waiting for mobile design
-@media (max-width: 1024px) {
-  .root{
-    height: initial;
-  }
-  .container{
-    //display: block;
-  }
-  .nav{
-    margin: 5px -20px;
-
-    a {
-      display: inline-block;
-    }
-  }
 }

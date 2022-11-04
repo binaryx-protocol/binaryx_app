@@ -1,5 +1,4 @@
 import { atom } from 'jotai'
-import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import router from 'next/router'
 import {
   AssetStatuses,
@@ -7,12 +6,9 @@ import {
   UiNewAssetForm,
   UiNewAssetFormChangeArgs
 } from "../types";
-import {arbClient} from "./arbClient";
-import {waitFor} from "../../../utils/pageLoadUtiils";
 import {assetValidator} from "./assetValidator";
 import {paths} from "../../../../../../pkg/paths";
-import {RpcConfig} from "../../../core/models/rpcConfigModel";
-import {$assetsTokenSmartContract} from "./smartContractsFactory";
+import { $assetsTokenSmartContractSigned, AssetManager} from "./smartContractsFactory";
 
 const defaultAttrs = (): UiNewAssetFormValues => ({
   name: '',
@@ -26,6 +22,7 @@ const defaultAttrs = (): UiNewAssetFormValues => ({
   propertyInfo_images: 'https://ns.clubmed.com/dream/RESORTS_3T___4T/Asie_et_Ocean_indien/Bali/169573-1lng9n8nnf-swhr.jpg',
 })
 
+// stores
 export const $form = atom<UiNewAssetForm>({
   values: defaultAttrs(),
   errors: {},
@@ -34,12 +31,13 @@ export const $form = atom<UiNewAssetForm>({
   isSubmitTouched: false,
 })
 
-export const $doCreateAsset = atom(null, async (get, set, form: UiNewAssetForm) => {
+// setters
+const $doCreateAsset = atom(null, async (get, set, form: UiNewAssetForm) => {
   const formValues = {
     ...form.values,
     tokenInfo_tokenPriceDe6: form.values.tokenInfo_tokenPriceDe6 * 1e6
   }
-  const manager = get($assetsTokenSmartContract)
+  const manager = get($assetsTokenSmartContractSigned) as AssetManager
   await manager.createAsset(...Object.values(formValues));
   alert("You will see your asset soon. Please, refresh the page.");
   router.push(paths.listAssets());
@@ -54,7 +52,7 @@ export const $onMount = atom(null, (get, set) => {
   set($doValidateFormValues, get($form))
 })
 
-export const $doUpdateFormValues = atom(null, (get, set, args: UiNewAssetFormChangeArgs) => {
+const $doUpdateFormValues = atom(null, (get, set, args: UiNewAssetFormChangeArgs) => {
   const form = get($form)
   const newForm = {
     ...form,
@@ -64,7 +62,7 @@ export const $doUpdateFormValues = atom(null, (get, set, args: UiNewAssetFormCha
   set($form, newForm)
 })
 
-export const $doValidateFormValues = atom(null, (get, set, args: UiNewAssetFormChangeArgs) => {
+const $doValidateFormValues = atom(null, (get, set, args: UiNewAssetFormChangeArgs) => {
   assetValidator.isNewValid(args.values)
     .then(({ errors, isValid }) => {
       const form = get($form)
