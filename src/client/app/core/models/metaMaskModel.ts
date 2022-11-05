@@ -18,7 +18,7 @@ type WalletProgress = 'init' | 'inProgress' | 'finished'
 type UiMetaMaskValues = {
   accounts: string[] | null
   chainId: KnownChainId | null
-  isConnected: boolean | null
+  noExtension: boolean | null
 }
 
 type UiMetaMaskForm = Omit<UiForm<UiMetaMaskValues>, 'isSubmitTouched' | 'touches'> & {
@@ -30,7 +30,7 @@ export const $metaMaskState = atom<UiMetaMaskForm>({
   values: {
     accounts: null,
     chainId: null,
-    isConnected: null,
+    noExtension: null,
   },
   errors: {},
   isValid: false,
@@ -48,14 +48,14 @@ export const $errorMessages = atom<string[]>((get) => {
   if (s.progress !== 'finished') {
     return messages;
   }
+  if (s.errors.noExtension) {
+    s.errors.noExtension.forEach((key) => messages.push(T[key as keyof typeof T]))
+  }
   if (s.errors.accounts) {
     s.errors.accounts.forEach((key) => messages.push(T[key as keyof typeof T]))
   }
   if (s.errors.chainId) {
     s.errors.chainId.forEach((key) => messages.push(withVariables(T[key as keyof typeof T])))
-  }
-  if (s.errors.isConnected) {
-    s.errors.isConnected.forEach((key) => messages.push(T[key as keyof typeof T]))
   }
   return messages
 })
@@ -94,9 +94,9 @@ export const $doValidate = atom(
     if (values.chainId !== get($rpcConfig)?.chain.chainId) {
       errors.chainId = ['CHAIN_INVALID']
     }
-    // if (!values.isConnected) {
-    //   errors.isConnected = ['EXTENSION_IS_NOT_INTSALLED'] // TODO test
-    // }
+    if (values.noExtension) {
+      errors.noExtension = ['EXTENSION_IS_NOT_INTSALLED']
+    }
     const isValid = Object.values(errors).length === 0;
 
     const form = {
@@ -132,6 +132,12 @@ export const $onBrowserInit = atom(
 export const $walletConnect = atom(
   null,
   async (get, set) => {
+    const ethereum = window.ethereum
+    if (!window.ethereum) {
+      set($doUpdateValues, { noExtension: true })
+      set($doSetProgress, 'finished')
+      return;
+    }
     if (get($metaMaskState).progress === 'inProgress') {
       console.log('Do not RUSH!');
       return;
@@ -140,8 +146,6 @@ export const $walletConnect = atom(
 
     await waitFor(() => !!get($rpcConfig))
     const rpcConfig = get($rpcConfig) as RpcConfig
-
-    const ethereum = window.ethereum
 
     // callbacks
     const onAccountsConnectOrDisconnect = (accounts: string[]) => {
@@ -156,31 +160,34 @@ export const $walletConnect = atom(
     ethereum.on('chainChanged', onChainIdChange);
 
     // Switch chain / Add & switch if it's a new chain (network)
-    await ethereum.request({ method: 'eth_chainId' })
-      .then(onChainIdChange)
+    const chainId = await ethereum.request({ method: 'eth_chainId' })
 
-    let isChainAdded = true // we do not know yet
-    try {
-      await ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: rpcConfig.chain.chainId }],
-      });
-    } catch (switchError) {
-      // This error code indicates that the chain has not been added to MetaMask.
-      if (switchError.code === 4902) {
-        isChainAdded = false // now we know
-      } else {
-        console.warn(switchError)
-      }
-    }
-    if (!isChainAdded) {
+    if (chainId !== rpcConfig.chain.chainId) {
+      let isChainAdded = true // we do not know yet
       try {
-        await ethereum.request({ method: 'wallet_addEthereumChain', params: [rpcConfig.chain] })
-      } catch (err: any) {
-        set($doSetProgress, 'finished')
-        return;
+        await ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: rpcConfig.chain.chainId }],
+        });
+      } catch (switchError) {
+        // This error code indicates that the chain has not been added to MetaMask.
+        if (switchError.code === 4902) {
+          isChainAdded = false // now we know
+        } else {
+          console.warn(switchError)
+        }
+      }
+      if (!isChainAdded) {
+        try {
+          await ethereum.request({ method: 'wallet_addEthereumChain', params: [rpcConfig.chain] })
+        } catch (err: any) {
+          set($doSetProgress, 'finished')
+          return;
+        }
       }
     }
+    const chainId2 = await ethereum.request({ method: 'eth_chainId' })
+    onChainIdChange(chainId2)
 
     // connect account
     await ethereum.request({ method: 'eth_accounts' })
@@ -204,9 +211,6 @@ export const $walletConnect = atom(
         return;
       }
     }
-
-    // etc
-    set($doUpdateValues, { isConnected: ethereum.isConnected() })
 
     // exit
     set($doSetProgress, 'finished')
