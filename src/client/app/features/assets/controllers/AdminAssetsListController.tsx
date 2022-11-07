@@ -1,10 +1,7 @@
-import Link from 'next/link'
 import s from './AdminAssetsListController.module.scss'
-import * as metaMaskModel from "../../../core/models/metaMaskModel";
 import * as assetsModel from "../models/assetsListModel";
-import {useAtomValue, useSetAtom} from "jotai";
+import {useAtomValue} from "jotai";
 import AssetList from '../views/AssetList';
-import AssetListItem from '../views/AssetList/AssetListItem';
 import SideMenu from '../views/SideMenu';
 import SideMenuNavItem from '../views/SideMenu/SideMenuNavItem';
 import IconProperty from '../views/SideMenu/icons/IconProperty';
@@ -15,10 +12,10 @@ import IconHistory from '../views/SideMenu/icons/IconHistory';
 import IconNotification from '../views/SideMenu/icons/IconNotification';
 import SideMenuDivider from '../views/SideMenu/SideMenuDivider';
 import {Container} from "../../../shared/ui/views/Container";
+import {NanoLoader} from "../../../shared/ui/views/NanoLoader";
 
 export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
-  // const $errorMessages = useAtomValue(metaMaskModel.$errorMessages)
   const blockchainAssets = $blockchainAssets.state === 'hasData' ? $blockchainAssets.data : null
   const [assets, balances] = blockchainAssets || []
 
@@ -42,7 +39,9 @@ export const AdminAssetsListController = () => {
                 Marketplace
               </h1>
             </div>
-            <AssetList assets={assets || []} balances={balances || []} />
+            <NanoLoader isLoading={!assets?.length} className={s.loader}>
+              <AssetList assets={assets || []} balances={balances || []} />
+            </NanoLoader>
           </div>
         </div>
       </Container>

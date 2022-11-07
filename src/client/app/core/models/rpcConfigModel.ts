@@ -1,5 +1,6 @@
 import { atom } from 'jotai'
 import {ethers} from "ethers";
+import {$featureFlags} from "./featureFlagsModel";
 
 type NewRpcChain = {
   chainId: string
@@ -32,6 +33,7 @@ export type RpcConfig = {
   assetsTokenAddress: string
 }
 
+// static
 const l2Goerli: RpcConfig = {
   chain: {
     chainId: `0x${Number(421613).toString(16)}`,
@@ -87,15 +89,26 @@ const localhost: RpcConfig = {
   usdtL2Address: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0', // depends on env // TODO - move into env vars...
 }
 
-const configByDomain = typeof window !== 'undefined' ?
-  {
-    // 'localhost': localhost,
-    'localhost': l2Goerli,
-    'i2.binaryx.com': l2Goerli,
-  }[window.location.hostname]
-  : null
+const all = {
+  localhost,
+  l2Goerli,
+}
 
-export const $rpcConfig = atom<RpcConfig | null>(configByDomain || null)
+// computed
+export const $rpcConfig = atom<RpcConfig | null>((get) => {
+  if (typeof window === 'undefined') {
+    return null
+  }
+  const configNameByDomain =
+    {
+      'localhost': 'l2Goerli',
+      'i2.binaryx.com': 'l2Goerli',
+    }[window.location.hostname]
+  const configNameFromFF = get($featureFlags).FF_RPC_NAME
+  const rpcName = (configNameFromFF || configNameByDomain) as keyof typeof all
+  console.log('Using RPC: ' + rpcName)
+  return all[rpcName] || null
+})
 
 export const $publicRpcProvider = atom<ethers.providers.JsonRpcProvider | null>((get) => {
   const rpcConfig = get($rpcConfig)
@@ -112,13 +125,4 @@ export const $userRpcProvider = atom<ethers.providers.JsonRpcProvider | null>((g
   }
   return new ethers.providers.Web3Provider(window.ethereum)
 })
-//
-// export const getProvider = () => {
-//   console.warn('Deprecated! Use $rpcProvider instead.')
-//   if (window.ethereum) {
-//     return new ethers.providers.Web3Provider(window.ethereum)
-//   } else {
-//     return new ethers.providers.JsonRpcProvider();
-//   }
-// }
-//
+
