@@ -1,7 +1,6 @@
 import { atom } from 'jotai'
 import {ethers} from "ethers";
 import {$featureFlags} from "./featureFlagsModel";
-import {keys} from "lodash";
 
 type NewRpcChain = {
   chainId: string
