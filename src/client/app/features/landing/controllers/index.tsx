@@ -17,6 +17,7 @@ import IconDiscord from 'features/landing/views/NavSocialImage/IconDiscord';
 import IconTwitter from 'features/landing/views/NavSocialImage/IconTwitter';
 import IconLinkedIn from 'features/landing/views/NavSocialImage/IconLinkedIn';
 import IconTelegram from 'features/landing/views/NavSocialImage/IconTelegram';
+import IconMail from 'features/landing/views/NavSocialImage/IconMail';
 
 const GoogleAnalytics = () => {
   return (
@@ -747,6 +748,19 @@ const HomePage: FC = () => {
                           className={s.footerNavSocialImage}
                           width={isMobile ? 30 : 43}
                           height={isMobile ? 30 : 43}
+                          fill="#335367"
+                        />
+                      }
+                    />
+                    <NavSocialImage
+                      link={'mailto:hello@binaryx.com'}
+                      style={{ margin: isMobile ? "-3px 0 0 -3px" : "-4px 0 0 -4px" }}
+                      newWindow={false}
+                      icon={
+                        <IconMail
+                          className={s.footerNavSocialImage}
+                          width={isMobile ? 36 : 52}
+                          height={isMobile ? 36 : 52}
                           fill="#335367"
                         />
                       }
