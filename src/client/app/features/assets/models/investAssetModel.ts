@@ -1,18 +1,17 @@
 import {atom} from 'jotai'
-import {waitFor} from "../../../utils/pageLoadUtiils";
 import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
-import {arbClient} from "./arbClient";
 import {BcAsset} from "../types";
 import {bnToInt} from "../../../utils/objectUtils";
 import {RpcConfig} from "../../../core/models/rpcConfigModel";
-
+import {$usdtSmartContractSigned, UsdtManager} from "../../../shared/usdtToken/smartContractsFactory";
+import {$assetsTokenSmartContractSigned, AssetManager} from "./smartContractsFactory";
 
 export const $onSubmit = atom(null, async (get,set, { asset, id, amount, then }: { asset: BcAsset, id: number, amount: number, then: () => void }) => {
-  await waitFor(() => {
-    return !!get(rpcConfigModel.$rpcConfig)
-  }, 3)
+  const rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
+  const usdtfTokenSigned = get($usdtSmartContractSigned) as UsdtManager
+  const assetsTokenSigned = get($assetsTokenSmartContractSigned) as AssetManager
 
-  const $rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
+  // calc
   if (!amount) {
     throw new Error('amount is required')
   }
@@ -20,14 +19,14 @@ export const $onSubmit = atom(null, async (get,set, { asset, id, amount, then }:
   if (!amountInMicro) {
     throw new Error('amountInMicro is required')
   }
-  await arbClient.approveUsdt(
-    $rpcConfig,
-    { amountInMicro }
-  );
 
-  // TODO 0 -> asset.id
-  await arbClient.investUsingUsdt($rpcConfig, { id, tokensToBuyAmount: amount })
+  // TRX #1
+  await usdtfTokenSigned.approve(rpcConfig.assetsTokenAddress, amountInMicro)
+
+  // TRX #2
+  await assetsTokenSigned.investUsingUsdt(id, amount)
   then()
 })
 
 const estimateCost = (asset: BcAsset, tokensAmount: number) => bnToInt(asset.tokenInfo_tokenPriceDe6) * tokensAmount * 1e4;
+

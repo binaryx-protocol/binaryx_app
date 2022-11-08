@@ -1,13 +1,12 @@
 import {atom, PrimitiveAtom} from 'jotai'
-import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import {waitFor} from "../../../utils/pageLoadUtiils";
 import {onlyFields} from "../../../utils/objectUtils";
-// import {rpcClient} from "./rpcClient";
 import {BigNumber} from "ethers";
 import {BcAsset} from "../../assets/types";
-import {RpcConfig} from "../../../core/models/rpcConfigModel";
-import {$assetsTokenSmartContract} from "../../assets/models/smartContractsFactory";
-import formatLongNumber from "../../../utils/formatNumber";
+import {
+  $assetsTokenSmartContractSigned,
+  AssetManager
+} from "../../assets/models/smartContractsFactory";
 
 export type BcReward = {
   asset: BcAsset
@@ -76,21 +75,16 @@ export const $accountInfo = atom<UiAccountInfo | null>((get) => {
 
 // setters
 export const $doLoadMyRewards = atom(null, async (get, set) => {
-  await waitFor(() => {
-    return !!get(rpcConfigModel.$rpcConfig)
-  }, 3)
+  await waitFor(() => !!get($assetsTokenSmartContractSigned), 3)
 
-  const sc = get($assetsTokenSmartContract)
+  console.log('FAIL pass')
+  const sc = get($assetsTokenSmartContractSigned) as AssetManager
   const response = await sc.getMyRewardsPerAsset();
   set($apiRewardsResponse, response);
 })
 
 export const $doClaimMyRewards = atom(null, async (get, set) => {
-  await waitFor(() => {
-    return !!get(rpcConfigModel.$rpcConfig)
-  }, 3)
-
-  const sc = get($assetsTokenSmartContract)
+  const sc = get($assetsTokenSmartContractSigned) as AssetManager
   await sc.claimRewardsInUsdt();
 })
 

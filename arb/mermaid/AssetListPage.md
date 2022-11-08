@@ -3,6 +3,8 @@
 ## Asset List
 ```mermaid
 sequenceDiagram
+autonumber
+
 User->>WebApp: navigate to '/assets' page
 WebApp->>RPC: getAssets({ page, pageSize, status })
 RPC-->>WebApp: Assets
@@ -15,6 +17,8 @@ WebApp-->>User: Render Assets
 ## Update Asset Status
 ```mermaid
 sequenceDiagram
+autonumber
+
 User->>WebApp: navigate to '/assets' page
 WebApp->>RPC: getAssets({ page, pageSize, status })
 RPC-->>WebApp: Assets

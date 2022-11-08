@@ -1,10 +1,9 @@
 import {atom, PrimitiveAtom} from 'jotai'
 import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import {BcAsset, BcAssetMetaData, UiAssetComputed} from "../types";
-import {arbClient} from "./arbClient";
 import {waitFor} from "../../../utils/pageLoadUtiils";
 import {RpcConfig} from "../../../core/models/rpcConfigModel";
-import {$assetsTokenSmartContract} from "./smartContractsFactory";
+import {$assetsTokenSmartContractPublic, AssetManager} from "./smartContractsFactory";
 
 // stores
 export const $asset = atom(null) as PrimitiveAtom<BcAsset | null>;
@@ -31,14 +30,12 @@ export const $assetComputed = atom<UiAssetComputed | null>((get) => {
 
 // setters
 export const $doLoadAsset = atom(null, async (get,set, args: { id: number }) => {
-  // TODO check what if no MM connected
-  await waitFor(() => {
-    return !!get(rpcConfigModel.$rpcConfig)
-  }, 3)
+  await waitFor(() => !!get($assetsTokenSmartContractPublic), 3)
+
+  const manager = get($assetsTokenSmartContractPublic) as AssetManager
+  const bcAsset = await manager.getAsset(args.id);
 
   const rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
-  const manager = get($assetsTokenSmartContract)
-  const bcAsset = await manager.getAsset(args.id);
   const tokensLeft = await manager.balanceOf(rpcConfig.assetsTokenAddress, args.id)
 
   set($asset, bcAsset);

@@ -2,6 +2,8 @@
 
 ```mermaid
 sequenceDiagram
+autonumber
+
   participant User
   participant WebApp
   participant RPC
