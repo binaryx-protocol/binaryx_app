@@ -62,7 +62,7 @@ const LandingNav: FC<Props> = ({ isDark }) => {
         </nav> */}
         <nav className={s.navSocial}>
           <NavSocialImage
-            link={'https://discord.gg/kJqgYh7G9G'}
+            link={'https://discord.gg/f4mTchBKC8'}
             icon={<IconDiscord className={s.navSocialImage} />}
           />
           <NavSocialImage
@@ -70,7 +70,7 @@ const LandingNav: FC<Props> = ({ isDark }) => {
             icon={<IconTwitter className={s.navSocialImage} />}
           />
           <NavSocialImage
-            link={'https://www.linkedin.com/company/realbinaryx/'}
+            link={'https://www.linkedin.com/company/binaryxprotocol/'}
             icon={<IconLinkedIn className={s.navSocialImage} />}
           />
           <NavSocialImage

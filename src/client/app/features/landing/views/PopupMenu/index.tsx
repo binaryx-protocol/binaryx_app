@@ -46,7 +46,7 @@ const PopupMenu = ({ isShowing, setIsShowing, handleFormSubmit }: Props) => {
         </div>
         <div className={s.socialLinks}>
           <NavSocialImage
-            link={'https://discord.gg/kJqgYh7G9G'}
+            link={'https://discord.gg/f4mTchBKC8'}
             icon={
               <IconDiscord
                 className={s.socialImage}
@@ -57,7 +57,7 @@ const PopupMenu = ({ isShowing, setIsShowing, handleFormSubmit }: Props) => {
             }
           />
           <NavSocialImage
-            link={'https://twitter.com/realBinaryx'}
+            link={'https://twitter.com/BinaryxProtocol'}
             icon={
               <IconTwitter
                 className={s.socialImage}
@@ -68,7 +68,7 @@ const PopupMenu = ({ isShowing, setIsShowing, handleFormSubmit }: Props) => {
             }
           />
           <NavSocialImage
-            link={'https://www.linkedin.com/company/realbinaryx/'}
+            link={'https://www.linkedin.com/company/binaryxprotocol/'}
             icon={
               <IconLinkedIn
                 className={s.socialImage}

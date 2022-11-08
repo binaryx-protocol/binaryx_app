@@ -709,7 +709,7 @@ const HomePage: FC = () => {
                   <h1 className={s.footerHeading}>Let's Keep in Touch With:</h1>
                   <nav className={s.footerNavSocial}>
                     <NavSocialImage
-                      link={'https://discord.gg/kJqgYh7G9G'}
+                      link={'https://discord.gg/f4mTchBKC8'}
                       icon={
                         <IconDiscord
                           className={s.footerNavSocialImage}
@@ -731,7 +731,7 @@ const HomePage: FC = () => {
                       }
                     />
                     <NavSocialImage
-                      link={'https://www.linkedin.com/company/realbinaryx/'}
+                      link={'https://www.linkedin.com/company/binaryxprotocol/'}
                       icon={
                         <IconLinkedIn
                           className={s.footerNavSocialImage}
