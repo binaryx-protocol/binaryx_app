@@ -3,6 +3,8 @@
 ## 
 ```mermaid
 sequenceDiagram
+autonumber
+
 User->>WebApp: go to '/assets/:id' page
 WebApp->>RPC: getAsset({ id })
 RPC-->>WebApp: Asset (title, addr, rates, token data)
