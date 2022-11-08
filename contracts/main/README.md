@@ -1,2 +1,0 @@
-Binaryx Smart Contract
-==================
