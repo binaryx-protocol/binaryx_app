@@ -9,7 +9,9 @@ Smart contracts: `/contracts_arbitrum`
 ## Demo
 
 ![Demo](https://binaryxestate.s3.eu-central-1.amazonaws.com/demo/binaryx_demo.gif)
-  
+
+TEST:
+![Output sample](https://github.com/ajasmin/camstudio-mousedown-highlight/raw/master/android_vid_test.gif)
 
 ### Dev
 
