@@ -1,5 +1,5 @@
-import AssetContract from 'src/frontend/contracts_near/AssetContract';
-import UsnContract from 'src/frontend/contracts_near/UsnContract';
+import AssetContract from 'src/frontend/contracts/AssetContract';
+import UsnContract from 'src/frontend/contracts/UsnContract';
 import MainContract from '../contracts/MainContract';
 import {ChangeEvent, SyntheticEvent} from "react";
 
