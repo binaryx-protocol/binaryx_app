@@ -8,7 +8,8 @@ Smart contracts: `/contracts_arbitrum`
 
 ## Demo
 
-![](https://binaryxestate.s3.eu-central-1.amazonaws.com/demo/binaryx_demo.gif)
+![Demo](https://binaryxestate.s3.eu-central-1.amazonaws.com/demo/binaryx_demo.gif)
+  
 
 ### Dev
 
