@@ -2,15 +2,21 @@
 
 ```mermaid
 sequenceDiagram
+autonumber
 
-participant User
-participant WebApp
+actor U as User
+participant W as WebApp
 participant RPC
-User->>WebApp: Navigate to /assets/list
-WebApp-->>User: Render the form
-User->>WebApp: Submit form data
-WebApp-->>RPC: createAsset(AssetInput)
-Note over WebApp, RPC: AssetInput: name, landType,<br>propertyType, address, images, etc... 
-RPC->>WebApp: AssetCreated()
-WebApp->>User: Suceess message
+
+U->>+W: Navigate to /assets/list
+  
+opt "isWalletConnected"
+  W-->>-U: Render the form
+  U->>W: Submit form data
+  W-->>+RPC: createAsset(AssetInput)
+  Note over W, RPC: AssetInput: name, landType,<br>propertyType, address, images, etc...
+  RPC-->>RPC: Persist Asset 
+  RPC-->>-W: AssetCreated()
+  W-->>U: Suceess message
+end
 ```
