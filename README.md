@@ -1,4 +1,4 @@
-#Binaryx Official Repository
+# Binaryx Official Repository
 
 https://binaryx.com/
 
@@ -7,7 +7,7 @@ _(Development in progress)_
 Smart contracts: `/contracts_arbitrum`
 
 ## Demo
-https://binaryxestate.s3.eu-central-1.amazonaws.com/demo/binaryx_demo.gif
+https://binaryxestate.s3.eu-central-1.amazonaws.com/demo/binaryx_demo.mp4
 
 
 ![binaryx_demo](https://user-images.githubusercontent.com/52509463/200624582-cb8f62e6-b677-4cc8-b134-3830d8224c53.gif)
