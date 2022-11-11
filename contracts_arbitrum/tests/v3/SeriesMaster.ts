@@ -8,7 +8,7 @@ describe("SeriesMaster", function () {
     const [owner, wallet2] = await ethers.getSigners();
 
     const SeriesMaster = await ethers.getContractFactory("SeriesMaster");
-    const seriesMaster = await upgrades.deployProxy(SeriesMaster, ['https://otoco.io/dashpanel/entity/']);
+    const seriesMaster = await upgrades.deployProxy(SeriesMaster, ['https://binaryx.com/dashpanel/entity/']);
 
     return { seriesMaster, owner, wallet2 };
   }

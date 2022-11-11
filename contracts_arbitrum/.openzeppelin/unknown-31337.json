@@ -1,20 +1,25 @@
 {
   "manifestVersion": "3.2",
   "admin": {
-    "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
-    "txHash": "0xfba4226e357a229fa624756bdd6f3717af54c217e3fd264c77b6dd09476e37c1"
+    "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+    "txHash": "0x3c2dd019536a7dd1f1b7a9fa2dd6ffd17c65bf094bb5dedf7d1e336771a63ee5"
   },
   "proxies": [
     {
       "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
       "txHash": "0xaf7bc81b4de3bfc7ced8e59790efa233fbc2e6dc208a2115c0b8a64cc0342ca2",
       "kind": "transparent"
+    },
+    {
+      "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+      "txHash": "0x079e288daf06f891fdf0d0169e6d0d3bee38c9ff90240b1df7ed21d4f3a7978f",
+      "kind": "transparent"
     }
   ],
   "impls": {
-    "7a49269d8934100677781881cfaf974324e763f7e31de07fa543e19d14e85c37": {
-      "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-      "txHash": "0xc3152e7f5a63e8fc7806442d870fcd400ec3d0cf8ccc0a5fb1cf52a129c5fff2",
+    "01a85e8c72530099df846d603ab7344ddc3191ec46a7f1e7526c98b0665efbd3": {
+      "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+      "txHash": "0xa6c2c53c017bfaca276229a153f4b8672f5f7cd1daf7cd0270cdb8215ac9cc17",
       "layout": {
         "solcVersion": "0.8.2",
         "storage": [
@@ -129,15 +134,15 @@
             "slot": "201",
             "type": "t_uint256",
             "contract": "SeriesMaster",
-            "src": "contracts/v3/SeriesMaster.sol:25"
+            "src": "contracts/v3/SeriesMaster.sol:17"
           },
           {
             "label": "series",
             "offset": 0,
             "slot": "202",
-            "type": "t_mapping(t_uint256,t_struct(Series)3227_storage)",
+            "type": "t_mapping(t_uint256,t_struct(Series)2991_storage)",
             "contract": "SeriesMaster",
-            "src": "contracts/v3/SeriesMaster.sol:27"
+            "src": "contracts/v3/SeriesMaster.sol:19"
           },
           {
             "label": "externalUrl",
@@ -145,7 +150,7 @@
             "slot": "203",
             "type": "t_string_storage",
             "contract": "SeriesMaster",
-            "src": "contracts/v3/SeriesMaster.sol:30"
+            "src": "contracts/v3/SeriesMaster.sol:22"
           }
         ],
         "types": {
@@ -185,7 +190,7 @@
             "label": "mapping(uint256 => address)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint256,t_struct(Series)3227_storage)": {
+          "t_mapping(t_uint256,t_struct(Series)2991_storage)": {
             "label": "mapping(uint256 => struct SeriesMaster.Series)",
             "numberOfBytes": "32"
           },
@@ -193,7 +198,7 @@
             "label": "string",
             "numberOfBytes": "32"
           },
-          "t_struct(Series)3227_storage": {
+          "t_struct(Series)2991_storage": {
             "label": "struct SeriesMaster.Series",
             "members": [
               {

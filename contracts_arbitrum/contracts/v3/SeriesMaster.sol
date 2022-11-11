@@ -4,17 +4,9 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
 import "@openzeppelin/contracts/utils/Base64.sol";
-import "@openzeppelin/contracts/utils/Strings.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract SeriesMaster is OwnableUpgradeable, ERC721Upgradeable {
-
-  // Libraries
-  using Strings for uint256;
-
-  // Events
-  event FeesWithdrawn(address owner, uint256 amount);
-
   struct Series {
     uint16 entityType;
     uint64 creation;
@@ -70,7 +62,7 @@ contract SeriesMaster is OwnableUpgradeable, ERC721Upgradeable {
    * @param tokenId of the series to be burned.
      */
   function closeSeries(uint256 tokenId) public enoughAmountFees() payable {
-    require(ownerOf(tokenId) == msg.sender, "OtoCoMaster: Series close from incorrect owner");
+    require(ownerOf(tokenId) == msg.sender, "SeriesMaster: Series close from incorrect owner");
     _burn(tokenId);
   }
 
@@ -85,8 +77,8 @@ contract SeriesMaster is OwnableUpgradeable, ERC721Upgradeable {
      * @param name the legal name of the entity.
      */
   function createBatchSeries(address[] calldata controller, uint64[] calldata creation, string[] calldata name) public onlyOwner {
-    require(name.length == controller.length, "OtoCoMaster: Name and Controller array should have same size.");
-    require(controller.length == creation.length, "OtoCoMaster: Controller and Creation array should have same size.");
+    require(name.length == controller.length, "SeriesMaster: Name and Controller array should have same size.");
+    require(controller.length == creation.length, "SeriesMaster: Controller and Creation array should have same size.");
     uint8 counter = uint8(controller.length);
     // Uses uint8 cause isn't possible to migrate more than 255 series at once.
     // Iterate through all previous series
