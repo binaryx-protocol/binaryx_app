@@ -4,8 +4,6 @@ const { network, upgrades, ethers } = require("hardhat");
 async function main() {
   let deploysJson;
 
-  fs.writeFileSync(`./deploys/${network.name}.json`, '{}');
-
   try {
     const data = fs.readFileSync(`./deploys/${network.name}.json`, {encoding:"utf-8"});
     deploysJson = JSON.parse(data);
@@ -15,18 +13,14 @@ async function main() {
   }
 
   const SeriesMaster = await ethers.getContractFactory("SeriesMaster");
-  const seriesMaster = await upgrades.deployProxy(SeriesMaster, ['https://binaryx.com/dashpanel/entity/']);
-  const master = await seriesMaster.deployed();
+  const seriesMaster = await upgrades.upgradeProxy(deploysJson.SeriesMaster, SeriesMaster);
 
-  await master.createSeries('0xD5742FAfb58CAbb89A355Ce67c2b0c9Dede6DDFB', "New Entity")
-
-  console.log("🚀 SeriesMaster Deployed:", master.address);
-  deploysJson.SeriesMaster = master.address
+  console.log("🚀 SeriesMaster Updated:", seriesMaster.address);
 
   const v = await seriesMaster.getV()
   console.log('v', v)
-
-  fs.writeFileSync(`./deploys/${network.name}.json`, JSON.stringify(deploysJson, undefined, 2));
+  const b = await seriesMaster.balanceOf('0xD5742FAfb58CAbb89A355Ce67c2b0c9Dede6DDFB')
+  console.log('b', b)
 }
 
 main()

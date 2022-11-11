@@ -101,7 +101,7 @@ export const $rpcConfig = atom<RpcConfig | null>((get) => {
   }
   const configNameByDomain =
     {
-      'localhost': 'l2Goerli',
+      'localhost': 'localhost',
       'i2.binaryx.com': 'l2Goerli',
     }[window.location.hostname]
   const configNameFromFF = get($featureFlags).FF_RPC_NAME
