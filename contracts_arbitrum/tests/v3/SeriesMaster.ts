@@ -35,5 +35,19 @@ describe("SeriesMaster", function () {
       const series = await seriesMaster.series(0)
       expect(series.name).to.eq('New Entity')
     });
+    it("Closing series", async function () {
+      const { seriesMaster, owner } = await loadFixture(deployFixture);
+      await seriesMaster.createSeries(0, owner.address, "New Entity")
+
+      expectBn(
+        await seriesMaster.balanceOf(owner.address)
+      ).to.eq(1)
+
+      await seriesMaster.closeSeries(0);
+
+      expectBn(
+        await seriesMaster.balanceOf(owner.address)
+      ).to.eq(0)
+    });
   });
 });
