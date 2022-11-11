@@ -44,7 +44,7 @@ contract SeriesMaster is OwnableUpgradeable, ERC721Upgradeable {
   * Check if there's enough ETH paid for public transactions.
   */
   modifier enoughAmountFees() {
-    require(msg.value >= (tx.gasprice * gasleft()) / 100, "SeriesMaster: Not enough ETH paid for the execution.");
+//    require(msg.value >= (tx.gasprice * gasleft()) / 100, "SeriesMaster: Not enough ETH paid for the execution.");
     _;
   }
 
@@ -75,7 +75,7 @@ contract SeriesMaster is OwnableUpgradeable, ERC721Upgradeable {
       jurisdiction,
       0,
       uint64(block.timestamp),
-      ""
+      name
     );
     // Mint NFT
     _mint(controller, current);

@@ -2,19 +2,19 @@
   "manifestVersion": "3.2",
   "admin": {
     "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
-    "txHash": "0xb06c9bb8e8914b4e5f6213cb7865a32e199cdfbdfe08a7f84f45e4bd2b51dfc1"
+    "txHash": "0x97a62c04d3234011e47f3a48d825b0d1aa2c8ce2b6738556b1006c2fb800cf5a"
   },
   "proxies": [
     {
       "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
-      "txHash": "0x9762e5f3a3e175975ba55ee76d15127ed468cb6e18c456f2b3bca2be6f89c044",
+      "txHash": "0x891b34b8ea79c500f8576c261ea43d6dc3726fbd5761e0935c6fce6d5a19679a",
       "kind": "transparent"
     }
   ],
   "impls": {
-    "247b2207ca07547e667078bbd90283e58f363ab37fa79c4f11ef69ffd2077ad4": {
+    "718810063c0a0460c4e3768de7d6b04f5dddc8bc8b29f96401bf2978ad486edb": {
       "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-      "txHash": "0x7eee1992271052ee6934b00ecaada86f50b7b024b69618a93acd476e7acaf200",
+      "txHash": "0xd5be35a783e6fc36043b8f3ca1c16da096d8d146e05ece600fe36e7b557c8b7c",
       "layout": {
         "solcVersion": "0.8.2",
         "storage": [
@@ -143,7 +143,7 @@
             "label": "series",
             "offset": 0,
             "slot": "203",
-            "type": "t_mapping(t_uint256,t_struct(Series)8125_storage)",
+            "type": "t_mapping(t_uint256,t_struct(Series)3229_storage)",
             "contract": "SeriesMaster",
             "src": "contracts/v3/SeriesMaster.sol:30"
           },
@@ -225,7 +225,7 @@
             "label": "mapping(uint256 => address)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint256,t_struct(Series)8125_storage)": {
+          "t_mapping(t_uint256,t_struct(Series)3229_storage)": {
             "label": "mapping(uint256 => struct SeriesMaster.Series)",
             "numberOfBytes": "32"
           },
@@ -233,7 +233,7 @@
             "label": "string",
             "numberOfBytes": "32"
           },
-          "t_struct(Series)8125_storage": {
+          "t_struct(Series)3229_storage": {
             "label": "struct SeriesMaster.Series",
             "members": [
               {
