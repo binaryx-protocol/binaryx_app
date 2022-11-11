@@ -2,19 +2,19 @@
   "manifestVersion": "3.2",
   "admin": {
     "address": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
-    "txHash": "0x97a62c04d3234011e47f3a48d825b0d1aa2c8ce2b6738556b1006c2fb800cf5a"
+    "txHash": "0xfba4226e357a229fa624756bdd6f3717af54c217e3fd264c77b6dd09476e37c1"
   },
   "proxies": [
     {
       "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
-      "txHash": "0x891b34b8ea79c500f8576c261ea43d6dc3726fbd5761e0935c6fce6d5a19679a",
+      "txHash": "0xaf7bc81b4de3bfc7ced8e59790efa233fbc2e6dc208a2115c0b8a64cc0342ca2",
       "kind": "transparent"
     }
   ],
   "impls": {
-    "718810063c0a0460c4e3768de7d6b04f5dddc8bc8b29f96401bf2978ad486edb": {
+    "7a49269d8934100677781881cfaf974324e763f7e31de07fa543e19d14e85c37": {
       "address": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-      "txHash": "0xd5be35a783e6fc36043b8f3ca1c16da096d8d146e05ece600fe36e7b557c8b7c",
+      "txHash": "0xc3152e7f5a63e8fc7806442d870fcd400ec3d0cf8ccc0a5fb1cf52a129c5fff2",
       "layout": {
         "solcVersion": "0.8.2",
         "storage": [
@@ -129,55 +129,23 @@
             "slot": "201",
             "type": "t_uint256",
             "contract": "SeriesMaster",
-            "src": "contracts/v3/SeriesMaster.sol:26"
-          },
-          {
-            "label": "lastMigrated",
-            "offset": 0,
-            "slot": "202",
-            "type": "t_uint256",
-            "contract": "SeriesMaster",
-            "src": "contracts/v3/SeriesMaster.sol:28"
+            "src": "contracts/v3/SeriesMaster.sol:25"
           },
           {
             "label": "series",
             "offset": 0,
-            "slot": "203",
-            "type": "t_mapping(t_uint256,t_struct(Series)3229_storage)",
+            "slot": "202",
+            "type": "t_mapping(t_uint256,t_struct(Series)3227_storage)",
             "contract": "SeriesMaster",
-            "src": "contracts/v3/SeriesMaster.sol:30"
-          },
-          {
-            "label": "jurisdictionCount",
-            "offset": 0,
-            "slot": "204",
-            "type": "t_uint16",
-            "contract": "SeriesMaster",
-            "src": "contracts/v3/SeriesMaster.sol:33"
-          },
-          {
-            "label": "jurisdictionAddress",
-            "offset": 0,
-            "slot": "205",
-            "type": "t_mapping(t_uint16,t_address)",
-            "contract": "SeriesMaster",
-            "src": "contracts/v3/SeriesMaster.sol:35"
-          },
-          {
-            "label": "seriesPerJurisdiction",
-            "offset": 0,
-            "slot": "206",
-            "type": "t_mapping(t_uint16,t_uint256)",
-            "contract": "SeriesMaster",
-            "src": "contracts/v3/SeriesMaster.sol:37"
+            "src": "contracts/v3/SeriesMaster.sol:27"
           },
           {
             "label": "externalUrl",
             "offset": 0,
-            "slot": "207",
+            "slot": "203",
             "type": "t_string_storage",
             "contract": "SeriesMaster",
-            "src": "contracts/v3/SeriesMaster.sol:40"
+            "src": "contracts/v3/SeriesMaster.sol:30"
           }
         ],
         "types": {
@@ -213,19 +181,11 @@
             "label": "mapping(address => uint256)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint16,t_address)": {
-            "label": "mapping(uint16 => address)",
-            "numberOfBytes": "32"
-          },
-          "t_mapping(t_uint16,t_uint256)": {
-            "label": "mapping(uint16 => uint256)",
-            "numberOfBytes": "32"
-          },
           "t_mapping(t_uint256,t_address)": {
             "label": "mapping(uint256 => address)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint256,t_struct(Series)3229_storage)": {
+          "t_mapping(t_uint256,t_struct(Series)3227_storage)": {
             "label": "mapping(uint256 => struct SeriesMaster.Series)",
             "numberOfBytes": "32"
           },
@@ -233,25 +193,19 @@
             "label": "string",
             "numberOfBytes": "32"
           },
-          "t_struct(Series)3229_storage": {
+          "t_struct(Series)3227_storage": {
             "label": "struct SeriesMaster.Series",
             "members": [
               {
-                "label": "jurisdiction",
+                "label": "entityType",
                 "type": "t_uint16",
                 "offset": 0,
                 "slot": "0"
               },
               {
-                "label": "entityType",
-                "type": "t_uint16",
-                "offset": 2,
-                "slot": "0"
-              },
-              {
                 "label": "creation",
                 "type": "t_uint64",
-                "offset": 4,
+                "offset": 2,
                 "slot": "0"
               },
               {

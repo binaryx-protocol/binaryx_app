@@ -8,7 +8,7 @@ describe("SeriesMaster", function () {
     const [owner, wallet2] = await ethers.getSigners();
 
     const SeriesMaster = await ethers.getContractFactory("SeriesMaster");
-    const seriesMaster = await upgrades.deployProxy(SeriesMaster, [[], 'https://otoco.io/dashpanel/entity/']);
+    const seriesMaster = await upgrades.deployProxy(SeriesMaster, ['https://otoco.io/dashpanel/entity/']);
 
     return { seriesMaster, owner, wallet2 };
   }
@@ -27,7 +27,7 @@ describe("SeriesMaster", function () {
       expectBn(
         await seriesMaster.seriesCount()
       ).to.eq(0)
-      await seriesMaster.createSeries(0, owner.address, "New Entity")
+      await seriesMaster.createSeries(owner.address, "New Entity")
       expectBn(
         await seriesMaster.seriesCount()
       ).to.eq(1)
@@ -37,7 +37,7 @@ describe("SeriesMaster", function () {
     });
     it("Closing series", async function () {
       const { seriesMaster, owner } = await loadFixture(deployFixture);
-      await seriesMaster.createSeries(0, owner.address, "New Entity")
+      await seriesMaster.createSeries(owner.address, "New Entity")
 
       expectBn(
         await seriesMaster.balanceOf(owner.address)
