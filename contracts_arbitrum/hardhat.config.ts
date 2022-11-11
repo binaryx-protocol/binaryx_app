@@ -4,6 +4,7 @@ import "hardhat-gas-reporter"
 
 require('@nomiclabs/hardhat-ethers')
 require("@nomiclabs/hardhat-web3");
+require('@openzeppelin/hardhat-upgrades');
 const { hardhatConfig } = require('arb-shared-dependencies')
 
 const config: HardhatUserConfig = {
