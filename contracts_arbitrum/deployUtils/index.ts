@@ -1,4 +1,5 @@
 import {ethers, network, web3} from "hardhat";
+const fs = require('fs');
 
 const { requireEnvVariables } = require('arb-shared-dependencies')
 
@@ -21,11 +22,35 @@ export const getUsdtAddress = async (network: any, deploysJson: { Usdt: string }
   if (network.name === 'local') {
     const UsdtfToken = await ethers.getContractFactory("UsdtfToken");
     const usdtfToken = await UsdtfToken.deploy(web3.utils.toBN(10_000).mul(web3.utils.toBN(1e6)).toString());
-    console.log('Dummy USDT deployed: ', usdtfToken.address)
+    console.log('🚀 Dummy USDT deployed: ', usdtfToken.address)
     usdtfAddress = usdtfToken.address
   }
   if (!usdtfAddress) {
     throw "usdtfAddress is required"
   }
   return usdtfAddress
+}
+
+export const writeDeploys = (networkName, data) => {
+  fs.writeFileSync(`./deploys/${networkName}.json`, JSON.stringify(data, undefined, 2));
+}
+
+export const readDeploys = (networkName) => {
+  const fileName = `./deploys/${networkName}.json`
+
+  if (!fs.existsSync(fileName)) {
+    console.log("Writing deploy file at ", fileName);
+    fs.writeFileSync(fileName, '{}');
+  }
+
+  let deploysJson;
+
+  try {
+    const data = fs.readFileSync(fileName, {encoding:"utf-8"});
+    deploysJson = JSON.parse(data);
+  } catch (err) {
+    console.log(err);
+    process.exit(1);
+  }
+  return deploysJson
 }
