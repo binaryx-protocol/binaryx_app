@@ -13,7 +13,7 @@ async function main() {
   }
 
   const Controller = await ethers.getContractFactory("Controller");
-  const controller = await upgrades.deployProxy(Controller, [deploysJson.SeriesMaster]);
+  const controller = await upgrades.deployProxy(Controller, [deploysJson.AssetsManager, deploysJson.SeriesMaster]);
   const sc = await controller.deployed();
 
   console.log("🚀 Controller Deployed:", sc.address);

@@ -4,8 +4,6 @@ const { network, upgrades, ethers } = require("hardhat");
 async function main() {
   let deploysJson;
 
-  fs.writeFileSync(`./deploys/${network.name}.json`, '{}');
-
   try {
     const data = fs.readFileSync(`./deploys/${network.name}.json`, {encoding:"utf-8"});
     deploysJson = JSON.parse(data);

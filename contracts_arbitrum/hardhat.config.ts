@@ -5,19 +5,28 @@ import "hardhat-gas-reporter"
 require('@nomiclabs/hardhat-ethers')
 require("@nomiclabs/hardhat-web3");
 require('@openzeppelin/hardhat-upgrades');
+require('dotenv').config()
 const { hardhatConfig } = require('arb-shared-dependencies')
 
 const config: HardhatUserConfig = {
   ...hardhatConfig,
   networks: {
-    ...hardhatConfig.networks,
     local: {
       gasLimit: 1_000_000_000_000,
       url: "http://127.0.0.1:8545",
-      accounts: [
-        `0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80`,
-        '0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d'
-      ],
+      accounts: process.env['DEVNET_PRIVKEY'] ? [process.env['DEVNET_PRIVKEY']] : [],
+    },
+    arbitrum_main: {
+      // gas: 2100000,
+      gasLimit: 2100000,
+      url: '',
+      accounts: process.env['DEVNET_PRIVKEY'] ? [process.env['DEVNET_PRIVKEY']] : [],
+    },
+    arbitrum_goerli: {
+      // gas: 2100000,
+      gasLimit: 2100000,
+      url: 'https://goerli-rollup.arbitrum.io/rpc',
+      accounts: process.env['DEVNET_PRIVKEY'] ? [process.env['DEVNET_PRIVKEY']] : [],
     },
   }
 }
