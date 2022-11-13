@@ -10,7 +10,3 @@ export const onlyFields = <T>(object): T => Object.entries(object).reduce((acc, 
 }, {}) as T
 
 const isObject = (v) => typeof v === 'object' && Object.keys(v).some(k => !k.match(/^[0-9]+$/))
-
-export const bnToInt = (bn) => {
-  return parseInt(bn._hex, 16)
-}

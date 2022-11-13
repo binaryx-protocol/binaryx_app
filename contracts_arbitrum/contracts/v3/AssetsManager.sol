@@ -9,7 +9,7 @@ import "../IAssetsTokenManager.sol";
 import "../IAssetsInvestmentsManager.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract AssetsToken is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestmentsManager {
+contract AssetsManager is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestmentsManager {
   using Counters for Counters.Counter;
 
   uint8 public constant STATUS_UPCOMING = 1;

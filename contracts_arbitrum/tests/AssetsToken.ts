@@ -1,43 +1,14 @@
 import { loadFixture, time } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
 import hre, {ethers, web3} from "hardhat";
-import {expectBn} from "../testUtils";
-import {onlyFields} from "../objectUtils";
+import {expectBn} from "../testUtils/testUtils";
+import {onlyFields} from "../testUtils/objectUtils";
+import {AssetInput, AssetStatuses} from "../testUtils/types";
 
-enum AssetStatuses {
-  'upcoming' = 1,
-  'active'= 2,
-  'sold_out'= 3,
-  'disabled'= 4,
-}
-
-type AssetInput = {
-  name: string,
-  symbol: string,
-  title: string,
-  description: string,
-  status: number,
-  tokenInfo_totalSupply: number,
-  tokenInfo_apr: number,
-  tokenInfo_tokenPriceDe6: number,
-  propertyInfo_images: string,
-}
-
-const defaultAttrs = (): AssetInput => ({
-  name: 'Name',
-  symbol: 'SYM',
-  title: 'Title',
-  description: 'Description is a long story to tell you about the asset. Let\'s write it another time.',
-  status: AssetStatuses.upcoming,
-  tokenInfo_totalSupply: 10_000, // decimals = 0
-  tokenInfo_apr: 10, // percents
-  tokenInfo_tokenPriceDe6: 50 * 1e6, // decimals = 6
-  propertyInfo_images: 'https://ns.clubmed.com/dream/RESORTS_3T___4T/Asie_et_Ocean_indien/Bali/169573-1lng9n8nnf-swhr.jpg,https://api.time.com/wp-content/uploads/2022/07/Worlds-Greatest-Places-2022-BaliIndonesia.jpeg'
-})
 
 const createMany = async (sc, count, attrs: Partial<AssetInput> = {}) => {
   for (let i =0; i<count;i++) {
-    const a = { ...defaultAttrs(), ...attrs }
+    const a = { ...defaultAssetAttrs(), ...attrs }
     await sc.createAsset(...Object.values(a))
   }
 }

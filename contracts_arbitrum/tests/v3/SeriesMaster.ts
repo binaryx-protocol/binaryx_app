@@ -1,28 +1,20 @@
 import { loadFixture, time } from "@nomicfoundation/hardhat-network-helpers";
 import { expect } from "chai";
-import hre, {ethers, upgrades, web3} from "hardhat";
-import {expectBn} from "../../testUtils";
+import {expectBn} from "../../testUtils/testUtils";
+import {seriesMasterFixture} from "../../testUtils/fixtures";
 
 describe("SeriesMaster", function () {
-  async function deployFixture() {
-    const [owner, wallet2] = await ethers.getSigners();
-
-    const SeriesMaster = await ethers.getContractFactory("SeriesMaster");
-    const seriesMaster = await upgrades.deployProxy(SeriesMaster, ['https://binaryx.com/dashpanel/entity/']);
-
-    return { seriesMaster, owner, wallet2 };
-  }
 
   describe("Deployment", function () {
     it("Initialize Master", async function () {
-      const { seriesMaster, owner } = await loadFixture(deployFixture);
+      const { seriesMaster, owner } = await loadFixture(seriesMasterFixture);
 
       expect(await seriesMaster.name()).to.equal("Binaryx Series");
       expect(await seriesMaster.symbol()).to.equal("BNRXS");
       expect(await seriesMaster.owner()).to.equal(owner.address);
     });
     it("Creating series", async function () {
-      const { seriesMaster, owner } = await loadFixture(deployFixture);
+      const { seriesMaster, owner } = await loadFixture(seriesMasterFixture);
 
       expectBn(
         await seriesMaster.seriesCount()
@@ -36,7 +28,7 @@ describe("SeriesMaster", function () {
       expect(series.name).to.eq('New Entity')
     });
     it("Closing series", async function () {
-      const { seriesMaster, owner } = await loadFixture(deployFixture);
+      const { seriesMaster, owner } = await loadFixture(seriesMasterFixture);
       await seriesMaster.createSeries(owner.address, "New Entity")
 
       expectBn(
