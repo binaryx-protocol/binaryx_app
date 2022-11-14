@@ -17,6 +17,11 @@ contract Controller is Initializable, OwnableUpgradeable {
     __Ownable_init();
   }
 
+  function updateDeps(address assetsManager, address payable seriesMaster) onlyOwner public {
+    _assetsManager = AssetsManager(assetsManager);
+    _seriesMaster = SeriesMaster(seriesMaster);
+  }
+
   function listAsset(
     string memory name,
     string memory symbol,
