@@ -33,6 +33,7 @@ export type RpcConfig = {
   usdtL1Address: string
   usdtL2Address: string
   assetsTokenAddress: string
+  controllerAddress: string
 }
 
 type DeploysAddresses = {
@@ -69,6 +70,7 @@ const arbGoerli = (deploys: DeploysAddresses): RpcConfig => ({
   assetsTokenAddress: deploys.AssetsManager,
   usdtL1Address: '', // not used yet
   usdtL2Address: deploys.Usdt,
+  controllerAddress: deploys.Controller,
 })
 
 const localhost = (deploys: DeploysAddresses): RpcConfig => ({
@@ -97,6 +99,7 @@ const localhost = (deploys: DeploysAddresses): RpcConfig => ({
   assetsTokenAddress: deploys.AssetsManager,
   usdtL1Address: '', // locally we do not connect to L1
   usdtL2Address: deploys.Usdt, // depends on env // TODO - move into env vars...
+  controllerAddress: deploys.Controller,
 })
 
 

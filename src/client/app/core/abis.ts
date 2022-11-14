@@ -61,3 +61,17 @@ export const erc20Abi = [
   // An event triggered whenever anyone transfers to someone else
   "event Transfer(address indexed from, address indexed to, uint amount)"
 ];
+
+export const controllerAbi = [
+  `function listAsset(
+    string memory name,
+    string memory symbol,
+    string memory title,
+    string memory description,
+    uint8 status,
+    uint256 tokenInfo_totalSupply,
+    uint256 tokenInfo_apr,
+    uint256 tokenInfo_tokenPriceDe6,
+    string memory propertyInfo_images
+  )`
+];
