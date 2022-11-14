@@ -110,15 +110,15 @@ export const $rpcConfig = atom<RpcConfig | null>((get) => {
       'localhost': 'localhost',
       'i2.binaryx.com': 'arbGoerli',
     }[window.location.hostname]
-  const configNameFromFF = get($featureFlags).FF_RPC_NAME
-  const rpcName = configNameFromFF || configNameByDomain
+  const rpcName = get($featureFlags).FF_RPC_NAME || configNameByDomain
   console.log('Using RPC: ' + rpcName)
   if (rpcName == 'localhost') {
-    return localhost(localhostDeploys)
+    return localhost(localhostDeploys as unknown as DeploysAddresses)
   }
   if (rpcName == 'arbGoerli') {
-    return arbGoerli(arbitrumGoerliDeploys)
+    return arbGoerli(arbitrumGoerliDeploys as unknown as DeploysAddresses)
   }
+  return null
 })
 
 export const $publicRpcProvider = atom<ethers.providers.JsonRpcProvider | null>((get) => {
