@@ -1,6 +1,8 @@
 import { atom } from 'jotai'
 import {ethers} from "ethers";
 import {$featureFlags} from "./featureFlagsModel";
+import localhostDeploys from "../../../../../contracts_arbitrum/deploys/localhost.json";
+import arbitrumGoerliDeploys from "../../../../../contracts_arbitrum/deploys/arbitrumGoerli.json";
 
 type NewRpcChain = {
   chainId: string
@@ -33,8 +35,16 @@ export type RpcConfig = {
   assetsTokenAddress: string
 }
 
+type DeploysAddresses = {
+  Usdt: string
+  AssetsManager: string
+  SeriesManager: string
+  Controller: string
+  BNRX: string
+}
+
 // static
-const l2Goerli: RpcConfig = {
+const arbGoerli = (deploys: DeploysAddresses): RpcConfig => ({
   chain: {
     chainId: `0x${Number(421613).toString(16)}`,
     blockExplorerUrls: ['https://goerli-rollup-explorer.arbitrum.io/'],
@@ -50,18 +60,18 @@ const l2Goerli: RpcConfig = {
   bnrxRootToken: {
     type: 'ERC20',
     options: {
-      address: '0x7c5180280464edddb48464112bb06a4a136cbdbb', // NOT REAL YET
+      address: deploys.BNRX, // NOT REAL YET
       symbol: 'BNRX',
       decimals: 18,
       image: '',
     },
   },
-  assetsTokenAddress: '0x721BCc10F12dc1E456aa882A9D10aF4570BaCaC1',
+  assetsTokenAddress: deploys.AssetsManager,
   usdtL1Address: '', // not used yet
-  usdtL2Address: '0xE026Ff21848c092C75775a0EfF84da486FD58cc9',
-}
+  usdtL2Address: deploys.Usdt,
+})
 
-const localhost: RpcConfig = {
+const localhost = (deploys: DeploysAddresses): RpcConfig => ({
   chain: {
     // chainId: `0x${Number(421611).toString(16)}`,
     chainId: `0x${Number(31337).toString(16)}`,
@@ -78,21 +88,17 @@ const localhost: RpcConfig = {
   bnrxRootToken: {
     type: 'ERC20',
     options: {
-      address: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
+      address: deploys.BNRX,
       symbol: 'BNRX',
       decimals: 18,
       image: '',
     },
   },
-  assetsTokenAddress: '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9',
+  assetsTokenAddress: deploys.AssetsManager,
   usdtL1Address: '', // locally we do not connect to L1
-  usdtL2Address: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0', // depends on env // TODO - move into env vars...
-}
+  usdtL2Address: deploys.Usdt, // depends on env // TODO - move into env vars...
+})
 
-const all = {
-  localhost,
-  l2Goerli,
-}
 
 // computed
 export const $rpcConfig = atom<RpcConfig | null>((get) => {
@@ -102,12 +108,17 @@ export const $rpcConfig = atom<RpcConfig | null>((get) => {
   const configNameByDomain =
     {
       'localhost': 'localhost',
-      'i2.binaryx.com': 'l2Goerli',
+      'i2.binaryx.com': 'arbGoerli',
     }[window.location.hostname]
   const configNameFromFF = get($featureFlags).FF_RPC_NAME
-  const rpcName = (configNameFromFF || configNameByDomain) as keyof typeof all
+  const rpcName = configNameFromFF || configNameByDomain
   console.log('Using RPC: ' + rpcName)
-  return all[rpcName] || null
+  if (rpcName == 'localhost') {
+    return localhost(localhostDeploys)
+  }
+  if (rpcName == 'arbGoerli') {
+    return arbGoerli(arbitrumGoerliDeploys)
+  }
 })
 
 export const $publicRpcProvider = atom<ethers.providers.JsonRpcProvider | null>((get) => {

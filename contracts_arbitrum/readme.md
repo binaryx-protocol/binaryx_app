@@ -10,14 +10,13 @@ cp .env.example .env
 # Deploy locally
 
 ```
-npx hardhat run scripts/v3/deployAssetsManager.ts --network local
-npx hardhat run scripts/v3/deploySeriesMaster.ts --network local
-npx hardhat run scripts/v3/deployController.ts --network local
+npx hardhat run scripts/v3/deployAssetsManager.ts --network localhost
+npx hardhat run scripts/v3/deploySeriesMaster.ts --network localhost
+npx hardhat run scripts/v3/deployController.ts --network localhost
 ```
 
-# Deploy to L2
+# Deploy to Staging (Arbitrum Goerli)
 
 ```
-npx hardhat compile
-npx hardhat run scripts/BNRXDeploy.js --network l2
+--//-- --network arbitrumGoerli
 ```

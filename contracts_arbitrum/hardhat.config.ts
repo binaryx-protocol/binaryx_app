@@ -11,7 +11,7 @@ const { hardhatConfig } = require('arb-shared-dependencies')
 const config: HardhatUserConfig = {
   ...hardhatConfig,
   networks: {
-    local: {
+    localhost: {
       gasLimit: 1_000_000_000_000,
       url: "http://127.0.0.1:8545",
       accounts: process.env['DEVNET_PRIVKEY'] ? [process.env['DEVNET_PRIVKEY']] : [],
