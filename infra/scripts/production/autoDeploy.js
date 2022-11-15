@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
-const {autoReleaseDocker} = require("../../libs/misc");
 const {config} = require("../../src/config");
-const {deployProduction} = require("../../src/docker");
+const {deployProduction, appAutoReleaseDocker} = require("../../src/docker");
+const {requireSlack, sendSlackMessage} = require("../../libs/slack");
 
 async function  main() {
-    const { imageTag } = await autoReleaseDocker(config)
+  requireSlack()
+  await sendSlackMessage({ channel: '#dev-deploys', text: `Production: building...` });
+    const { imageTag } = await appAutoReleaseDocker(config)
     await deployProduction(imageTag)
 }
 

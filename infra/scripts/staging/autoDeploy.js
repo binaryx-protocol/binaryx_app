@@ -1,17 +1,13 @@
 #!/usr/bin/env node
 
-const {autoReleaseDocker} = require("../../libs/misc");
 const {config} = require("../../src/config");
-const {deployStaging} = require("../../src/docker");
+const {deployStaging, appAutoReleaseDocker} = require("../../src/docker");
 const {requireSlack, sendSlackMessage} = require("../../libs/slack");
 
 async function  main() {
   requireSlack()
-  await sendSlackMessage({ channel: '#dev-deploys', text: `Staging: building...` });
-  const { imageTag, who } = await autoReleaseDocker(config)
-  await sendSlackMessage({ channel: '#dev-deploys', text: `Staging: deploying. (${imageTag} by ${who})` })
+  const { imageTag } = await appAutoReleaseDocker(config)
   await deployStaging(imageTag)
-  await sendSlackMessage({ channel: '#dev-deploys', text: `Staging: success! (${imageTag} by ${who})` })
 }
 
 main()
