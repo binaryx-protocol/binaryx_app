@@ -3,6 +3,7 @@ node_modules
 .vscode
 dist
 contracts_arbitrum
+!contracts_arbitrum/deploys
 contracts_near
 cypress
 infra
