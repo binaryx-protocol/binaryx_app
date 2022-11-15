@@ -16,8 +16,6 @@ const sendSlackMessage = async ({ channel, text }) => {
     channel,
     text,
   }, { headers: { authorization: `Bearer ${slackToken}` } });
-
-  console.log('Done', res.data);
 }
 
 module.exports = {

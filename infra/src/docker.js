@@ -35,13 +35,8 @@ const getSign = async (imageTag) => {
 }
 
 async function deployStaging(imageTag){
-    const sign = await getSign(imageTag)
-    try {
-        await deployScalableImage(config, servers['i2'], imageTag, '.i2_app_env')
-    } catch (e) {
-        console.log(config, { text: `i2: deploy -> critical error: ${e.toString()}. ${sign}` })
-        console.log('e', e)
-    }
+    // const sign = await getSign(imageTag)
+    await deployScalableImage(config, servers['i2'], imageTag, '.i2_app_env')
 }
 
 async function deployProduction(imageTag){
