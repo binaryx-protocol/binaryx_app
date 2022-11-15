@@ -1,3 +1,5 @@
+require('dotenv').config({ path: __dirname + '/../.env' })
+
 const axios = require('axios');
 
 const requireSlack = () => {
