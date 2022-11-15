@@ -19,7 +19,7 @@ export const $assetComputed = atom<UiAssetComputed | null>((get) => {
   const tokensTotalSupply = asset.tokenInfo_totalSupply.toNumber()
   const tokensLeft = assetMetaData.tokensLeft.toNumber()
   const tokensSold = tokensTotalSupply - tokensLeft
-  const progress = (tokensSold / tokensTotalSupply)
+  const progress = (tokensSold / tokensTotalSupply) * 100
   const result = {
     tokensSold,
     tokensLeft,
