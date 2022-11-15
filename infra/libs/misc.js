@@ -160,7 +160,7 @@ async function autoReleaseDocker(config){
     if (!isImageExists) {
         await releaseDocker(imageTag, config)
     }
-    return { imageTag }
+    return { imageTag, who: await machineUserAndId() }
 }
 
 function replaceShell(cmd) {
