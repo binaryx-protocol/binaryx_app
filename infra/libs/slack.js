@@ -10,6 +10,7 @@ const requireSlack = () => {
 }
 
 const sendSlackMessage = async ({ channel, text }) => {
+  const slackToken = process.env.SLACK_PRIVATE_KEY;
   const url = 'https://slack.com/api/chat.postMessage';
   const res = await axios.post(url, {
     channel,
