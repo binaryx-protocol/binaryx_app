@@ -16,13 +16,13 @@ const config: HardhatUserConfig = {
       url: "http://127.0.0.1:8545",
       accounts: process.env['DEVNET_PRIVKEY'] ? [process.env['DEVNET_PRIVKEY']] : [],
     },
-    arbitrum_main: {
+    arbitrumMain: {
       // gas: 2100000,
       gasLimit: 2100000,
       url: '',
       accounts: process.env['DEVNET_PRIVKEY'] ? [process.env['DEVNET_PRIVKEY']] : [],
     },
-    arbitrum_goerli: {
+    arbitrumGoerli: {
       // gas: 2100000,
       gasLimit: 2100000,
       url: 'https://goerli-rollup.arbitrum.io/rpc',
