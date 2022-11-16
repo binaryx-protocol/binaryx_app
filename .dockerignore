@@ -1,3 +1,11 @@
 node_modules
 .next
+.vscode
 dist
+contracts_arbitrum
+!contracts_arbitrum/deploys
+contracts_near
+cypress
+infra
+gitignored
+

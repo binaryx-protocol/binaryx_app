@@ -27,6 +27,7 @@ export const $usdtSmartContractSigned = atom<UsdtManager>((get) => {
   return smartContract.connect(provider.getSigner()) as UsdtManager
 })
 
+// TODO move ?
 export const $usdtBalanceAsync = atom<Promise<number>>(async (get) => {
   const isAccountConnected = get($isAccountConnected)
   if (!isAccountConnected) {
@@ -37,3 +38,15 @@ export const $usdtBalanceAsync = atom<Promise<number>>(async (get) => {
 })
 
 export const $usdtBalance = loadable($usdtBalanceAsync)
+//
+export const $usdtBnrxBalanceAsync = atom<Promise<number>>(async (get) => {
+  const isAccountConnected = get($isAccountConnected)
+  if (!isAccountConnected) {
+    return 0;
+  }
+  const sc = get($usdtSmartContractPublic)
+  const rpcConfig = get($rpcConfig) as RpcConfig
+  return (await sc.balanceOf(rpcConfig.assetsTokenAddress)).toNumber() / 1e6
+})
+
+export const $usdtBnrxBalance = loadable($usdtBnrxBalanceAsync)

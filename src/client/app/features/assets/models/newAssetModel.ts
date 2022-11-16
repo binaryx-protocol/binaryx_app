@@ -8,7 +8,7 @@ import {
 } from "../types";
 import {assetValidator} from "./assetValidator";
 import {paths} from "../../../../../../pkg/paths";
-import { $assetsTokenSmartContractSigned, AssetManager} from "./smartContractsFactory";
+import {$controllerSmartContractSigned} from "./smartContractsFactory";
 
 const defaultAttrs = (): UiNewAssetFormValues => ({
   name: '',
@@ -37,8 +37,9 @@ const $doCreateAsset = atom(null, async (get, set, form: UiNewAssetForm) => {
     ...form.values,
     tokenInfo_tokenPriceDe6: form.values.tokenInfo_tokenPriceDe6 * 1e6
   }
-  const manager = get($assetsTokenSmartContractSigned) as AssetManager
-  await manager.createAsset(...Object.values(formValues));
+  const manager = get($controllerSmartContractSigned)
+  // @ts-ignore
+  await manager?.listAsset(...Object.values(formValues));
   alert("You will see your asset soon. Please, refresh the page.");
   router.push(paths.listAssets());
 })

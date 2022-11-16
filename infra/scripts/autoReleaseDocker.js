@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const {autoReleaseDocker} = require("../libs/misc");
 const {config} = require("../src/config");
+const {appAutoReleaseDocker} = require("../src/docker");
 
-autoReleaseDocker(config)
+appAutoReleaseDocker(config)

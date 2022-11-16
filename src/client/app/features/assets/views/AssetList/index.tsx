@@ -24,7 +24,7 @@ const AssetList = ({ assets, balances }: Props) => {
       {
         assets && assets.map((blockchainAsset, index) => {
           const collectedNumber = blockchainAsset.tokenInfo_totalSupply.toNumber() - balances[index].toNumber()
-          const collectedPercentage = collectedNumber / blockchainAsset.tokenInfo_totalSupply.toNumber()
+          const collectedPercentage = collectedNumber / blockchainAsset.tokenInfo_totalSupply.toNumber() * 100
           return (
             <div key={index} className={s.gridItem}>
               <AssetListItem

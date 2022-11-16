@@ -5,18 +5,18 @@ npm i
 cp .env.example .env
 ```
 
-**Important!**: Update DEVNET_PRIVKEY in .env
+**Important:** Update DEVNET_PRIVKEY in .env
 
 # Deploy locally
 
 ```
-npx hardhat compile
-npx hardhat run scripts/BNRXDeploy.js 
+npx hardhat run scripts/v3/deployAssetsManager.ts --network localhost
+npx hardhat run scripts/v3/deploySeriesMaster.ts --network localhost
+npx hardhat run scripts/v3/deployController.ts --network localhost
 ```
 
-# Deploy to L2
+# Deploy to Staging (Arbitrum Goerli)
 
 ```
-npx hardhat compile
-npx hardhat run scripts/BNRXDeploy.js --network l2
+--//-- --network arbitrumGoerli
 ```

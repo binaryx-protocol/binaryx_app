@@ -1,8 +1,9 @@
 "use strict";
 
-const {loginAndStopImage, runRemotely, waitForHealthyRemotely,color, machineUserAndId} = require("../libs/misc");
+const {loginAndStopImage, runRemotely, waitForHealthyRemotely,color, machineUserAndId, autoReleaseDocker, getCommitHash} = require("../libs/misc");
 const {config} = require("./config");
 const {servers} = require("./servers");
+const {sendSlackMessage} = require("../libs/slack");
 
 const getDockerRunCmdScalableVersion = (config, repositoryTag, envFileName) => `
 sudo docker run -it -d --rm\\
@@ -34,24 +35,37 @@ const getSign = async (imageTag) => {
     return `(${imageTag} by ${me})`
 }
 
+const notify = async (text) => await sendSlackMessage({ channel: '#dev-deploys', text })
+
 async function deployStaging(imageTag){
-    const sign = await getSign(imageTag)
+    const who = await getSign(imageTag)
     try {
-        await deployScalableImage(config, servers['i2'], imageTag, '.i2_app_env')
+      await notify(`Staging: deploying... (${imageTag} by ${who})`)
+      await deployScalableImage(config, servers['i2'], imageTag, '.i2_app_env')
+      await notify(`Staging: successfully deployed! (${imageTag} by ${who})`)
     } catch (e) {
-        console.log(config, { text: `i2: deploy -> critical error: ${e.toString()}. ${sign}` })
-        console.log('e', e)
+      await notify(`Staging: critical error during deployment (${who}). Message: ${e.toString()}`)
+      throw e;
     }
 }
 
 async function deployProduction(imageTag){
-    const sign = await getSign(imageTag)
+    const who = await getSign(imageTag)
     try {
+      await notify(`Production: deploying... (${imageTag} by ${who})`)
         await deployScalableImage(config, servers['i1'], imageTag, '.i1_app_env')
+      await notify(`Production: successfully deployed! (${imageTag} by ${who})`)
     } catch (e) {
-        console.log(config, { text: `i1: deploy -> critical error: ${e.toString()}. ${sign}` })
-        console.log('e', e)
+      await notify(`Production: critical error during deployment (${who}). Message: ${e.toString()}`)
+      throw e;
     }
+}
+
+async function appAutoReleaseDocker(config) {
+  const who = await machineUserAndId()
+  const tag = await getCommitHash()
+  await notify(`...building an image ${tag} by ${who}`)
+  return await autoReleaseDocker(config)
 }
 
 async function serverInfo(server, config, envFile){
@@ -68,4 +82,5 @@ module.exports = {
     deployStaging,
     deployProduction,
     serverInfo,
+  appAutoReleaseDocker,
 };

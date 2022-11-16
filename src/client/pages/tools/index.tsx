@@ -1,9 +1,12 @@
 import {DefaultLayout} from "../../app/shared/layout/DefaultLayout";
-import {MintUsdtController} from "../../app/features/tools/controllers/MintUsdtController";
+import {CompanyBalanceController, MintUsdtController} from "../../app/features/tools";
 
 const ToolsPage = () => {
   return (
-    <MintUsdtController />
+    <>
+      <MintUsdtController />
+      <CompanyBalanceController />
+    </>
   )
 };
 
