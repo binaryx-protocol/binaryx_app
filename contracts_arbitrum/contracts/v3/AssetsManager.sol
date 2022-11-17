@@ -142,7 +142,7 @@ contract AssetsManager is ERC1155, Ownable, IAssetsTokenManager, IAssetsInvestme
       _investments[msg.sender][assetId].accumulatedAt = block.timestamp;
     } else {
       _investmentsIds[msg.sender].push(assetId);
-      _investments[msg.sender][assetId] = Investment(assetId, 0, block.timestamp - 60*60*24*30);
+      _investments[msg.sender][assetId] = Investment(assetId, 0, block.timestamp); //  - 60*60*24*30
     }
   }
 
