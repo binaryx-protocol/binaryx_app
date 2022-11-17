@@ -165,6 +165,20 @@ describe("AssetsManager", function () {
         myRewardsPerAsset[0].length
       ).to.eq(2)
     });
+    it.only("should show only mine assets", async function () {
+      const { sc, otherAccount, owner, usdtfToken } = await loadFixture(deployFixture);
+      await createMany(sc, 5)
+
+      await usdtfToken.approve(sc.address, 100 * usdtDecimals)
+      await sc.investUsingUsdt(1, 1)
+
+      await usdtfToken.transfer(otherAccount.address, 100 * usdtDecimals)
+      await usdtfToken.connect(otherAccount).approve(sc.address, 100 * usdtDecimals)
+      await sc.connect(otherAccount).investUsingUsdt(2, 1)
+
+      let myRewardsPerAsset = await sc.getMyRewardsPerAsset();
+      console.log('myRewardsPerAsset', myRewardsPerAsset)
+    });
   });
 
   // describe("updateAsset", function () {
