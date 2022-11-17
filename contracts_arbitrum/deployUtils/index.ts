@@ -13,15 +13,15 @@ export const validateEnvVars = (networkName) => {
 
 export const getUsdtAddress = async (network: any, deploysJson: { Usdt: string }) => {
   let usdtfAddress;
-  if (network.name === 'arbitrumMain' || network.name === 'arbitrumGoerli') {
+  if (network.name === 'arbitrumMain') {
     if (!deploysJson.Usdt) {
       throw "deploysJson.Usdt is required! This is the USDT smart contract address. Please put it into " + `./deploys/${network.name}.json file.`
     }
     usdtfAddress = deploysJson.Usdt
   }
-  if (network.name === 'localhost') {
+  if (network.name === 'localhost' || network.name === 'arbitrumGoerli') {
     const UsdtfToken = await ethers.getContractFactory("UsdtfToken");
-    const usdtfToken = await UsdtfToken.deploy(web3.utils.toBN(10_000).mul(web3.utils.toBN(1e6)).toString());
+    const usdtfToken = await UsdtfToken.deploy(web3.utils.toBN(1_000_000).mul(web3.utils.toBN(1e6)).toString());
     console.log('🚀 Dummy USDT deployed: ', usdtfToken.address)
     usdtfAddress = usdtfToken.address
   }

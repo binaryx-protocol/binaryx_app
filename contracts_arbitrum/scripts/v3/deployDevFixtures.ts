@@ -29,7 +29,7 @@ const defaultAttrs2 = (): UiNewAssetFormValues => ({
   tokenInfo_totalSupply: 20000, // decimals = 0
   tokenInfo_apr: 10, // percents
   tokenInfo_tokenPriceDe6: 25 * 1e6,
-  propertyInfo_images: 'https://cdn.villa-bali.com/cache/1024/villas/villa-camilla-2/villa-camilla-2-34d3ed7d-6c7c-4dec-a789-431778c5f5b8-633a5e3c55b6a.jpg,https://cdn.villa-bali.com/cache/1024/villas/villa-camilla-2/villa-camilla-2-br-1-1-633a5e45d3f96.jpg'
+  propertyInfo_images: 'https://cdn.villa-bali.com/cache/1024/villas/villa-camilla-2/villa-camilla-2-34d3ed7d-6c7c-4dec-a789-431778c5f5b8-633a5e3c55b6a.jpg'
 })
 const defaultAttrs3 = (): UiNewAssetFormValues => ({
   name: 'Villa Lapis 1',
@@ -77,13 +77,12 @@ const main = async () => {
   const usdt = await UsdtfToken.attach(usdtAddress)
 
   await assetsToken.createAsset(...Object.values(defaultAttrs1()))
-  await usdt.approve(assetsToken.address, 500 * 1e6)
-  await assetsToken.investUsingUsdt(1, 5)
-
   await assetsToken.createAsset(...Object.values(defaultAttrs2()))
   await assetsToken.createAsset(...Object.values(defaultAttrs3()))
   await assetsToken.createAsset(...Object.values(defaultAttrs4()))
 
+  await usdt.approve(assetsToken.address, 500 * 1e6)
+  await assetsToken.investUsingUsdt(1, 5)
   await usdt.transfer(assetsToken.address, 500 * 1e6)
 }
 
