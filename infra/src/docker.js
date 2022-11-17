@@ -32,7 +32,7 @@ const deployScalableImage = async (config, server, imageTag, envFileName) => {
 
 const getSign = async (imageTag) => {
     const me = await machineUserAndId()
-    return `(${imageTag} by ${me})`
+    return `${imageTag} by ${me}`
 }
 
 const notify = async (text) => await sendSlackMessage({ channel: '#dev-deploys', text })
