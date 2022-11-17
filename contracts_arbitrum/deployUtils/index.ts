@@ -13,7 +13,7 @@ export const validateEnvVars = (networkName) => {
 
 export const getUsdtAddress = async (network: any, deploysJson: { Usdt: string }) => {
   let usdtfAddress;
-  if (network.name === 'arbitrumMain' && network.name === 'arbitrumGoerli') {
+  if (network.name === 'arbitrumMain' || network.name === 'arbitrumGoerli') {
     if (!deploysJson.Usdt) {
       throw "deploysJson.Usdt is required! This is the USDT smart contract address. Please put it into " + `./deploys/${network.name}.json file.`
     }

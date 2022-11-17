@@ -18,5 +18,7 @@ npx hardhat run scripts/v3/deployController.ts --network localhost
 # Deploy to Staging (Arbitrum Goerli)
 
 ```
---//-- --network arbitrumGoerli
+npx hardhat run scripts/v3/deployAssetsManager.ts --network arbitrumGoerli
+npx hardhat run scripts/v3/deploySeriesMaster.ts --network arbitrumGoerli
+npx hardhat run scripts/v3/deployController.ts --network arbitrumGoerli
 ```
