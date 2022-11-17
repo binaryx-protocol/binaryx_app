@@ -45,7 +45,7 @@ type DeploysAddresses = {
 }
 
 // static
-const arbGoerli = (deploys: DeploysAddresses): RpcConfig => ({
+const arbitrumGoerli = (deploys: DeploysAddresses): RpcConfig => ({
   chain: {
     chainId: `0x${Number(421613).toString(16)}`,
     blockExplorerUrls: ['https://goerli-rollup-explorer.arbitrum.io/'],
@@ -111,16 +111,19 @@ export const $rpcConfig = atom<RpcConfig | null>((get) => {
   const configNameByDomain =
     {
       'localhost': 'localhost',
-      'i2.binaryx.com': 'arbGoerli',
+      'i2.binaryx.com': 'arbitrumGoerli',
     }[window.location.hostname]
   const rpcName = get($featureFlags).FF_RPC_NAME || configNameByDomain
-  console.log('Using RPC: ' + rpcName)
+  console.debug('Using RPC: ' + rpcName)
   if (rpcName == 'localhost') {
+    console.debug('localhostDeploys', localhostDeploys)
     return localhost(localhostDeploys as unknown as DeploysAddresses)
   }
-  if (rpcName == 'arbGoerli') {
-    return arbGoerli(arbitrumGoerliDeploys as unknown as DeploysAddresses)
+  if (rpcName == 'arbitrumGoerli') {
+    console.debug('arbitrumGoerliDeploys', arbitrumGoerliDeploys)
+    return arbitrumGoerli(arbitrumGoerliDeploys as unknown as DeploysAddresses)
   }
+  console.error('Unknown RPC name:', rpcName)
   return null
 })
 

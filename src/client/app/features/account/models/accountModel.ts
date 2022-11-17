@@ -77,7 +77,6 @@ export const $accountInfo = atom<UiAccountInfo | null>((get) => {
 export const $doLoadMyRewards = atom(null, async (get, set) => {
   await waitFor(() => !!get($assetsTokenSmartContractSigned), 3)
 
-  console.log('FAIL pass')
   const sc = get($assetsTokenSmartContractSigned) as AssetManager
   const response = await sc.getMyRewardsPerAsset();
   set($apiRewardsResponse, response);
