@@ -6,9 +6,8 @@ const {requireSlack, sendSlackMessage} = require("../../libs/slack");
 
 async function  main() {
   requireSlack()
-  await sendSlackMessage({ channel: '#dev-deploys', text: `Production: building...` });
-    const { imageTag } = await appAutoReleaseDocker(config)
-    await deployProduction(imageTag)
+  const { imageTag } = await appAutoReleaseDocker(config)
+  await deployProduction(imageTag)
 }
 
 main()

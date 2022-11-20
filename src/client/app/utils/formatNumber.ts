@@ -8,5 +8,5 @@ function formatLongNumber(number: number | string, options?: { digits?: number, 
 
 export default formatLongNumber;
 
-
-export const truncuteCents = (v: number): number => Math.floor(v*100) / 100
+export const truncateCents = (v: number): number => Math.floor(v*100) / 100
+export const truncatePercentage = (v: number): number => Math.floor(v*1000) / 1000

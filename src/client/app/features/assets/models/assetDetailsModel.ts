@@ -4,6 +4,7 @@ import {BcAsset, BcAssetMetaData, UiAssetComputed} from "../types";
 import {waitFor} from "../../../utils/pageLoadUtiils";
 import {RpcConfig} from "../../../core/models/rpcConfigModel";
 import {$assetsTokenSmartContractPublic, AssetManager} from "./smartContractsFactory";
+import {truncatePercentage} from "../../../utils/formatNumber";
 
 // stores
 export const $asset = atom(null) as PrimitiveAtom<BcAsset | null>;
@@ -19,7 +20,7 @@ export const $assetComputed = atom<UiAssetComputed | null>((get) => {
   const tokensTotalSupply = asset.tokenInfo_totalSupply.toNumber()
   const tokensLeft = assetMetaData.tokensLeft.toNumber()
   const tokensSold = tokensTotalSupply - tokensLeft
-  const progress = (tokensSold / tokensTotalSupply) * 100
+  const progress = truncatePercentage((tokensSold / tokensTotalSupply) * 100)
   const result = {
     tokensSold,
     tokensLeft,

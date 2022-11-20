@@ -32,39 +32,39 @@ const deployScalableImage = async (config, server, imageTag, envFileName) => {
 
 const getSign = async (imageTag) => {
     const me = await machineUserAndId()
-    return `(${imageTag} by ${me})`
+    return `${imageTag} by ${me}`
 }
 
 const notify = async (text) => await sendSlackMessage({ channel: '#dev-deploys', text })
 
 async function deployStaging(imageTag){
-    const who = await getSign(imageTag)
+    const sign = await getSign(imageTag)
     try {
-      await notify(`Staging: deploying... (${imageTag} by ${who})`)
+      await notify(`🙌 Staging: deploying... (${sign})`)
       await deployScalableImage(config, servers['i2'], imageTag, '.i2_app_env')
-      await notify(`Staging: successfully deployed! (${imageTag} by ${who})`)
+      await notify(`🚀 Staging: successfully deployed! (${sign})`)
     } catch (e) {
-      await notify(`Staging: critical error during deployment (${who}). Message: ${e.toString()}`)
+      await notify(`🚨 Staging: critical error during deployment (${sign}). Message: ${e.toString()}`)
       throw e;
     }
 }
 
 async function deployProduction(imageTag){
-    const who = await getSign(imageTag)
+    const sign = await getSign(imageTag)
     try {
-      await notify(`Production: deploying... (${imageTag} by ${who})`)
-        await deployScalableImage(config, servers['i1'], imageTag, '.i1_app_env')
-      await notify(`Production: successfully deployed! (${imageTag} by ${who})`)
+      await notify(`🙌🙌🙌 Production: deploying... (${sign})`)
+      await deployScalableImage(config, servers['i1'], imageTag, '.i1_app_env')
+      await notify(`🚀🚀🚀 Production: successfully deployed! (${sign})`)
     } catch (e) {
-      await notify(`Production: critical error during deployment (${who}). Message: ${e.toString()}`)
+      await notify(`🚨🚨🚨 Production: critical error during deployment (${sign}). Message: ${e.toString()}`)
       throw e;
     }
 }
 
 async function appAutoReleaseDocker(config) {
-  const who = await machineUserAndId()
-  const tag = await getCommitHash()
-  await notify(`...building an image ${tag} by ${who}`)
+  const imageTag = await getCommitHash()
+  const sign = await getSign(imageTag)
+  await notify(`... building an image ${sign}`)
   return await autoReleaseDocker(config)
 }
 

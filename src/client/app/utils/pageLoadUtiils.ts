@@ -9,6 +9,7 @@ export const waitFor = async (selector: () => boolean, timeout: number = 30): Pr
       }
     }, 5);
     setTimeout(() => {
+      console.debug('Cannot wait anymore!')
       reject()
       clearInterval(interval);
     }, timeout * 1000)

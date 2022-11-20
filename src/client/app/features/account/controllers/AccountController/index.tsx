@@ -42,13 +42,12 @@ export const AccountController = () => {
 
           <StatisticBlock
             currentAccountValue={
-              accountInfo.totalValue +
-              accountInfo.totalRewards -
-              accountInfo.totalEarned
+              accountInfo.totalPropertyValue +
+              accountInfo.totalRewards
             }
             totalRentEarned={accountInfo.totalEarned}
             propertiesEarned={accountInfo.rewards.length}
-            totalPropertyValue={accountInfo.totalValue}
+            totalPropertyValue={accountInfo.totalPropertyValue}
           />
         </div>
 

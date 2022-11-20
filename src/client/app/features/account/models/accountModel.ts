@@ -49,7 +49,7 @@ export type UIRewardComputed = {
 export type UiAccountInfo = {
   rewards: UIReward[]
   totalRewards: number
-  totalValue: number
+  totalPropertyValue: number
   totalEarned: number
 }
 
@@ -68,7 +68,7 @@ export const $accountInfo = atom<UiAccountInfo | null>((get) => {
   return {
     rewards,
     totalRewards: totalRewards,
-    totalValue: rewards.reduce((acc, r) => acc + r.computed.currentValue, 0),
+    totalPropertyValue: rewards.reduce((acc, r) => acc + r.computed.currentValue, 0),
     totalEarned,
   }
 });
@@ -77,7 +77,6 @@ export const $accountInfo = atom<UiAccountInfo | null>((get) => {
 export const $doLoadMyRewards = atom(null, async (get, set) => {
   await waitFor(() => !!get($assetsTokenSmartContractSigned), 3)
 
-  console.log('FAIL pass')
   const sc = get($assetsTokenSmartContractSigned) as AssetManager
   const response = await sc.getMyRewardsPerAsset();
   set($apiRewardsResponse, response);

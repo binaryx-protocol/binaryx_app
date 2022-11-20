@@ -144,7 +144,7 @@ export const $walletConnect = atom(
     }
     set($doSetProgress, 'inProgress')
 
-    await waitFor(() => !!get($rpcConfig))
+    await waitFor(() => !!get($rpcConfig), 5)
     const rpcConfig = get($rpcConfig) as RpcConfig
 
     // callbacks
