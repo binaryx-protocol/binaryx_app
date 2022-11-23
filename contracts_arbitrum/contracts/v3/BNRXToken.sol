@@ -13,5 +13,10 @@ contract BNRXToken is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable,
     __ERC20Burnable_init();
     __Pausable_init();
     __Ownable_init();
+    _mint(address(this), 100_000_000 * 1e6);
+  }
+
+  function decimals() public view virtual override returns (uint8) {
+    return 6;
   }
 }
