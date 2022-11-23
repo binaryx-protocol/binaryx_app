@@ -18,10 +18,6 @@ contract BNRXToken is Initializable, ERC20BurnableUpgradeable, PausableUpgradeab
     _mint(owner, 100_000_000 * 1e6);
   }
 
-  function decimals() public view virtual override returns (uint8) {
-    return 6;
-  }
-
   function pause() public onlyOwner {
     _pause();
   }
