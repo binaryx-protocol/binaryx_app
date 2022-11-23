@@ -7,13 +7,15 @@ import "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract BNRXToken is Initializable, ERC20Upgradeable, ERC20BurnableUpgradeable, PausableUpgradeable, OwnableUpgradeable {
-  function initialize() initializer public {
+contract BNRXToken is Initializable, ERC20BurnableUpgradeable, PausableUpgradeable, OwnableUpgradeable {
+  function initialize(address owner) initializer public {
     __ERC20_init("Binaryx", "BNRX");
     __ERC20Burnable_init();
     __Pausable_init();
     __Ownable_init();
-    _mint(address(this), 100_000_000 * 1e6);
+
+    transferOwnership(owner);
+    _mint(owner, 100_000_000 * 1e6);
   }
 
   function decimals() public view virtual override returns (uint8) {
