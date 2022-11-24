@@ -8,9 +8,9 @@ async function main() {
   const deploysJson = readDeploys(network.name)
   validateEnvVars(network.name)
 
-  const [sender, nextOwner] = await hre.ethers.getSigners()
+  // const [sender, nextOwner] = await hre.ethers.getSigners()
   const BNRXToken = await ethers.getContractFactory("BNRXToken");
-  const bNRXToken = await upgrades.deployProxy(BNRXToken, [nextOwner.address]);
+  const bNRXToken = await upgrades.deployProxy(BNRXToken, ['0x12645b2EE0C091b1EE8263381278DAaa97D20FF8']);
   const sc = await bNRXToken.deployed();
 
   const implementation = await upgrades.erc1967.getImplementationAddress(sc.address);
