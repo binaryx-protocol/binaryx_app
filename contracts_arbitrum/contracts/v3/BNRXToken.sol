@@ -15,7 +15,7 @@ contract BNRXToken is Initializable, ERC20BurnableUpgradeable, PausableUpgradeab
     __Ownable_init();
 
     transferOwnership(owner);
-    _mint(owner, 100_000_000 * 1e6);
+    _mint(owner, 100_000_000 * 1e18);
   }
 
   function pause() public onlyOwner {
