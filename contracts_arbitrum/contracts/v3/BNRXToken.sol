@@ -28,6 +28,6 @@ contract BNRXToken is Initializable, ERC20BurnableUpgradeable, PausableUpgradeab
   }
 
   function getV() public view returns (string memory) {
-    return "2";
+    return "4";
   }
 }
