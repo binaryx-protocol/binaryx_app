@@ -9,8 +9,11 @@ async function main() {
   validateEnvVars(network.name)
 
   // const [sender, nextOwner] = await hre.ethers.getSigners()
+  // const SAFE_ARBITRUM_MAIN = '0x12645b2EE0C091b1EE8263381278DAaa97D20FF8'
+  // const SAFE_GOERLI = '0x8357Ef8E63Dd942641D73f44e11e336B867771eB'
+  const SAFE_ARBITRUM_GOERLI = '0x29A442EED90B6c4c66460769155CB5e05F5B55FF'
   const BNRXToken = await ethers.getContractFactory("BNRXToken");
-  const bNRXToken = await upgrades.deployProxy(BNRXToken, ['0x12645b2EE0C091b1EE8263381278DAaa97D20FF8']);
+  const bNRXToken = await upgrades.deployProxy(BNRXToken, [SAFE_ARBITRUM_GOERLI]);
   const sc = await bNRXToken.deployed();
 
   const implementation = await upgrades.erc1967.getImplementationAddress(sc.address);
