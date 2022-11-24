@@ -1,5 +1,4 @@
 import {readDeploys, validateEnvVars, writeDeploys} from "../../deployUtils";
-const hre = require('hardhat')
 
 const fs = require('fs');
 const { network, upgrades, ethers } = require("hardhat");
@@ -8,16 +7,13 @@ async function main() {
   const deploysJson = readDeploys(network.name)
   validateEnvVars(network.name)
 
-  const [sender, nextOwner] = await hre.ethers.getSigners()
   const BNRXToken = await ethers.getContractFactory("BNRXToken");
-  const bNRXToken = await upgrades.deployProxy(BNRXToken, [nextOwner.address]);
-  const sc = await bNRXToken.deployed();
+  const sc = await upgrades.upgradeProxy(deploysJson.BNRXToken, BNRXToken);
 
   const implementation = await upgrades.erc1967.getImplementationAddress(sc.address);
-  console.log("🚀 BNRXToken Deployed:", sc.address);
+  console.log("🚀 BNRXToken Updated:", sc.address);
   console.log('implementation:', implementation)
 
-  deploysJson.BNRXToken = sc.address
   deploysJson.BNRXToken__implementation = implementation
   writeDeploys(network.name, deploysJson)
   //
