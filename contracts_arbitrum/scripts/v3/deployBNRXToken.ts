@@ -8,6 +8,10 @@ async function main() {
   const deploysJson = readDeploys(network.name)
   validateEnvVars(network.name)
 
+  console.log('process.env.DEVNET_MULTISIG_ADDRESS', process.env.DEVNET_MULTISIG_ADDRESS)
+  await new Promise(r => setTimeout(r, 10000));
+
+  console.log('Deploying...')
   const BNRXToken = await ethers.getContractFactory("BNRXToken");
   const bNRXToken = await upgrades.deployProxy(BNRXToken, [process.env.DEVNET_MULTISIG_ADDRESS]);
   const sc = await bNRXToken.deployed();

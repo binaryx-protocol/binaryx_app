@@ -12,6 +12,8 @@ const accounts = (
   process.env['DEVNET_PRIVKEY']
 ) ? [process.env['DEVNET_PRIVKEY']] : []
 
+console.log(process.env['MAINNET_FORK_URL'])
+
 const config: HardhatUserConfig = {
   ...hardhatConfig,
   networks: {
@@ -21,9 +23,9 @@ const config: HardhatUserConfig = {
       accounts,
     },
     arbitrumMain: {
-      gas: 2100000,
-      gasLimit: 0,
-      url: '',
+      // gas: 2100000,
+      // gasLimit: 0,
+      url: 'https://arb1.arbitrum.io/rpc',
       accounts,
     },
     arbitrumGoerli: {
@@ -34,6 +36,12 @@ const config: HardhatUserConfig = {
       url: 'https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
       accounts,
     },
+    hardhat: {
+      forking: {
+        url: process.env['MAINNET_FORK_URL'],
+        ignoreUnknownTxType: true
+      }
+    }
   }
 }
 
