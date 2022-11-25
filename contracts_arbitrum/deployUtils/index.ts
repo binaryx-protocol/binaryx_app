@@ -4,7 +4,7 @@ const fs = require('fs');
 const { requireEnvVariables } = require('arb-shared-dependencies')
 
 export const validateEnvVars = (networkName) => {
-  requireEnvVariables(['DEVNET_PRIVKEY'])
+  requireEnvVariables(['DEVNET_PRIVKEY', 'DEVNET_MULTISIG_ADDRESS'])
 
   if (networkName === 'l2') {
     throw 'network.name "l2" is deprecated - use arbitrum_main or arbitrum_goerli instead'

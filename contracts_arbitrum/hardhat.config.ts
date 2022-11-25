@@ -9,8 +9,8 @@ require('dotenv').config()
 const { hardhatConfig } = require('arb-shared-dependencies')
 
 const accounts = (
-  process.env['DEVNET_PRIVKEY'] && process.env['DEVNET_MULTISIG']
-) ? [process.env['DEVNET_PRIVKEY'], process.env['DEVNET_MULTISIG']] : []
+  process.env['DEVNET_PRIVKEY']
+) ? [process.env['DEVNET_PRIVKEY']] : []
 
 const config: HardhatUserConfig = {
   ...hardhatConfig,

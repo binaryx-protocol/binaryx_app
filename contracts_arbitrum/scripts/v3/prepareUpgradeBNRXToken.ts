@@ -12,7 +12,14 @@ async function main() {
   console.log('deployer.address', deployer.address)
 
   const BNRXToken = await ethers.getContractFactory("BNRXToken");
-  const sc = await upgrades.upgradeProxy(deploysJson.BNRXToken, BNRXToken);
+  // const sc = await upgrades.upgradeProxy(deploysJson.BNRXToken, BNRXToken);
+  const newImplementation = await upgrades.prepareUpgrade(deploysJson.BNRXToken, BNRXToken);
+  console.log("🚀 BNRXToken prepareUpgrade new implementation:", newImplementation);
+
+  // this you can use instead of Defender to change the proxy admin owner:
+  // const adminProxy = await upgrades.admin.getInstance(deploysJson.BNRXToken);
+  // await adminProxy.connect(w1).upgrade(deploysJson.BNRXToken, newImplementation)
+
   // writeDeploys(network.name, deploysJson)
 }
 
