@@ -1,4 +1,4 @@
-import {ethers, network, web3} from "hardhat";
+import {ethers, network, upgrades, web3} from "hardhat";
 const fs = require('fs');
 
 const { requireEnvVariables } = require('arb-shared-dependencies')
@@ -53,4 +53,18 @@ export const readDeploys = (networkName) => {
     process.exit(1);
   }
   return deploysJson
+}
+
+export const debugProxyInfo = async (proxyAddress) => {
+  console.log('=== debugProxyInfo ===')
+
+  const adminAddress = await upgrades.erc1967.getAdminAddress(proxyAddress)
+  console.log('adminAddress:', adminAddress)
+
+  const implementation = await upgrades.erc1967.getImplementationAddress(proxyAddress);
+  console.log('implementation:', implementation)
+
+  const admin = await upgrades.admin.getInstance(proxyAddress);
+  const adminOwner = await admin.owner();
+  console.log('adminOwner:', adminOwner)
 }

@@ -10,17 +10,24 @@ async function main() {
   const BNRXToken = await ethers.getContractFactory("BNRXToken");
   const sc = await upgrades.upgradeProxy(deploysJson.BNRXToken, BNRXToken);
 
-  const implementation = await upgrades.erc1967.getImplementationAddress(sc.address);
   console.log("🚀 BNRXToken Updated:", sc.address);
-  console.log('implementation:', implementation)
-
-  deploysJson.BNRXToken__implementation = implementation
   writeDeploys(network.name, deploysJson)
-  //
+
+  // owner info
   const currentOwner = await sc.owner()
   console.log('currentOwner', currentOwner)
   const ownerBalance = await sc.balanceOf(currentOwner)
   console.log('ownerBalance', ownerBalance.toString())
+
+  // proxy info
+  const adminAddress = await upgrades.erc1967.getAdminAddress(deploysJson.BNRXToken)
+  const implementation = await upgrades.erc1967.getImplementationAddress(deploysJson.BNRXToken);
+  const admin = await upgrades.admin.getInstance(deploysJson.BNRXToken);
+  const adminOwner = await admin.owner();
+
+  console.log('adminAddress:', adminAddress)
+  console.log('implementation:', implementation)
+  console.log('adminOwner:', adminOwner)
 }
 
 main()

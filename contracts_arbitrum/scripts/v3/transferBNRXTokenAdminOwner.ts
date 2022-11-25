@@ -1,15 +1,24 @@
-import {readDeploys, validateEnvVars, writeDeploys} from "../../deployUtils";
+import {debugProxyInfo, readDeploys, validateEnvVars, writeDeploys} from "../../deployUtils";
 
 const fs = require('fs');
+const hre = require('hardhat');
 const { network, upgrades, ethers } = require("hardhat");
 
 async function main() {
-  const SAFE_ARBITRUM_GOERLI = '0x29A442EED90B6c4c66460769155CB5e05F5B55FF'
+  const deploysJson = readDeploys(network.name)
+  validateEnvVars(network.name)
 
-  console.log('Transferring ownership of ProxyAdmin...');
-  // The owner of the ProxyAdmin can upgrade our contracts
-  await upgrades.admin.transferProxyAdminOwnership(SAFE_ARBITRUM_GOERLI);
-  console.log('Transferred ownership of ProxyAdmin to:', SAFE_ARBITRUM_GOERLI);
+  const [w1, w2] = await hre.ethers.getSigners()
+  console.log('w1.address', w1.address)
+
+  // await upgrades.forceImport(deploysJson.BNRXToken, await ethers.getContractFactory("BNRXToken"));
+  await debugProxyInfo(deploysJson.BNRXToken)
+  const adminProxy = await upgrades.admin.getInstance(deploysJson.BNRXToken);
+  await adminProxy.connect(w2).transferOwnership(w1.address)
+  console.log("🚀 BNRXToken changeProxyAdmin");
+
+  // writeDeploys(network.name, deploysJson)
+  await debugProxyInfo(deploysJson.BNRXToken)
 }
 
 main()
