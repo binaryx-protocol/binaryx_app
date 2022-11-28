@@ -10,6 +10,8 @@ cp .env.example .env
 # Deploy locally
 
 ```
+npx hardhat run scripts/v3/deployBNRXToken.ts --network localhost
+
 npx hardhat run scripts/v3/deployAssetsManager.ts --network localhost
 npx hardhat run scripts/v3/deploySeriesMaster.ts --network localhost
 npx hardhat run scripts/v3/deployController.ts --network localhost
