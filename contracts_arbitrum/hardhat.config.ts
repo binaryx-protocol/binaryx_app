@@ -14,9 +14,6 @@ const accounts = (
 
 console.log(process.env['MAINNET_FORK_URL'])
 
-const mnemonic =
-  process.env.MNEMONIC || 'test test test test test test test test test test test test';
-
 const config: HardhatUserConfig = {
   ...hardhatConfig,
   networks: {
@@ -47,7 +44,6 @@ const config: HardhatUserConfig = {
         interval: 5000,
       },
       accounts: {
-        mnemonic,
         count: 5,
         accountsBalance: '1000000000000000000000',
       },
