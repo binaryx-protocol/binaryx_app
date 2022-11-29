@@ -411,7 +411,7 @@
 
 .ourTeamTitle {
   color: var(--font-color_white);
-  font-size: var(--font-size_medium);
+  font-size: var(--font-size_big);
   font-weight: 400;
   text-align: center;
   margin: 30px 0 0 0;
@@ -516,7 +516,7 @@
 }
 
 .footerHeading {
-  font-size: var(--font-size_medium);
+  font-size: var(--font-size_big);
   font-weight: 300;
   color: inherit;
   background: linear-gradient(253.14deg, #8673FF 13.68%, #007DC5 44.28%, #257AD7 65.26%, #01F8EB 93.3%);
@@ -628,7 +628,7 @@
 }
 
 .footerLinks a {
-  font-size: var(--font-size_small-extra);
+  font-size: var(--font-size_small);
   color: var(--font-color_gray-dark);
 
   @media (max-width: 768px) {
@@ -694,7 +694,7 @@
 
   .btnJoinWaitlist {
     height: 60px;
-    font-size: var(--font-size_small);
+    font-size: var(--font-size_medium);
     width: inherit;
   }
 

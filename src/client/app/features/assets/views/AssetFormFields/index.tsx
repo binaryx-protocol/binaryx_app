@@ -5,6 +5,7 @@ import {UiNewAssetForm} from "../../types";
 import Box from "@mui/material/Box";
 import {UiInputChangeEvent} from "../../../../types/globals";
 import {UiForm} from "../../../../../../../pkg/formType";
+import {BaseInput} from "../../../../shared/ui/views/BaseInput";
 
 type AssetFormFieldsProps = {
   form: UiNewAssetForm,
@@ -35,7 +36,8 @@ export const AssetFormFields = ({ form, onChange }: AssetFormFieldsProps) => {
           '& .MuiTextField-root': { m: '7px', width: 'calc(100% - 14px)' },
         }}
       >
-        <TextField label="Name" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'name')} />
+        <BaseInput  placeholder={'Property name'} title={'Property name+'}/>
+        {/*<TextField label="Name" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'name')} />*/}
         <TextField label="Symbol" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'symbol')} />
         <TextField label="Title" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'title')} />
         <TextField label="Description" variant="outlined" onChange={onChangeLocal} onBlur={onBlurLocal} {...inputProps(form, 'description')} />

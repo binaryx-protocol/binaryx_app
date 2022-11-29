@@ -29,14 +29,20 @@ export const NewAssetController = () => {
         {
           isAccountConnected
             ? (
-              <form noValidate onSubmit={onSubmitLocal}>
-                <AssetFormFields form={form} onChange={onFormChange} />
-                <div className={s.formActions}>
-                  <Button type="submit">
-                    Create
-                  </Button>
-                </div>
-              </form>
+              <>
+              <div>
+                <p className={s.generalInfo}>General Information</p>
+                <p className={s.generalDescription}>First, we need to know a little more about your property.</p>
+              </div>
+               <form noValidate onSubmit={onSubmitLocal}>
+                 <AssetFormFields form={form} onChange={onFormChange} />
+                 <div className={s.formActions}>
+                   <Button type="submit">
+                     Create
+                   </Button>
+                 </div>
+               </form>
+              </>
             )
             : "Please connect your wallet first"
         }
