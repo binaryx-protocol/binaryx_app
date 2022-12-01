@@ -1,0 +1,50 @@
+.webAssetCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  width: 140px;
+  height: 84px;
+  border-radius: var(--border-radius_default);
+  position: relative;
+  z-index: 2;
+  backdrop-filter: blur(2px);
+  font-size: 14px;
+}
+
+.webAssetCard img {
+  width: 32px;
+
+  @media screen and (max-width: 1024px) {
+    width: 22px;
+  }
+}
+
+.description {
+  margin-bottom: 0;
+  margin-top: 3px;
+}
+
+@media screen and (max-width: 1024px) {
+  .webAssetCard {
+    width: 100px;
+    height: 70px;
+    font-size: 12px;
+  }
+
+  .description {
+    margin-top: 6px;
+    font-size: 11px;
+  }
+}
+
+@media screen and (max-height: 667px) {
+  .webAssetCard {
+    height: 60px;
+  }
+
+  .image {
+    height: 25px;
+  }
+}

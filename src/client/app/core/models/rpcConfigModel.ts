@@ -72,8 +72,8 @@ const arbitrumGoerli = (deploys: DeploysAddresses): RpcConfig => ({
   usdtL2Address: deploys.Usdt,
   controllerAddress: deploys.Controller,
 })
-
-const localhost = (deploys: DeploysAddresses): RpcConfig => ({
+const fork = true;
+const arbitrum = (deploys: DeploysAddresses): RpcConfig => ({
   chain: {
     // chainId: `0x${Number(421611).toString(16)}`,
     chainId: `0x${Number(42161).toString(16)}`,
@@ -117,7 +117,7 @@ export const $rpcConfig = atom<RpcConfig | null>((get) => {
   console.debug('Using RPC: ' + rpcName)
   if (rpcName == 'localhost') {
     console.debug('localhostDeploys', localhostDeploys)
-    return localhost(localhostDeploys as unknown as DeploysAddresses)
+    return arbitrum(localhostDeploys as unknown as DeploysAddresses)
   }
   if (rpcName == 'arbitrumGoerli') {
     console.debug('arbitrumGoerliDeploys', arbitrumGoerliDeploys)

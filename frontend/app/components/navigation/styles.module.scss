@@ -1,0 +1,135 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 95px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px) saturate(2);
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.logo {
+  max-width: 180px;
+}
+
+.navLinks {
+  display: flex;
+  justify-content: space-between;
+  width: 600px;
+  margin-left: auto;
+}
+
+.navLinks a {
+  color: #1e1e1e;
+  text-decoration: none;
+  font-size: 1.1em;
+  transition: 0.3s ease;
+}
+
+.navLinks a:last-child {
+  display: none;
+}
+
+.navLinks a:hover {
+  color: rgba(1, 155, 186, 1);
+}
+
+.btnShowMenu {
+  display: none;
+}
+
+@media screen and (max-width: 800px) {
+  .navLinks {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: calc(100vh - 90px);
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    transform: translateY(90px);
+    background: white;
+  }
+
+  .navLinks a {
+    margin-bottom: 30px;
+    font-size: 20px;
+  }
+
+  .navLinks a:nth-child(1) {
+    display: none;
+  }
+
+  .navLinks a:last-child {
+    display: grid;
+  }
+
+  .viewMarketplace {
+    display: grid;
+    place-content: center;
+    width: 300px;
+    height: 50px;
+    border-radius: 15px;
+    color: #1e1e1e !important;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+    border: 1px solid #fff;
+    background: linear-gradient(85.42deg, rgba(0, 174, 255, 0.8) 8.17%, rgba(0, 255, 238, 0.8) 103.39%);
+  }
+
+  .viewMarketplace:hover {
+    background-color: rgba(0, 174, 255, 0.9);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    transform: translate(0px, 2px) scale(1.05);
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .burgerMenuField {
+    display: grid;
+    place-content: center;
+    height: 25px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .burgerShowMenu {
+    background-color: rgba(1, 155, 186, 1);
+    width: 30px;
+    height: 4px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .burgerShowMenu::before {
+    content: '';
+    background-color: rgba(1, 155, 186, 1);
+    width: 30px;
+    height: 4px;
+    position: absolute;
+    top: 37px;
+  }
+
+  .burgerShowMenu::after {
+    content: '';
+    background-color: rgba(1, 155, 186, 1);
+    width: 30px;
+    height: 4px;
+    position: absolute;
+    top: 54px;
+  }
+}
