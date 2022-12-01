@@ -1,0 +1,38 @@
+.root {
+  background-color: #F5F5F5;
+  min-height: calc(100vh - 64px);
+}
+
+.crudTopNav{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+
+  h1{
+    margin: 0 0 10px 0;
+    font-weight: 700;
+    font-size: 24px;
+    font-family: var(--font-family--primary);
+    color: #000;
+  }
+}
+
+.contentWrapper{
+  display: flex;
+  padding: 8px 0 0 0;
+}
+
+.pageMenu{
+  flex-shrink: 0;
+  width: 240px;
+}
+
+.pageContent{
+  padding: 5px 0 0 35px;
+  flex-grow: 1;
+}
+
+.loader{
+  min-height: 200px;
+}

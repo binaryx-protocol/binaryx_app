@@ -1,0 +1,25 @@
+.descriptionBlock {
+  display: grid;
+  place-content: center flex-start;
+  background: rgba(2, 12, 22, 0.2);
+  border: 1px solid rgba(70, 70, 70, 1);
+  border-radius: var(--border-radius_default);
+  backdrop-filter: blur(10px);
+  font-size: 12px;
+  width: 150px;
+  padding: 0 10px;
+  
+  @media screen and (max-width: 768px) {
+    width: 140px;
+  }
+}
+
+.descriptionBlock ul {
+  padding: 0;
+  margin: 0;
+}
+
+.descriptionBlock ul li {
+  list-style: none;
+  line-height: 1.8;
+}

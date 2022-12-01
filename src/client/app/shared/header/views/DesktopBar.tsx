@@ -3,6 +3,8 @@ import {Button} from "../../ui/views/Button";
 import {paths} from "../../../../../../pkg/paths";
 import Link from "next/link";
 import {Container} from "../../ui/views/Container";
+import {useState} from "react";
+import { WalletConnectModal} from "../../ui/views/WalletConnectModal";
 
 type Props = {
   account: string
@@ -11,6 +13,7 @@ type Props = {
 }
 
 export const DesktopBar = ({ account, onWalletConnect, hasAddress }: Props) => {
+  const [isOpen, setIsOpen] = useState(false)
   return (
     <div className={s.root}>
       <Container className={s.container}>
@@ -61,10 +64,11 @@ export const DesktopBar = ({ account, onWalletConnect, hasAddress }: Props) => {
                 </Link>
               )
               :
-              <Button onClick={onWalletConnect}>
+              <Button onClick={() => setIsOpen(true)}>
                 Connect Wallet
               </Button>
           }
+          {isOpen && <WalletConnectModal setIsOpen={setIsOpen} />}
         </div>
       </Container>
     </div>
