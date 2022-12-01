@@ -5,6 +5,7 @@ import {UiNewAssetForm} from "../../types";
 import Box from "@mui/material/Box";
 import {UiInputChangeEvent} from "../../../../types/globals";
 import {UiForm} from "../../../../../../../pkg/formType";
+import {BaseInput} from "../../../../shared/ui/views/BaseInput";
 
 type AssetFormFieldsProps = {
   form: UiNewAssetForm,

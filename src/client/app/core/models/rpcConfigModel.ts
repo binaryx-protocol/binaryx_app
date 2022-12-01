@@ -76,7 +76,7 @@ const arbitrumGoerli = (deploys: DeploysAddresses): RpcConfig => ({
 const localhost = (deploys: DeploysAddresses): RpcConfig => ({
   chain: {
     // chainId: `0x${Number(421611).toString(16)}`,
-    chainId: `0x${Number(31337).toString(16)}`,
+    chainId: `0x${Number(42161).toString(16)}`,
     blockExplorerUrls: ['https://rinkeby-explorer.arbitrum.io/#/'],
     chainName: 'HH',
     // iconUrls: [],

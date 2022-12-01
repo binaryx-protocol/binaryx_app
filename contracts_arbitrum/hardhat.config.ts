@@ -18,6 +18,7 @@ const config: HardhatUserConfig = {
   ...hardhatConfig,
   networks: {
     localhost: {
+      chainId:1,
       gasLimit: 1_000_000_000_000,
       url: "http://127.0.0.1:8545",
       accounts,
@@ -37,11 +38,16 @@ const config: HardhatUserConfig = {
       accounts,
     },
     hardhat: {
-      forking: {
-        url: process.env['MAINNET_FORK_URL'],
-        ignoreUnknownTxType: true
-      }
-    }
+      chainId: 42161,
+      mining: {
+        auto: false,
+        interval: 5000,
+      },
+      accounts: {
+        count: 5,
+        accountsBalance: '1000000000000000000000',
+      },
+    },
   }
 }
 

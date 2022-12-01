@@ -1,0 +1,23 @@
+.title{
+  margin:0 0 8px 7px;
+  font-size: var(--font-size_extra-small);
+  color: var(--color-text-secondary);
+}
+.root{
+  height: 48px;
+  width: 100%;
+  padding: 12px;
+  margin: 0 3px;
+  border: none;
+  border-radius: var(--border-radius_large);
+  background-color: var(--color--secondary-bg);
+  font-size: var(--font-size_small);
+  font-weight: 600;
+  &::placeholder{
+    color: var(--font-color_placeholder);
+    font-weight: 400;
+  }
+  &:focus{
+    outline: none;
+  }
+}
