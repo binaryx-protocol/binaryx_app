@@ -11,5 +11,14 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true
-  }
+  },
+  "ts-node": {
+    "files": true
+  },
+  "include": [
+    "src/",
+    "test",
+    "ormconfig.ts",
+    "jest.config.ts"
+  ]
 }
