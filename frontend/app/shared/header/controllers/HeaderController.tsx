@@ -1,14 +1,11 @@
 import {DesktopBar} from "../views/DesktopBar";
-import {useAtomValue, useSetAtom} from "jotai";
-import {useAccount} from "wagmi";
-import {WalletInfo} from "../../ui/views/WalletInfo";
-import {useState} from "react";
+import {Connector, useAccount} from "wagmi";
+import {InjectedConnector} from "wagmi/connectors/injected";
 
 export const HeaderController = () => {
     const {address, connector, isConnected} = useAccount()
-    const walletAddress = address || ''
-
-    return (
-            <DesktopBar isConnected={isConnected} account={walletAddress} connector={connector}/>
+    const walletAddress = address || '';
+  return (
+            <DesktopBar isConnected={isConnected} account={walletAddress} />
     )
 }

@@ -7,7 +7,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import '../app/styles/globalVariables.css';
 import { Provider, useAtomValue, useSetAtom } from 'jotai';
 import Head from 'next/head';
-import {WagmiProvider} from "../app/walletsConnect/WagmiProvider";
+import {WagmiProvider} from "../app/shared/walletsConnect";
 
 type Props = {
   Component: any;

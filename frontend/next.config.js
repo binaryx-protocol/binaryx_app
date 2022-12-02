@@ -11,6 +11,9 @@ const nextConfig = {
     // more info https://nextjs.org/docs/basic-features/eslint
     ignoreDuringBuilds: true,
   },
+  // typescript:{
+  //   ignoreBuildErrors: true
+  // }
 }
 
 module.exports = nextConfig

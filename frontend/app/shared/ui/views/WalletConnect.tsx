@@ -3,8 +3,8 @@ import s from "./WalletConnect.module.scss";
 import closeIcon from "../../../../public/svg/closeIcon.svg"
 import arrowLeftIcon from '../../../../public/svg/ArrowLeft.svg'
 import Image from "next/image";
-import {useConnect} from "wagmi";
-import {getWalletConfig} from "../../../constants/wallets";
+import {Connector, useConnect} from "wagmi";
+import {getWalletConfig} from "../../walletsConnect";
 import {WalletConnectWait} from "./WalletConnectWait";
 import {useState} from "react";
 import {useAtom} from "jotai";
@@ -12,12 +12,13 @@ import {$connectorAtom} from "../../../core/models/walletModel";
 
 type Props = {
     setIsOpen: (value: boolean) => void;
+    setConnector:any;
+    connector: Connector;
 }
 export const WalletConnect = (props: Props) => {
-    const [waitComponent, setWaitComponent] = useState(false)
-    const {setIsOpen} = props
-    const {connectors} = useConnect()
-    const [connector, setConnector] = useAtom($connectorAtom)
+  const {setIsOpen, setConnector, connector} = props
+  const {connectors} = useConnect()
+  const [waitComponent, setWaitComponent] = useState(false)
 
     return (
         <>
@@ -38,7 +39,7 @@ export const WalletConnect = (props: Props) => {
                         (
                             <div className={s.walletWrapper} onClick={
                                 () => {
-                                    setConnector(connector)
+                                  setConnector(connector)
                                     setWaitComponent(true)
                                 }}
                                  key={getWalletConfig(connector.id).title}>

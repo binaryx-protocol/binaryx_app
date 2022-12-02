@@ -12,16 +12,18 @@ import {Connector, useNetwork} from "wagmi";
 import {walletAddressFormatted} from "../../../utils/walletAddressFormatted";
 import {BaseModal} from "../../ui/views/BaseModal";
 import {WrongNetwork} from "../../ui/views/WrongNetwork";
+import {useAtom} from "jotai";
+import {$connectorAtom} from "../../../core/models/walletModel";
 
 type Props = {
     account: string
     isConnected: boolean
-    connector: Connector | undefined;
 }
 
-export const DesktopBar = ({account, isConnected, connector}: Props) => {
+export const DesktopBar = ({account, isConnected}: Props) => {
     const [isOpenWalletModal, setIsOpenWalletModal] = useState(false)
     const [isOpenWalletInfo, setIsOpenWalletInfo] = useState(false)
+    const [connector, setConnector] = useAtom($connectorAtom)
     const {chain} = useNetwork()
     const unsupportedChain = chain !== undefined ? chain.unsupported : false;
     return (
@@ -86,10 +88,10 @@ export const DesktopBar = ({account, isConnected, connector}: Props) => {
                     }
                     {isOpenWalletModal &&
                         <BaseModal setIsOpen={setIsOpenWalletModal}>
-                            <WalletConnect setIsOpen={setIsOpenWalletModal}/>
+                            <WalletConnect setIsOpen={setIsOpenWalletModal} setConnector={setConnector} connector={connector}/>
                         </BaseModal>}
                     {unsupportedChain && <BaseModal setIsOpen={() => unsupportedChain}>
-                        <WrongNetwork/>
+                        <WrongNetwork connector={connector}/>
                     </BaseModal>}
                 </div>
             </Container>

@@ -1,11 +1,9 @@
-import {toHex} from "../utils/toHex";
 import {Chain} from "wagmi";
 
 export enum SupportedChainId {
   ARBITRUM_ONE = 42161,
 }
-
-export type ChainsInfo = {
+ type ChainsInfo = {
   [key in SupportedChainId]: any;
 }
 

@@ -1,10 +1,9 @@
 {
   "compilerOptions": {
-    "baseUrl": "app",
-    "outDir": "./dist/",
+    "baseUrl": "./app",
     "sourceMap": true,
     "strictPropertyInitialization": false,
-    "target": "es2017",
+    "target": "es5",
     "lib": [
       "dom",
       "dom.iterable",
@@ -31,10 +30,13 @@
     "incremental": true
   },
   "include": [
-    "src/**/*"
+    "next-env.d.ts",
+    "next.config.js",
+    "app",
+    "pages",
+    "app/types/globals.d.ts"
   ],
   "exclude": [
     "node_modules",
-    "cypress"
   ]
 }

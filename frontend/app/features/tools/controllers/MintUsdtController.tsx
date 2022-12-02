@@ -7,7 +7,7 @@ import { Button } from "shared/ui/views/Button";
 import {UiInputChangeEvent} from "../../../types/globals";
 import {$usdtBalance} from "../../../shared/usdtToken/smartContractsFactory";
 import {useAccount, useNetwork} from "wagmi";
-import {CHAIN_INFO, SupportedChainId} from "../../../constants/chainInfo";
+import {CHAIN_INFO, SupportedChainId} from "../../../shared/walletsConnect";
 
 export const MintUsdtController = () => {
   const doMint = useSetAtom(usdtToolModel.$doMint)

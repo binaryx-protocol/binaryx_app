@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { atom } from 'jotai'
 import {$rpcConfig, RpcConfig} from "./rpcConfigModel";
 import {waitFor} from "../../utils/pageLoadUtiils";

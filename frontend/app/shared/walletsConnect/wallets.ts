@@ -1,13 +1,12 @@
-import {metaMaskConnector} from "../utils/wagmi";
-import metamaskIcon from '../../public/svg/metamask.svg'
-import twtIcon from '../../public/svg/twt.svg'
+import metamaskIcon from '../../../public/svg/wallet/metamask.svg'
+import twtIcon from '../../../public/svg/wallet/twt.svg'
 
 export enum ConnectorNames {
     MetaMask = 'metaMask',
     Injected = 'injected',
 }
 
-export interface WalletConfig  {
+interface WalletConfig  {
     id: string;
     title: string;
     icon: string;
@@ -15,7 +14,7 @@ export interface WalletConfig  {
     downloadLink: string;
     imageLink: string;
 }
-export type WalletsConfig = {
+type WalletsConfig = {
     [key in ConnectorNames]: WalletConfig
 }
 

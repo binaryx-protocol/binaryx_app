@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { atom } from 'jotai'
 import {ethers} from "ethers";
 import {$featureFlags} from "./featureFlagsModel";

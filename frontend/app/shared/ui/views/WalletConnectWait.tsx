@@ -1,7 +1,7 @@
 import s from './WalletConnectWait.module.scss'
 import Image from "next/image";
-import hourglassIcon from '../../../../public/svg/Hourglass.svg'
-import {ConnectorNames, walletsConfig} from "../../../constants/wallets";
+import hourglassIcon from '../../../../public/svg/wallet/Hourglass.svg'
+import {ConnectorNames, getWalletConfig} from "../../walletsConnect";
 import {useEffect, useState} from "react";
 import {Connector, useAccount, useConnect, useNetwork} from "wagmi";
 import {QRCode} from "./QRCode";
@@ -17,8 +17,8 @@ export const MetamaskError = () => {
             <div>
                 Please Install Metamask
             </div>
-            <QRCode image={walletsConfig[ConnectorNames.MetaMask].imageLink}
-                    url={walletsConfig[ConnectorNames.MetaMask].downloadLink}/>
+            <QRCode image={getWalletConfig(ConnectorNames.MetaMask).imageLink}
+                    url={getWalletConfig(ConnectorNames.MetaMask).downloadLink}/>
         </>
     )
 }
@@ -29,8 +29,8 @@ export const TrustWalletError = () => {
             <div>
                 Please Install Trust Wallet
             </div>
-            <QRCode image={walletsConfig[ConnectorNames.Injected].imageLink}
-                    url={walletsConfig[ConnectorNames.Injected].downloadLink}/>
+            <QRCode image={getWalletConfig(ConnectorNames.Injected).imageLink}
+                    url={getWalletConfig(ConnectorNames.Injected).downloadLink}/>
         </>
 
     )

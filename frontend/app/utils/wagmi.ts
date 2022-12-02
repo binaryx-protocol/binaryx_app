@@ -1,10 +1,8 @@
-import {configureChains, createClient, defaultChains} from 'wagmi'
+import {configureChains, createClient} from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
-import {alchemyProvider} from "wagmi/providers/alchemy";
-import {publicProvider} from "wagmi/providers/public";
 import {jsonRpcProvider} from "wagmi/providers/jsonRpc";
-import {SUPPORTED_CHAINS} from "../constants/chainInfo";
+import {SUPPORTED_CHAINS} from "../shared/walletsConnect";
 
 const { chains, provider } = configureChains(SUPPORTED_CHAINS, [
     jsonRpcProvider({

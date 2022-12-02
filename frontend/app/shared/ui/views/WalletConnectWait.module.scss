@@ -25,15 +25,16 @@
 }
 .waitingContent{
   text-align: center;
-  .header{
-    font-size: 18px;
-    font-weight: 700;
-    margin: 16px 0 0;
-  }
-  .description{
-    font-size: 14px;
-    font-weight: 400;
-    color: var(--color-text-secondary);
-    margin: 8px 0 32px;
-  }
+}
+
+.header{
+  font-size: 18px;
+  font-weight: 700;
+  margin: 16px 0 0;
+}
+.description{
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  margin: 8px 0 32px;
 }
