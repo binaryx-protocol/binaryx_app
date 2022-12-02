@@ -6,9 +6,8 @@ import client from '../app/apollo-client';
 import { createTheme, ThemeProvider } from '@mui/material';
 import '../app/styles/globalVariables.css';
 import { Provider, useAtomValue, useSetAtom } from 'jotai';
-import * as featureFlagsModel from '../app/core/models/featureFlagsModel';
-import * as metaMaskModel from '../app/core/models/metaMaskModel';
 import Head from 'next/head';
+import {WagmiProvider} from "../app/walletsConnect/WagmiProvider";
 
 type Props = {
   Component: any;
@@ -44,6 +43,7 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
   }, []);
 
   return (
+    <WagmiProvider>
     <Provider>
       <Head>
         <meta name="viewport" content="width=device-width, user-scalable=no" key="viewport" />
@@ -74,7 +74,6 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
 
           {/* <Navigation /> */}
           {/* <Home data={''} /> */}
-          <WalletConnector />
           <Layout>
             <Component {...pageProps} />
           </Layout>
@@ -103,20 +102,8 @@ const MyApp: FC<Props> = ({ Component, pageProps }) => {
         )}
       </ApolloProvider>
     </Provider>
+    </WagmiProvider>
   );
-};
-
-// NOTE: it has to be nested inside jotai's Provider
-const WalletConnector = () => {
-  const $featureFlags = useAtomValue(featureFlagsModel.$featureFlags);
-  const $onBrowserInit = useSetAtom(metaMaskModel.$onBrowserInit);
-  useEffect(() => {
-    if ($featureFlags.FF_MM) {
-      $onBrowserInit();
-    }
-  }, []);
-
-  return null;
 };
 
 export default MyApp;

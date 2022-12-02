@@ -1,4 +1,4 @@
-import {UiForm} from "../../../../../pkg/formType";
+import {UiForm} from "../../../pkg/formType";
 import {BigNumber} from "ethers";
 
 export enum AssetStatuses {

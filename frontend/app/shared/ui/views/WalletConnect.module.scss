@@ -1,0 +1,83 @@
+.connect{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .connectWallet{
+    font-weight: 800;
+    font-size: 18px;
+    margin: 0;
+  }
+}
+.close{
+  width: 32px;
+  height: 32px;
+  background-color: var(--color--secondary-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover{
+    cursor: pointer;
+  }
+}
+.wallets{
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+  .walletWrapper{
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .wallet{
+      display: flex;
+      align-items: center;
+    }
+    .walletName{
+      padding-left: 12px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .walletIcon{
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .metamask{
+      background-color: #FFE5C8;
+    }
+    .trust{
+      background-color: #C1D3FF;
+    }
+    &:hover{
+      cursor: pointer;
+      background-color: var(--color--secondary-bg);
+      border-radius: 12px;
+      &:after{
+        content: 'Connect';
+        padding-right: 12px;
+        font-weight: 600;
+        font-size: 14px;
+      }
+    }
+  }
+}
+.privacyPolice{
+  border-radius: 12px;
+  background-color: var(--color--secondary-bg);
+  padding: 12px;
+  font-size: 12px;
+  font-weight: 400;
+  color:var(--color-text-secondary);
+  a{
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+}
+.privacyPoliceContent{
+  margin: 0;
+}

@@ -7,19 +7,19 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import { useEffect } from 'react';
 import { paths } from '../../../../../pkg/paths';
 import { Container } from '../../../../shared/ui/views/Container';
-import {$isAccountConnected} from "../../../../core/models/metaMaskModel";
+import {useAccount} from "wagmi";
 
 export const AccountController = () => {
   const doLoadMyRewards = useSetAtom(accountModel.$doLoadMyRewards);
   const doClaimMyRewards = useSetAtom(accountModel.$doClaimMyRewards);
   const accountInfo = useAtomValue(accountModel.$accountInfo);
-  const isAccountConnected = useAtomValue($isAccountConnected);
+  const {isConnected} = useAccount()
 
   useEffect(() => {
-    if (isAccountConnected) {
+    if (isConnected) {
       doLoadMyRewards();
     }
-  }, [isAccountConnected]);
+  }, [isConnected]);
 
   const onWithdraw = () => {
     doClaimMyRewards();

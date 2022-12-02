@@ -1,0 +1,40 @@
+.root{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.outsideCircle{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 106px;
+  height: 106px;
+  background: linear-gradient(135deg, #DCE5ED 0%, #FBFBFB 100%);
+  border-radius: 50%;
+}
+
+.insideCircle{
+  width: 92px;
+  height: 92px;
+  background: linear-gradient(135deg, #E1E7ED 0%, #FFFFFF 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.warningContent{
+  text-align: center;
+  .header{
+    font-size: 18px;
+    font-weight: 700;
+    margin: 16px 0 0;
+  }
+  .buttons{
+    margin: 20px;
+  }
+  .disconnect{
+    background-color: #FF3939;
+    margin-left: 20px;
+  }
+}

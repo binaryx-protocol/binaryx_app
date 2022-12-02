@@ -1,0 +1,39 @@
+.root{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.hourglassOutside{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 106px;
+  height: 106px;
+  background: linear-gradient(135deg, #DCE5ED 0%, #FBFBFB 100%);
+  border-radius: 50%;
+}
+
+.hourglassInside{
+  width: 92px;
+  height: 92px;
+  background: linear-gradient(135deg, #E1E7ED 0%, #FFFFFF 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.waitingContent{
+  text-align: center;
+  .header{
+    font-size: 18px;
+    font-weight: 700;
+    margin: 16px 0 0;
+  }
+  .description{
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    margin: 8px 0 32px;
+  }
+}
