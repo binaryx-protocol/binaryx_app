@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-echo "Creating symlink from shared/.env to /app/.env"
+echo "cp .env ..."
 cp $ENV_FILE $(pwd)/.env
+
+echo "Migrations:"
+npm run typeorm:migration:run
 
 echo "Running web server"
 npm run start

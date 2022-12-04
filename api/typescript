@@ -420,4 +420,81 @@ Emitted 'error' event on Server instance at:
 }
 ^C
 [?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ lsot[Kf -p 3000
-[?2004llsof: WARNING: can't stat() overlay file system /var/lib/docker/overlay2/01f63aaa51f541e4081637b3cb616b9ed17a6131194823a7745d91f7b88790fb/merged
+[?2004llsof: WARNING: can't stat() overlay file system /var/lib/docker/overlay2/01f63aaa51f541e4081637b3cb616b9ed17a6131194823a7745d91f7b88790fb/merged
+      Output information may be incomplete.
+lsof: WARNING: can't stat() nsfs file system /run/docker/netns/2be23a073bcd
+      Output information may be incomplete.
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ lsof -p 3000[C[C[C[C[C[1P 3000i 3000
+[?2004llsof: unknown protocol name (3000) in: -i 3000
+lsof 4.93.2
+ latest revision: https://github.com/lsof-org/lsof
+ latest FAQ: https://github.com/lsof-org/lsof/blob/master/00FAQ
+ latest (non-formatted) man page: https://github.com/lsof-org/lsof/blob/master/Lsof.8
+ usage: [-?abhKlnNoOPRtUvVX] [+|-c c] [+|-d s] [+D D] [+|-E] [+|-e s] [+|-f[gG]]
+ [-F [f]] [-g [s]] [-i [i]] [+|-L [l]] [+m [m]] [+|-M] [-o [o]] [-p s]
+ [+|-r [t]] [-s [p:s]] [-S [t]] [-T [t]] [-u s] [+|-w] [-x [fl]] [--] [names]
+Use the ``-h'' option to get more help information.
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ lsof -i 3000:3000
+[?2004lCOMMAND     PID USER   FD   TYPE   DEVICE SIZE/OFF NODE NAME
+node    1657211  dev   21u  IPv6 20962566      0t0  TCP *:3000 (LISTEN)
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ lsof -i :3000[1P3000:3000[Kkill -9 [7m1657211[27m1657211
+[?2004l[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ ^C[?2004l[?2004h[?2004l
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ kill -9 1657211[2Plsof -i :3000[1P3000p[C[C[C[C[Cnpm run start:dev
+[?2004l
+> api@0.0.1 start:dev
+> nest start --watch
+
+c[[90m12:11:00 AM[0m] Starting compilation in watch mode...
+
+[[90m12:11:02 AM[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 1764305   - [39m12/05/2022, 12:11:02 AM   [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 1764305   - [39m12/05/2022, 12:11:02 AM   [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +20ms[39m
+[32m[Nest] 1764305   - [39m12/05/2022, 12:11:02 AM   [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1764305   - [39m12/05/2022, 12:11:02 AM   [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 1764305   - [39m12/05/2022, 12:11:02 AM   [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1764305   - [39m12/05/2022, 12:11:02 AM   [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +73ms[39m
+[32m[Nest] 1764305   - [39m12/05/2022, 12:11:02 AM   [38;5;3m[RoutesResolver] [39m[32mAppController {}:[39m[38;5;3m +3ms[39m
+[32m[Nest] 1764305   - [39m12/05/2022, 12:11:02 AM   [38;5;3m[RouterExplorer] [39m[32mMapped {, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 1764305   - [39m12/05/2022, 12:11:02 AM   [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +2ms[39m
+^C
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ sudo docker ps
+[?2004l[sudo] password for dev: 
+CONTAINER ID   IMAGE                                                  COMMAND                  CREATED          STATUS                      PORTS                                       NAMES
+87ede3377535   binaryx_api:262eed0c8cea37acda8b739edc7e53d5a0bebc00   "./entry.sh --"          28 seconds ago   Up 27 seconds (unhealthy)   3000/tcp                                    musing_hugle
+80b51e77d9c6   postgres:bullseye                                      "docker-entrypoint.s…"   13 minutes ago   Up 16 seconds               0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   api-postgres-1
+[?2004hdev@[32m~/d/22/binaryx_app/api[33m(feature/rdeploy)[00m$ sudo docker ps[K[Kconntainer storp [K[K[Kp [7m80b51e77d9c6[27m80b51e77d9c6
+[?2004ldocker: 'conntainer' is not a docker command.
+See 'docker --help'
+[?2004hdev@[32m~/d/22/binaryx_app/api[33m(feature/rdeploy)[00m$ sudo docker conntainer stop 80b51e77d9c6[1P
+[?2004l80b51e77d9c6
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ sudo docker container stop 80b51e77d9c6[1@n[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cps[K
+[?2004lCONTAINER ID   IMAGE                                                  COMMAND           CREATED          STATUS                      PORTS     NAMES
+4106984f5871   binaryx_api:262eed0c8cea37acda8b739edc7e53d5a0bebc00   "./entry.sh --"   15 seconds ago   Up 14 seconds (unhealthy)             sleepy_bardeen
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ sudo docker ps
+[?2004lCONTAINER ID   IMAGE                                                  COMMAND           CREATED          STATUS                      PORTS     NAMES
+4106984f5871   binaryx_api:262eed0c8cea37acda8b739edc7e53d5a0bebc00   "./entry.sh --"   16 seconds ago   Up 16 seconds (unhealthy)             sleepy_bardeen
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ sudo docker ps
+[?2004lCONTAINER ID   IMAGE                                                  COMMAND           CREATED          STATUS                      PORTS     NAMES
+4106984f5871   binaryx_api:262eed0c8cea37acda8b739edc7e53d5a0bebc00   "./entry.sh --"   17 seconds ago   Up 17 seconds (unhealthy)             sleepy_bardeen
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ sudo docker ps
+[?2004lCONTAINER ID   IMAGE                                                  COMMAND           CREATED          STATUS                      PORTS     NAMES
+4106984f5871   binaryx_api:262eed0c8cea37acda8b739edc7e53d5a0bebc00   "./entry.sh --"   18 seconds ago   Up 17 seconds (unhealthy)             sleepy_bardeen
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ sudo docker ps
+[?2004lCONTAINER ID   IMAGE                                                  COMMAND           CREATED          STATUS                      PORTS     NAMES
+4106984f5871   binaryx_api:262eed0c8cea37acda8b739edc7e53d5a0bebc00   "./entry.sh --"   18 seconds ago   Up 18 seconds (unhealthy)             sleepy_bardeen
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ sudo docker ps
+[?2004lCONTAINER ID   IMAGE                                                  COMMAND           CREATED          STATUS                      PORTS     NAMES
+4106984f5871   binaryx_api:262eed0c8cea37acda8b739edc7e53d5a0bebc00   "./entry.sh --"   19 seconds ago   Up 18 seconds (unhealthy)             sleepy_bardeen
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ sudo docker ps
+[?2004lCONTAINER ID   IMAGE               COMMAND                  CREATED          STATUS         PORTS                                       NAMES
+80b51e77d9c6   postgres:bullseye   "docker-entrypoint.s…"   14 minutes ago   Up 2 seconds   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   api-postgres-1
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ sudo docker ps
+[?2004lCONTAINER ID   IMAGE               COMMAND                  CREATED          STATUS         PORTS                                       NAMES
+80b51e77d9c6   postgres:bullseye   "docker-entrypoint.s…"   14 minutes ago   Up 3 seconds   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   api-postgres-1
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ sudo docker ps
+[?2004lCONTAINER ID   IMAGE               COMMAND                  CREATED          STATUS         PORTS                                       NAMES
+80b51e77d9c6   postgres:bullseye   "docker-entrypoint.s…"   14 minutes ago   Up 4 seconds   0.0.0.0:5432->5432/tcp, :::5432->5432/tcp   api-postgres-1
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ sudo docker ps
+[?2004lCONTAINER ID   IMAGE               COMMAND                  CREATED          STATUS         PORTS                                       NAMES
+80b51e77d9c6   postgres:b
