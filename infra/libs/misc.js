@@ -2,6 +2,7 @@ const util = require('util');
 const execP = util.promisify(require('child_process').exec);
 const exec = require('child_process').exec;
 const chalk = require("chalk");
+const {notify} = require("../src/docker");
 
 async function runSync(cmd) {
     console.log(chalk.green(cmd))
@@ -174,6 +175,18 @@ function replaceShell(cmd) {
     );
 }
 
+const getSign = async (imageTag) => {
+  const me = await machineUserAndId()
+  return `${imageTag} by ${me}`
+}
+
+async function appAutoReleaseDocker(config, notify) {
+  const imageTag = await getCommitHash()
+  const sign = await getSign(imageTag)
+  notify && await notify(`... building an image ${sign}`)
+  return await autoReleaseDocker(config)
+}
+
 module.exports = {
     qaRepositoryTag,
     ecrLogIn,
@@ -196,5 +209,7 @@ module.exports = {
     isImageExistsInEcr,
     getCommitHash,
     replaceShell,
+  getSign,
+    appAutoReleaseDocker,
     rootDir: __dirname + "/../..",
 }

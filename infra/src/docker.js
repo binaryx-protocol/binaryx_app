@@ -30,11 +30,6 @@ const deployScalableImage = async (config, server, imageTag, envFileName) => {
     })
 }
 
-const getSign = async (imageTag) => {
-    const me = await machineUserAndId()
-    return `${imageTag} by ${me}`
-}
-
 const notify = async (text) => await sendSlackMessage({ channel: '#dev-deploys', text })
 
 async function deployStaging(imageTag){
@@ -61,13 +56,6 @@ async function deployProduction(imageTag){
     }
 }
 
-async function appAutoReleaseDocker(config) {
-  const imageTag = await getCommitHash()
-  const sign = await getSign(imageTag)
-  await notify(`... building an image ${sign}`)
-  return await autoReleaseDocker(config)
-}
-
 async function serverInfo(server, config, envFile){
     await runRemotely(server, `ls -la ~/shared`).catch(console.error)
     await runRemotely(server, `cat ~/shared/${envFile}`).catch(console.error)
@@ -78,9 +66,8 @@ async function serverInfo(server, config, envFile){
 module.exports = {
     getDockerRunCmdScalableVersion,
     deployScalableImage,
-    getSign,
     deployStaging,
     deployProduction,
     serverInfo,
-  appAutoReleaseDocker,
+    notify,
 };
