@@ -17,7 +17,7 @@ sudo docker run -it -d --rm\\
 
 async function deployDevApi(imageTag){
   const sign = await getSign(imageTag)
-  const cmd = getDockerRunCmdScalableVersion(config, imageTag, '.i2_api_env')
+  const cmd = getDockerRunCmdScalableVersion(config, imageTag, '.i2_dev_api_env')
   try {
     await notify(`🙌 Dev Api: deploying... (${sign})`)
     await deployScalableImage(config, servers['i2_dev_api'], cmd, 'http://localhost')
