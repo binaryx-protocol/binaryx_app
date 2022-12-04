@@ -298,6 +298,10 @@ FakesAssemblies/
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
 node_modules/
+backend/node_modules/
+frontend/node_modules/
+backend/dist/
+backend/.env
 
 # Typescript v1 declaration files
 typings/
@@ -421,7 +425,6 @@ yarn-error.log*
 
 contracts_near/*/target
 contracts_near/*/res
-/test
 contracts_near/*/neardev
 
 /.idea
