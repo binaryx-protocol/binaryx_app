@@ -1,0 +1,423 @@
+Script started on 2022-12-04 23:17:19+02:00 [TERM="xterm-256color" TTY="/dev/pts/3" COLUMNS="211" LINES="49"]
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ hf savegit merge feature/backend_reorganisation2hf save[K[Kscripts/s[Kstaging/
+autoDeploy.js  updateEnv.js   
+dev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/staging/updateEnv.js 
+[?2004l[32m> scp -i /home/dev/d/22/binaryx_app/infra/src/../../gitignored/i2_v1.pem /home/dev/d/22/binaryx_app/infra/libs/../../gitignored/env/i2/.i2_api_env ec2-user@ec2-34-243-201-169.eu-west-1.compute.amazonaws.com:~/shared/.i2_api_env[39m
+[90mchild process exited with code 0[39m
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ 
+[?2004l[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/staging/updateEnv.js [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K/dev/updateEnv.js 
+[?2004l[32m> scp -i /home/dev/d/22/binaryx_app/infra/src/../../gitignored/i2_v1.pem /home/dev/d/22/binaryx_app/infra/libs/../../gitignored/env/i2/.i2_dev_api_env ec2-user@ec2-3-248-201-21.eu-west-1.compute.amazonaws.com:~/shared/.i2_dev_api_env[39m
+/home/dev/d/22/binaryx_app/infra/libs/../../gitignored/env/i2/.i2_dev_api_env: No such file or directory
+
+[90mchild process exited with code 1[39m
+node:internal/process/promises:279
+            triggerUncaughtException(err, true /* fromPromise */);
+            ^
+
+[UnhandledPromiseRejection: This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). The promise rejected with the reason "#<Object>".] {
+  code: [32m'ERR_UNHANDLED_REJECTION'[39m
+}
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/updateEnv.js 
+[?2004l[32m> scp -i /home/dev/d/22/binaryx_app/infra/src/../../gitignored/i2_v1.pem /home/dev/d/22/binaryx_app/infra/libs/../../gitignored/env/i2_dev/.i2_dev_api_env ec2-user@ec2-3-248-201-21.eu-west-1.compute.amazonaws.com:~/shared/.i2_dev_api_env[39m
+scp: /home/ec2-user/shared/.i2_dev_api_env: No such file or directory
+
+[90mchild process exited with code 1[39m
+node:internal/process/promises:279
+            triggerUncaughtException(err, true /* fromPromise */);
+            ^
+
+[UnhandledPromiseRejection: This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). The promise rejected with the reason "#<Object>".] {
+  code: [32m'ERR_UNHANDLED_REJECTION'[39m
+}
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/updateEnv.js 
+[?2004l[32m> ssh -o StrictHostKeyChecking=no -i /home/dev/d/22/binaryx_app/infra/src/../../gitignored/i2_v1.pem ec2-user@ec2-3-248-201-21.eu-west-1.compute.amazonaws.com 'mkdir -p ~/shared'[39m
+[90mchild process exited with code 0[39m
+[32m> scp -i /home/dev/d/22/binaryx_app/infra/src/../../gitignored/i2_v1.pem /home/dev/d/22/binaryx_app/infra/libs/../../gitignored/env/i2_dev/.i2_dev_api_env ec2-user@ec2-3-248-201-21.eu-west-1.compute.amazonaws.com:~/shared/.i2_dev_api_env[39m
+[90mchild process exited with code 0[39m
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/updateEnv.js 
+[?2004l[32m> ssh -o StrictHostKeyChecking=no -i /home/dev/d/22/binaryx_app/infra/src/../../gitignored/i2_v1.pem ec2-user@ec2-3-248-201-21.eu-west-1.compute.amazonaws.com 'mkdir -p ~/shared'[39m
+[90mchild process exited with code 0[39m
+[32m> scp -i /home/dev/d/22/binaryx_app/infra/src/../../gitignored/i2_v1.pem /home/dev/d/22/binaryx_app/infra/libs/../../gitignored/env/i2_dev/.i2_dev_api_env ec2-user@ec2-3-248-201-21.eu-west-1.compute.amazonaws.com:~/shared/.i2_dev_api_env[39m
+[90mchild process exited with code 0[39m
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/updateEnv.js 
+[?2004l[32m> ssh -o StrictHostKeyChecking=no -i /home/dev/d/22/binaryx_app/infra/src/../../gitignored/i2_v1.pem ec2-user@ec2-3-248-201-21.eu-west-1.compute.amazonaws.com 'mkdir -p ~/shared'[39m
+[90mchild process exited with code 0[39m
+[32m> scp -i /home/dev/d/22/binaryx_app/infra/src/../../gitignored/i2_v1.pem /home/dev/d/22/binaryx_app/infra/libs/../../gitignored/env/i2_dev/.i2_dev_api_env ec2-user@ec2-3-248-201-21.eu-west-1.compute.amazonaws.com:~/shared/.i2_dev_api_env[39m
+[90mchild process exited with code 0[39m
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/updateEnv.js [K[K[K[K[K[K[K[K[K[K[K[K[Kinfo.js 
+[?2004l/home/dev/d/22/binaryx_app/api/scripts/dev/info.js:6
+await serverInfo(servers['i2'], config, '.i2_app_env')
+^^^^^
+
+SyntaxError: await is only valid in async functions and the top level bodies of modules
+[90m    at Object.compileFunction (node:vm:352:18)[39m
+[90m    at wrapSafe (node:internal/modules/cjs/loader:1033:15)[39m
+[90m    at Module._compile (node:internal/modules/cjs/loader:1069:27)[39m
+[90m    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:981:32)[39m
+[90m    at Function.Module._load (node:internal/modules/cjs/loader:822:12)[39m
+[90m    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:77:12)[39m
+[90m    at node:internal/main/run_main_module:17:47[39m
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ [A
+[?2004l[A: command not found
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ [Ascripts/dev/info.js 
+[?2004l/home/dev/d/22/binaryx_app/api/scripts/dev/info.js:6
+serverInfo(servers['i2'], config, '.i2_app_env')
+^
+
+TypeError: serverInfo is not a function
+    at Object.<anonymous> (/home/dev/d/22/binaryx_app/api/scripts/dev/info.js:6:1)
+[90m    at Module._compile (node:internal/modules/cjs/loader:1105:14)[39m
+[90m    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:981:32)[39m
+[90m    at Function.Module._load (node:internal/modules/cjs/loader:822:12)[39m
+[90m    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:77:12)[39m
+[90m    at node:internal/main/run_main_module:17:47[39m
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/info.js 
+[?2004l[32m> ssh -o StrictHostKeyChecking=no -i /home/dev/d/22/binaryx_app/infra/src/../../gitignored/i2_v1.pem ec2-user@ec2-34-243-201-169.eu-west-1.compute.amazonaws.com 'ls -la ~/shared'[39m
+total 8
+drwxrwxr-x 2 ec2-user ec2-user  44 гру  4 21:17 .
+drwx------ 7 ec2-user ec2-user 171 вер 20 11:58 ..
+-rw-rw-r-- 1 ec2-user ec2-user 188 гру  4 21:17 .i2_api_env
+-rw-rw-r-- 1 ec2-user ec2-user 568 вер 28 15:02 .i2_app_env
+
+[90mchild process exited with code 0[39m
+[32m> ssh -o StrictHostKeyChecking=no -i /home/dev/d/22/binaryx_app/infra/src/../../gitignored/i2_v1.pem ec2-user@ec2-34-243-201-169.eu-west-1.compute.amazonaws.com 'cat ~/shared/.i2_app_env'[39m
+DATABASE_URL=postgres://postgres:this_coffee_is_extremely_good_with___coding@i2-app-db.cszyghkaadhl.eu-west-1.rds.amazonaws.com:5432/i2_app_v2
+
+# NOT USED:
+# but you cannot remove them... because the server will not start
+
+JWT_SECRET=secret
+JWT_EXPIRES_IN=10d
+OAUTH_GOOGLE_ID=id
+OAUTH_GOOGLE_SECRET=secret
+OAUTH_GOOGLE_REDIRECT_URL=http://localhost:3000/auth/google/redirect
+OAUTH_COGNITO_ID=id
+OAUTH_COGNITO_SECRET=secret
+OAUTH_COGNITO_REDIRECT_URL=http://localhost:3000/auth/cognito/redirect
+OAUTH_COGNITO_DOMAIN=nestjs-playground-dev
+OAUTH_COGNITO_REGION=us-east-1
+
+[90mchild process exited with code 0[39m
+/home/dev/d/22/binaryx_app/infra/src/appUtils.js:10
+  await runRemotely(server, `sudo docker exec -it ${config.containerName} "sh env"`).catch(console.error)
+                                                           ^
+
+TypeError: Cannot read properties of undefined (reading 'containerName')
+    at serverInfo (/home/dev/d/22/binaryx_app/infra/src/appUtils.js:10:60)
+[90m    at processTicksAndRejections (node:internal/process/task_queues:96:5)[39m
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/info.js 
+[?2004lTypeError: Cannot destructure property 'host' of 'undefined' as it is undefined.
+    at runRemotely (/home/dev/d/22/binaryx_app/infra/libs/misc.js:73:30)
+    at serverInfo (/home/dev/d/22/binaryx_app/infra/src/appUtils.js:8:9)
+    at Object.<anonymous> (/home/dev/d/22/binaryx_app/api/scripts/dev/info.js:6:1)
+[90m    at Module._compile (node:internal/modules/cjs/loader:1105:14)[39m
+[90m    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:981:32)[39m
+[90m    at Function.Module._load (node:internal/modules/cjs/loader:822:12)[39m
+[90m    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:77:12)[39m
+[90m    at node:internal/main/run_main_module:17:47[39m
+TypeError: Cannot destructure property 'host' of 'undefined' as it is undefined.
+    at runRemotely (/home/dev/d/22/binaryx_app/infra/libs/misc.js:73:30)
+    at serverInfo (/home/dev/d/22/binaryx_app/infra/src/appUtils.js:9:9)
+/home/dev/d/22/binaryx_app/infra/src/appUtils.js:10
+  await runRemotely(server, `sudo docker exec -it ${config.containerName} "sh env"`).catch(console.error)
+                                                           ^
+
+TypeError: Cannot read properties of undefined (reading 'containerName')
+    at serverInfo (/home/dev/d/22/binaryx_app/infra/src/appUtils.js:10:60)
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/info.js 1[A[K
+[?2004l[A: command not found
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ [A
+[?2004l[A: command not found
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ [Ascripts/dev/info.js 1
+[?2004lTypeError: Cannot destructure property 'host' of 'undefined' as it is undefined.
+    at runRemotely (/home/dev/d/22/binaryx_app/infra/libs/misc.js:73:30)
+    at serverInfo (/home/dev/d/22/binaryx_app/infra/src/appUtils.js:8:9)
+    at Object.<anonymous> (/home/dev/d/22/binaryx_app/api/scripts/dev/info.js:7:1)
+[90m    at Module._compile (node:internal/modules/cjs/loader:1105:14)[39m
+[90m    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:981:32)[39m
+[90m    at Function.Module._load (node:internal/modules/cjs/loader:822:12)[39m
+[90m    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:77:12)[39m
+[90m    at node:internal/main/run_main_module:17:47[39m
+TypeError: Cannot destructure property 'host' of 'undefined' as it is undefined.
+    at runRemotely (/home/dev/d/22/binaryx_app/infra/libs/misc.js:73:30)
+    at serverInfo (/home/dev/d/22/binaryx_app/infra/src/appUtils.js:9:9)
+TypeError: Cannot destructure property 'host' of 'undefined' as it is undefined.
+    at runRemotely (/home/dev/d/22/binaryx_app/infra/libs/misc.js:73:30)
+    at serverInfo (/home/dev/d/22/binaryx_app/infra/src/appUtils.js:10:9)
+TypeError: Cannot destructure property 'host' of 'undefined' as it is undefined.
+    at runRemotely (/home/dev/d/22/binaryx_app/infra/libs/misc.js:73:30)
+    at serverInfo (/home/dev/d/22/binaryx_app/infra/src/appUtils.js:11:9)
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/info.js 1
+[?2004l[32m> ssh -o StrictHostKeyChecking=no -i /home/dev/d/22/binaryx_app/infra/src/../../gitignored/i2_v1.pem ec2-user@ec2-3-248-201-21.eu-west-1.compute.amazonaws.com 'ls -la ~/shared'[39m
+total 4
+drwxrwxr-x 2 ec2-user ec2-user  29 гру  4 21:23 .
+drwx------ 5 ec2-user ec2-user 121 гру  4 21:23 ..
+-rw-rw-r-- 1 ec2-user ec2-user 188 гру  4 21:26 .i2_dev_api_env
+
+[90mchild process exited with code 0[39m
+[32m> ssh -o StrictHostKeyChecking=no -i /home/dev/d/22/binaryx_app/infra/src/../../gitignored/i2_v1.pem ec2-user@ec2-3-248-201-21.eu-west-1.compute.amazonaws.com 'cat ~/shared/.i2_dev_api_env'[39m
+#DB
+DB_HOST=i2-app-db.cszyghkaadhl.eu-west-1.rds.amazonaws.com
+DB_USERNAME=postgres
+DB_PASSWORD=this_coffee_is_extremely_good_with___coding
+DB_NAME=i2_api_v1
+DB_PORT=5432
+DB_SCHEMA=public
+
+[90mchild process exited with code 0[39m
+[32m> ssh -o StrictHostKeyChecking=no -i /home/dev/d/22/binaryx_app/infra/src/../../gitignored/i2_v1.pem ec2-user@ec2-3-248-201-21.eu-west-1.compute.amazonaws.com 'sudo docker exec -it binaryx_app "sh env"'[39m
+Error: No such container: binaryx_app
+
+[90mchild process exited with code 1[39m
+{
+  stdout: [32m''[39m,
+  stderr: [32m'Error: No such container: binaryx_app\n'[39m,
+  code: [33m1[39m
+}
+[32m> ssh -o StrictHostKeyChecking=no -i /home/dev/d/22/binaryx_app/infra/src/../../gitignored/i2_v1.pem ec2-user@ec2-3-248-201-21.eu-west-1.compute.amazonaws.com 'sudo docker logs binaryx_app'[39m
+Error: No such container: binaryx_app
+
+[90mchild process exited with code 1[39m
+{
+  stdout: [32m''[39m,
+  stderr: [32m'Error: No such container: binaryx_app\n'[39m,
+  code: [33m1[39m
+}
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ 
+[?2004l[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scriptp[K[K[Kpt
+script        scriptlive    scriptreplay  
+dev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ script
+script        scriptlive    scriptreplay  
+dev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts
+scripts
+dev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts
+scripts
+dev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/
+autoDeploy.js  info.js        updateEnv.js   
+dev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/autoDeploy.js 
+[?2004lnode:internal/modules/cjs/loader:936
+  throw err;
+  ^
+
+Error: Cannot find module '../../../infra/src/config'
+Require stack:
+- /home/dev/d/22/binaryx_app/api/scripts/dev/autoDeploy.js
+[90m    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:933:15)[39m
+[90m    at Function.Module._load (node:internal/modules/cjs/loader:778:27)[39m
+[90m    at Module.require (node:internal/modules/cjs/loader:1005:19)[39m
+[90m    at require (node:internal/modules/cjs/helpers:102:18)[39m
+    at Object.<anonymous> (/home/dev/d/22/binaryx_app/api/scripts/dev/autoDeploy.js:3:18)
+[90m    at Module._compile (node:internal/modules/cjs/loader:1105:14)[39m
+[90m    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:981:32)[39m
+[90m    at Function.Module._load (node:internal/modules/cjs/loader:822:12)[39m
+[90m    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:77:12)[39m {
+  code: [32m'MODULE_NOT_FOUND'[39m,
+  requireStack: [ [32m'/home/dev/d/22/binaryx_app/api/scripts/dev/autoDeploy.js'[39m ]
+}
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/autoDeploy.js 
+[?2004lnode:internal/modules/cjs/loader:936
+  throw err;
+  ^
+
+Error: Cannot find module '../config'
+Require stack:
+- /home/dev/d/22/binaryx_app/infra/src/api/docker.js
+- /home/dev/d/22/binaryx_app/api/scripts/dev/autoDeploy.js
+[90m    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:933:15)[39m
+[90m    at Function.Module._load (node:internal/modules/cjs/loader:778:27)[39m
+[90m    at Module.require (node:internal/modules/cjs/loader:1005:19)[39m
+[90m    at require (node:internal/modules/cjs/helpers:102:18)[39m
+    at Object.<anonymous> (/home/dev/d/22/binaryx_app/infra/src/api/docker.js:3:18)
+[90m    at Module._compile (node:internal/modules/cjs/loader:1105:14)[39m
+[90m    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:981:32)[39m
+[90m    at Function.Module._load (node:internal/modules/cjs/loader:822:12)[39m
+[90m    at Module.require (node:internal/modules/cjs/loader:1005:19)[39m {
+  code: [32m'MODULE_NOT_FOUND'[39m,
+  requireStack: [
+    [32m'/home/dev/d/22/binaryx_app/infra/src/api/docker.js'[39m,
+    [32m'/home/dev/d/22/binaryx_app/api/scripts/dev/autoDeploy.js'[39m
+  ]
+}
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/autoDeploy.js 
+[?2004lnode:internal/modules/cjs/loader:936
+  throw err;
+  ^
+
+Error: Cannot find module '../config'
+Require stack:
+- /home/dev/d/22/binaryx_app/infra/src/api/docker.js
+- /home/dev/d/22/binaryx_app/api/scripts/dev/autoDeploy.js
+[90m    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:933:15)[39m
+[90m    at Function.Module._load (node:internal/modules/cjs/loader:778:27)[39m
+[90m    at Module.require (node:internal/modules/cjs/loader:1005:19)[39m
+[90m    at require (node:internal/modules/cjs/helpers:102:18)[39m
+    at Object.<anonymous> (/home/dev/d/22/binaryx_app/infra/src/api/docker.js:3:18)
+[90m    at Module._compile (node:internal/modules/cjs/loader:1105:14)[39m
+[90m    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:981:32)[39m
+[90m    at Function.Module._load (node:internal/modules/cjs/loader:822:12)[39m
+[90m    at Module.require (node:internal/modules/cjs/loader:1005:19)[39m {
+  code: [32m'MODULE_NOT_FOUND'[39m,
+  requireStack: [
+    [32m'/home/dev/d/22/binaryx_app/infra/src/api/docker.js'[39m,
+    [32m'/home/dev/d/22/binaryx_app/api/scripts/dev/autoDeploy.js'[39m
+  ]
+}
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/autoDeploy.js 
+[?2004lnode:internal/modules/cjs/loader:936
+  throw err;
+  ^
+
+Error: Cannot find module '../config'
+Require stack:
+- /home/dev/d/22/binaryx_app/infra/src/api/docker.js
+- /home/dev/d/22/binaryx_app/api/scripts/dev/autoDeploy.js
+[90m    at Function.Module._resolveFilename (node:internal/modules/cjs/loader:933:15)[39m
+[90m    at Function.Module._load (node:internal/modules/cjs/loader:778:27)[39m
+[90m    at Module.require (node:internal/modules/cjs/loader:1005:19)[39m
+[90m    at require (node:internal/modules/cjs/helpers:102:18)[39m
+    at Object.<anonymous> (/home/dev/d/22/binaryx_app/infra/src/api/docker.js:3:18)
+[90m    at Module._compile (node:internal/modules/cjs/loader:1105:14)[39m
+[90m    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1159:10)[39m
+[90m    at Module.load (node:internal/modules/cjs/loader:981:32)[39m
+[90m    at Function.Module._load (node:internal/modules/cjs/loader:822:12)[39m
+[90m    at Module.require (node:internal/modules/cjs/loader:1005:19)[39m {
+  code: [32m'MODULE_NOT_FOUND'[39m,
+  requireStack: [
+    [32m'/home/dev/d/22/binaryx_app/infra/src/api/docker.js'[39m,
+    [32m'/home/dev/d/22/binaryx_app/api/scripts/dev/autoDeploy.js'[39m
+  ]
+}
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/autoDeploy.js [Kscripts/dev/autoDeploy.js 
+[?2004lbash: scripts/dev/autoDeploy.js: No such file or directory
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ scripts/dev/autoDeploy.js [Kin
+in                     infobrowser            infotocap              inputattach            install                installkernel          install-sgmlcatalog    intel-virtual-output   
+info                   infocmp                init                   insmod                 install-info           install-printerdriver  instmodsh              invoke-rc.d            
+dev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ in
+in                     infobrowser            infotocap              inputattach            install                installkernel          install-sgmlcatalog    intel-virtual-output   
+info                   infocmp                init                   insmod                 install-info           install-printerdriver  instmodsh              invoke-rc.d            
+dev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ infra/dev/autoDeploy.js 
+[?2004l[32mgit rev-parse HEAD[39m
+553eec4739d0cfab16ef96a061b13f95d986991d
+
+
+[32mwhoami[39m
+dev
+
+
+[32msudo dmidecode --string system-uuid[39m
+[sudo] password for dev: 
+9911a14e-67a0-11ec-80f1-88a4c22b5bc5
+
+
+[32mgit rev-parse HEAD[39m
+553eec4739d0cfab16ef96a061b13f95d986991d
+
+
+[32maws ecr describe-images --repository-name binaryx_api --profile binaryx --region eu-west-1 --image-ids imageTag=553eec4739d0cfab16ef96a061b13f95d986991d[39m
+Image not found Error: Command failed: aws ecr describe-images --repository-name binaryx_api --profile binaryx --region eu-west-1 --image-ids imageTag=553eec4739d0cfab16ef96a061b13f95d986991d
+
+An error occurred (ImageNotFoundException) when calling the DescribeImages operation: The image with imageId {imageDigest:'null', imageTag:'553eec4739d0cfab16ef96a061b13f95d986991d'} does not exist within the repository with name 'binaryx_api' in the registry with id '292041122161'
+
+[32m> sudo docker build -t "binaryx_api:553eec4739d0cfab16ef96a061b13f95d986991d" -f Dockerfile .[39m
+unable to prepare context: unable to evaluate symlinks in Dockerfile path: lstat /home/dev/d/22/binaryx_app/api/Dockerfile: no such file or directory
+
+[90mchild process exited with code 1[39m
+node:internal/process/promises:279
+            triggerUncaughtException(err, true /* fromPromise */);
+            ^
+
+[UnhandledPromiseRejection: This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). The promise rejected with the reason "#<Object>".] {
+  code: [32m'ERR_UNHANDLED_REJECTION'[39m
+}
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ npm st[K[K[K run start:dev
+[?2004l
+> api@0.0.1 start:dev
+> nest start --watch
+
+c[[90m12:08:32 AM[0m] Starting compilation in watch mode...
+
+DeprecationWarning: 'getMutableClone' has been deprecated since v4.0.0. Use an appropriate `factory.update...` method instead, use `setCommentRange` or `setSourceMapRange`, and avoid setting `parent`.
+[96msrc/app/users/user.entity.ts[0m:[93m8[0m:[93m35[0m - [91merror[0m[90m TS2307: [0mCannot find module '@nestjs/graphql' or its corresponding type declarations.
+
+[7m8[0m import { ObjectType, Field } from '@nestjs/graphql';
+[7m [0m [91m                                  ~~~~~~~~~~~~~~~~~[0m
+
+[[90m12:08:35 AM[0m] Found 1 error. Watching for file changes.
+
+c[[90m12:09:17 AM[0m] File change detected. Starting incremental compilation...
+
+[[90m12:09:17 AM[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 1763535   - [39m12/05/2022, 12:09:18 AM   [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 1763535   - [39m12/05/2022, 12:09:18 AM   [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +20ms[39m
+[32m[Nest] 1763535   - [39m12/05/2022, 12:09:18 AM   [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 1763535   - [39m12/05/2022, 12:09:18 AM   [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1763535   - [39m12/05/2022, 12:09:18 AM   [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[31m[Nest] 1763535   - [39m12/05/2022, 12:09:18 AM   [38;5;3m[TypeOrmModule] [39m[31mUnable to connect to the database. Retrying (1)...[39m[38;5;3m +26ms[39m
+Error: connect ECONNREFUSED 127.0.0.1:5432
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1187:16)
+c[[90m12:09:18 AM[0m] File change detected. Starting incremental compilation...
+
+[[90m12:09:18 AM[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 1763549   - [39m12/05/2022, 12:09:19 AM   [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 1763549   - [39m12/05/2022, 12:09:19 AM   [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +20ms[39m
+[32m[Nest] 1763549   - [39m12/05/2022, 12:09:19 AM   [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 1763549   - [39m12/05/2022, 12:09:19 AM   [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1763549   - [39m12/05/2022, 12:09:19 AM   [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[31m[Nest] 1763549   - [39m12/05/2022, 12:09:19 AM   [38;5;3m[TypeOrmModule] [39m[31mUnable to connect to the database. Retrying (1)...[39m[38;5;3m +21ms[39m
+Error: connect ECONNREFUSED 127.0.0.1:5432
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1187:16)
+[31m[Nest] 1763549   - [39m12/05/2022, 12:09:22 AM   [38;5;3m[TypeOrmModule] [39m[31mUnable to connect to the database. Retrying (2)...[39m[38;5;3m +3007ms[39m
+Error: connect ECONNREFUSED 127.0.0.1:5432
+    at TCPConnectWrap.afterConnect [as oncomplete] (node:net:1187:16)
+^C
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ npm run start:dev
+[?2004l
+> api@0.0.1 start:dev
+> nest start --watch
+
+c[[90m12:09:42 AM[0m] Starting compilation in watch mode...
+
+[[90m12:09:43 AM[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 1764067   - [39m12/05/2022, 12:09:43 AM   [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 1764067   - [39m12/05/2022, 12:09:43 AM   [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +20ms[39m
+[32m[Nest] 1764067   - [39m12/05/2022, 12:09:43 AM   [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 1764067   - [39m12/05/2022, 12:09:43 AM   [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1764067   - [39m12/05/2022, 12:09:43 AM   [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 1764067   - [39m12/05/2022, 12:09:44 AM   [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +87ms[39m
+[32m[Nest] 1764067   - [39m12/05/2022, 12:09:44 AM   [38;5;3m[RoutesResolver] [39m[32mAppController {}:[39m[38;5;3m +3ms[39m
+[32m[Nest] 1764067   - [39m12/05/2022, 12:09:44 AM   [38;5;3m[RouterExplorer] [39m[32mMapped {, GET} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 1764067   - [39m12/05/2022, 12:09:44 AM   [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +1ms[39m
+node:events:505
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use :::3000
+[90m    at Server.setupListenHandle [as _listen2] (node:net:1372:16)[39m
+[90m    at listenInCluster (node:net:1420:12)[39m
+[90m    at Server.listen (node:net:1508:7)[39m
+    at ExpressAdapter.listen (/home/dev/d/22/binaryx_app/api/node_modules/[4m@nestjs[24m/platform-express/adapters/express-adapter.js:45:32)
+    at NestApplication.listen (/home/dev/d/22/binaryx_app/api/node_modules/[4m@nestjs[24m/core/nest-application.js:149:26)
+[90m    at processTicksAndRejections (node:internal/process/task_queues:96:5)[39m
+    at async bootstrap (/home/dev/d/22/binaryx_app/api/dist/src/main.js:7:5)
+Emitted 'error' event on Server instance at:
+[90m    at emitErrorNT (node:net:1399:8)[39m
+[90m    at processTicksAndRejections (node:internal/process/task_queues:83:21)[39m {
+  code: [32m'EADDRINUSE'[39m,
+  errno: [33m-98[39m,
+  syscall: [32m'listen'[39m,
+  address: [32m'::'[39m,
+  port: [33m3000[39m
+}
+^C
+[?2004hdev@[32m~/d/22/binaryx_app/api[31m(feature/rdeploy)[00m$ lsot[Kf -p 3000
+[?2004llsof: WARNING: can't stat() overlay file system /var/lib/docker/overlay2/01f63aaa51f541e4081637b3cb616b9ed17a6131194823a7745d91f7b88790fb/merged
