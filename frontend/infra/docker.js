@@ -18,11 +18,11 @@ async function deployDevApi(imageTag){
   const sign = await getSign(imageTag)
   const cmd = getDockerRunCmdScalableVersion(config, imageTag, '.i2_dev_api_env')
   try {
-    await notify(`🙌 Dev Api: deploying... (${sign})`)
-    await deployScalableImage(config, servers['i2_dev_api'], cmd, 'http://localhost')
-    await notify(`🚀 Dev Api: successfully deployed! (${sign})`)
+    await notify(`🙌 Dev Frontend: deploying... (${sign})`)
+    await deployScalableImage(config, servers['i2_dev_frontend'], cmd, 'http://localhost')
+    await notify(`🚀 Dev Frontend: successfully deployed! (${sign})`)
   } catch (e) {
-    await notify(`🚨 Dev Api: critical error during deployment (${sign}). Message: ${e.toString()}`)
+    await notify(`🚨 Dev Frontend: critical error during deployment (${sign}). Message: ${e.toString()}`)
     throw e;
   }
 }
