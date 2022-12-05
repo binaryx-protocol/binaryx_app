@@ -3,7 +3,7 @@ import Image from "next/image";
 import s from "./WrongNetwork.module.scss";
 import {Button} from "./Button";
 import {Connector, useDisconnect} from "wagmi";
-import {SupportedChainId} from "../../walletsConnect";
+import {getActiveConfig, SupportedChainId} from "../../walletsConnect";
 
 type Props = {
   connector: Connector;
@@ -12,8 +12,9 @@ type Props = {
 export const WrongNetwork = (props: Props) => {
   const {connector} = props;
   const {disconnect} = useDisconnect()
+  const chainConfig = getActiveConfig();
   const switchChain = async () => {
-    await connector.switchChain!(SupportedChainId.ARBITRUM_ONE)
+    await connector.switchChain!(chainConfig!.chainInfo.id)
   }
   return (
     <div className={s.root}>

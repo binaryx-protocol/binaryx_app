@@ -1,10 +1,12 @@
+import {arbitrumFork, getActiveConfig} from 'shared/walletsConnect';
 import {configureChains, createClient} from 'wagmi'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import {jsonRpcProvider} from "wagmi/providers/jsonRpc";
-import {SUPPORTED_CHAINS} from "../shared/walletsConnect";
 
-const { chains, provider } = configureChains(SUPPORTED_CHAINS, [
+const activeConfig = getActiveConfig();
+const supportedChains = activeConfig !== undefined ? activeConfig.chainInfo : arbitrumFork;
+const { chains, provider } = configureChains([supportedChains!], [
     jsonRpcProvider({
         rpc: (chain) => {
             return {http: chain.rpcUrls.default}

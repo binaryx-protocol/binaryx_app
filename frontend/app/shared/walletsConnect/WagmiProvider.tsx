@@ -4,7 +4,6 @@ import {
 } from 'wagmi'
 import {client} from "../../utils/wagmi";
 
-
 export const WagmiProvider = ({children}: { children: ReactNode }) => {
 
   return(

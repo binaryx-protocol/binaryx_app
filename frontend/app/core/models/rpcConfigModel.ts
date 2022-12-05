@@ -1,4 +1,4 @@
-// @ts-nocheck
+//@ts-nocheck
 import { atom } from 'jotai'
 import {ethers} from "ethers";
 import {$featureFlags} from "./featureFlagsModel";
@@ -73,8 +73,8 @@ const arbitrumGoerli = (deploys: DeploysAddresses): RpcConfig => ({
   usdtL2Address: deploys.Usdt,
   controllerAddress: deploys.Controller,
 })
-const fork = true;
-const arbitrum = (deploys: DeploysAddresses): RpcConfig => ({
+
+const localhost = (deploys: DeploysAddresses): RpcConfig => ({
   chain: {
     // chainId: `0x${Number(421611).toString(16)}`,
     chainId: `0x${Number(42161).toString(16)}`,
@@ -118,7 +118,7 @@ export const $rpcConfig = atom<RpcConfig | null>((get) => {
   console.debug('Using RPC: ' + rpcName)
   if (rpcName == 'localhost') {
     console.debug('localhostDeploys', localhostDeploys)
-    return arbitrum(localhostDeploys as unknown as DeploysAddresses)
+    return localhost(localhostDeploys as unknown as DeploysAddresses)
   }
   if (rpcName == 'arbitrumGoerli') {
     console.debug('arbitrumGoerliDeploys', arbitrumGoerliDeploys)

@@ -5,7 +5,7 @@ import copyIcon from '../../../../public/svg/wallet/copy.svg'
 import disconnectIcon from '../../../../public/svg/wallet/disconnect.svg'
 import clsx from 'clsx'
 import {Connector, useDisconnect} from "wagmi";
-import {getWalletConfig} from "../../walletsConnect";
+import {getActiveConfig, getWalletConfig} from "../../walletsConnect";
 import {useNetwork} from 'wagmi'
 import {walletAddressFormatted} from "../../../utils/walletAddressFormatted";
 import {copyDataToClipboard} from "../../../utils/copyDataToClipboard";
@@ -20,9 +20,10 @@ type Props = {
 export const WalletInfo = (props: Props) => {
   const {connector, account} = props;
   const {disconnect} = useDisconnect()
-  const {chain} = useNetwork()
-  const activeChain = chain?.id !== undefined ? chain.id : SupportedChainId.ARBITRUM_ONE
-  const explorerLink = `${CHAIN_INFO[activeChain as keyof typeof CHAIN_INFO]?.blockExplorers.default.url}address/${account}`;
+  const activeChainIfo = getActiveConfig();
+  // @ts-ignore
+  const explorerDefault = activeChainIfo.chainInfo.blockExplorers.default.url
+  const explorerLink = `${explorerDefault}address/${account}`;
   return (
     <div className={s.root}>
       <div className={s.address}>

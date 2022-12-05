@@ -23,7 +23,6 @@
     "noEmit": true,
     "jsx": "preserve",
     "types": [
-      "react-spring",
       "jest",
       "cypress"
     ],

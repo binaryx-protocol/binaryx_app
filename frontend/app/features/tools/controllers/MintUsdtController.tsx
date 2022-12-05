@@ -7,7 +7,7 @@ import { Button } from "shared/ui/views/Button";
 import {UiInputChangeEvent} from "../../../types/globals";
 import {$usdtBalance} from "../../../shared/usdtToken/smartContractsFactory";
 import {useAccount, useNetwork} from "wagmi";
-import {CHAIN_INFO, SupportedChainId} from "../../../shared/walletsConnect";
+import {CHAIN_INFO, getActiveConfig, SupportedChainId} from "../../../shared/walletsConnect";
 
 export const MintUsdtController = () => {
   const doMint = useSetAtom(usdtToolModel.$doMint)
@@ -16,7 +16,7 @@ export const MintUsdtController = () => {
   const {isConnected, address} = useAccount()
   const {chain} = useNetwork()
   const balance = usdtBalance.state === 'hasData' ? usdtBalance.data : 0;
-  const resultChain = chain !== undefined ? chain.id : SupportedChainId.ARBITRUM_ONE
+  const chainInfo = getActiveConfig();
   const onChangeLocal = (e: UiInputChangeEvent) => {
     setAmount(parseInt(e.target.value))
   }
@@ -41,7 +41,7 @@ export const MintUsdtController = () => {
               </div>
               <div style={{ color: "#afafaf", padding: '15px 0 0 0' }}>
                 <small>
-                  Note: using USDT smart contract at: {CHAIN_INFO[resultChain as keyof typeof CHAIN_INFO]}
+                  Note: using USDT smart contract at: {chainInfo?.contractsAddresses.usdtL2Address}
                 </small>
               </div>
             </>

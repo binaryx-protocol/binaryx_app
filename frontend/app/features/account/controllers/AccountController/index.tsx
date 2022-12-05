@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import s from './styles.module.scss';
 import WithdrawBlock from 'components/pages/account_page/WithdrawBlock';
 import StatisticBlock from 'components/pages/account_page/StatisticBlock';
@@ -13,7 +15,7 @@ export const AccountController = () => {
   const doLoadMyRewards = useSetAtom(accountModel.$doLoadMyRewards);
   const doClaimMyRewards = useSetAtom(accountModel.$doClaimMyRewards);
   const accountInfo = useAtomValue(accountModel.$accountInfo);
-  const {isConnected} = useAccount()
+  const {isConnected, address} = useAccount()
 
   useEffect(() => {
     if (isConnected) {
@@ -25,7 +27,7 @@ export const AccountController = () => {
     doClaimMyRewards();
   };
 
-  if (!accountInfo) {
+  if (!address) {
     return <>Please connect your wallet first</>;
   }
 
