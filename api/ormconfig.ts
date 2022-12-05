@@ -1,6 +1,9 @@
 import * as dotenv from 'dotenv';
 
 dotenv.config();
+
+console.log('process.env', process.env)
+
 export = {
   type: 'postgres' as const,
   host: process.env.DB_HOST,
