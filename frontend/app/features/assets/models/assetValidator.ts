@@ -2,7 +2,7 @@ import ElegantValidator from 'elegant-validator'
 import { TValidatorResult } from 'elegant-validator/src'
 import defaultMessagesEn from 'elegant-validator/src/defaultMessagesEn'
 import defaultValidators from 'elegant-validator/src/defaultValidators'
-import {UiFormValidatorRules} from "../../../../../../pkg/formType";
+import {UiFormValidatorRules} from "../../../../pkg/formType";
 import {UiNewAssetFormValues} from "../types";
 
 const ev = new ElegantValidator(defaultValidators, defaultMessagesEn)

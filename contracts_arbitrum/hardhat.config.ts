@@ -32,7 +32,7 @@ const config: HardhatUserConfig = {
       url: 'https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
     },
     hardhat: {
-      chainId: 421613,
+      chainId: 42161,
       accounts:{
         mnemonic,
         count: 5,

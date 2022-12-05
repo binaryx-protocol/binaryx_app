@@ -112,7 +112,7 @@ const Account: NextPage<{ data: string }> = (props) => {
 
         <div className={s.orderSection}>
           {myAssets.map((asset) => {
-            return <OrderBlock asset={asset} accountId={accountId} />;
+            return <OrderBlock asset={asset} accountId={accountId} key={accountId}/>;
           })}
         </div>
       </div>

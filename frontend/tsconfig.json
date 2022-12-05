@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "baseUrl": "./app",
+    "sourceMap": true,
+    "strictPropertyInitialization": false,
     "target": "es5",
     "lib": [
       "dom",
@@ -9,15 +11,21 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
+    "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    "noEmit": true,
     "jsx": "preserve",
+    "types": [
+      "jest",
+      "cypress"
+    ],
     "incremental": true
   },
   "include": [
@@ -25,10 +33,9 @@
     "next.config.js",
     "app",
     "pages",
-    "../server/common",
     "app/types/globals.d.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
   ]
 }

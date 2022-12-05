@@ -1,7 +1,8 @@
+// @ts-nocheck
 import { atom } from 'jotai'
 import {$rpcConfig, RpcConfig} from "./rpcConfigModel";
 import {waitFor} from "../../utils/pageLoadUtiils";
-import {UiForm, UiFormErrors} from "../../../../../pkg/formType";
+import {UiForm, UiFormErrors} from "../../../pkg/formType";
 
 const KNOWN_CHAINS = {
   '0x1': 'Ethereum Main Network (Mainnet)',
