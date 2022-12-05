@@ -6,21 +6,31 @@ import Image from "next/image";
 import {Connector, useConnect} from "wagmi";
 import {getWalletConfig} from "../../walletsConnect";
 import {WalletConnectWait} from "./WalletConnectWait";
-import {useState} from "react";
 
 type Props = {
   setIsOpen: (value: boolean) => void;
-  setConnector: any;
+  setIsOpenWalletWait: (value: boolean) => void;
+  setConnector: (value: Connector) => void;
   connector: Connector;
+  isOpenWalletWait: boolean;
+  connectError: boolean;
+  setConnectError: (value: boolean) => void;
 }
 export const WalletConnect = (props: Props) => {
-  const {setIsOpen, setConnector, connector} = props
+  const {
+    setIsOpen,
+    setConnector,
+    connector,
+    setIsOpenWalletWait,
+    isOpenWalletWait,
+    setConnectError,
+    connectError
+  } = props
   const {connectors} = useConnect()
-  const [waitComponent, setWaitComponent] = useState(false)
   return (
     <>
       <div className={s.connect}>
-        {waitComponent ? <div className={s.close} onClick={() => setWaitComponent(false)}>
+        {isOpenWalletWait ? <div className={s.close} onClick={() => setIsOpenWalletWait(false)}>
           <Image src={arrowLeftIcon} alt='close' width={16} height={16}/>
         </div> : <p className={s.connectWallet}>
           Connect Wallet
@@ -30,14 +40,16 @@ export const WalletConnect = (props: Props) => {
           <Image src={closeIcon} alt='close' width={16} height={16}/>
         </div>
       </div>
-      {waitComponent ? <WalletConnectWait connector={connector} setIsOpen={setIsOpen}/> :
+      {isOpenWalletWait ?
+        <WalletConnectWait connector={connector} setIsOpen={setIsOpen} setConnectError={setConnectError}
+                           connectError={connectError}/> :
         <div className={s.wallets}>
           {connectors.map((connector) =>
             (
               <div className={s.walletWrapper} onClick={
                 () => {
                   setConnector(connector)
-                  setWaitComponent(true)
+                  setIsOpenWalletWait(true)
                 }}
                    key={getWalletConfig(connector.id).title}>
                 <div className={s.wallet}>

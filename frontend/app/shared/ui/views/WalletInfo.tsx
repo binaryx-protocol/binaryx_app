@@ -6,10 +6,8 @@ import disconnectIcon from '../../../../public/svg/wallet/disconnect.svg'
 import clsx from 'clsx'
 import {Connector, useDisconnect} from "wagmi";
 import {getActiveConfig, getWalletConfig} from "../../walletsConnect";
-import {useNetwork} from 'wagmi'
 import {walletAddressFormatted} from "../../../utils/walletAddressFormatted";
 import {copyDataToClipboard} from "../../../utils/copyDataToClipboard";
-import {CHAIN_INFO, SupportedChainId} from "../../walletsConnect";
 import {useOutsideClick} from "../../../hooks/useOutisdeClick";
 import {useRef} from "react";
 
@@ -23,14 +21,14 @@ export const WalletInfo = (props: Props) => {
   const {connector, account, setIsOpen} = props;
   const {disconnect} = useDisconnect()
   const activeChainIfo = getActiveConfig();
-  // @ts-ignore
-  const explorerDefault = activeChainIfo.chainInfo.blockExplorers.default.url
-  const explorerLink = `${explorerDefault}address/${account}`;
   const wrapperRef = useRef(null);
   const closeInfo = () =>{
     setIsOpen(false)
   }
   useOutsideClick(wrapperRef, closeInfo);
+  // @ts-ignore
+  const explorerDefault = activeChainIfo.chainInfo.blockExplorers.default.url
+  const explorerLink = `${explorerDefault}address/${account}`;
   return (
     <div className={s.root} ref={wrapperRef}>
       <div className={s.address}>

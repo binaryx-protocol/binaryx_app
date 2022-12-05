@@ -3,12 +3,14 @@ import Image from "next/image";
 import hourglassIcon from '../../../../public/svg/wallet/Hourglass.svg'
 import {ConnectorNames, getWalletConfig} from "../../walletsConnect";
 import {useEffect, useState} from "react";
-import {Connector, useAccount, useConnect, useNetwork} from "wagmi";
+import {Connector, useAccount, useConnect} from "wagmi";
 import {QRCode} from "./QRCode";
 
 type Props = {
     connector: Connector;
     setIsOpen: (value: boolean) => void;
+    connectError: boolean;
+    setConnectError: (value: boolean) => void;
 }
 
 export const MetamaskError = () => {
@@ -53,8 +55,7 @@ export const Loading = () => {
 }
 
 export const WalletConnectWait = (props: Props) => {
-    const {connector, setIsOpen} = props
-    const [error, setError] = useState(false);
+    const {connector, setIsOpen, setConnectError, connectError} = props
     const {connect} = useConnect()
     const {address} = useAccount()
     useEffect(() => {
@@ -65,13 +66,13 @@ export const WalletConnectWait = (props: Props) => {
     useEffect(() => {
         if (connector.id === ConnectorNames.MetaMask) {
             if (!window.ethereum?.isMetaMask && window.ethereum?.isTrustWallet) {
-                setError(true)
+              setConnectError(true)
             }else{
                 connect({connector})
             }
         } else {
             if (window.ethereum?.isMetaMask && !window.ethereum?.isTrustWallet) {
-                setError(true)
+              setConnectError(true)
             }else{
                 connect({connector})
             }
@@ -80,7 +81,7 @@ export const WalletConnectWait = (props: Props) => {
 
     return (
         <div className={s.root}>
-            {error ? (connector.id === ConnectorNames.MetaMask ? <MetamaskError/> : <TrustWalletError/>) : <Loading/>}
+            {connectError ? (connector.id === ConnectorNames.MetaMask ? <MetamaskError/> : <TrustWalletError/>) : <Loading/>}
         </div>
     )
 }

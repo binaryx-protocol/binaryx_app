@@ -23,7 +23,9 @@ type Props = {
 export const DesktopBar = ({account, isConnected}: Props) => {
   const [isOpenWalletModal, setIsOpenWalletModal] = useState(false)
   const [isOpenWalletInfo, setIsOpenWalletInfo] = useState(false)
-  const [connector, setConnector] = useAtom($connectorAtom)
+  const [isOpenWalletWait, setIsOpenWalletWait] = useState(false);
+  const [connectError, setConnectError] = useState(false);
+  const [connector, setConnector] = useAtom($connectorAtom);
   const {chain} = useNetwork()
   const unsupportedChain = chain !== undefined ? chain.unsupported : false;
   return (
@@ -70,7 +72,7 @@ export const DesktopBar = ({account, isConnected}: Props) => {
               ? (
                 <>
                   <div className={s.wallet} onClick={() => {
-                    setIsOpenWalletInfo(!isOpenWalletInfo)
+                    setIsOpenWalletInfo(true)
                   }}>
                     <WalletIcon/>
                     <span className={s.accountAddress}>{walletAddressFormatted(account)}</span>
@@ -88,10 +90,12 @@ export const DesktopBar = ({account, isConnected}: Props) => {
           }
           {isOpenWalletModal &&
             <BaseModal setIsOpen={setIsOpenWalletModal}>
-              <WalletConnect setIsOpen={setIsOpenWalletModal} setConnector={setConnector} connector={connector}/>
+              <WalletConnect setIsOpen={setIsOpenWalletModal} setConnector={setConnector} connector={connector}
+                             isOpenWalletWait={isOpenWalletWait} setIsOpenWalletWait={setIsOpenWalletWait}
+                             connectError={connectError} setConnectError={setConnectError}/>
             </BaseModal>}
           {unsupportedChain && <BaseModal setIsOpen={() => unsupportedChain}>
-            <WrongNetwork connector={connector}/>
+            <WrongNetwork/>
           </BaseModal>}
         </div>
       </Container>
