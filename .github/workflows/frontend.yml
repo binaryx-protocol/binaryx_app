@@ -1,10 +1,6 @@
 name: Build and Test
 
-on:
-  push:
-    branches: [feature/rdeploy]
-  pull_request:
-    branches: [main]
+on: [push, pull_request]
 
 jobs:
   build_and_test:
