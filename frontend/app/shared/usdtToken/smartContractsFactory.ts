@@ -1,9 +1,10 @@
 import { atom } from 'jotai'
 import {Contract, ethers} from "ethers";
-import {$publicRpcProvider, $rpcConfig, $userRpcProvider, RpcConfig} from "../../core/models/rpcConfigModel";
+import {$publicRpcProvider, $rpcConfig, $userRpcProvider} from "../../core/models/rpcConfigModel";
 import {erc20Abi} from "../../core/abis";
-import {$isAccountConnected, $metaMaskState} from "../../core/models/metaMaskModel";
 import {loadable} from "jotai/utils";
+import {ChainInfo} from "../walletsConnect";
+import {$isConnected} from "../../core/models/walletModel";
 
 export type UsdtManager = Contract & {
   demoMint: (amount: number) => Promise<void>
@@ -15,38 +16,38 @@ const abi = [
 ]
 
 export const $usdtSmartContractPublic = atom<UsdtManager>((get) => {
-  const rpcConfig = get($rpcConfig) as RpcConfig
+  const rpcConfig = get($rpcConfig) as ChainInfo
   const provider = get($publicRpcProvider) as ethers.providers.JsonRpcProvider
-  return new ethers.Contract(rpcConfig.usdtL2Address, abi, provider) as UsdtManager
+  return new ethers.Contract(rpcConfig.contractsAddresses.usdtL2Address, abi, provider) as UsdtManager
 })
 
 export const $usdtSmartContractSigned = atom<UsdtManager>((get) => {
-  const rpcConfig = get($rpcConfig) as RpcConfig
+  const rpcConfig = get($rpcConfig) as ChainInfo
   const provider = get($userRpcProvider) as ethers.providers.JsonRpcProvider
-  const smartContract = new ethers.Contract(rpcConfig.usdtL2Address, abi, provider);
+  const smartContract = new ethers.Contract(rpcConfig.contractsAddresses.usdtL2Address, abi, provider);
   return smartContract.connect(provider.getSigner()) as UsdtManager
 })
 
 // TODO move ?
 export const $usdtBalanceAsync = atom<Promise<number>>(async (get) => {
-  const isAccountConnected = get($isAccountConnected)
+  const isAccountConnected = get($isConnected)
   if (!isAccountConnected) {
     return 0;
   }
   const sc = get($usdtSmartContractPublic)
-  return (await sc.balanceOf(get($metaMaskState).values.accounts?.[0])).toNumber() / 1e6
+  return (await sc.balanceOf(get($isConnected))).toNumber() / 1e6
 })
 
 export const $usdtBalance = loadable($usdtBalanceAsync)
 //
 export const $usdtBnrxBalanceAsync = atom<Promise<number>>(async (get) => {
-  const isAccountConnected = get($isAccountConnected)
+  const isAccountConnected = get($isConnected)
   if (!isAccountConnected) {
     return 0;
   }
   const sc = get($usdtSmartContractPublic)
-  const rpcConfig = get($rpcConfig) as RpcConfig
-  return (await sc.balanceOf(rpcConfig.assetsTokenAddress)).toNumber() / 1e6
+  const rpcConfig = get($rpcConfig) as ChainInfo
+  return (await sc.balanceOf(rpcConfig.contractsAddresses.assetsTokenAddress)).toNumber() / 1e6
 })
 
 export const $usdtBnrxBalance = loadable($usdtBnrxBalanceAsync)

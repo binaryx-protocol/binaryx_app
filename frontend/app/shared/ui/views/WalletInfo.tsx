@@ -10,6 +10,8 @@ import {useNetwork} from 'wagmi'
 import {walletAddressFormatted} from "../../../utils/walletAddressFormatted";
 import {copyDataToClipboard} from "../../../utils/copyDataToClipboard";
 import {CHAIN_INFO, SupportedChainId} from "../../walletsConnect";
+import {useOutsideClick} from "../../../hooks/useOutisdeClick";
+import {useRef} from "react";
 
 type Props = {
   connector: Connector;
@@ -18,14 +20,19 @@ type Props = {
 }
 
 export const WalletInfo = (props: Props) => {
-  const {connector, account} = props;
+  const {connector, account, setIsOpen} = props;
   const {disconnect} = useDisconnect()
   const activeChainIfo = getActiveConfig();
   // @ts-ignore
   const explorerDefault = activeChainIfo.chainInfo.blockExplorers.default.url
   const explorerLink = `${explorerDefault}address/${account}`;
+  const wrapperRef = useRef(null);
+  const closeInfo = () =>{
+    setIsOpen(false)
+  }
+  useOutsideClick(wrapperRef, closeInfo);
   return (
-    <div className={s.root}>
+    <div className={s.root} ref={wrapperRef}>
       <div className={s.address}>
         <Image src={getWalletConfig(connector?.id)?.icon} alt={'wallet'} width={24} height={24}/>
         <p>{walletAddressFormatted(account)}</p>

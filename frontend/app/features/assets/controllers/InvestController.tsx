@@ -3,9 +3,9 @@ import {useAtomValue} from "jotai";
 import {useAccount} from "wagmi";
 
 export const InvestController = () => {
-  const {isConnected} = useAccount()
+  const {address} = useAccount()
 
-  return isConnected ? <InvestAmountSection /> : <div style={{ padding: '10px', textAlign: 'center' }}>Please connect your wallet first</div>
+  return address ? <InvestAmountSection /> : <div style={{ padding: '10px', textAlign: 'center' }}>Please connect your wallet first</div>
 }
 
 const T = {

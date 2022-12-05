@@ -2,19 +2,21 @@ import warningIcon from '../../../../public/svg/warning.svg'
 import Image from "next/image";
 import s from "./WrongNetwork.module.scss";
 import {Button} from "./Button";
-import {Connector, useDisconnect} from "wagmi";
-import {getActiveConfig, SupportedChainId} from "../../walletsConnect";
+import {Connector, useDisconnect, useSwitchNetwork} from "wagmi";
+import {getActiveConfig} from "../../walletsConnect";
 
 type Props = {
   connector: Connector;
 }
 
 export const WrongNetwork = (props: Props) => {
-  const {connector} = props;
+  const { switchNetwork} = useSwitchNetwork()
   const {disconnect} = useDisconnect()
   const chainConfig = getActiveConfig();
   const switchChain = async () => {
-    await connector.switchChain!(chainConfig!.chainInfo.id)
+    if (switchNetwork && chainConfig) {
+       switchNetwork(chainConfig.chainInfo.id)
+    }
   }
   return (
     <div className={s.root}>

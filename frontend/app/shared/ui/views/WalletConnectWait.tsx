@@ -61,6 +61,7 @@ export const WalletConnectWait = (props: Props) => {
         if (address) setIsOpen(false);
     }, [address])
 
+
     useEffect(() => {
         if (connector.id === ConnectorNames.MetaMask) {
             if (!window.ethereum?.isMetaMask && window.ethereum?.isTrustWallet) {

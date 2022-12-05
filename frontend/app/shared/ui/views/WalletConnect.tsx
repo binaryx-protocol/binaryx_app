@@ -3,12 +3,10 @@ import s from "./WalletConnect.module.scss";
 import closeIcon from "../../../../public/svg/closeIcon.svg"
 import arrowLeftIcon from '../../../../public/svg/ArrowLeft.svg'
 import Image from "next/image";
-import {Connector, useConnect, useProvider} from "wagmi";
+import {Connector, useConnect} from "wagmi";
 import {getWalletConfig} from "../../walletsConnect";
 import {WalletConnectWait} from "./WalletConnectWait";
 import {useState} from "react";
-import ERC20 from '../../../abis/ERC20.json'
-import {Contract} from "ethers";
 
 type Props = {
   setIsOpen: (value: boolean) => void;
