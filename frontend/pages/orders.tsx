@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from 'react';
 import { NextPage } from 'next';
 import { Request } from 'express';

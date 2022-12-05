@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import waitForContract from 'utils/waitForContract';
 import MainContract from 'contracts/MainContract';
 import { MAIN_CONTRACT_NAME } from 'contracts/config';
