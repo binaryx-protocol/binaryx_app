@@ -13,11 +13,13 @@ import IconNotification from '../views/SideMenu/icons/IconNotification';
 import SideMenuDivider from '../views/SideMenu/SideMenuDivider';
 import {Container} from "../../../shared/ui/views/Container";
 import {NanoLoader} from "../../../shared/ui/views/NanoLoader";
+import {PropertyCard} from "../../../shared/ui/views/PropertyCard";
 
 export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
   const blockchainAssets = $blockchainAssets.state === 'hasData' ? $blockchainAssets.data : null
   const [assets, balances] = blockchainAssets || []
+
   return (
     <div className={s.root}>
       <Container>

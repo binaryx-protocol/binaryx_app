@@ -49,6 +49,7 @@ export const DesktopBar = (props: Props) => {
   } = props
   const {chain} = useNetwork()
   const unsupportedChain = chain !== undefined ? chain.unsupported : false;
+  console.log(account)
   useEffect(()=>{
    if(!account) onCurrentWalletClick(false);
   },[account])
