@@ -6,7 +6,7 @@ import StatisticBlock from 'components/pages/account_page/StatisticBlock';
 import OrderBlockView from '../../../../components/pages/account_page/OrderBlock/OrderBlockView';
 import * as accountModel from '../../models/accountModel';
 import {useAtomValue, useSetAtom} from 'jotai';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {paths} from '../../../../../pkg/paths';
 import {Container} from '../../../../shared/ui/views/Container';
 import {useAccount} from "wagmi";

@@ -10,13 +10,18 @@
   padding: 8px;
   border-radius: 12px;
   max-height: 200px;
-  font-family: "Manrope", sans-serif;
 
   p {
     margin: 0;
   }
 }
+.grayBorder{
+  border: 1px solid var(--color--secondary-bg);
+}
 
+.purpleBorder{
+  border: 1px solid #6F4DC4;
+}
 .mainInfo {
   display: flex;
   align-items: center;

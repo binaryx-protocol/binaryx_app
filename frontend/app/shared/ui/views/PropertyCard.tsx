@@ -4,12 +4,15 @@ import s from './PropertyCard.module.scss'
 import {Button} from "./Button";
 import arrowIcon from '../../../../public/svg/arrow.svg'
 import clsx from "clsx";
+import {useState} from "react";
 
 export const PropertyCard = () => {
+  const [isActive, setIsActive] = useState<boolean>(false)
+
   return (
     <>
       <p className={s.property}>Your Property</p>
-      <div className={s.propertyCard}>
+      <div className={clsx(s.propertyCard, isActive ? s.purpleBorder: s.grayBorder)}>
         <div className={s.mainInfo}>
           <Image src={IMAGE} alt={'IMAGE'} className={s.propertyImage} width={123} height={92}/>
           <div>
@@ -31,11 +34,11 @@ export const PropertyCard = () => {
           <Button className={s.claimButton}>
             Claim
           </Button>
-          <div className={s.arrowWrapper}>
+          <div className={s.arrowWrapper} onClick={()=>setIsActive(!isActive)}>
             <Image src={arrowIcon} alt={'arrowIcon'}/>
           </div>
         </div>
-        <div className={s.detailInfo}>
+        {isActive && <div className={clsx(s.detailInfo, isActive ? s.active : '')}>
           <div className={s.separateLine}/>
           <div className={s.assetIDWrapper}>
             <div className={s.assetID}>
@@ -52,7 +55,7 @@ export const PropertyCard = () => {
               View Transactions
             </Button>
           </div>
-        </div>
+        </div>}
       </div>
     </>
   )
