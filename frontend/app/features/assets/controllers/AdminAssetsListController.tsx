@@ -13,6 +13,7 @@ import IconNotification from '../views/SideMenu/icons/IconNotification';
 import SideMenuDivider from '../views/SideMenu/SideMenuDivider';
 import {Container} from "../../../shared/ui/views/Container";
 import {NanoLoader} from "../../../shared/ui/views/NanoLoader";
+import {PropertyCard} from "../../../shared/ui/views/PropertyCard";
 
 export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
@@ -39,9 +40,17 @@ export const AdminAssetsListController = () => {
                 Marketplace
               </h1>
             </div>
-            <NanoLoader isLoading={!assets?.length} className={s.loader}>
-              <AssetList assets={assets || []} balances={balances || []} />
-            </NanoLoader>
+            {/*<NanoLoader isLoading={!assets?.length} className={s.loader}>*/}
+            {/*  <AssetList assets={assets || []} balances={balances || []} />*/}
+            {/*</NanoLoader>*/}
+            <div className={s.totalPropertyInfo}>
+              <div className={s.totalRentInfo}>
+                <p>Total Rent Balance</p>
+              </div>
+              <div>
+                <PropertyCard/>
+              </div>
+            </div>
           </div>
         </div>
       </Container>
