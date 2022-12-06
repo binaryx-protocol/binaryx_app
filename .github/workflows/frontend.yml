@@ -3,7 +3,7 @@ name: Test Frontend
 on: [push] #, pull_request
 
 jobs:
-  build_and_test:
+  frontend_build_and_test:
     runs-on: ubuntu-latest
 
     strategy:
