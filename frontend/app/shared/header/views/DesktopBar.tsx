@@ -3,29 +3,49 @@ import {Button} from "../../ui/views/Button";
 import {paths} from "../../../../pkg/paths";
 import Link from "next/link";
 import {Container} from "../../ui/views/Container";
-import {useState} from "react";
 import {WalletConnect} from "../../ui/views/WalletConnect";
 import arrowIcon from '../../../../public/svg/arrow.svg'
 import Image from "next/image";
 import {WalletInfo} from "../../ui/views/WalletInfo";
-import {useNetwork} from "wagmi";
+import {Connector, useNetwork} from "wagmi";
 import {walletAddressFormatted} from "../../../utils/walletAddressFormatted";
 import {BaseModal} from "../../ui/views/BaseModal";
 import {WrongNetwork} from "../../ui/views/WrongNetwork";
-import {useAtom} from "jotai";
-import {$connectorAtom} from "../../../core/models/walletModel";
 
 type Props = {
   account: string
   isConnected: boolean
+  setIsOpenWalletInfo: (value: boolean) => void;
+  isOpenWalletInfo: boolean;
+  connector: Connector;
+  setIsOpenWalletModal: (value: boolean) => void;
+  isOpenWalletModal: boolean;
+  setConnector: () => void;
+  setIsOpenWalletWait: (value: boolean) => void;
+  isOpenWalletWait: boolean;
+  setConnectError:(value: boolean) => void;
+  connectError: boolean;
+  disconnect: () => void;
+  switchNetwork: ((chainId_?: number | undefined) => void) | undefined;
 }
 
-export const DesktopBar = ({account, isConnected}: Props) => {
-  const [isOpenWalletModal, setIsOpenWalletModal] = useState(false)
-  const [isOpenWalletInfo, setIsOpenWalletInfo] = useState(false)
-  const [isOpenWalletWait, setIsOpenWalletWait] = useState(false);
-  const [connectError, setConnectError] = useState(false);
-  const [connector, setConnector] = useAtom($connectorAtom);
+export const DesktopBar = (props: Props) => {
+  const {
+    account,
+    isConnected,
+    setIsOpenWalletInfo,
+    isOpenWalletInfo,
+    connector,
+    setIsOpenWalletModal,
+    isOpenWalletModal,
+    setConnector,
+    setIsOpenWalletWait,
+    isOpenWalletWait,
+    setConnectError,
+    connectError,
+    disconnect,
+    switchNetwork
+  } = props
   const {chain} = useNetwork()
   const unsupportedChain = chain !== undefined ? chain.unsupported : false;
   return (
@@ -80,7 +100,7 @@ export const DesktopBar = ({account, isConnected}: Props) => {
                   </div>
                   {isOpenWalletInfo &&
                     <WalletInfo connector={connector} account={account}
-                                setIsOpen={setIsOpenWalletInfo}/>}
+                                setIsOpen={setIsOpenWalletInfo} disconnect={disconnect}/>}
                 </>
               )
               :
@@ -95,7 +115,7 @@ export const DesktopBar = ({account, isConnected}: Props) => {
                              connectError={connectError} setConnectError={setConnectError}/>
             </BaseModal>}
           {unsupportedChain && <BaseModal setIsOpen={() => unsupportedChain}>
-            <WrongNetwork/>
+            <WrongNetwork disconnect={disconnect}  switchNetwork={switchNetwork}/>
           </BaseModal>}
         </div>
       </Container>

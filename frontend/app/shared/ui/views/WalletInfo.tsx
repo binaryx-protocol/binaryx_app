@@ -15,11 +15,11 @@ type Props = {
   connector: Connector;
   account: string;
   setIsOpen: any;
+  disconnect: () => void;
 }
 
 export const WalletInfo = (props: Props) => {
-  const {connector, account, setIsOpen} = props;
-  const {disconnect} = useDisconnect()
+  const {connector, account, setIsOpen, disconnect} = props;
   const activeChainIfo = getActiveConfig();
   const wrapperRef = useRef(null);
   const closeInfo = () =>{
