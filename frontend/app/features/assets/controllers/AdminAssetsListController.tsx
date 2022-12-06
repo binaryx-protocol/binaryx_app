@@ -25,13 +25,13 @@ export const AdminAssetsListController = () => {
       <Container>
         <div className={s.contentWrapper}>
           <SideMenu className={s.pageMenu}>
-            <SideMenuNavItem icon={<IconProperty />} title="Asset Overview" url="/account-v2" />
-            <SideMenuNavItem icon={<IconCoins />} title="Marketplace" url="/assets-v2" />
-            <SideMenuNavItem icon={<IconGift />} title="Refer and Earn" url="#" />
-            <SideMenuNavItem icon={<IconHistory />} title="Transaction" url="#" />
-            <SideMenuDivider />
-            <SideMenuNavItem icon={<IconSettings />} title="Settings" url="#" />
-            <SideMenuNavItem icon={<IconNotification />} title="Notifications" url="#" />
+            <SideMenuNavItem icon={<IconProperty/>} title="Asset Overview" url="/account-v2"/>
+            <SideMenuNavItem icon={<IconCoins/>} title="Marketplace" url="/assets-v2"/>
+            <SideMenuNavItem icon={<IconGift/>} title="Refer and Earn" url="#"/>
+            <SideMenuNavItem icon={<IconHistory/>} title="Transaction" url="#"/>
+            <SideMenuDivider/>
+            <SideMenuNavItem icon={<IconSettings/>} title="Settings" url="#"/>
+            <SideMenuNavItem icon={<IconNotification/>} title="Notifications" url="#"/>
           </SideMenu>
 
           <div className={s.pageContent}>
@@ -40,17 +40,9 @@ export const AdminAssetsListController = () => {
                 Marketplace
               </h1>
             </div>
-            {/*<NanoLoader isLoading={!assets?.length} className={s.loader}>*/}
-            {/*  <AssetList assets={assets || []} balances={balances || []} />*/}
-            {/*</NanoLoader>*/}
-            <div className={s.totalPropertyInfo}>
-              <div className={s.totalRentInfo}>
-                <p>Total Rent Balance</p>
-              </div>
-              <div>
-                <PropertyCard/>
-              </div>
-            </div>
+            <NanoLoader isLoading={!assets?.length} className={s.loader}>
+              <AssetList assets={assets || []} balances={balances || []}/>
+            </NanoLoader>
           </div>
         </div>
       </Container>
