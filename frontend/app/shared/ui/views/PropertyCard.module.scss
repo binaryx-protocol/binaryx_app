@@ -1,16 +1,11 @@
-.property {
-  font-size: 18px;
-  font-weight: 700;
-  margin: 10px 18px 24px;
-}
-
 .propertyCard {
-  width: 54vw;
+  width: 50vw;
+  max-width: 840px;
   background-color: var(--color--primary-bg);
   padding: 8px;
   border-radius: 12px;
   max-height: 200px;
-
+  margin-bottom: 8px;
   p {
     margin: 0;
   }

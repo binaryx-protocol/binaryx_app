@@ -5,23 +5,28 @@ import {Button} from "./Button";
 import arrowIcon from '../../../../public/svg/arrow.svg'
 import clsx from "clsx";
 import {useState} from "react";
+import {UiAccountInfo, UIReward} from "../../../features/account/models/accountModel";
 
-export const PropertyCard = () => {
+type Props = {
+  property:UIReward;
+}
+
+export const PropertyCard = (props: Props) => {
+  const {property} = props
+  // TODO: replace in controller after MVP
   const [isActive, setIsActive] = useState<boolean>(false)
-
   return (
     <>
-      <p className={s.property}>Your Property</p>
       <div className={clsx(s.propertyCard, isActive ? s.purpleBorder: s.grayBorder)}>
         <div className={s.mainInfo}>
-          <Image src={IMAGE} alt={'IMAGE'} className={s.propertyImage} width={123} height={92}/>
+          <img src={property.asset.propertyInfo_images} alt={'propertyImage'} className={s.propertyImage} width={123} height={92}/>
           <div>
-            <p className={clsx(s.propertyName, s.upperText)}>621 E Le Claire Rd</p>
-            <p className={s.greyText}>Eldridge, IA 52748</p>
+            <p className={clsx(s.propertyName, s.upperText)}>{property.asset.name}</p>
+            <p className={s.greyText}>{property.asset.name}</p>
           </div>
           <div>
             <p className={clsx(s.greyText, s.upperText)}>CoC</p>
-            <p className={s.purpleText}>0.0%</p>
+            <p className={s.purpleText}>{property.asset.tokenInfo_apr}%</p>
           </div>
           <div>
             <p className={clsx(s.greyText, s.upperText)}>Total</p>
@@ -29,14 +34,14 @@ export const PropertyCard = () => {
           </div>
           <div>
             <p className={clsx(s.greyText, s.upperText)}>Current Rent Balance</p>
-            <p className={s.purpleText}>$1.198</p>
+            <p className={s.purpleText}>${property.rewardAmountDe6}</p>
           </div>
-          <Button className={s.claimButton}>
-            Claim
-          </Button>
-          <div className={s.arrowWrapper} onClick={()=>setIsActive(!isActive)}>
-            <Image src={arrowIcon} alt={'arrowIcon'}/>
-          </div>
+          {/*<Button className={s.claimButton}>*/}
+          {/*  Claim*/}
+          {/*</Button>*/}
+          {/*<div className={s.arrowWrapper} onClick={()=>setIsActive(!isActive)}>*/}
+          {/*  <Image src={arrowIcon} alt={'arrowIcon'}/>*/}
+          {/*</div>*/}
         </div>
         {isActive && <div className={clsx(s.detailInfo, isActive ? s.active : '')}>
           <div className={s.separateLine}/>
