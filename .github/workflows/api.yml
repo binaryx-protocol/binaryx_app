@@ -1,9 +1,9 @@
 name: Test API
 
-on: [push, pull_request]
+on: [push] # pull_request
 
 jobs:
-  build_and_test:
+  api_build_and_test:
     runs-on: ubuntu-latest
 
     strategy:
