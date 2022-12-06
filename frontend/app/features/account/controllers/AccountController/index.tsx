@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import s from './styles.module.scss';
 import WithdrawBlock from 'components/pages/account_page/WithdrawBlock';
 import StatisticBlock from 'components/pages/account_page/StatisticBlock';
@@ -27,7 +25,7 @@ export const AccountController = () => {
     doClaimMyRewards();
   };
 
-  if (!address) {
+  if (!address || !accountInfo) {
     return <>Please connect your wallet first</>;
   }
 

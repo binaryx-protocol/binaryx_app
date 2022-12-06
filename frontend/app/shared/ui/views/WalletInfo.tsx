@@ -6,26 +6,31 @@ import disconnectIcon from '../../../../public/svg/wallet/disconnect.svg'
 import clsx from 'clsx'
 import {Connector, useDisconnect} from "wagmi";
 import {getActiveConfig, getWalletConfig} from "../../walletsConnect";
-import {useNetwork} from 'wagmi'
 import {walletAddressFormatted} from "../../../utils/walletAddressFormatted";
 import {copyDataToClipboard} from "../../../utils/copyDataToClipboard";
-import {CHAIN_INFO, SupportedChainId} from "../../walletsConnect";
+import {useOutsideClick} from "../../../hooks/useOutisdeClick";
+import {useRef} from "react";
 
 type Props = {
   connector: Connector;
   account: string;
-  setIsOpen: any;
+  onWalletInfoClick: any;
+  disconnect: () => void;
 }
 
 export const WalletInfo = (props: Props) => {
-  const {connector, account} = props;
-  const {disconnect} = useDisconnect()
+  const {connector, account, onWalletInfoClick, disconnect} = props;
   const activeChainIfo = getActiveConfig();
+  const wrapperRef = useRef(null);
+  const closeInfo = () =>{
+    onWalletInfoClick(false)
+  }
+  useOutsideClick(wrapperRef, closeInfo);
   // @ts-ignore
   const explorerDefault = activeChainIfo.chainInfo.blockExplorers.default.url
   const explorerLink = `${explorerDefault}address/${account}`;
   return (
-    <div className={s.root}>
+    <div className={s.root} ref={wrapperRef}>
       <div className={s.address}>
         <Image src={getWalletConfig(connector?.id)?.icon} alt={'wallet'} width={24} height={24}/>
         <p>{walletAddressFormatted(account)}</p>

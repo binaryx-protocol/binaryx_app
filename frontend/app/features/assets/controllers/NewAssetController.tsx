@@ -4,11 +4,11 @@ import {useAtomValue, useSetAtom} from "jotai";
 import {AssetFormFields} from "../views/AssetFormFields";
 import {SyntheticEvent, useEffect} from "react";
 import {Button} from "../../../shared/ui/views/Button";
-import * as metaMaskModel from "../../../core/models/metaMaskModel";
+import {useAccount} from "wagmi";
 
 export const NewAssetController = () => {
   const form = useAtomValue(newAssetModel.$form)
-  const isAccountConnected = useAtomValue(metaMaskModel.$isAccountConnected)
+  const {address} = useAccount()
   const onFormChange = useSetAtom(newAssetModel.$onFormChange)
   const onSubmit = useSetAtom(newAssetModel.$onSubmit)
   const onMount = useSetAtom(newAssetModel.$onMount)
@@ -27,7 +27,7 @@ export const NewAssetController = () => {
     <div className={s.page}>
       <div className={s.container}>
         {
-          isAccountConnected
+          address
             ? (
               <form noValidate onSubmit={onSubmitLocal}>
                 <AssetFormFields form={form} onChange={onFormChange} />
@@ -43,7 +43,4 @@ export const NewAssetController = () => {
       </div>
     </div>
   )
-}
-
-const T = {
 }

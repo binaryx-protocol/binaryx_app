@@ -15,11 +15,11 @@ export type ContractAddresses = {
   controllerAddress: string;
 }
 
-type ChainInfo = {
+export type ChainInfo = {
   chainInfo: Chain,
   contractsAddresses: ContractAddresses
 }
-type ChainsInfo = {
+export type ChainsInfo = {
   [key in SupportedChainId]: ChainInfo;
 }
 
@@ -58,7 +58,7 @@ export const arbitrumFork: Chain = {
 export const arbitrumGoerli: Chain = {
   id: SupportedChainId.ARBITRUM_GOERLI,
   rpcUrls: {
-    default: `https://goerli-rollup.arbitrum.io/rpc`,
+    default: 'https://goerli-rollup.arbitrum.io/rpc',
   },
   name: 'Arbitrum_Goerli',
   network: 'Arbitrum_Goerli',
@@ -93,14 +93,15 @@ export const CHAIN_INFO: ChainsInfo = {
     },
   }
 }
-export const getActiveConfig = () => {
+export const getActiveConfig = () :ChainInfo | null => {
   if (typeof window !== "undefined") {
     const configNameByDomain =
       {
         'localhost': CHAIN_INFO[SupportedChainId.ARBITRUM_GOERLI],
         'i2.binaryx.com': CHAIN_INFO[SupportedChainId.ARBITRUM_GOERLI],
       }[window.location.hostname];
-    return configNameByDomain;
+    return configNameByDomain!;
   }
+  return null;
 }
 
