@@ -98,8 +98,7 @@ export const getActiveConfig = () :ChainInfo | null => {
     const configNameByDomain =
       {
         'localhost': CHAIN_INFO[SupportedChainId.ARBITRUM_GOERLI],
-        'dev.binaryx.com': CHAIN_INFO[SupportedChainId.ARBITRUM_GOERLI],
-        'staging.binaryx.com': CHAIN_INFO[SupportedChainId.ARBITRUM_GOERLI],
+        'i2.binaryx.com': CHAIN_INFO[SupportedChainId.ARBITRUM_GOERLI],
       }[window.location.hostname];
     return configNameByDomain!;
   }

@@ -31,6 +31,7 @@ export type UIAsset = {
   tokenInfo_totalSupply: number
   tokenInfo_apr: number
   tokenInfo_tokenPriceDe6: number
+  propertyInfo_images: string
 }
 
 export type UIReward = {
