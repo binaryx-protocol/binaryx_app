@@ -102,7 +102,7 @@ const MyApp: FC<Props> = ({Component, pageProps}) => {
           `
             }}/>
           )}
-        </ApolloProvider>ґ
+        </ApolloProvider>
       </WagmiProvider>
     </Provider>
   );
