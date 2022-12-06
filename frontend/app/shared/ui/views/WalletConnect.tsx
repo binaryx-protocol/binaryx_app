@@ -8,8 +8,8 @@ import {getWalletConfig} from "../../walletsConnect";
 import {WalletConnectWait} from "./WalletConnectWait";
 
 type Props = {
-  setIsOpen: (value: boolean) => void;
-  setIsOpenWalletWait: (value: boolean) => void;
+  onWalletConnectClick: (value: boolean) => void;
+  onCurrentWalletClick: (value: boolean) => void;
   setConnector: (value: Connector) => void;
   connector: Connector;
   isOpenWalletWait: boolean;
@@ -18,38 +18,39 @@ type Props = {
 }
 export const WalletConnect = (props: Props) => {
   const {
-    setIsOpen,
+    onWalletConnectClick,
     setConnector,
     connector,
-    setIsOpenWalletWait,
+    onCurrentWalletClick,
     isOpenWalletWait,
     setConnectError,
-    connectError
+    connectError,
   } = props
   const {connectors} = useConnect()
   return (
     <>
       <div className={s.connect}>
-        {isOpenWalletWait ? <div className={s.close} onClick={() => setIsOpenWalletWait(false)}>
+        {isOpenWalletWait ? <div className={s.close} onClick={() => onCurrentWalletClick(false)}>
           <Image src={arrowLeftIcon} alt='close' width={16} height={16}/>
         </div> : <p className={s.connectWallet}>
           Connect Wallet
         </p>}
 
-        <div className={s.close} onClick={() => setIsOpen(false)}>
+        <div className={s.close} onClick={() => onWalletConnectClick(false)}>
           <Image src={closeIcon} alt='close' width={16} height={16}/>
         </div>
       </div>
       {isOpenWalletWait ?
-        <WalletConnectWait connector={connector} setIsOpen={setIsOpen} setConnectError={setConnectError}
+        <WalletConnectWait connector={connector} onWalletConnectClick={onWalletConnectClick}
+                           setConnectError={setConnectError}
                            connectError={connectError}/> :
         <div className={s.wallets}>
           {connectors.map((connector) =>
             (
               <div className={s.walletWrapper} onClick={
                 () => {
+                  onCurrentWalletClick(true)
                   setConnector(connector)
-                  setIsOpenWalletWait(true)
                 }}
                    key={getWalletConfig(connector.id).title}>
                 <div className={s.wallet}>

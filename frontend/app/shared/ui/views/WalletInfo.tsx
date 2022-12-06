@@ -14,16 +14,16 @@ import {useRef} from "react";
 type Props = {
   connector: Connector;
   account: string;
-  setIsOpen: any;
+  onWalletInfoClick: any;
   disconnect: () => void;
 }
 
 export const WalletInfo = (props: Props) => {
-  const {connector, account, setIsOpen, disconnect} = props;
+  const {connector, account, onWalletInfoClick, disconnect} = props;
   const activeChainIfo = getActiveConfig();
   const wrapperRef = useRef(null);
   const closeInfo = () =>{
-    setIsOpen(false)
+    onWalletInfoClick(false)
   }
   useOutsideClick(wrapperRef, closeInfo);
   // @ts-ignore

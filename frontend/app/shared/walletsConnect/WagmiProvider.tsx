@@ -5,12 +5,12 @@ import {
 } from 'wagmi'
 import {client} from "../../utils/wagmi";
 import {useAtom} from "jotai";
-import {$isConnectedAccount} from "../../core/models/walletModel";
+import {$connectedAccount} from "../../core/models/walletModel";
 
 export const WagmiProvider = ({children}: { children: ReactNode }) => {
   const {address} = useAccount()
   const walletAddress = address || ''
-  const [accountActive, setAccountActive] = useAtom($isConnectedAccount);
+  const [accountActive, setAccountActive] = useAtom($connectedAccount);
   useEffect(() => {
     setAccountActive(walletAddress);
   }, [address])

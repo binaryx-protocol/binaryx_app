@@ -11,17 +11,18 @@ import {Connector, useNetwork} from "wagmi";
 import {walletAddressFormatted} from "../../../utils/walletAddressFormatted";
 import {BaseModal} from "../../ui/views/BaseModal";
 import {WrongNetwork} from "../../ui/views/WrongNetwork";
+import {useEffect} from "react";
 
 type Props = {
   account: string
   isConnected: boolean
-  setIsOpenWalletInfo: (value: boolean) => void;
+  onWalletInfoClick: (value: boolean) => void;
   isOpenWalletInfo: boolean;
   connector: Connector;
-  setIsOpenWalletModal: (value: boolean) => void;
+  onWalletConnectClick: (value: boolean) => void;
   isOpenWalletModal: boolean;
   setConnector: () => void;
-  setIsOpenWalletWait: (value: boolean) => void;
+  onCurrentWalletClick: (value: boolean) => void;
   isOpenWalletWait: boolean;
   setConnectError:(value: boolean) => void;
   connectError: boolean;
@@ -33,13 +34,13 @@ export const DesktopBar = (props: Props) => {
   const {
     account,
     isConnected,
-    setIsOpenWalletInfo,
+    onWalletInfoClick,
     isOpenWalletInfo,
     connector,
-    setIsOpenWalletModal,
+    onWalletConnectClick,
     isOpenWalletModal,
     setConnector,
-    setIsOpenWalletWait,
+    onCurrentWalletClick,
     isOpenWalletWait,
     setConnectError,
     connectError,
@@ -48,6 +49,10 @@ export const DesktopBar = (props: Props) => {
   } = props
   const {chain} = useNetwork()
   const unsupportedChain = chain !== undefined ? chain.unsupported : false;
+  console.log(account)
+  useEffect(()=>{
+   if(!account) onCurrentWalletClick(false);
+  },[account])
   return (
     <div className={s.root}>
       <Container className={s.container}>
@@ -92,7 +97,7 @@ export const DesktopBar = (props: Props) => {
               ? (
                 <>
                   <div className={s.wallet} onClick={() => {
-                    setIsOpenWalletInfo(true)
+                    onWalletInfoClick(true)
                   }}>
                     <WalletIcon/>
                     <span className={s.accountAddress}>{walletAddressFormatted(account)}</span>
@@ -100,19 +105,19 @@ export const DesktopBar = (props: Props) => {
                   </div>
                   {isOpenWalletInfo &&
                     <WalletInfo connector={connector} account={account}
-                                setIsOpen={setIsOpenWalletInfo} disconnect={disconnect}/>}
+                                onWalletInfoClick={onWalletInfoClick} disconnect={disconnect}/>}
                 </>
               )
               :
-              <Button onClick={() => setIsOpenWalletModal(true)}>
+              <Button onClick={() => onWalletConnectClick(true)}>
                 Connect Wallet
               </Button>
           }
           {isOpenWalletModal &&
-            <BaseModal setIsOpen={setIsOpenWalletModal}>
-              <WalletConnect setIsOpen={setIsOpenWalletModal} setConnector={setConnector} connector={connector}
-                             isOpenWalletWait={isOpenWalletWait} setIsOpenWalletWait={setIsOpenWalletWait}
-                             connectError={connectError} setConnectError={setConnectError}/>
+            <BaseModal setIsOpen={onWalletConnectClick}>
+              <WalletConnect onWalletConnectClick={onWalletConnectClick} setConnector={setConnector} connector={connector}
+                             isOpenWalletWait={isOpenWalletWait} onCurrentWalletClick={onCurrentWalletClick}
+                             connectError={connectError} setConnectError={setConnectError} />
             </BaseModal>}
           {unsupportedChain && <BaseModal setIsOpen={() => unsupportedChain}>
             <WrongNetwork disconnect={disconnect}  switchNetwork={switchNetwork}/>

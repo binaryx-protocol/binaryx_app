@@ -4,7 +4,7 @@ import {$publicRpcProvider, $rpcConfig, $userRpcProvider} from "../../core/model
 import {erc20Abi} from "../../core/abis";
 import {loadable} from "jotai/utils";
 import {ChainInfo} from "../walletsConnect";
-import {$isConnectedAccount} from "../../core/models/walletModel";
+import {$connectedAccount} from "../../core/models/walletModel";
 
 export type UsdtManager = Contract & {
   demoMint: (amount: number) => Promise<void>
@@ -30,18 +30,18 @@ export const $usdtSmartContractSigned = atom<UsdtManager>((get) => {
 
 // TODO move ?
 export const $usdtBalanceAsync = atom<Promise<number>>(async (get) => {
-  const isAccountConnected = get($isConnectedAccount)
+  const isAccountConnected = get($connectedAccount)
   if (!isAccountConnected) {
     return 0;
   }
   const sc = get($usdtSmartContractPublic)
-  return (await sc.balanceOf(get($isConnectedAccount))).toNumber() / 1e6
+  return (await sc.balanceOf(get($connectedAccount))).toNumber() / 1e6
 })
 
 export const $usdtBalance = loadable($usdtBalanceAsync)
 //
 export const $usdtBnrxBalanceAsync = atom<Promise<number>>(async (get) => {
-  const isAccountConnected = get($isConnectedAccount)
+  const isAccountConnected = get($connectedAccount)
   if (!isAccountConnected) {
     return 0;
   }

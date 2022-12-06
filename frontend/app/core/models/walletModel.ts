@@ -9,5 +9,5 @@ export const $connectorAtom = atom<any, any>(
       }
     }
 )
-export const $isConnectedAccount = atom<string>('');
+export const $connectedAccount = atom<string>('');
 
