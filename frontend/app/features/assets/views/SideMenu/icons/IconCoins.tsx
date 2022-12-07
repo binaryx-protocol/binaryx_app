@@ -1,3 +1,4 @@
+import s from './IconCoins.module.scss'
 const IconCoins = ({ width = 24, height = 24, color = '#58667E'}) => (
   <svg
     width={width}
@@ -5,6 +6,7 @@ const IconCoins = ({ width = 24, height = 24, color = '#58667E'}) => (
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    className={s.root}
   >
     <rect width={width} height={height} fill="none" />
     <path

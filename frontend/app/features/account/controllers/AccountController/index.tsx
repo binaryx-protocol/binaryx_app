@@ -1,5 +1,3 @@
-//@ts-nocheck
-
 import s from './styles.module.scss';
 import * as accountModel from '../../models/accountModel';
 import {useAtomValue, useSetAtom} from 'jotai';
@@ -18,12 +16,14 @@ import SideMenu from "../../../assets/views/SideMenu";
 import {Button} from "../../../../shared/ui/views/Button";
 import {ArrowIcon} from "../../views/svg/ArrowIcon";
 import {DetailsTable} from "../../views/DetailsTable";
+import {paths} from "../../../../../pkg/paths";
 
 export const AccountController = () => {
   const doLoadMyRewards = useSetAtom(accountModel.$doLoadMyRewards);
   const doClaimMyRewards = useSetAtom(accountModel.$doClaimMyRewards);
   const accountInfo = useAtomValue(accountModel.$accountInfo);
   const {isConnected, address} = useAccount()
+  console.log(paths.account())
   useEffect(() => {
     if (isConnected) {
       doLoadMyRewards();
@@ -42,8 +42,8 @@ export const AccountController = () => {
     <>
       <div className={s.root}>
         <SideMenu className={s.pageMenu}>
-          <SideMenuNavItem icon={<IconProperty/>} title="Asset Overview" url="/account-v2"/>
-          <SideMenuNavItem icon={<IconCoins/>} title="Marketplace" url="/assets-v2"/>
+          <SideMenuNavItem icon={<IconProperty/>} title="Asset Overview" url={paths.account()}/>
+          <SideMenuNavItem icon={<IconCoins/>} title="Marketplace" url={paths.listAssets()}/>
           <SideMenuNavItem icon={<IconGift/>} title="Refer and Earn" url="#"/>
           <SideMenuNavItem icon={<IconHistory/>} title="Transaction" url="#"/>
           <SideMenuDivider/>
