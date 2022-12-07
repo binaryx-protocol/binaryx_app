@@ -1,6 +1,11 @@
 .root{
   display: flex;
 }
+.arrowIcon{
+  path{
+    stroke: #6F4DC4;
+  }
+}
 .property {
   font-size: 18px;
   font-weight: 700;

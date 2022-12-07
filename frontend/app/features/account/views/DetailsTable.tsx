@@ -13,6 +13,7 @@ type Props = {
 
 export const DetailsTable = (props: Props) => {
   const {property} = props
+  const currentAccountValue = property.totalPropertyValue + property.totalEarned;
   return (
     <table className={s.tableDetails}>
       <tbody>
@@ -25,13 +26,13 @@ export const DetailsTable = (props: Props) => {
           </div>
           <div>
             <p className={s.details_text_grey}>Current Account Value</p>
-            <p className={s.details_text_purple}>$1 380.37</p>
+            <p className={s.details_text_purple}>${currentAccountValue.toFixed(2)}</p>
           </div>
         </td>
         <td className={s.accountDetails}>
           <div>
             <div className={s.iconWrapper}>
-              <IconProperty color={'#6F4DC4'}/>
+              <IconProperty classname={s.iconsColor}/>
             </div>
           </div>
           <div>
@@ -44,7 +45,7 @@ export const DetailsTable = (props: Props) => {
         <td className={clsx(s.accountDetails, s.horizontalBorder)}>
           <div>
             <div className={s.iconWrapper}>
-              <IconCoins width={20} height={20} color={'#6F4DC4'}/>
+              <IconCoins width={20} height={20} classname={s.iconsColor}/>
             </div>
           </div>
           <div>

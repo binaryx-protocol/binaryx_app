@@ -23,7 +23,6 @@ export const AccountController = () => {
   const doClaimMyRewards = useSetAtom(accountModel.$doClaimMyRewards);
   const accountInfo = useAtomValue(accountModel.$accountInfo);
   const {isConnected, address} = useAccount()
-  console.log(paths.account())
   useEffect(() => {
     if (isConnected) {
       doLoadMyRewards();
@@ -37,7 +36,6 @@ export const AccountController = () => {
   if (!address || !accountInfo) {
     return <>Please connect your wallet first</>;
   }
-
   return (
     <>
       <div className={s.root}>
@@ -58,10 +56,10 @@ export const AccountController = () => {
             <div className={s.totalRentInfo}>
               <p className={s.totalRentInfo_text}>Total Rent Balance</p>
               <div className={s.rentBalanceClaim}>
-                <p className={s.totalRentBalance_text}>${accountInfo.totalRewards}</p>
+                <p className={s.totalRentBalance_text}>${accountInfo.totalRewards.toFixed(2)}</p>
                 <Button className={s.claimAllButton} onClick={onWithdraw}>
                   <div className={s.arrowWrapper}>
-                    <ArrowIcon color={'#6F4DC4'} width={10} height={10}/>
+                    <ArrowIcon classname={s.arrowIcon} width={10} height={10}/>
                   </div>
                   <p>Claim All</p>
                 </Button>
