@@ -1,18 +1,18 @@
 import s from './DefaultLayout.module.scss'
 import {HeaderController} from "../header";
 import {useAtomValue} from "jotai";
-import {$errorMessages} from "../../core/models/metaMaskModel";
+import {useConnect} from "wagmi";
 
 export const DefaultLayout = ({ children }: { children: any }) => {
-  const errors = useAtomValue($errorMessages)
+    const {isError, error} = useConnect()
 
   return (
     <div className={s.defaultLayout}>
       <HeaderController />
       {
-        errors && errors.length
+          isError
         ? <div className={s.errors}>
-            {errors[0]}
+            {`${error}`}
           </div>
           : null
       }

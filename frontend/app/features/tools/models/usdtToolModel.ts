@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { atom } from 'jotai'
 import {$rpcConfig, NewRpcToken, RpcConfig} from "../../../core/models/rpcConfigModel";
 import {completeAction, isDoneAction} from "../../../utils/isDoneActionLs";

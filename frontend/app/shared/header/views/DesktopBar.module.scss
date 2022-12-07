@@ -41,13 +41,31 @@
 }
 
 .accountAddress{
-  margin-top: 5px;
-  margin-left: 10px;
+  margin: 5px 10px;
+  text-decoration: underline;
 }
 .wallet{
-  margin-left: 20px;
+  margin: 0 20px;
+  padding: 4px 8px;
+  border: 1px solid var(--color--secondary-bg);
+  border-radius: 12px;
   display: flex;
   align-items: center;
   text-decoration: none;
   color: inherit;
+  &:hover{
+    border: 1px solid #101113;
+    border-radius: 12px;
+    padding: 4px 8px;
+    cursor: pointer;
+  }
+}
+.arrow-open{
+  transform: rotate(180deg);
+  transition: 300ms linear all;
+}
+
+.arrow-close{
+  transition: 300ms linear all;
+  transform: rotate(180deg);
 }

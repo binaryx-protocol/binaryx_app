@@ -2,9 +2,9 @@ import {atom, PrimitiveAtom} from 'jotai'
 import * as rpcConfigModel from "../../../core/models/rpcConfigModel";
 import {BcAsset, BcAssetMetaData, UiAssetComputed} from "../types";
 import {waitFor} from "../../../utils/pageLoadUtiils";
-import {RpcConfig} from "../../../core/models/rpcConfigModel";
 import {$assetsTokenSmartContractPublic, AssetManager} from "./smartContractsFactory";
 import {truncatePercentage} from "../../../utils/formatNumber";
+import {ChainInfo} from "../../../shared/walletsConnect";
 
 // stores
 export const $asset = atom(null) as PrimitiveAtom<BcAsset | null>;
@@ -36,8 +36,8 @@ export const $doLoadAsset = atom(null, async (get,set, args: { id: number }) => 
   const manager = get($assetsTokenSmartContractPublic) as AssetManager
   const bcAsset = await manager.getAsset(args.id);
 
-  const rpcConfig = get(rpcConfigModel.$rpcConfig) as RpcConfig
-  const tokensLeft = await manager.balanceOf(rpcConfig.assetsTokenAddress, args.id)
+  const rpcConfig = get(rpcConfigModel.$rpcConfig) as ChainInfo
+  const tokensLeft = await manager.balanceOf(rpcConfig.contractsAddresses.assetsTokenAddress, args.id)
 
   set($asset, bcAsset);
   set($assetMetaData, {

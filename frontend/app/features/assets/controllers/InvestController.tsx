@@ -1,11 +1,11 @@
 import {InvestAmountSection} from "../views/InvestAmountSection";
 import {useAtomValue} from "jotai";
-import * as metaMaskModel from "../../../core/models/metaMaskModel";
+import {useAccount} from "wagmi";
 
 export const InvestController = () => {
-  const isAccountConnected = useAtomValue(metaMaskModel.$isAccountConnected)
+  const {address} = useAccount()
 
-  return isAccountConnected ? <InvestAmountSection /> : <div style={{ padding: '10px', textAlign: 'center' }}>Please connect your wallet first</div>
+  return address ? <InvestAmountSection /> : <div style={{ padding: '10px', textAlign: 'center' }}>Please connect your wallet first</div>
 }
 
 const T = {

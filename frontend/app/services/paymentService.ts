@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { USN } from '../constants/billingTypes';
 import usnContractService from './usnContractService';
 import assetContractService from './assetContractService';

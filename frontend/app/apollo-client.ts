@@ -1,5 +1,4 @@
 import { ApolloClient, gql, InMemoryCache } from '@apollo/client';
-import { Request } from 'express';
 
 import { Zeus, ValueTypes, GraphQLTypes, InputType } from './types/zeus';
 
@@ -15,6 +14,7 @@ export const typedQuery = <Z extends ValueTypes[O], O extends 'Query'>(
 ) => {
   return client.query<InputType<GraphQLTypes[O], Z>>({
     query: gql(Zeus('query', query, operationName)),
+    // @ts-ignore
     context: { headers: { Cookie: req.headers.cookie } },
   });
 };

@@ -1,16 +1,24 @@
 import {DesktopBar} from "../views/DesktopBar";
-import {useAtomValue, useSetAtom} from "jotai";
-import * as metaMaskModel from "../../../core/models/metaMaskModel";
+import {useAccount, useDisconnect, useSwitchNetwork} from "wagmi";
+import {useAtom} from "jotai";
+import {$connectorAtom, $connectedAccount} from "../../../core/models/walletModel";
+import {useEffect, useState} from "react";
 
 export const HeaderController = () => {
-  const $walletConnect = useSetAtom(metaMaskModel.$walletConnect)
-  const $metaMaskState = useAtomValue(metaMaskModel.$metaMaskState)
-  const $isAccountConnected = useAtomValue(metaMaskModel.$isAccountConnected)
-
-  const walletAddress = $metaMaskState.values.accounts?.[0] || ''
-  const walletAddressFormatted = walletAddress.substr(0, 5) + '...' + walletAddress.substr(walletAddress.length-3, 3)
-
+  const {isConnected} = useAccount()
+  const {switchNetwork} = useSwitchNetwork()
+  const {disconnect} = useDisconnect()
+  const [isOpenWalletModal, setIsOpenWalletModal] = useState(false)
+  const [isOpenWalletInfo, setIsOpenWalletInfo] = useState(false)
+  const [isOpenWalletWait, setIsOpenWalletWait] = useState(false);
+  const [connectError, setConnectError] = useState(false);
+  const [connector, setConnector] = useAtom($connectorAtom);
+  const account = useAtom($connectedAccount)
   return (
-    <DesktopBar hasAddress={$isAccountConnected || $metaMaskState.progress === 'inProgress'} account={walletAddressFormatted} onWalletConnect={$walletConnect} />
+    <DesktopBar isConnected={isConnected} account={account[0]} onWalletInfoClick={setIsOpenWalletInfo}
+                isOpenWalletInfo={isOpenWalletInfo} connector={connector} onWalletConnectClick={setIsOpenWalletModal}
+                isOpenWalletModal={isOpenWalletModal} setConnector={setConnector} connectError={connectError}
+                isOpenWalletWait={isOpenWalletWait} setConnectError={setConnectError}
+                onCurrentWalletClick={setIsOpenWalletWait} switchNetwork={switchNetwork} disconnect={disconnect}/>
   )
 }
