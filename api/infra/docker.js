@@ -7,7 +7,7 @@ const {config} = require("./config");
 
 const getDockerRunCmdScalableVersion = (config, repositoryTag, envFileName) => `
 sudo docker run -it -d --rm\\
-      -p 80:3000\\
+      -p 80:3001\\
       -v /home/ec2-user/shared/${envFileName}:/app/.env \\
       -e DEBUG_TAG=${repositoryTag}\\
       --ulimit nofile=65535:65535 --name ${config.containerName}\\
