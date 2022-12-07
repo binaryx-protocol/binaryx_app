@@ -1,8 +1,8 @@
 import s from './WalletInfo.module.scss'
 import Image from "next/image";
-import exploreIcon from '../../../../public/svg/wallet/explore.svg'
-import copyIcon from '../../../../public/svg/wallet/copy.svg'
-import disconnectIcon from '../../../../public/svg/wallet/disconnect.svg'
+import exploreIcon from '../../../../public/shared/wallet/explore.svg'
+import copyIcon from '../../../../public/shared/wallet/copy.svg'
+import disconnectIcon from '../../../../public/shared/wallet/disconnect.svg'
 import clsx from 'clsx'
 import {Connector, useDisconnect} from "wagmi";
 import {getActiveConfig, getWalletConfig} from "../../walletsConnect";

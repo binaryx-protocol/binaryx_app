@@ -18,19 +18,18 @@ export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
   const blockchainAssets = $blockchainAssets.state === 'hasData' ? $blockchainAssets.data : null
   const [assets, balances] = blockchainAssets || []
-
   return (
     <div className={s.root}>
       <Container>
         <div className={s.contentWrapper}>
           <SideMenu className={s.pageMenu}>
-            <SideMenuNavItem icon={<IconProperty />} title="Asset Overview" url="/account-v2" />
-            <SideMenuNavItem icon={<IconCoins />} title="Marketplace" url="/assets-v2" />
-            <SideMenuNavItem icon={<IconGift />} title="Refer and Earn" url="#" />
-            <SideMenuNavItem icon={<IconHistory />} title="Transaction" url="#" />
-            <SideMenuDivider />
-            <SideMenuNavItem icon={<IconSettings />} title="Settings" url="#" />
-            <SideMenuNavItem icon={<IconNotification />} title="Notifications" url="#" />
+            <SideMenuNavItem icon={<IconProperty/>} title="Asset Overview" url="/account-v2"/>
+            <SideMenuNavItem icon={<IconCoins/>} title="Marketplace" url="/assets-v2"/>
+            <SideMenuNavItem icon={<IconGift/>} title="Refer and Earn" url="#"/>
+            <SideMenuNavItem icon={<IconHistory/>} title="Transaction" url="#"/>
+            <SideMenuDivider/>
+            <SideMenuNavItem icon={<IconSettings/>} title="Settings" url="#"/>
+            <SideMenuNavItem icon={<IconNotification/>} title="Notifications" url="#"/>
           </SideMenu>
 
           <div className={s.pageContent}>
@@ -40,7 +39,7 @@ export const AdminAssetsListController = () => {
               </h1>
             </div>
             <NanoLoader isLoading={!assets?.length} className={s.loader}>
-              <AssetList assets={assets || []} balances={balances || []} />
+              <AssetList assets={assets || []} balances={balances || []}/>
             </NanoLoader>
           </div>
         </div>
