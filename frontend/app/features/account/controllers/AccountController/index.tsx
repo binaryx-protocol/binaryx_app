@@ -58,7 +58,7 @@ export const AccountController = () => {
             <div className={s.totalRentInfo}>
               <p className={s.totalRentInfo_text}>Total Rent Balance</p>
               <div className={s.rentBalanceClaim}>
-                <p className={s.totalRentBalance_text}>$1 380.37</p>
+                <p className={s.totalRentBalance_text}>${accountInfo.totalRewards}</p>
                 <Button className={s.claimAllButton} onClick={onWithdraw}>
                   <div className={s.arrowWrapper}>
                     <ArrowIcon color={'#6F4DC4'} width={10} height={10}/>
