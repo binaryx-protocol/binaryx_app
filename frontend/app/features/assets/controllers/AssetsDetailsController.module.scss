@@ -1,5 +1,40 @@
+.root{
+  display: flex;
+}
 .asset {
   background: linear-gradient(253.14deg,
     rgba(37, 122, 215, 0.05) 65.26%,
     rgba(1, 248, 235, 0.05) 93.3%);
+}
+.navigation{
+  font-size: 12px;
+}
+.navigationDisabled{
+  color: var(--color-text-secondary);
+  font-weight: 700;
+}
+.navigationActive{
+  font-weight: 700;
+}
+.container{
+  border-radius: 16px;
+  border: 1px solid var(--color--border);
+}
+.assetInfo{
+  height: 1000px;
+  width: 55vw;
+  margin: 8px 8px 0 34px;
+  padding: 16px 24px;
+}
+.assetInvest{
+  height: 700px;
+  width: 25vw;
+  margin-top: 8px;
+}
+.assetInvestBuy{
+  height: 350px;
+  margin-bottom: 16px;
+}
+.assetInvestDetails{
+  height: 350px;
 }

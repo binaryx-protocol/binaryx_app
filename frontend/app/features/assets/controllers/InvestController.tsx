@@ -7,6 +7,3 @@ export const InvestController = () => {
 
   return address ? <InvestAmountSection /> : <div style={{ padding: '10px', textAlign: 'center' }}>Please connect your wallet first</div>
 }
-
-const T = {
-}
