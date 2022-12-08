@@ -10,3 +10,4 @@ cache
 .openzeppelin/unknown-31337.json
 coverage.json
 coverage
+deploys/localhost
