@@ -56,38 +56,22 @@ contract RewardsDistributor is Ownable {
     rewardToken = _rewardToken;
   }
 
-  function addPool(address _token, uint256 _totalSupply) external onlyOwner {
-    require(poolInfo[_token].lastRewardTime == 0);
-    registeredAssets.push(_token);
-    poolInfo[_token] = PoolInfo({
-    totalSupply : _totalSupply,
-    lastRewardTime : block.timestamp,
-    accRewardPerShare : 0,
-    currentEmissionPoint : 0,
-    isInitialized : false
-    });
-  }
-
-  function initializePool(address _token) external onlyOwner {
-    require(!poolInfo[_token].isInitialized);
-    poolInfo[_token].isInitialized = true;
-  }
-
-  function addEmissionPointsForPool(address _token, uint256[] memory _startTimes, uint256[] memory _endTimes, uint256[] memory _rewardsPerSecond) external onlyOwner {
-    require(_startTimes.length == _endTimes.length);
-    require(_startTimes.length == _rewardsPerSecond.length);
-    for (uint256 i = 0; i < _startTimes.length; i++) {
-      emissionSchedule[_token].push(EmissionPoint({
-      startTime : uint128(_startTimes[i]),
-      endTime : uint128(_endTimes[i]),
-      rewardsPerSecond : _rewardsPerSecond[i]
-      }));
-    }
-    _updatePool(_token);
-  }
-
   function poolLength() external view returns (uint256) {
     return registeredAssets.length;
+  }
+
+  function calculateActualEmissionPointPerPool(address _token) public view returns (uint256) {
+    uint256 currentEmissionPoint = poolInfo[_token].currentEmissionPoint;
+    EmissionPoint[] storage schedule = emissionSchedule[_token];
+    if (schedule.length == 0) {
+      return 0;
+    }
+    for (uint256 i = currentEmissionPoint; i < schedule.length; i++) {
+      if (schedule[i].startTime <= block.timestamp && block.timestamp < schedule[i].endTime) {
+        return i;
+      }
+    }
+    return schedule.length - 1;
   }
 
   function emissionScheduleLength(address _token) external view returns (uint256) {
@@ -133,18 +117,34 @@ contract RewardsDistributor is Ownable {
     return claimable;
   }
 
-  function calculateActualEmissionPointPerPool(address _token) public view returns (uint256) {
-    uint256 currentEmissionPoint = poolInfo[_token].currentEmissionPoint;
-    EmissionPoint[] storage schedule = emissionSchedule[_token];
-    if (schedule.length == 0) {
-      return 0;
+  function addPool(address _token, uint256 _totalSupply) external onlyOwner {
+    require(poolInfo[_token].lastRewardTime == 0);
+    registeredAssets.push(_token);
+    poolInfo[_token] = PoolInfo({
+    totalSupply : _totalSupply,
+    lastRewardTime : block.timestamp,
+    accRewardPerShare : 0,
+    currentEmissionPoint : 0,
+    isInitialized : false
+    });
+  }
+
+  function addEmissionPointsForPool(address _token, uint256[] memory _startTimes, uint256[] memory _endTimes, uint256[] memory _rewardsPerSecond) external onlyOwner {
+    require(_startTimes.length == _endTimes.length);
+    require(_startTimes.length == _rewardsPerSecond.length);
+    for (uint256 i = 0; i < _startTimes.length; i++) {
+      emissionSchedule[_token].push(EmissionPoint({
+      startTime : uint128(_startTimes[i]),
+      endTime : uint128(_endTimes[i]),
+      rewardsPerSecond : _rewardsPerSecond[i]
+      }));
     }
-    for (uint256 i = currentEmissionPoint; i < schedule.length; i++) {
-      if (schedule[i].startTime <= block.timestamp && block.timestamp < schedule[i].endTime) {
-        return i;
-      }
-    }
-    return schedule.length - 1;
+    _updatePool(_token);
+  }
+
+  function initializePool(address _token) external onlyOwner {
+    require(!poolInfo[_token].isInitialized);
+    poolInfo[_token].isInitialized = true;
   }
 
   function _updatePool(address _token) internal {
