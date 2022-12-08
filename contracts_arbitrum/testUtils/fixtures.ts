@@ -15,6 +15,11 @@ export const defaultAssetAttrs = (): AssetInput => ({
   propertyInfo_images: 'https://ns.clubmed.com/dream/RESORTS_3T___4T/Asie_et_Ocean_indien/Bali/169573-1lng9n8nnf-swhr.jpg,https://api.time.com/wp-content/uploads/2022/07/Worlds-Greatest-Places-2022-BaliIndonesia.jpeg',
 });
 
+export const addressesProviderFixture = async () => {
+  const addressesProvider = await hre.ethers.getContractFactory('AddressesProvider');
+  return await addressesProvider.deploy();
+}
+
 export const rewardsDistributorWithPoolFixture = async () => {
   const [owner, alice, bob, carol] = await hre.ethers.getSigners();
 
@@ -54,7 +59,7 @@ export const rewardsDistributorWithUSDTAndAssetFixture = async () => {
 
 export const rewardsDistributorFixture = async () => {
   const [owner, alice, bob, carol] = await hre.ethers.getSigners();
-
+  addressesProviderFixture();
   const UsdtToken = await hre.ethers.getContractFactory('UsdtfToken');
   const usdtToken = await UsdtToken.deploy(ethers.constants.WeiPerEther.mul(1000));
 
@@ -67,9 +72,12 @@ export const rewardsDistributorFixture = async () => {
 export const assetFixture = async () => {
   const [owner, alice, bob, carol] = await hre.ethers.getSigners();
 
+  const UsdtToken = await hre.ethers.getContractFactory('UsdtfToken');
+  const usdtToken = await UsdtToken.deploy(ethers.utils.parseUnits("10000", 6));
+
   const Asset = await hre.ethers.getContractFactory('Asset');
-  const asset = await Asset.deploy();
-  return { asset, owner, alice, bob, carol };
+  const asset = await Asset.deploy(ethers.constants.WeiPerEther.mul(175), usdtToken.address);
+  return { asset, usdtToken, owner, alice, bob, carol };
 };
 
 // export const controllerFixture = async () => {

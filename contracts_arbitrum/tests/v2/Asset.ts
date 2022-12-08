@@ -7,51 +7,15 @@ import {
 import { ethers } from 'ethers';
 import { generateEmissionPoints } from '../../testUtils/rewardDistributorUtils';
 import * as assert from 'assert';
+import { parseEmissionPoints } from '../../testUtils/objectUtils';
 
 const hre = require('hardhat');
 
 const mockData = {
-  rewardDataOne: {
-    alice: {
-      amount: ethers.utils.parseEther('25'),
-      result: ethers.utils.parseUnits('13.142857', 6),
-    },
-    bob: {
-      amount: ethers.utils.parseEther('50'),
-      result: ethers.utils.parseUnits('26.285714', 6),
-    },
-    carol: {
-      amount: ethers.utils.parseEther('100'),
-      result: ethers.utils.parseUnits('52.571428', 6),
-    },
-    totalSupply: ethers.utils.parseUnits('175', 6),
-  },
-  rewardDataTwo: {
-    alice: {
-      amount: ethers.utils.parseEther('75'),
-      result: ethers.utils.parseUnits('4.285714', 6),
-    },
-    bob: {
-      amount: ethers.utils.parseEther('100'),
-      result: ethers.utils.parseUnits('5.714285', 6),
-    },
-    totalSupply: ethers.utils.parseUnits('175', 6),
-  },
-  rewardDataThree: {
-    alice: {
-      amount: ethers.utils.parseEther('75'),
-      result: ethers.utils.parseUnits('3.857142', 6),
-    },
-    bob: {
-      amount: ethers.utils.parseEther('100'),
-      result: ethers.utils.parseUnits('5.142857', 6),
-    },
-    totalSupply: ethers.utils.parseUnits('175', 6),
-  },
 };
 
-describe('RewardDistributor', function() {
-  it('Deploy RewardDistributor', async function() {
+describe('Asset', function() {
+  it('Deploy Asset', async function() {
     const { rewardDistributor, usdtToken, owner } = await loadFixture(rewardsDistributorFixture);
     assert.equal(await rewardDistributor.poolLength(), 0);
     assert.equal(await rewardDistributor.rewardToken(), usdtToken.address);
