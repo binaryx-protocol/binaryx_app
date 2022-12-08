@@ -1,0 +1,7 @@
+// The request body is provided in place
+POST http://localhost:3001/kyc/createToken HTTP/1.1
+Content-Type: application/json
+Cookie: key=first-value
+
+{ "key" : "value", "list": [1, 2, 3] }
+
