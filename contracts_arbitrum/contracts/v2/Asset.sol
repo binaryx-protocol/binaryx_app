@@ -22,8 +22,11 @@ contract Asset is ERC20, Ownable {
   function _transfer(address sender, address recipient, uint256 amount) internal virtual override {
     super._transfer(sender, recipient, amount);
     if (address(rewardsDistributor) != address(0)) {
-      uint256 accountBalance = balanceOf(recipient);
-      rewardsDistributor.handleAction(recipient, accountBalance);
+      uint256 senderBalance = balanceOf(sender);
+      uint256 recipientBalance = balanceOf(recipient);
+      rewardsDistributor.handleAction(sender, senderBalance);
+      rewardsDistributor.handleAction(recipient, recipientBalance);
     }
   }
+
 }

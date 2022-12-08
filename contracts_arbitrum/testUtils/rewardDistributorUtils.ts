@@ -8,7 +8,7 @@ export const generateEmissionPoints = (tempTime: number, interval:number = 1, am
     startTimes.push(ethers.BigNumber.from(tempTime));
     tempTime += interval;
     endTimes.push(ethers.BigNumber.from(tempTime));
-    rewardsPerSecond.push(ethers.constants.WeiPerEther.mul(i+1));
+    rewardsPerSecond.push(ethers.utils.parseUnits((i+1).toString(), 6));
   }
   return {startTimes, endTimes, rewardsPerSecond};
 }

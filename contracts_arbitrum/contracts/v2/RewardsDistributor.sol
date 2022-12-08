@@ -18,6 +18,7 @@ contract RewardsDistributor is Ownable {
 
   struct PoolInfo {
     uint256 totalSupply;
+    uint256 decimals;
     uint256 lastRewardTime; // Last second that reward distribution occurs.
     uint256 accRewardPerShare; // Accumulated rewards per share, times 1e12.
     uint256 currentEmissionPoint;
@@ -31,6 +32,7 @@ contract RewardsDistributor is Ownable {
   }
 
   IERC20 public immutable rewardToken;
+  uint256 public immutable rewardTokenDecimals = 1e6;
 
   address[] public registeredAssets;
 
@@ -46,11 +48,12 @@ contract RewardsDistributor is Ownable {
   // user => receiver
   mapping(address => address) public claimReceiver;
 
-  event BalanceUpdated(
-    address indexed asset,
-    address indexed user,
-    uint256 balance
-  );
+  event BalanceUpdated(address indexed asset, address indexed user, uint256 balance);
+  event Claimed(address indexed user, uint256 amount);
+  event PoolAdded(address indexed asset, uint256 totalSupply);
+  event PoolInitialized(address indexed asset);
+  event PaidRent(address indexed user, address indexed asset, uint256 amount, uint128 startTime, uint128 endTime);
+
 
   constructor(IERC20 _rewardToken) Ownable() public {
     rewardToken = _rewardToken;
@@ -101,8 +104,8 @@ contract RewardsDistributor is Ownable {
         pool.accRewardPerShare = pool.accRewardPerShare + (reward * 1e12 / pool.totalSupply);
         pool.lastRewardTime = block.timestamp;
       } else {
-        for (uint256 i = firstEmissionPoint; i <= lastEmissionPoint; i++) {
-          EmissionPoint memory emissionPoint = emissionSchedule[token][i];
+        for (uint256 j = firstEmissionPoint; j <= lastEmissionPoint; j++) {
+          EmissionPoint memory emissionPoint = emissionSchedule[token][j];
           uint256 startTime = emissionPoint.startTime > pool.lastRewardTime ? emissionPoint.startTime : pool.lastRewardTime;
           uint256 endTime = emissionPoint.endTime > block.timestamp ? block.timestamp : emissionPoint.endTime;
           uint256 duration = endTime - startTime;
@@ -112,12 +115,12 @@ contract RewardsDistributor is Ownable {
         }
       }
       UserInfo memory user = userInfo[token][_user];
-      claimable[i] = user.amount * pool.accRewardPerShare / 1e12 - user.rewardDebt;
+      claimable[i] = user.amount * rewardTokenDecimals / pool.decimals * pool.accRewardPerShare / 1e12 - user.rewardDebt;
     }
     return claimable;
   }
 
-  function addPool(address _token, uint256 _totalSupply) external onlyOwner {
+  function addPool(address _token, uint256 decimals, uint256 _totalSupply) external onlyOwner {
     require(poolInfo[_token].lastRewardTime == 0);
     registeredAssets.push(_token);
     poolInfo[_token] = PoolInfo({
@@ -125,8 +128,10 @@ contract RewardsDistributor is Ownable {
     lastRewardTime : block.timestamp,
     accRewardPerShare : 0,
     currentEmissionPoint : 0,
-    isInitialized : false
+    isInitialized : false,
+    decimals : 10 ** decimals
     });
+    emit PoolAdded(_token, _totalSupply);
   }
 
   function addEmissionPointsForPool(address _token, uint256[] memory _startTimes, uint256[] memory _endTimes, uint256[] memory _rewardsPerSecond) external onlyOwner {
@@ -145,6 +150,7 @@ contract RewardsDistributor is Ownable {
   function initializePool(address _token) external onlyOwner {
     require(!poolInfo[_token].isInitialized);
     poolInfo[_token].isInitialized = true;
+    emit PoolInitialized(_token);
   }
 
   function _updatePool(address _token) internal {
@@ -182,7 +188,7 @@ contract RewardsDistributor is Ownable {
     _updatePool(msg.sender);
     UserInfo storage user = userInfo[msg.sender][_user];
     if (user.amount > 0) {
-      uint256 pending = user.amount * pool.accRewardPerShare / 1e12 - user.rewardDebt;
+      uint256 pending = user.amount * rewardTokenDecimals / pool.decimals * pool.accRewardPerShare / 1e12 - user.rewardDebt;
       if (pending > 0) {
         user.baseClaimable += pending;
       }
@@ -206,12 +212,13 @@ contract RewardsDistributor is Ownable {
       _updatePool(_tokens[i]);
 
       UserInfo storage user = userInfo[_tokens[i]][_user];
-      uint256 currentRewardDebt = user.amount * pool.accRewardPerShare / 1e12;
+      uint256 currentRewardDebt = user.amount * rewardTokenDecimals / pool.decimals * pool.accRewardPerShare / 1e12;
       pending = pending + (currentRewardDebt - user.rewardDebt) + user.baseClaimable;
       user.baseClaimable = 0;
       user.rewardDebt = currentRewardDebt;
     }
     safeRewardTokenTransfer(_user, pending);
+    emit Claimed(_user, pending);
   }
 
   function safeRewardTokenTransfer(address _to, uint256 _amount) internal {
@@ -221,5 +228,12 @@ contract RewardsDistributor is Ownable {
     } else {
       rewardToken.transfer(_to, _amount);
     }
+  }
+
+  function payForRent(address token, uint256 amount, uint128 startTime, uint128 endTime) external {
+    require(amount > 0, "Asset: amount must be greater than 0");
+    require(startTime < endTime, "Asset: startTime must be less than endTime");
+    rewardToken.transferFrom(msg.sender, address(this), amount);
+    emit PaidRent(msg.sender, token, amount, startTime, endTime);
   }
 }
