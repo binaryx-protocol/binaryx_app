@@ -5,7 +5,7 @@ const KycPage = () => {
   return (
     <>
       <SumsubWebSdk
-        accessToken={'sbx:0j9RKheEqWbILkoRBdqCgUDB.EkSjgHNXurQTKvEyStJ5tRTTux6ZtXBU'}
+        accessToken={'_act-sbx-7dcf206f-08b0-4e9e-ab56-d328146ebaa9'}
         expirationHandler={async (args) => console.log('expirationHandler ', args)}
         config={{}}
         options={{}}

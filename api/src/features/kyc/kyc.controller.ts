@@ -4,73 +4,67 @@ import { Request } from 'express';
 import {ConfigService} from "@nestjs/config";
 import { sdk } from "sumsub-node-sdk";
 
-
+// type KycApiAccessTokenResponse = {
+//   id: string // '6391cxxxxxxxxxxxxxxxxa1af',
+//   createdAt: string // '2022-12-08 11:00:07',
+//   key: string // 'XXXXXXXXXEUKQ',
+//   clientId: string // 'xxxxxxxxxxxxxxxxxxxx',
+//   inspectionId: string // '639xxxxxxxxxxxx1d1a1b0',
+//   externalUserId: string // 'my-external-user-id',
+//   info: any // {}
+//   fixedInfo: {
+//     country: string // 'USA'
+//   },
+//   email: string
+//   phone: string // '+1234567890',
+//   requiredIdDocs: {
+//     docSets: any[]
+//   },
+//   review: {
+//     reviewId: string // 'qkxXx',
+//     attemptId: string // 'jxxxX',
+//     attemptCnt: number, // 0
+//     levelName: 'basic-kyc-level',
+//     createDate: string // '2022-12-08 11:00:07+0000',
+//     reviewStatus: string // 'init',
+//     priority: 0
+//   },
+//   type: 'individual',
+//   metadata: any[],
+//   inspectionMetadata: any[]
+// }
 
 @Controller('kyc')
 export class KycController {
   @Inject(ConfigService)
   private readonly config: ConfigService;
 
-  @Post('createToken')
-  async createToken(@Req() request: Request): Promise<any> {
+  @Post('sumsubCreateToken')
+  async sumsubCreateToken(@Req() request: Request): Promise<any> {
     const sdkConfig = {
       baseURL: 'https://api.sumsub.com',
-      // baseURL: this.config.get<string>('SUMSUB_BASE_URL'),
       secretKey: this.config.get<string>('SUMSUB_SECRET_KEY'),
-      appToken: this.config.get<string>('SUBSUB_APP_TOKEN'),
+      appToken: this.config.get<string>('SUMSUB_APP_TOKEN'),
     }
     console.log('sdkConfig', sdkConfig)
     const sumsub = sdk(sdkConfig);
 
     // Use the methods
-    const response = await sumsub.createApplicant("my-external-user-id", "basic-kyc-level", {
-      email: "user@gmail.com",
-      phone: "+1234567890",
-      fixedInfo: {
-        country: "USA",
-      },
-      metadata: [
-        {
-          key: "foo",
-          value: "bar",
-        },
-      ],
-    });
+    let response;
+    try {
+      response = await sumsub.createAccessToken(request.body.userId);
+    } catch (e) {
+      console.log('e', e)
+    }
 
-    console.log(response)
+    return {
+      accessToken: response.data
+    }
   }
 
   @Post('sumsubOnSuccess')
   async sumsubOnSuccess(@Req() request: Request): Promise<any> {
-
+    console.log('request.body', request.body)
+    return {}
   }
-}
-
-type CreateTokenArgs = { externalUserId: string, appToken: string, isProduction: boolean }
-
-// https://developers.sumsub.com/api-reference/#access-tokens-for-sdks
-function createAccessToken ({
-                              externalUserId,
-                              appToken,
-                              isProduction,
-                            }: Partial<CreateTokenArgs> = {}) {
-  const method = 'post';
-  const url = `/resources/accessTokens?userId=${externalUserId}&ttlInSecs=600&levelName=basic-kyc-level`;
-
-  const headers = {
-    'Accept': 'application/json',
-    'X-App-Token': appToken
-  };
-
-  const config: any = {};
-  config.baseURL = isProduction ? 'https://api.sumsub.com' : 'https://test-api.sumsub.com'; // is it the same? I did not find in docs yet...
-
-  config.method = method;
-  config.url = url;
-  config.headers = headers;
-  config.data = null;
-
-  console.log('config', config)
-
-  return config;
 }
