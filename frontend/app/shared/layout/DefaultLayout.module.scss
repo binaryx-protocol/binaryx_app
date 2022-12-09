@@ -9,6 +9,21 @@
 }
 
 .defaultLayout{
-  min-width: 1000px;
   overflow-x: auto;
+}
+
+.contentWrapper{
+  display: flex;
+  justify-content: center;
+}
+.pageMenu{
+  flex-shrink: 0;
+  width: 240px;
+  margin-top: 8px;
+}
+
+@media screen and (max-width: 480px) {
+  .pageMenu,.header{
+    display: none;
+  }
 }

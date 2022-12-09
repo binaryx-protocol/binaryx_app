@@ -39,15 +39,6 @@ export const AccountController = () => {
   return (
     <>
       <div className={s.root}>
-        <SideMenu className={s.pageMenu}>
-          <SideMenuNavItem icon={<IconProperty/>} title="Asset Overview" url={paths.account()}/>
-          <SideMenuNavItem icon={<IconCoins/>} title="Marketplace" url={paths.listAssets()}/>
-          <SideMenuNavItem icon={<IconGift/>} title="Refer and Earn" url="#"/>
-          <SideMenuNavItem icon={<IconHistory/>} title="Transaction" url="#"/>
-          <SideMenuDivider/>
-          <SideMenuNavItem icon={<IconSettings/>} title="Settings" url="#"/>
-          <SideMenuNavItem icon={<IconNotification/>} title="Notifications" url="#"/>
-        </SideMenu>
         <div className={s.totalPropertyInfoWrapper}>
           <div className={s.navigation}><span className={s.navigationHome}>Home</span> · <span
             className={s.navigationAsset}>Asset Overview</span></div>

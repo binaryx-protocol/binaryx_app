@@ -1,0 +1,31 @@
+.galleryRoot{
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.image{
+  border-radius: 12px;
+}
+.dotGroup{
+  display: flex;
+  justify-content: center;
+  position: relative;
+  bottom: 20px;
+  button{
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    margin-right: 4px;
+    border: none;
+    &:disabled{
+      background-color: var(--color--primary-bg);
+    }
+  }
+}
+.dot{
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 50%;
+}
