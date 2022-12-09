@@ -1,17 +1,33 @@
 import {DefaultLayout} from "../../app/shared/layout/DefaultLayout";
 import SumsubWebSdk from '@sumsub/websdk-react'
+import {useEffect, useState} from "react";
+import {httpClient} from "../../app/core/http-client";
 
 const KycPage = () => {
+  const [token, setToken] = useState('')
+
+  useEffect(() =>{
+    const fetchToken = async () => {
+      const response = await httpClient.fetch('/kyc/sumsubCreateToken', { method: 'POST', body: { userId: '0x123123' } })
+      setToken(response.body.accessToken.token)
+    }
+    fetchToken();
+  }, [])
+
   return (
     <>
-      <SumsubWebSdk
-        accessToken={'_act-sbx-7dcf206f-08b0-4e9e-ab56-d328146ebaa9'}
-        expirationHandler={async (args) => console.log('expirationHandler ', args)}
-        config={{}}
-        options={{}}
-        onMessage={async (args) => console.log('onMessage ', args)}
-        onError={async (args) => console.log('onError ', args)}
-      />
+      {
+        token ?
+          <SumsubWebSdk
+            accessToken={token}
+            expirationHandler={async (args: any) => console.log('expirationHandler ', args)}
+            config={{}}
+            options={{}}
+            onMessage={async (args: any) => console.log('onMessage ', args)}
+            onError={async (args: any) => console.log('onError ', args)}
+          />
+          : 'Loading...'
+      }
     </>
   )
 };
