@@ -8,7 +8,7 @@ const KycPage = () => {
 
   useEffect(() =>{
     const fetchToken = async () => {
-      const response = await httpClient.fetch('/kyc/sumsubCreateToken', { method: 'POST', body: { userId: '0x123123' } })
+      const response = await httpClient.fetch<{ accessToken: { token: string } }>('/kyc/sumsubCreateToken', { method: 'POST', body: { userId: '0x123123' } })
       setToken(response.body.accessToken.token)
     }
     fetchToken();
