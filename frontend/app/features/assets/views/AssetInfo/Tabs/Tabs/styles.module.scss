@@ -2,6 +2,9 @@
   display: flex;
   margin-top: 16px;
 }
+.outlet{
+  padding-bottom: 12px;
+}
 .tabsContentTitle{
   font-size: 18px;
   font-weight: 700;
@@ -26,5 +29,8 @@
     overflow-x: scroll;
     overflow-y: hidden;
     min-height: 45px;
+  }
+  .tabsContentTitle{
+    font-size: 16px;
   }
 }

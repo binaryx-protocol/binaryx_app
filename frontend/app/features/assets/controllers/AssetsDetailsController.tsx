@@ -13,6 +13,7 @@ import {$connectedAccount} from "../../../core/models/walletModel";
 import {useWindowSize} from "../../../hooks/useWindowSize";
 import {Tab} from "../views/AssetInfo/Tabs/Tab";
 import {TabContent} from "../views/AssetInfo/Tabs/TabContent";
+import {NanoLoader} from "../../../shared/ui/views/NanoLoader";
 
 
 export const AssetsDetailsController = () => {
@@ -25,7 +26,14 @@ export const AssetsDetailsController = () => {
   const account = useAtomValue($connectedAccount)
   const balance = usdtBalance.state === 'hasData' ? usdtBalance.data : 0;
   const {xs} = useWindowSize()
-  const [activeTab, setActiveTab] = useState("propertyInfo");
+  const [activeTabMobile, setActiveTabMobile] = useState("propertyInfo");
+  const [isFullWidth, setIsFullWidth] = useState<boolean>(false);
+  const [currentSlide, setCurrentSlide] = useState<number>(0);
+  const [activeTab, setActiveTab] = useState("details");
+  const location = {
+    lat: 50.450001,
+    lng: 30.523333,
+  }
 
   useEffect(() => {
     if (Number.isInteger(id)) {
@@ -34,7 +42,7 @@ export const AssetsDetailsController = () => {
   }, [id])
 
   if (!$asset || !$assetMetaData || !$assetComputed) {
-    return null // TODO skeleton loader
+    return false // TODO skeleton loader
   }
 
   const images = [
@@ -48,7 +56,7 @@ export const AssetsDetailsController = () => {
   ]
   const investInfo = {
     tokensLeft: $assetComputed.tokensLeft,
-    progress: $assetComputed.progress,
+    tokensTotalSupply: $assetComputed.tokensTotalSupply,
     irr: 20.5,
     coc: bnToInt($asset.tokenInfo_apr),
     id,
@@ -76,16 +84,22 @@ export const AssetsDetailsController = () => {
       <>
         <div className={s.root}>
           <div className={s.tabs}>
-            <Tab id={'propertyInfo'} title={'Property Info'} activeTab={activeTab} setActiveTab={setActiveTab} withUnderline/>
-            <Tab id={'financials'} title={'Financials'} activeTab={activeTab} setActiveTab={setActiveTab} withUnderline/>
+            <Tab id={'propertyInfo'} title={'Property Info'} activeTab={activeTabMobile}
+                 setActiveTab={setActiveTabMobile}
+                 withUnderline/>
+            <Tab id={'financials'} title={'Financials'} activeTab={activeTabMobile} setActiveTab={setActiveTabMobile}
+                 withUnderline/>
           </div>
           <div className="outlet">
-            <TabContent id="propertyInfo" activeTab={activeTab}>
+            <TabContent id="propertyInfo" activeTab={activeTabMobile}>
               <div className={clsx(s.assetInfo, s.container)}>
-                  <AssetInfo {...assetInfo} images={images} balance={balance} account={account}/>
+                <AssetInfo {...assetInfo} images={images} balance={balance} account={account} {...investInfo}
+                           currentSlide={currentSlide} isFullWidth={isFullWidth} setIsFullWidth={setIsFullWidth}
+                           setCurrentSlide={setCurrentSlide} setActiveTab={setActiveTab} activeTab={activeTab}
+                           location={location}/>
               </div>
             </TabContent>
-            <TabContent id="financials" activeTab={activeTab}>
+            <TabContent id="financials" activeTab={activeTabMobile}>
               <div className={clsx(s.assetInvestDetails, s.container)}>
                 <AssetInvestDetails/>
               </div>
@@ -99,12 +113,16 @@ export const AssetsDetailsController = () => {
             className={s.navigationDisabled}>Marketplace</span> · <span
             className={s.navigationActive}>Property page</span></div>
           <div>
-            <AssetInfo {...assetInfo} images={images} balance={balance} account={account}/>
+            <AssetInfo currentSlide={currentSlide} {...assetInfo} {...investInfo}
+                       images={images} balance={balance}
+                       account={account} isFullWidth={isFullWidth} setIsFullWidth={setIsFullWidth}
+                       setCurrentSlide={setCurrentSlide} setActiveTab={setActiveTab} activeTab={activeTab}
+                       location={location}/>
           </div>
         </div>
         <div className={s.assetInvest}>
           <div className={clsx(s.assetInvestBuy, s.container)}>
-              <AssetInvest coc={22} id={2} irr={22} progress={88} tokensLeft={10} balance={balance} account={account}/>
+            <AssetInvest {...investInfo} balance={balance} account={account}/>
           </div>
           <div className={clsx(s.assetInvestDetails, s.container)}>
             <AssetInvestDetails/>

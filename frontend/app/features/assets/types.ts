@@ -27,7 +27,7 @@ export type BcAssetMetaData = {
 export type UiAssetComputed = {
   tokensSold: number,
   tokensLeft: number,
-  progress: number,
+  tokensTotalSupply: number,
 }
 
 export type UiNewAssetFormValues = {

@@ -7,9 +7,16 @@
   text-align: center;
   border-radius: 5px;
 }
-
-.defaultLayout{
-  overflow-x: auto;
+.footer{
+  display: flex;
+  justify-content: center;
+  margin: 32px;
+  p{
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-text-secondary)
+  }
 }
 
 .contentWrapper{

@@ -62,5 +62,15 @@
   .tabs{
     order: 4;
   }
+  .realAddress{
+    flex-direction: column;
+  }
+  .statusSection{
+    order: 1;
+  }
+  .propertyAddress{
+    font-size: 18px;
+    order: 2;
+  }
 }
 

@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {Tab} from "../Tab";
-import { TabContent } from "../TabContent";
+import {TabContent} from "../TabContent";
 import s from './styles.module.scss'
 import {Location} from "../../../Location";
 import {IconWrapper} from "../../../IconWrapper";
@@ -11,22 +11,24 @@ import peopleIcon from "../../../../../../../public/feature/assets/people.svg";
 import squareIcon from "../../../../../../../public/feature/assets/square.svg";
 import houseIcon from "../../../../../../../public/feature/assets/house.svg";
 
-export const Tabs = () =>{
-  const [activeTab, setActiveTab] = useState("details");
-  const location = {
-    lat: 50.450001,
-    lng: 30.523333,
-  }
+type Props = {
+  activeTab: string;
+  setActiveTab: (value: string) => void;
+  location: { lat: number, lng: number }
+}
+
+export const Tabs = (props: Props) => {
+  const {setActiveTab, activeTab, location} = props
   return (
     <div>
       <div className={s.tabs}>
-        <Tab  id={'details'} title={'Details'} activeTab={activeTab} setActiveTab={setActiveTab}/>
-        <Tab  id={'financials'} title={'Financials'} activeTab={activeTab} setActiveTab={setActiveTab}/>
-        <Tab  id={'documents'} title={'Documents'} activeTab={activeTab} setActiveTab={setActiveTab}/>
-        <Tab  id={'buyingProcess'} title={'Buying Process'} activeTab={activeTab} setActiveTab={setActiveTab}/>
+        <Tab id={'details'} title={'Details'} activeTab={activeTab} setActiveTab={setActiveTab}/>
+        <Tab id={'financials'} title={'Financials'} activeTab={activeTab} setActiveTab={setActiveTab}/>
+        <Tab id={'documents'} title={'Documents'} activeTab={activeTab} setActiveTab={setActiveTab}/>
+        <Tab id={'buyingProcess'} title={'Buying Process'} activeTab={activeTab} setActiveTab={setActiveTab}/>
         <Tab id={'market'} title={'Market'} activeTab={activeTab} setActiveTab={setActiveTab}/>
       </div>
-      <div className="outlet">
+      <div className={s.outlet}>
         <TabContent id="details" activeTab={activeTab}>
           <div className={s.detailsIcons}>
             <IconWrapper classname={s.detailsIconElem}>
@@ -61,7 +63,7 @@ export const Tabs = () =>{
             each unit, a brand new bathroom, one fully new kitchen with butcher
             block countertops and a breakfast bar, and much more.
           </p>
-          <Location  location={location}/>
+          <Location location={location}/>
         </TabContent>
         <TabContent id="financials" activeTab={activeTab}>
           <p className={s.tabsContentTitle}>

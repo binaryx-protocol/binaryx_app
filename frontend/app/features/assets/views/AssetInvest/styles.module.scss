@@ -69,3 +69,11 @@
   font-weight: 700;
   color: #6F4DC4;
 }
+@media screen and (max-width: 480px) {
+  .tokenPrice_text{
+    font-size: 12px;
+  }
+  .detailsPercent{
+    font-size: 16px;
+  }
+}

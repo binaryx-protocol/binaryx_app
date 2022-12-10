@@ -14,16 +14,16 @@ export const Location = (props: Props) =>{
       <p className={s.header}>
         Location
       </p>
-      <GoogleMapReact
-        bootstrapURLKeys={{key: ''}}
-        defaultCenter={location}
-        defaultZoom={20}
-      >
-        <LocationPin
-          // @ts-ignore
-          lat={location.lat}
-          lng={location.lng}/>
-      </GoogleMapReact>
+       <GoogleMapReact
+         bootstrapURLKeys={{key: ''}}
+         defaultCenter={location}
+         defaultZoom={20}
+       >
+         <LocationPin
+           // @ts-ignore
+           lat={location.lat}
+           lng={location.lng}/>
+       </GoogleMapReact>
     </div>
   )
 }

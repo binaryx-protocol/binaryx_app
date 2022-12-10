@@ -3,8 +3,6 @@ import ellipseIcon from '../../../../../public/feature/assets/ellipse .svg'
 import Image from "next/image";
 import {DesktopCarousel} from "../Gallery/DesktopCarousel";
 import {Tabs} from "./Tabs/Tabs";
-import {IconWrapper} from "../IconWrapper";
-import bedAIcon from '../../../../../public/feature/assets/bed.svg'
 import {MobileCarousel} from "../Gallery/MobileCarousel";
 import {useWindowSize} from "../../../../hooks/useWindowSize";
 import {AssetInvest} from "../AssetInvest";
@@ -26,6 +24,18 @@ type AssetInfoProps = {
   images: any;
   balance: number;
   account: string;
+  tokensLeft: number;
+  tokensTotalSupply: number;
+  irr: number;
+  coc: number;
+  id: number;
+  isFullWidth: boolean;
+  setIsFullWidth: (value: boolean) => void;
+  currentSlide: number;
+  setCurrentSlide: (value: number) => void;
+  activeTab: string;
+  setActiveTab: (value: string) => void;
+  location: { lat: number, lng: number }
 }
 export const AssetInfo = ({
                             title,
@@ -43,7 +53,19 @@ export const AssetInfo = ({
                             infoItems,
                             images,
                             balance,
-                            account
+                            account,
+                            coc,
+                            tokensLeft,
+                            irr,
+                            tokensTotalSupply,
+                            id,
+                            setIsFullWidth,
+                            setCurrentSlide,
+                            currentSlide,
+                            isFullWidth,
+                            setActiveTab,
+                            location,
+                            activeTab
                           }: AssetInfoProps) => {
   const {xs} = useWindowSize()
 
@@ -66,37 +88,18 @@ export const AssetInfo = ({
         </div>
       </div>
       <div className={s.assetInvest}>
-        {xs && <AssetInvest  coc={22} id={2} irr={22} progress={88} tokensLeft={10} balance={balance} account={account}/>}
+        {xs && <AssetInvest coc={coc} id={id} irr={irr} tokensTotalSupply={tokensTotalSupply} tokensLeft={tokensLeft}
+                            balance={balance}
+                            account={account}/>}
       </div>
       <div className={s.carousel}>
-        {xs ? <MobileCarousel images={images}/> : <DesktopCarousel images={images}/>}
+        {xs ? <MobileCarousel images={images}/> :
+          <DesktopCarousel images={images} currentSlide={currentSlide} setCurrentSlide={setCurrentSlide}
+                           setIsFullWidth={setIsFullWidth} isFullWidth={isFullWidth}/>}
       </div>
       <div className={s.tabs}>
-        <Tabs/>
+        <Tabs setActiveTab={setActiveTab} activeTab={activeTab} location={location}/>
       </div>
     </div>
   );
 };
-
-
-// <div className={s.info}>
-//   <h2 className={s.title}>{title}</h2>
-//   <div>{description} ({statusLabel})</div>
-//   <div className={s.addressLine1}>
-//     {name} {symbol}
-//   </div>
-//   <div className={s.addressLine1}>
-//     {line1} {line2}
-//   </div>
-//   <div className={s.addressLine2}>
-//     {city}, {state} {postalCode} {country}
-//   </div>
-//   <ul className={s.infoItems}>
-//     {infoItems.map((infoItem) => (
-//       <li key={infoItem.type} className={s.infoItem}>
-//         {infoItem.value}
-//       </li>
-//     ))}
-//   </ul>
-//   <Tabs legalDocuments={legalDocuments} />
-// </div>

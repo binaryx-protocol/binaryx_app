@@ -14,10 +14,16 @@ import {
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import clsx from "clsx";
 
-export const DesktopCarousel = ({images}: { images?: { src: string }[] }) => {
+type Props = {
+  isFullWidth: boolean;
+  setIsFullWidth: (value: boolean) => void;
+  currentSlide: number;
+  setCurrentSlide: (value: number) => void;
+  images?: { src: string }[];
+}
 
-  const [isFullWidth, setIsFullWidth] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(0);
+export const DesktopCarousel = (props: Props) => {
+  const {images, setIsFullWidth, isFullWidth, setCurrentSlide, currentSlide} = props
 
   const displayIsShow = isFullWidth ? 'block' : 'none';
 
@@ -114,9 +120,10 @@ export const DesktopCarousel = ({images}: { images?: { src: string }[] }) => {
             <Slider>
               {images.map((image, index) => (
                 <Slide index={index} key={index}>
-                  <Image hasMasterSpinner={false} src={image.src} className={clsx(s.image, s.imageMain)} onClick={() => {
-                    toggleFullWidth(), toggleCurrentSlide(index);
-                  }}/>
+                  <Image hasMasterSpinner={false} src={image.src} className={clsx(s.image, s.imageMain)}
+                         onClick={() => {
+                           toggleFullWidth(), toggleCurrentSlide(index);
+                         }}/>
                 </Slide>
               ))}
             </Slider>

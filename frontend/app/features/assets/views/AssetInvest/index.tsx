@@ -4,10 +4,11 @@ import detailsIcon from '../../../../../public/svg/details.svg'
 import {ProgressBarText} from "../ProgressBar/ProgressBarText";
 import {Button} from "../../../../shared/ui/views/Button";
 import {InvestInput} from "../InvestInput";
+import {useState} from "react";
 
 type InvestBlockProps = {
   tokensLeft: number,
-  progress: number,
+  tokensTotalSupply: number,
   irr: number,
   coc: number,
   id: number,
@@ -15,7 +16,7 @@ type InvestBlockProps = {
   account: string;
 }
 
-export const AssetInvest = ({progress, tokensLeft, irr, coc, id, balance, account}: InvestBlockProps) => {
+export const AssetInvest = ({ irr, coc, id, balance, account, tokensLeft,tokensTotalSupply}: InvestBlockProps) => {
   return (
     <div className={s.root}>
       <div className={s.tokenPrice}>
@@ -42,41 +43,10 @@ export const AssetInvest = ({progress, tokensLeft, irr, coc, id, balance, accoun
           <p className={s.detailsPercent}>{coc}%</p>
         </div>
       </div>
-      <ProgressBarText tokensLeft={4456} tokensTotal={10000}/>
+      <ProgressBarText tokensLeft={tokensLeft} tokensTotal={tokensTotalSupply}/>
       <Button className={s.buyTokensButton} disabled>
         Buy Tokens
       </Button>
     </div>
   );
 };
-
-
-// <div className={s.investBlock}>
-//   <div className={s.progress}>
-//     <LinearProgress
-//       variant="buffer"
-//       valueBuffer={100}
-//       value={progress}
-//       className={s.progressBar}
-//     />
-//     <div className={s.progressValues}>
-//       <span className={s.progressValue}>{progress}%</span>
-//       <span className={s.tokensLeft}>{tokensLeft} tokens left</span>
-//     </div>
-//   </div>
-//   <div className={s.info}>
-//     <div className={s.infoItem}>
-//       <span className={s.infoItemTitle}>Projected IRR</span>
-//       <span className={s.infoItemValue}>{irr}%</span>
-//     </div>
-//     <div className={s.infoItem}>
-//       <span className={s.infoItemTitle}>CoC Return</span>
-//       <span className={s.infoItemValue}>{coc}%</span>
-//     </div>
-//   </div>
-//   <div className={s.invest}>
-//     <Link href={paths.investAsset({ id })}>
-//       <a className={s.investButton}>INVEST</a>
-//     </Link>
-//   </div>
-// </div>

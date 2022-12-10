@@ -15,6 +15,7 @@
 @media screen and (max-width: 480px) {
   .root{
     max-height: 44px;
+    min-width: 38vw;
     flex-direction: row;
   }
 }

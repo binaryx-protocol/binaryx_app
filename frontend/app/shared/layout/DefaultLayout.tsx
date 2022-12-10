@@ -39,6 +39,9 @@ export const DefaultLayout = ({ children }: { children: any }) => {
       }
       {children}
       </div>
+      <div className={s.footer}>
+        <p>© 2022 Binaryx</p>
+      </div>
     </div>
   )
 }

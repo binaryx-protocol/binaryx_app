@@ -21,7 +21,7 @@
   border: 1px solid var(--color--border);
 }
 .assetInfo{
-  height: 1300px;
+  height: 100%;
   width: 55vw;
   margin: 8px 8px 24px 34px;
   padding: 16px 24px;
@@ -37,6 +37,11 @@
 .assetInvestDetails{
   padding: 24px;
 }
+.loader{
+  min-height: 200px;
+  z-index: 10;
+}
+
 
 @media screen and (max-width: 480px) {
  .root{
