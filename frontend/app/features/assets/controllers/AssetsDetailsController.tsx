@@ -15,8 +15,7 @@ import {Tab} from "../views/AssetInfo/Tabs/Tab";
 import {TabContent} from "../views/AssetInfo/Tabs/TabContent";
 import {NanoLoader} from "../../../shared/ui/views/NanoLoader";
 
-
-export const AssetsDetailsController = () => {
+export const AssetsDetailsController = (): JSX.Element => {
   const id = parseInt(useRouter().query.id as string);
   const $asset = useAtomValue(assetDetailsModel.$asset)
   const $assetMetaData = useAtomValue(assetDetailsModel.$assetMetaData)
@@ -42,7 +41,7 @@ export const AssetsDetailsController = () => {
   }, [id])
 
   if (!$asset || !$assetMetaData || !$assetComputed) {
-    return false // TODO skeleton loader
+    return <div/> // TODO skeleton loader
   }
 
   const images = [
@@ -141,17 +140,3 @@ const T = {
     4: 'Disabled',
   }
 }
-
-// <div className={s.asset}>
-//   <Gallery images={images} />
-//   <MuiContainer maxWidth="lg">
-//     <Grid container spacing={0} maxWidth={1600}>
-//       <Grid item xs={8}>
-//         <AssetInfo {...assetInfo} />
-//       </Grid>
-//       <Grid item xs={3}>
-//         <AssetInvest {...investInfo} />
-//       </Grid>
-//     </Grid>
-//   </MuiContainer>
-// </div>

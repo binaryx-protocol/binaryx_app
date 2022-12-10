@@ -7,7 +7,6 @@ import TabDetails from './TabDetails';
 import TabFinancials from './TabFinancials';
 import TabDocuments from './TabDocuments';
 import TabBuyingProcess from './TabBuyingProcess';
-import TabMarket from './TabMarket';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -72,9 +71,6 @@ export default function BasicTabs() {
       </TabPanel>
       <TabPanel value={value} index={3}>
         <TabBuyingProcess />
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        <TabMarket />
       </TabPanel>
     </Box>
   );
