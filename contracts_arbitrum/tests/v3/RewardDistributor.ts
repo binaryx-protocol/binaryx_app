@@ -52,6 +52,13 @@ const mockData = {
   },
 };
 
+const commissionData = {
+  companyAddress: '0x0000000000000000000000000000000000000001',
+  assetReserveAddress: '0x0000000000000000000000000000000000000002',
+  companyCommission: 200, // 1000 = 10% | 100 = 1% | 10 = 0.1%
+  assetReserveCommission: 200, // 1000 = 10% | 100 = 1% | 10 = 0.1%
+}
+
 describe('RewardDistributor', function() {
   it('Deploy RewardDistributor', async function() {
     const { rewardDistributor, usdtToken, owner } = await loadFixture(rewardsDistributorFixture);
@@ -94,7 +101,7 @@ describe('RewardDistributor', function() {
     let tempTime = await time.latest() + 1;
     const { startTimes, endTimes, rewardsPerSecond } = generateEmissionPoints(tempTime, 10, 10);
     await rewardDistributor.addEmissionPointsForPool(asset.address, startTimes, endTimes, rewardsPerSecond);
-    await rewardDistributor.initializePool(asset.address);
+    await rewardDistributor.initializePool(asset.address, commissionData.companyAddress, commissionData.assetReserveAddress, commissionData.companyCommission, commissionData.assetReserveCommission);
     const emissionPointsPerPool = await rewardDistributor.getEmissionPoints(asset.address, 0);
     const poolInfoBefore = await rewardDistributor.poolInfo(asset.address);
     assert.equal(emissionPointsPerPool.length.toString(), '10');
@@ -124,14 +131,14 @@ describe('RewardDistributor', function() {
     let tempTime = await time.latest() + 1;
     const emissionPoints = generateEmissionPoints(tempTime, 10, 4);
     await rewardDistributor.addEmissionPointsForPool(asset.address, emissionPoints.startTimes, emissionPoints.endTimes, emissionPoints.rewardsPerSecond);
-    await rewardDistributor.initializePool(asset.address);
+    await rewardDistributor.initializePool(asset.address, commissionData.companyAddress, commissionData.assetReserveAddress, commissionData.companyCommission, commissionData.assetReserveCommission);
     await mine(34);
     const rewardDistributorBalanceBefore = await usdtToken.balanceOf(rewardDistributor.address);
     assert.equal(rewardDistributorBalanceBefore.toString(), '0');
     await usdtToken.connect(owner).approve(rewardDistributor.address, ethers.utils.parseUnits('1000', 6));
     await rewardDistributor.connect(owner).payForRent(asset.address, ethers.utils.parseUnits('1000', 6), emissionPoints.startTimes[0], emissionPoints.endTimes[0]);
     const rewardDistributorBalanceAfter = await usdtToken.balanceOf(rewardDistributor.address);
-    assert.equal(rewardDistributorBalanceAfter.toString(), ethers.utils.parseUnits('1000', 6).toString());
+    assert.equal(rewardDistributorBalanceAfter.toString(), ethers.utils.parseUnits('960', 6).toString());
     await rewardDistributor.claim(alice.address, [asset.address]);
     await rewardDistributor.claim(bob.address, [asset.address]);
     await rewardDistributor.claim(carol.address, [asset.address]);
@@ -152,7 +159,7 @@ describe('RewardDistributor', function() {
     assert.equal(aliceBalance.toString(), mockData.rewardDataOne.alice.result.toString());
     assert.equal(bobBalance.toString(), mockData.rewardDataOne.bob.result.toString());
     assert.equal(carolBalance.toString(), mockData.rewardDataOne.carol.result.toString());
-    assert.equal(rewardDistributorBalance.toString(), '908000001');
+    assert.equal(rewardDistributorBalance.toString(), '868000001');
   });
   it('Claim reward flow (3 users) with more then 1 emission point', async function() {
     const {
@@ -170,7 +177,7 @@ describe('RewardDistributor', function() {
     let tempTime = await time.latest() + 1;
     const emissionPoints = generateEmissionPoints(tempTime, mockData.rewardDataOne.emissionPoints.interval, mockData.rewardDataOne.emissionPoints.amount);
     await rewardDistributor.addEmissionPointsForPool(asset.address, emissionPoints.startTimes, emissionPoints.endTimes, emissionPoints.rewardsPerSecond);
-    await rewardDistributor.initializePool(asset.address);
+    await rewardDistributor.initializePool(asset.address, commissionData.companyAddress, commissionData.assetReserveAddress, commissionData.companyCommission, commissionData.assetReserveCommission);
     await mine(36);
     await rewardDistributor.claim(alice.address, [asset.address]);
     await rewardDistributor.claim(bob.address, [asset.address]);
@@ -207,7 +214,7 @@ describe('RewardDistributor', function() {
     let tempTime = await time.latest() + 1;
     const emissionPoints = generateEmissionPoints(tempTime, mockData.rewardDataTwo.emissionPoints.interval, mockData.rewardDataTwo.emissionPoints.amount);
     await rewardDistributor.addEmissionPointsForPool(asset.address, emissionPoints.startTimes, emissionPoints.endTimes, emissionPoints.rewardsPerSecond);
-    await rewardDistributor.initializePool(asset.address);
+    await rewardDistributor.initializePool(asset.address, commissionData.companyAddress, commissionData.assetReserveAddress, commissionData.companyCommission, commissionData.assetReserveCommission);
     await mine(7);
     await hre.network.provider.send('evm_setAutomine', [false]);
     await rewardDistributor.claim(alice.address, [asset.address]);
@@ -246,7 +253,7 @@ describe('RewardDistributor', function() {
     let tempTime = await time.latest() + 1;
     const emissionPoints = generateEmissionPoints(tempTime, mockData.rewardDataOne.emissionPoints.interval, mockData.rewardDataOne.emissionPoints.amount);
     await rewardDistributor.addEmissionPointsForPool(asset.address, emissionPoints.startTimes, emissionPoints.endTimes, emissionPoints.rewardsPerSecond);
-    await rewardDistributor.initializePool(asset.address);
+    await rewardDistributor.initializePool(asset.address, commissionData.companyAddress, commissionData.assetReserveAddress, commissionData.companyCommission, commissionData.assetReserveCommission);
     await mine(37);
     const aliceReward = await rewardDistributor.claimableRewards(alice.address, [asset.address]);
     const bobReward = await rewardDistributor.claimableRewards(bob.address, [asset.address]);
@@ -267,7 +274,7 @@ describe('RewardDistributor', function() {
     let tempTime = await time.latest() + 1;
     const emissionPoints = generateEmissionPoints(tempTime, mockData.rewardDataTwo.emissionPoints.interval, mockData.rewardDataTwo.emissionPoints.amount);
     await rewardDistributor.addEmissionPointsForPool(asset.address, emissionPoints.startTimes, emissionPoints.endTimes, emissionPoints.rewardsPerSecond);
-    await rewardDistributor.initializePool(asset.address);
+    await rewardDistributor.initializePool(asset.address, commissionData.companyAddress, commissionData.assetReserveAddress, commissionData.companyCommission, commissionData.assetReserveCommission);
     await mine(8);
     const aliceReward = await rewardDistributor.claimableRewards(alice.address, [asset.address]);
     const bobReward = await rewardDistributor.claimableRewards(bob.address, [asset.address]);
