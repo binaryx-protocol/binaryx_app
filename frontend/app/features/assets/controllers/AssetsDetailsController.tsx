@@ -13,10 +13,10 @@ import {$connectedAccount} from "../../../core/models/walletModel";
 import {useWindowSize} from "../../../hooks/useWindowSize";
 import {Tab} from "../views/AssetInfo/Tabs/Tab";
 import {TabContent} from "../views/AssetInfo/Tabs/TabContent";
-import {NanoLoader} from "../../../shared/ui/views/NanoLoader";
 
 export const AssetsDetailsController = (): JSX.Element => {
   const id = parseInt(useRouter().query.id as string);
+  const $contractError = useAtomValue(assetDetailsModel.$contractError)
   const $asset = useAtomValue(assetDetailsModel.$asset)
   const $assetMetaData = useAtomValue(assetDetailsModel.$assetMetaData)
   const $assetComputed = useAtomValue(assetDetailsModel.$assetComputed)
@@ -29,6 +29,8 @@ export const AssetsDetailsController = (): JSX.Element => {
   const [isFullWidth, setIsFullWidth] = useState<boolean>(false);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [activeTab, setActiveTab] = useState("details");
+  const [investAmount, setInvestAmount] = useState(0)
+  const [validationInvestError, setValidationInvestError] = useState<string>('')
   const location = {
     lat: 50.450001,
     lng: 30.523333,
@@ -39,7 +41,9 @@ export const AssetsDetailsController = (): JSX.Element => {
       $doLoadAsset({id})
     }
   }, [id])
-
+  if ($contractError) { // @ts-ignore
+    return <p>{`Contract error: ${$contractError.reason}`}</p>
+  }
   if (!$asset || !$assetMetaData || !$assetComputed) {
     return <div/> // TODO skeleton loader
   }
@@ -95,7 +99,9 @@ export const AssetsDetailsController = (): JSX.Element => {
                 <AssetInfo {...assetInfo} images={images} balance={balance} account={account} {...investInfo}
                            currentSlide={currentSlide} isFullWidth={isFullWidth} setIsFullWidth={setIsFullWidth}
                            setCurrentSlide={setCurrentSlide} setActiveTab={setActiveTab} activeTab={activeTab}
-                           location={location}/>
+                           location={location} validationInvestError={validationInvestError}
+                           setValidationInvestError={setValidationInvestError} investAmount={investAmount}
+                           setInvestAmount={setInvestAmount}/>
               </div>
             </TabContent>
             <TabContent id="financials" activeTab={activeTabMobile}>
@@ -116,12 +122,17 @@ export const AssetsDetailsController = (): JSX.Element => {
                        images={images} balance={balance}
                        account={account} isFullWidth={isFullWidth} setIsFullWidth={setIsFullWidth}
                        setCurrentSlide={setCurrentSlide} setActiveTab={setActiveTab} activeTab={activeTab}
-                       location={location}/>
+                       location={location} validationInvestError={validationInvestError}
+                       setValidationInvestError={setValidationInvestError} investAmount={investAmount}
+                       setInvestAmount={setInvestAmount}/>
           </div>
         </div>
         <div className={s.assetInvest}>
           <div className={clsx(s.assetInvestBuy, s.container)}>
-            <AssetInvest {...investInfo} balance={balance} account={account}/>
+            <AssetInvest {...investInfo} balance={balance} account={account}
+                         validationInvestError={validationInvestError}
+                         setValidationInvestError={setValidationInvestError} investAmount={investAmount}
+                         setInvestAmount={setInvestAmount}/>
           </div>
           <div className={clsx(s.assetInvestDetails, s.container)}>
             <AssetInvestDetails/>

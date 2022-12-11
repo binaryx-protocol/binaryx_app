@@ -6,17 +6,17 @@ import defaultMessagesEn from "elegant-validator/src/defaultMessagesEn";
 const ev = new ElegantValidator(defaultValidators, defaultMessagesEn)
 
 const schema= {
-  amount: ['required', 'number'],
+  amount: ['required'],
 }
 export const tokenAmountValidator = {
-  isAmountValid(amount: number, tokensLeft: number, userBalance: number, tokenPrice: number) {
-    const tokenToBuy = tokenPrice * amount;
-    if(amount > userBalance){
+  isAmountValid(formData: {amount: number}, tokensLeft: number, userBalance: number, tokenPrice: number) {
+    const tokenToBuy = tokenPrice * tokensLeft;
+    if(formData.amount > userBalance){
       return 'Not enough balance!'
     }
-    if(tokenToBuy > tokensLeft){
-      return `Tokens left: ${tokensLeft}. You want to buy: ${tokenToBuy}`
+    if(formData.amount > tokenToBuy){
+      return `Tokens left: ${tokensLeft}. You want to buy: ${formData.amount / tokenPrice}`
     }
-    return ev.isValid(amount, schema)
+    return ev.isValid(formData, schema)
   },
 }

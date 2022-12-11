@@ -25,6 +25,21 @@
   &:focus{
     outline: none;
   }
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+.inputInvalid{
+  border: 1px solid red;
+}
+.error{
+  color: red;
+  font-size: 12px;
+  margin: 0;
+  padding-left: 5px;
+  padding-top: 5px;
 }
 .maxButton {
   font-size: 14px;

@@ -35,7 +35,11 @@ type AssetInfoProps = {
   setCurrentSlide: (value: number) => void;
   activeTab: string;
   setActiveTab: (value: string) => void;
-  location: { lat: number, lng: number }
+  location: { lat: number, lng: number };
+  investAmount: number;
+  setInvestAmount: (value: number) => void;
+  setValidationInvestError: (value: string) => void
+  validationInvestError: string;
 }
 export const AssetInfo = ({
                             title,
@@ -65,7 +69,11 @@ export const AssetInfo = ({
                             isFullWidth,
                             setActiveTab,
                             location,
-                            activeTab
+                            activeTab,
+                            setValidationInvestError,
+                            validationInvestError,
+                            setInvestAmount,
+                            investAmount
                           }: AssetInfoProps) => {
   const {xs} = useWindowSize()
 
@@ -90,7 +98,9 @@ export const AssetInfo = ({
       <div className={s.assetInvest}>
         {xs && <AssetInvest coc={coc} id={id} irr={irr} tokensTotalSupply={tokensTotalSupply} tokensLeft={tokensLeft}
                             balance={balance}
-                            account={account}/>}
+                            account={account} setInvestAmount={setInvestAmount} investAmount={investAmount}
+                            setValidationInvestError={setValidationInvestError}
+                            validationInvestError={validationInvestError}/>}
       </div>
       <div className={s.carousel}>
         {xs ? <MobileCarousel images={images}/> :
