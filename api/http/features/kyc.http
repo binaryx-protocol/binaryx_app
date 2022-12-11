@@ -14,5 +14,16 @@ Content-Type: application/json
 Cookie: key=first-value
 
 {
-  "sasasasas": "1"
+  "applicantId": "xxxxxxb47e9bfb0001745e5c",
+  "inspectionId": "xxxxxxb47e9bfb0001745e5d",
+  "applicantType": "individual",
+  "correlationId": "xxxxxx015806e21fa6eeda90771aa635",
+  "levelName": "basic-kyc-level",
+  "sandboxMode": true,
+  "externalUserId": "dev.3",
+  "type": "applicantReviewed",
+  "reviewResult": { "reviewAnswer": "GREEN" },
+  "reviewStatus": "completed",
+  "createdAt": "2022-12-09 19:01:28+0000",
+  "clientId": "xxxxxx_llc"
 }
