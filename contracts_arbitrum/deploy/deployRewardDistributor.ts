@@ -1,9 +1,12 @@
-module.exports = async ({ getNamedAccounts, deployments }) => {
+import * as config from '../deployConfig.json';
+module.exports = async ({ getNamedAccounts, deployments, getChainId }) => {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
+  const chainId = await getChainId();
+  const localConfig = config[chainId];
   await deploy('RewardsDistributor', {
     from: deployer,
-    args: ['0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9'],
+    args: [localConfig.USDT.address],
     log: true,
     deterministicDeployment: true,
   });

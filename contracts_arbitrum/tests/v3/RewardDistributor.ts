@@ -7,7 +7,6 @@ import {
 import { ethers } from 'ethers';
 import { generateEmissionPoints } from '../../testUtils/rewardDistributorUtils';
 import * as assert from 'assert';
-import { parseEmissionPoints } from '../../testUtils/objectUtils';
 
 const hre = require('hardhat');
 
@@ -15,40 +14,42 @@ const mockData = {
   rewardDataOne: {
     alice: {
       amount: ethers.utils.parseEther('25'),
+      timeElapsed: 38,
       result: ethers.utils.parseUnits('13.142857', 6),
     },
     bob: {
       amount: ethers.utils.parseEther('50'),
+      timeElapsed: 38,
       result: ethers.utils.parseUnits('26.285714', 6),
     },
     carol: {
       amount: ethers.utils.parseEther('100'),
+      timeElapsed: 38,
       result: ethers.utils.parseUnits('52.571428', 6),
     },
     totalSupply: ethers.utils.parseUnits('175', 6),
+    emissionPoints: {
+      interval: 10,
+      amount: 4,
+    },
   },
   rewardDataTwo: {
     alice: {
       amount: ethers.utils.parseEther('75'),
+      timeElapsed: 9,
       result: ethers.utils.parseUnits('4.285714', 6),
     },
     bob: {
       amount: ethers.utils.parseEther('100'),
+      timeElapsed: 9,
       result: ethers.utils.parseUnits('5.714285', 6),
     },
     totalSupply: ethers.utils.parseUnits('175', 6),
-  },
-  rewardDataThree: {
-    alice: {
-      amount: ethers.utils.parseEther('75'),
-      result: ethers.utils.parseUnits('3.857142', 6),
+    emissionPoints: {
+      interval: 100,
+      amount: 4,
     },
-    bob: {
-      amount: ethers.utils.parseEther('100'),
-      result: ethers.utils.parseUnits('5.142857', 6),
-    },
-    totalSupply: ethers.utils.parseUnits('175', 6),
-  },
+  }
 };
 
 describe('RewardDistributor', function() {
@@ -167,7 +168,7 @@ describe('RewardDistributor', function() {
     await asset.transfer(carol.address, mockData.rewardDataOne.carol.amount);
     await mine(10);
     let tempTime = await time.latest() + 1;
-    const emissionPoints = generateEmissionPoints(tempTime, 10, 4);
+    const emissionPoints = generateEmissionPoints(tempTime, mockData.rewardDataOne.emissionPoints.interval, mockData.rewardDataOne.emissionPoints.amount);
     await rewardDistributor.addEmissionPointsForPool(asset.address, emissionPoints.startTimes, emissionPoints.endTimes, emissionPoints.rewardsPerSecond);
     await rewardDistributor.initializePool(asset.address);
     await mine(36);
@@ -201,10 +202,10 @@ describe('RewardDistributor', function() {
       alice,
       bob,
     } = await loadFixture(rewardsDistributorWithPoolFixture);
-    await asset.transfer(alice.address, mockData.rewardDataThree.alice.amount);
-    await asset.transfer(bob.address, mockData.rewardDataThree.bob.amount);
+    await asset.transfer(alice.address, mockData.rewardDataTwo.alice.amount);
+    await asset.transfer(bob.address, mockData.rewardDataTwo.bob.amount);
     let tempTime = await time.latest() + 1;
-    const emissionPoints = generateEmissionPoints(tempTime, 100, 4);
+    const emissionPoints = generateEmissionPoints(tempTime, mockData.rewardDataTwo.emissionPoints.interval, mockData.rewardDataTwo.emissionPoints.amount);
     await rewardDistributor.addEmissionPointsForPool(asset.address, emissionPoints.startTimes, emissionPoints.endTimes, emissionPoints.rewardsPerSecond);
     await rewardDistributor.initializePool(asset.address);
     await mine(7);
@@ -224,10 +225,10 @@ describe('RewardDistributor', function() {
 
     const rewardDistributorBalance = await usdtToken.balanceOf(rewardDistributor.address);
 
-    assert.equal(poolInfo.totalSupply.toString(), mockData.rewardDataThree.totalSupply);
+    assert.equal(poolInfo.totalSupply.toString(), mockData.rewardDataTwo.totalSupply);
     assert.equal(poolInfo.currentEmissionPoint.toString(), '0');
-    assert.equal(aliceBalance.toString(), mockData.rewardDataThree.alice.result.toString());
-    assert.equal(bobBalance.toString(), mockData.rewardDataThree.bob.result.toString());
+    assert.equal(aliceBalance.toString(), mockData.rewardDataTwo.alice.result.toString());
+    assert.equal(bobBalance.toString(), mockData.rewardDataTwo.bob.result.toString());
     assert.equal(rewardDistributorBalance.toString(), '991000001');
   });
   it('Claimable reward with more then 1 emission point', async function() {
@@ -243,7 +244,7 @@ describe('RewardDistributor', function() {
     await asset.transfer(carol.address, mockData.rewardDataOne.carol.amount);
     await mine(10);
     let tempTime = await time.latest() + 1;
-    const emissionPoints = generateEmissionPoints(tempTime, 10, 4);
+    const emissionPoints = generateEmissionPoints(tempTime, mockData.rewardDataOne.emissionPoints.interval, mockData.rewardDataOne.emissionPoints.amount);
     await rewardDistributor.addEmissionPointsForPool(asset.address, emissionPoints.startTimes, emissionPoints.endTimes, emissionPoints.rewardsPerSecond);
     await rewardDistributor.initializePool(asset.address);
     await mine(37);
@@ -264,10 +265,10 @@ describe('RewardDistributor', function() {
     await asset.transfer(alice.address, mockData.rewardDataTwo.alice.amount);
     await asset.transfer(bob.address, mockData.rewardDataTwo.bob.amount);
     let tempTime = await time.latest() + 1;
-    const emissionPoints = generateEmissionPoints(tempTime, 100, 4);
+    const emissionPoints = generateEmissionPoints(tempTime, mockData.rewardDataTwo.emissionPoints.interval, mockData.rewardDataTwo.emissionPoints.amount);
     await rewardDistributor.addEmissionPointsForPool(asset.address, emissionPoints.startTimes, emissionPoints.endTimes, emissionPoints.rewardsPerSecond);
     await rewardDistributor.initializePool(asset.address);
-    await mine(9);
+    await mine(8);
     const aliceReward = await rewardDistributor.claimableRewards(alice.address, [asset.address]);
     const bobReward = await rewardDistributor.claimableRewards(bob.address, [asset.address]);
     assert.equal(aliceReward[0].toString(), mockData.rewardDataTwo.alice.result.toString());
