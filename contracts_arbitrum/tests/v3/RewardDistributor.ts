@@ -37,19 +37,19 @@ const mockData = {
     alice: {
       amount: ethers.utils.parseEther('75'),
       timeElapsed: 9,
-      result: ethers.utils.parseUnits('4.285714', 6),
+      result: ethers.utils.parseUnits('3.857142', 6),
     },
     bob: {
       amount: ethers.utils.parseEther('100'),
       timeElapsed: 9,
-      result: ethers.utils.parseUnits('5.714285', 6),
+      result: ethers.utils.parseUnits('5.142857', 6),
     },
     totalSupply: ethers.utils.parseUnits('175', 6),
     emissionPoints: {
       interval: 100,
       amount: 4,
     },
-  }
+  },
 };
 
 describe('RewardDistributor', function() {
