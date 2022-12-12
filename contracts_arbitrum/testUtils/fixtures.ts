@@ -1,5 +1,6 @@
 import { AssetInput, AssetStatuses } from './types';
 import { ethers } from 'ethers';
+
 const hre = require('hardhat');
 
 export const defaultAssetAttrs = (): AssetInput => ({
@@ -22,13 +23,31 @@ export const rewardsDistributorWithPoolFixture = async () => {
 
   const RewardDistributor = await hre.ethers.getContractFactory('RewardsDistributor');
   const rewardDistributor = await RewardDistributor.deploy(usdtToken.address);
-  usdtToken.transfer(rewardDistributor.address, ethers.constants.WeiPerEther.mul(1000));
+  usdtToken.transfer(rewardDistributor.address, ethers.utils.parseUnits('1000', 6));
 
   const Asset = await hre.ethers.getContractFactory('Asset');
   const asset = await Asset.deploy();
   await asset.setRewardsDistributor(rewardDistributor.address);
 
-  await rewardDistributor.addPool(asset.address, ethers.constants.WeiPerEther.mul(175));
+  await rewardDistributor.addPool(asset.address, 18, ethers.utils.parseUnits('175', 6));
+
+  return { rewardDistributor, usdtToken, asset, owner, alice, bob, carol };
+};
+
+export const rewardsDistributorWithUSDTAndAssetFixture = async () => {
+  const [owner, alice, bob, carol] = await hre.ethers.getSigners();
+
+  const UsdtToken = await hre.ethers.getContractFactory('UsdtfToken');
+  const usdtToken = await UsdtToken.deploy(ethers.constants.WeiPerEther.mul(1000));
+
+  const RewardDistributor = await hre.ethers.getContractFactory('RewardsDistributor');
+  const rewardDistributor = await RewardDistributor.deploy(usdtToken.address);
+
+  const Asset = await hre.ethers.getContractFactory('Asset');
+  const asset = await Asset.deploy();
+  await asset.setRewardsDistributor(rewardDistributor.address);
+
+  await rewardDistributor.addPool(asset.address, 18, ethers.utils.parseUnits('175', 6));
 
   return { rewardDistributor, usdtToken, asset, owner, alice, bob, carol };
 };
@@ -41,7 +60,7 @@ export const rewardsDistributorFixture = async () => {
 
   const RewardDistributor = await hre.ethers.getContractFactory('RewardsDistributor');
   const rewardDistributor = await RewardDistributor.deploy(usdtToken.address);
-  usdtToken.transfer(rewardDistributor.address, ethers.constants.WeiPerEther.mul(1000));
+  usdtToken.transfer(rewardDistributor.address, ethers.utils.parseUnits('1000', 6));
   return { rewardDistributor, usdtToken, owner, alice, bob, carol };
 };
 
@@ -51,7 +70,7 @@ export const assetFixture = async () => {
   const Asset = await hre.ethers.getContractFactory('Asset');
   const asset = await Asset.deploy();
   return { asset, owner, alice, bob, carol };
-}
+};
 
 // export const controllerFixture = async () => {
 //   const [owner, wallet2] = await ethers.getSigners();
