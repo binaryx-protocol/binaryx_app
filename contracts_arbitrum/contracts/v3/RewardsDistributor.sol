@@ -10,30 +10,6 @@ contract RewardsDistributor is IRewardsDistributor {
 
   uint256 private constant COMMISSION_PRECISION = 10000; // 100%
 
-  struct Commission {
-    address companyAddress;
-    address assetReserveAddress;
-    uint256 companyCommission; // 1000 = 10% | 100 = 1% | 10 = 0.1%
-    uint256 assetReserveCommission; // 1000 = 10% | 100 = 1% | 10 = 0.1%
-  }
-
-  struct UserInfo {
-    uint256 amount;
-    uint256 rewardDebt;
-    uint256 baseClaimable;
-    uint256 lastEmissionPoint;
-  }
-
-  struct PoolInfo {
-    uint256 totalSupply;
-    uint256 decimals;
-    uint256 lastRewardTime; // Last second that reward distribution occurs.
-    uint256 accRewardPerShare; // Accumulated rewards per share, times 1e12.
-    uint256 currentEmissionPoint;
-    bool isInitialized;
-    Commission commission;
-  }
-
   modifier onlyOwner() {
     require(msg.sender == addressesProvider.getRewardsDistributorAdmin(), "RewardsDistributor: caller is not the RewardsDistributorAdmin");
     _;
@@ -56,15 +32,6 @@ contract RewardsDistributor is IRewardsDistributor {
 
   // user => receiver
   mapping(address => address) public claimReceiver;
-
-  event BalanceUpdated(address indexed asset, address indexed user, uint256 balance);
-  event Claimed(address indexed user, uint256 amount);
-  event PoolAdded(address indexed asset, uint256 totalSupply);
-  event PoolInitialized(address indexed asset);
-  event PaidRent(address indexed user, address indexed asset, uint256 amount, uint128 startTime, uint128 endTime);
-  event CompanyPaid(address indexed asset, uint256 amount);
-  event AssetReservePaid(address indexed asset, uint256 amount);
-
 
   constructor(IERC20 _rewardToken, IAddressesProvider _addressesProvider) {
     require(address(_addressesProvider) != address(0), "RewardsDistributor: addresses provider is the zero address");
@@ -212,7 +179,7 @@ contract RewardsDistributor is IRewardsDistributor {
     }
   }
 
-  function handleAction(address _user, uint256 _balance) external override {
+  function onUserBalanceChanged(address _user, uint256 _balance) external override {
     PoolInfo storage pool = poolInfo[msg.sender];
     require(pool.lastRewardTime > 0);
     _updatePool(msg.sender);
@@ -226,7 +193,7 @@ contract RewardsDistributor is IRewardsDistributor {
     user.amount = _balance;
     user.rewardDebt = _balance * pool.accRewardPerShare / 1e12;
 
-    emit BalanceUpdated(msg.sender, _user, _balance);
+    emit UserBalanceUpdated(msg.sender, _user, _balance);
   }
 
   function setClaimReceiver(address _user, address _receiver) external override {

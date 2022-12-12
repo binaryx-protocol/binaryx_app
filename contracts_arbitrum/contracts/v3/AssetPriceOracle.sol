@@ -33,6 +33,7 @@ contract AssetPriceOracle {
   }
 
   function setAssetPrice(address asset, uint256 price) public onlyOwner {
+    require(price > 0, "AssetPriceOracle: price must be greater than 0");
     assetPrice[asset].price = price;
     assetPrice[asset].timestamp = block.timestamp;
   }
@@ -45,6 +46,7 @@ contract AssetPriceOracle {
   }
 
   function addAsset(address asset, uint256 price) public onlyOwner {
+    require(assetPrice[asset].timestamp == 0, "AssetPriceOracle: asset already exists");
     assetPrice[asset].price = price;
     assetPrice[asset].timestamp = block.timestamp;
   }
@@ -57,6 +59,7 @@ contract AssetPriceOracle {
   }
 
   function removeAsset(address asset) external onlyOwner {
+    require(assetPrice[asset].timestamp != 0, "AssetPriceOracle: asset does not exist");
     delete assetPrice[asset];
   }
 }

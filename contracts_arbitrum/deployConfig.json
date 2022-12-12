@@ -1,7 +1,11 @@
 {
- "421613": {
-   "USDT": {
-     "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
-   }
- }
+  "421613": {
+    "USDT": {
+      "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9"
+    },
+    "developers": [
+      "0xDC89F9576281e87f78EeF7ddDEBD61f7e7D82f82",
+      "0xbF8FE9240804b898BFA455967d8691cC7102E12E"
+    ]
+  }
 }

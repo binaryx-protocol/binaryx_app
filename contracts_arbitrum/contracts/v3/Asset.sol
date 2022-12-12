@@ -7,9 +7,6 @@ import "./interfaces/IAsset.sol";
 import "./RewardsDistributor.sol";
 import "./AssetPriceOracle.sol";
 
-import "hardhat/console.sol";// TODO: remove
-
-
 contract Asset is IAsset, ERC20 {
 
   IAddressesProvider public addressesProvider;
@@ -50,14 +47,14 @@ contract Asset is IAsset, ERC20 {
     uint256 price = oracle.latestPrice(address(this));
     require(price > 0, "price must be greater than 0");
 
-    uint256 buyTokenAmount = amount * buyTokenDecimals / decimals() * price;
+    uint256 buyTokenAmount = amount * buyTokenDecimals / 10 ** decimals() * price;
     buyToken.transferFrom(msg.sender, address(this), buyTokenAmount);
     _mint(recipient, amount);
   unchecked {
     leftToBuy -= amount;
   }
     uint256 recipientBalance = balanceOf(recipient);
-    rewardsDistributor.handleAction(recipient, recipientBalance);
+    rewardsDistributor.onUserBalanceChanged(recipient, recipientBalance);
 
     if (leftToBuy == 0) {
       soldOut = true;
@@ -72,8 +69,8 @@ contract Asset is IAsset, ERC20 {
     if (address(rewardsDistributor) != address(0)) {
       uint256 senderBalance = balanceOf(sender);
       uint256 recipientBalance = balanceOf(recipient);
-      rewardsDistributor.handleAction(sender, senderBalance);
-      rewardsDistributor.handleAction(recipient, recipientBalance);
+      rewardsDistributor.onUserBalanceChanged(sender, senderBalance);
+      rewardsDistributor.onUserBalanceChanged(recipient, recipientBalance);
     }
   }
 }

@@ -13,6 +13,8 @@ contract AddressesProvider is IAddressesProvider, Ownable {
   bytes32 private constant REWARD_DISTRIBUTOR_ADMIN = 'REWARD_DISTRIBUTOR_ADMIN';
   bytes32 private constant ASSET_PRICE_ORACLE_ADMIN = 'ASSET_PRICE_ORACLE_ADMIN';
   bytes32 private constant EMERGENCY_ADMIN = 'EMERGENCY_ADMIN';
+  bytes32 private constant PROPERTY_FACTORY = 'PROPERTY_FACTORY';
+  bytes32 private constant PROPERTY_FACTORY_ADMIN = 'PROPERTY_FACTORY_ADMIN';
 
   function setAddress(bytes32 id, address newAddress) external override onlyOwner {
     _addresses[id] = newAddress;
@@ -75,6 +77,24 @@ contract AddressesProvider is IAddressesProvider, Ownable {
   function setEmergencyAdmin(address _emergencyAdmin) external override onlyOwner {
     _addresses[EMERGENCY_ADMIN] = _emergencyAdmin;
     emit EmergencyAdminUpdated(_emergencyAdmin);
+  }
+
+  function getPropertyFactory() external view override returns (address) {
+    return getAddress(PROPERTY_FACTORY);
+  }
+
+  function setPropertyFactory(address _propertyFactory) external override onlyOwner {
+    _addresses[PROPERTY_FACTORY] = _propertyFactory;
+    emit PropertyFactoryUpdated(_propertyFactory);
+  }
+
+  function getPropertyFactoryAdmin() external view override returns (address) {
+    return getAddress(PROPERTY_FACTORY_ADMIN);
+  }
+
+  function setPropertyFactoryAdmin(address _propertyFactoryAdmin) external override onlyOwner {
+    _addresses[PROPERTY_FACTORY_ADMIN] = _propertyFactoryAdmin;
+    emit PropertyFactoryAdminUpdated(_propertyFactoryAdmin);
   }
 
 }

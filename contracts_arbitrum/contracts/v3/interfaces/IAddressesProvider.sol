@@ -9,6 +9,8 @@ interface IAddressesProvider {
   event RewardDistributorAdminUpdated(address indexed newAddress);
   event AssetPriceOracleAdminUpdated(address indexed newAddress);
   event EmergencyAdminUpdated(address indexed newAddress);
+  event PropertyFactoryUpdated(address indexed newAddress);
+  event PropertyFactoryAdminUpdated(address indexed newAddress);
 
   function setAddress(bytes32 id, address newAddress) external;
   function getAddress(bytes32 id) external view returns (address);
@@ -24,4 +26,8 @@ interface IAddressesProvider {
   function setAssetPriceOracleAdmin(address _assetPriceOracleAdmin) external;
   function getEmergencyAdmin() external view returns (address);
   function setEmergencyAdmin(address _emergencyAdmin) external;
+  function getPropertyFactory() external view returns (address);
+  function setPropertyFactory(address _propertyFactory) external;
+  function getPropertyFactoryAdmin() external view returns (address);
+  function setPropertyFactoryAdmin(address _propertyFactoryAdmin) external;
 }
