@@ -12,10 +12,17 @@
     margin: 5px;
   }
 }
-@media screen and (max-width: 480px) {
+@media (max-width: 480px) {
   .root{
     max-height: 44px;
-    min-width: 38vw;
+    min-width: 40vw;
     flex-direction: row;
   }
 }
+
+@media (max-width: 360px) {
+  .root {
+    min-width: 45vw;
+  }
+}
+

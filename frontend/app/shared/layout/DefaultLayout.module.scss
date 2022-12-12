@@ -29,7 +29,7 @@
   margin-top: 8px;
 }
 
-@media screen and (max-width: 480px) {
+@media (max-width: 480px) {
   .pageMenu,.header{
     display: none;
   }

@@ -33,10 +33,17 @@
   background-color: #6F4DC4;
   border-radius: 8px;
 }
-@media screen and (max-width: 480px) {
+@media (max-width: 480px) {
   .elem {
     max-height: 40px;
-    min-width: 32vw;
+    min-width: 34vw;
   }
 }
+
+@media (max-width: 360px) {
+  .elem {
+    min-width: 37vw;
+  }
+}
+
 

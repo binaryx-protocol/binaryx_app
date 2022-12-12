@@ -4,19 +4,9 @@ import {useAtomValue, useSetAtom} from 'jotai';
 import {useEffect} from 'react';
 import {useAccount} from "wagmi";
 import {PropertyCard} from "../../../../shared/ui/views/PropertyCard";
-import SideMenuNavItem from "../../../assets/views/SideMenu/SideMenuNavItem";
-import IconProperty from "../../../assets/views/SideMenu/icons/IconProperty";
-import IconCoins from "../../../assets/views/SideMenu/icons/IconCoins";
-import IconGift from "../../../assets/views/SideMenu/icons/IconGift";
-import IconHistory from "../../../assets/views/SideMenu/icons/IconHistory";
-import SideMenuDivider from "../../../assets/views/SideMenu/SideMenuDivider";
-import IconSettings from "../../../assets/views/SideMenu/icons/IconSettings";
-import IconNotification from "../../../assets/views/SideMenu/icons/IconNotification";
-import SideMenu from "../../../assets/views/SideMenu";
 import {Button} from "../../../../shared/ui/views/Button";
 import {ArrowIcon} from "../../views/svg/ArrowIcon";
 import {DetailsTable} from "../../views/DetailsTable";
-import {paths} from "../../../../../pkg/paths";
 
 export const AccountController = () => {
   const doLoadMyRewards = useSetAtom(accountModel.$doLoadMyRewards);

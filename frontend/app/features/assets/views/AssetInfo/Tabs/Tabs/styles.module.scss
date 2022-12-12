@@ -24,7 +24,7 @@
     margin-right: 0;
   }
 }
-@media screen and (max-width: 480px) {
+@media (max-width: 480px) {
   .detailsIcons,.tabs{
     overflow-x: scroll;
     overflow-y: hidden;

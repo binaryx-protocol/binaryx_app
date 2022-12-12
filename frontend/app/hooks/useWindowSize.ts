@@ -1,4 +1,5 @@
 import {useState, useEffect} from "react";
+import debounce from 'lodash.debounce'
 
 export enum ScreenSizes {
   xs = 480,
@@ -17,12 +18,12 @@ interface ScreenSizeInterface {
 export const useWindowSize = (): ScreenSizeInterface => {
   const [windowSize, setWindowSize] = useState(0);
   useEffect(() => {
-    function handleResize() {
+    const debounceResize = debounce(() => {
       setWindowSize(window.innerWidth);
-    }
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
+    }, 100);
+    window.addEventListener("resize", debounceResize);
+    debounceResize();
+    return () => window.removeEventListener("resize", debounceResize);
   }, []);
   return {
     xs: windowSize < ScreenSizes.xs,

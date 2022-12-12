@@ -14,7 +14,7 @@ import {useWindowSize} from "../../../hooks/useWindowSize";
 import {Tab} from "../views/AssetInfo/Tabs/Tab";
 import {TabContent} from "../views/AssetInfo/Tabs/TabContent";
 import {tokenAmountValidator} from "../models/tokenBuyValidator";
-
+import _ from 'lodash'
 export const AssetsDetailsController = (): JSX.Element => {
   const id = parseInt(useRouter().query.id as string);
   const $contractError = useAtomValue(assetDetailsModel.$contractError)
@@ -86,13 +86,20 @@ export const AssetsDetailsController = (): JSX.Element => {
   const tokenPrice = 50;
   const validateInvestInput = async (e: any) => {
     const amount = Number(e.target.value);
-    const res = await tokenAmountValidator.isAmountValid({amount}, investInfo.tokensLeft, balance, tokenPrice)
-    if (typeof res === 'string') {
-      setValidationInvestError(res);
+    const res = await tokenAmountValidator.isAmountValid({
+      amount,
+      tokensLeft: investInfo.tokensLeft,
+      userBalance:balance,
+      tokenPrice
+    })
+    if (res.errors.amount?.length) {
+      setValidationInvestError(res.errors.amount[0]);
     } else {
       setValidationInvestError('')
     }
   }
+
+
   return (
     xs ?
       <>

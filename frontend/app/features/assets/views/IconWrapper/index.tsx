@@ -7,7 +7,6 @@ type Props = {
 }
 export const IconWrapper = (props: Props) => {
   const {children, classname} = props
-  console.log(classname)
 
   return (
     <div className={clsx(s.root, classname)}>
