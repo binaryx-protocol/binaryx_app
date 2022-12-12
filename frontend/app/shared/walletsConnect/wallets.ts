@@ -1,5 +1,5 @@
-import metamaskIcon from '../../../public/svg/wallet/metamask.svg'
-import twtIcon from '../../../public/svg/wallet/twt.svg'
+import metamaskIcon from '../../../public/shared/wallet/metamask.svg'
+import twtIcon from '../../../public/shared/wallet/twt.svg'
 
 export enum ConnectorNames {
     MetaMask = 'metaMask',

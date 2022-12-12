@@ -1,0 +1,113 @@
+.propertyCard {
+  width: 50vw;
+  max-width: 840px;
+  background-color: var(--color--primary-bg);
+  padding: 8px;
+  border-radius: 12px;
+  max-height: 200px;
+  margin-bottom: 8px;
+  p {
+    margin: 0;
+  }
+}
+.grayBorder{
+  border: 1px solid var(--color--secondary-bg);
+}
+
+.purpleBorder{
+  border: 1px solid #6F4DC4;
+}
+.mainInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.propertyImage {
+  border-radius: 12px;
+}
+
+.propertyName {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.greyText {
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.purpleText {
+  font-weight: 700;
+  font-size: 16px;
+  color: #6F4DC4;
+}
+
+.upperText {
+  padding-bottom: 8px;
+}
+
+.arrowWrapper {
+  width: 32px;
+  height: 32px;
+  background-color: var(--color--secondary-bg);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.claimButton {
+  background-color: #6F4DC4;
+  width: 62px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.detailInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.separateLine {
+  width: 100%;
+  height: 1px;
+  margin: 8px;
+  background-color: var(--color--secondary-bg);
+  align-self: center;
+}
+
+.assetIDWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.assetID {
+  display: flex;
+}
+
+.assetIDText {
+  margin-left: 24px;
+}
+
+.viewTxButton {
+  width: 155px;
+  height: 32px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  color: #6F4DC4;
+  background-color: rgba(111, 77, 196, 0.12);
+}
+
+.underlineText {
+  text-decoration: underline;
+}

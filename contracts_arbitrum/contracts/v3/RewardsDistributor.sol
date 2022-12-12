@@ -8,6 +8,32 @@ import "./interfaces/IAddressesProvider.sol";
 
 contract RewardsDistributor is IRewardsDistributor {
 
+  uint256 private constant COMMISSION_PRECISION = 10000; // 100%
+
+  struct Commission {
+    address companyAddress;
+    address assetReserveAddress;
+    uint256 companyCommission; // 1000 = 10% | 100 = 1% | 10 = 0.1%
+    uint256 assetReserveCommission; // 1000 = 10% | 100 = 1% | 10 = 0.1%
+  }
+
+  struct UserInfo {
+    uint256 amount;
+    uint256 rewardDebt;
+    uint256 baseClaimable;
+    uint256 lastEmissionPoint;
+  }
+
+  struct PoolInfo {
+    uint256 totalSupply;
+    uint256 decimals;
+    uint256 lastRewardTime; // Last second that reward distribution occurs.
+    uint256 accRewardPerShare; // Accumulated rewards per share, times 1e12.
+    uint256 currentEmissionPoint;
+    bool isInitialized;
+    Commission commission;
+  }
+
   modifier onlyOwner() {
     require(msg.sender == addressesProvider.getRewardsDistributorAdmin(), "RewardsDistributor: caller is not the RewardsDistributorAdmin");
     _;
@@ -30,6 +56,15 @@ contract RewardsDistributor is IRewardsDistributor {
 
   // user => receiver
   mapping(address => address) public claimReceiver;
+
+  event BalanceUpdated(address indexed asset, address indexed user, uint256 balance);
+  event Claimed(address indexed user, uint256 amount);
+  event PoolAdded(address indexed asset, uint256 totalSupply);
+  event PoolInitialized(address indexed asset);
+  event PaidRent(address indexed user, address indexed asset, uint256 amount, uint128 startTime, uint128 endTime);
+  event CompanyPaid(address indexed asset, uint256 amount);
+  event AssetReservePaid(address indexed asset, uint256 amount);
+
 
   constructor(IERC20 _rewardToken, IAddressesProvider _addressesProvider) {
     require(address(_addressesProvider) != address(0), "RewardsDistributor: addresses provider is the zero address");
@@ -108,7 +143,13 @@ contract RewardsDistributor is IRewardsDistributor {
     accRewardPerShare : 0,
     currentEmissionPoint : 0,
     isInitialized : false,
-    decimals : 10 ** decimals
+    decimals : 10 ** decimals,
+    commission : Commission({
+    companyAddress : address(0),
+    assetReserveAddress : address(0),
+    companyCommission : 0,
+    assetReserveCommission : 0
+    })
     });
     emit PoolAdded(_token, _totalSupply);
   }
@@ -126,9 +167,19 @@ contract RewardsDistributor is IRewardsDistributor {
     _updatePool(_token);
   }
 
-  function initializePool(address _token) external override onlyOwner {
-    require(!poolInfo[_token].isInitialized);
+  function initializePool(address _token, address companyAddress, address assetReserveAddress, uint256 companyCommission, uint256 assetReserveCommission) external override onlyOwner {
+    require(!poolInfo[_token].isInitialized, "Pool already initialized");
+    require(emissionSchedule[_token].length > 0, "Emission schedule not set");
+    require(companyAddress != address(0), "Company address not set");
+    require(assetReserveAddress != address(0), "Asset reserve address not set");
     poolInfo[_token].isInitialized = true;
+    poolInfo[_token].commission = Commission({
+    companyAddress : companyAddress,
+    assetReserveAddress : assetReserveAddress,
+    companyCommission : companyCommission,
+    assetReserveCommission : assetReserveCommission
+    });
+
     emit PoolInitialized(_token);
   }
 
@@ -210,9 +261,17 @@ contract RewardsDistributor is IRewardsDistributor {
   }
 
   function payForRent(address token, uint256 amount, uint128 startTime, uint128 endTime) external override {
+    require(poolInfo[token].isInitialized, "Pool not initialized");
     require(amount > 0, "Asset: amount must be greater than 0");
     require(startTime < endTime, "Asset: startTime must be less than endTime");
-    rewardToken.transferFrom(msg.sender, address(this), amount);
+    uint256 companyPart = amount * poolInfo[token].commission.companyCommission / COMMISSION_PRECISION;
+    uint256 assetReservePart = amount * poolInfo[token].commission.assetReserveCommission / COMMISSION_PRECISION;
+    uint256 userPart = amount - companyPart - assetReservePart;
+    rewardToken.transferFrom(msg.sender, poolInfo[token].commission.companyAddress, companyPart);
+    rewardToken.transferFrom(msg.sender, poolInfo[token].commission.assetReserveAddress, assetReservePart);
+    rewardToken.transferFrom(msg.sender, address(this), userPart);
     emit PaidRent(msg.sender, token, amount, startTime, endTime);
+    emit CompanyPaid(token, companyPart);
+    emit AssetReservePaid(token, assetReservePart);
   }
 }
