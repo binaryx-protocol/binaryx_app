@@ -10,6 +10,8 @@ require('solidity-coverage')
 require('dotenv').config();
 const { hardhatConfig } = require('arb-shared-dependencies');
 
+const DEFAULT_MNEMONIC = 'test test test test test test test test test test test junk'
+
 const accounts =
   process.env['PRIVATE_KEY']
     ? [process.env['PRIVATE_KEY']] : { mnemonic: process.env['MNEMONIC'] };
@@ -23,7 +25,7 @@ const config: HardhatUserConfig = {
         url: 'https://arb1.arbitrum.io/rpc',
       },
       accounts: {
-        mnemonic: process.env['MNEMONIC'],
+        mnemonic: process.env['MNEMONIC'] || DEFAULT_MNEMONIC,
         count: 10,
       },
       tags: ["test", "local"]
