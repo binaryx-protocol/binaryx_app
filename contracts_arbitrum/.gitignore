@@ -11,3 +11,4 @@ cache
 coverage.json
 coverage
 deploys/localhost
+yarn.lock
