@@ -1,0 +1,69 @@
+.iconsColor{
+    path{
+      stroke: #6F4DC4;
+    }
+}
+.tableDetails{
+  border-bottom: 1px dashed var(--color--border);
+  border-top: 1px dashed var(--color--border);
+  padding: 16px 0;
+  tbody{
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.trFirst{
+  border-right: 1px dashed var(--color--border);
+  padding-right: 10px;
+  td{
+    &:nth-child(odd){
+      padding-bottom: 16px;
+    }
+    &:nth-child(even){
+      padding-top: 16px;
+    }
+  }
+}
+.trSecond{
+  padding-left: 10px;
+  td{
+   &:nth-child(odd){
+     padding-bottom: 16px;
+   }
+    &:nth-child(even){
+      padding-top: 16px;
+    }
+  }
+}
+.horizontalBorder{
+  border-bottom: 1px dashed var(--color--border);
+}
+.accountDetails{
+  display: flex;
+  flex-direction: row;
+}
+.details_text_grey{
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.details_text_purple{
+  font-size: 16px;
+  font-weight: 700;
+  color: #6F4DC4;
+  margin: 0;
+  text-align: left;
+}
+.iconWrapper{
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(111, 77, 196, 0.12);
+  border-radius: 50%;
+  margin-right: 8px;
+}

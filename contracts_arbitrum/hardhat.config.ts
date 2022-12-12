@@ -1,47 +1,67 @@
-import { HardhatUserConfig } from "hardhat/config";
-import "hardhat-erc1820";
-import "hardhat-gas-reporter"
+import { HardhatUserConfig } from 'hardhat/config';
 
-require('@nomiclabs/hardhat-ethers')
-require("@nomiclabs/hardhat-web3");
+require('@nomiclabs/hardhat-ethers');
+require('@nomiclabs/hardhat-web3');
 require('@openzeppelin/hardhat-upgrades');
-require('dotenv').config()
-const { hardhatConfig } = require('arb-shared-dependencies')
+require('hardhat-gas-reporter');
+require('hardhat-deploy');
+require('solidity-coverage')
 
-const accounts = (
-  process.env['DEVNET_PRIVKEY']
-) ? [process.env['DEVNET_PRIVKEY']] : []
-const mnemonic = process.env.MNEMONIC
+require('dotenv').config();
+const { hardhatConfig } = require('arb-shared-dependencies');
+
+const accounts =
+  process.env['PRIVATE_KEY']
+    ? [process.env['PRIVATE_KEY']] : { mnemonic: process.env['MNEMONIC'] };
 
 const config: HardhatUserConfig = {
   ...hardhatConfig,
   networks: {
-    localhost: {
-      gasLimit: 1_000_000_000_000,
-      url: "http://127.0.0.1:8545",
+    hardhat: {
+      chainId: 421613,
+      forking: {
+        url: 'https://arb1.arbitrum.io/rpc',
+      },
+      accounts: {
+        mnemonic: process.env['MNEMONIC'],
+        count: 10,
+      },
+      tags: ["test", "local"]
     },
-    arbitrumMain: {
-      // gas: 2100000,
-      // gasLimit: 0,
+    localhost: {
+      url: 'http://127.0.0.1:8545',
+      saveDeployments: true,
+      live: false,
+      tags: ["staging"],
+    },
+    arbitrum: {
       url: 'https://arb1.arbitrum.io/rpc',
+      accounts,
+      tags: ["production"],
     },
     arbitrumGoerli: {
       url: 'https://goerli-rollup.arbitrum.io/rpc',
+      accounts,
+      tags: ["staging"]
     },
-    goerli: {
-      url: 'https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
-    },
-    hardhat: {
-      chainId: 42161,
-      accounts:{
-        mnemonic,
-        count: 5,
-      },
-      forking: {
-        url: 'https://arb1.arbitrum.io/rpc',
-      }
-    }
-  }
-}
+  },
+  namedAccounts: {
+    deployer: 0,
+    tokenOwner: 1,
+  },
+  paths: {
+    deploy: 'deploy',
+    deployments: 'deploys',
+    imports: 'imports'
+  },
+  gasReporter: {
+    currency: 'USD',
+    gasPrice: 14,
+    enabled: true,
+    showTimeSpent: true,
+    coinmarketcap: process.env['COINMARKETCAP_API_KEY'],
 
-module.exports = config
+  },
+};
+
+module.exports = config;

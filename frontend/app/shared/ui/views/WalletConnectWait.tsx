@@ -1,6 +1,6 @@
 import s from './WalletConnectWait.module.scss'
 import Image from "next/image";
-import hourglassIcon from '../../../../public/svg/wallet/Hourglass.svg'
+import hourglassIcon from '../../../../public/shared/wallet/Hourglass.svg'
 import {ConnectorNames, getWalletConfig} from "../../walletsConnect";
 import {useEffect} from "react";
 import {Connector, useAccount, useConnect} from "wagmi";
