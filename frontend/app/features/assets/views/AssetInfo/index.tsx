@@ -38,7 +38,7 @@ type AssetInfoProps = {
   location: { lat: number, lng: number };
   investAmount: number;
   setInvestAmount: (value: number) => void;
-  setValidationInvestError: (value: string) => void
+  validateInvestInput: (value: any) => void
   validationInvestError: string;
 }
 export const AssetInfo = ({
@@ -70,7 +70,7 @@ export const AssetInfo = ({
                             setActiveTab,
                             location,
                             activeTab,
-                            setValidationInvestError,
+                            validateInvestInput,
                             validationInvestError,
                             setInvestAmount,
                             investAmount
@@ -99,8 +99,7 @@ export const AssetInfo = ({
         {xs && <AssetInvest coc={coc} id={id} irr={irr} tokensTotalSupply={tokensTotalSupply} tokensLeft={tokensLeft}
                             balance={balance}
                             account={account} setInvestAmount={setInvestAmount} investAmount={investAmount}
-                            setValidationInvestError={setValidationInvestError}
-                            validationInvestError={validationInvestError}/>}
+                            validationInvestError={validationInvestError} validateInvestInput={validateInvestInput}/>}
       </div>
       <div className={s.carousel}>
         {xs ? <MobileCarousel images={images}/> :

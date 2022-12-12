@@ -20,7 +20,6 @@ export const Location = (props: Props) =>{
          defaultZoom={20}
        >
          <LocationPin
-           // @ts-ignore
            lat={location.lat}
            lng={location.lng}/>
        </GoogleMapReact>

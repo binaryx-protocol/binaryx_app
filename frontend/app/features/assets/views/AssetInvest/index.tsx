@@ -18,8 +18,8 @@ type InvestBlockProps = {
   account: string;
   investAmount: number;
   setInvestAmount: (value: number) => void;
-  setValidationInvestError: (value: string) => void
   validationInvestError: string;
+  validateInvestInput: (e: any) => void;
 }
 
 export const AssetInvest = ({
@@ -32,8 +32,8 @@ export const AssetInvest = ({
                               tokensTotalSupply,
                               investAmount,
                               setInvestAmount,
-                              setValidationInvestError,
-                              validationInvestError
+                              validationInvestError,
+                              validateInvestInput
                             }: InvestBlockProps) => {
   return (
     <div className={s.root}>
@@ -43,8 +43,8 @@ export const AssetInvest = ({
       </div>
       {account && <div className={s.investInput}>
         <InvestInput balance={balance} setInvestAmount={setInvestAmount}
-                     setValidationInvestError={setValidationInvestError} validationInvestError={validationInvestError}
-                     tokensLeft={tokensLeft} tokenPrice={50}/>
+                     validationInvestError={validationInvestError}
+         validateInput={validateInvestInput}/>
         <p className={s.total}>Total: <span className={s.balance}>{balance.toFixed(2)} USDT</span></p>
       </div>}
       <div className={s.infoBlock}>

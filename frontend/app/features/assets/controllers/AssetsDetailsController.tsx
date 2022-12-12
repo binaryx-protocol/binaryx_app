@@ -13,6 +13,7 @@ import {$connectedAccount} from "../../../core/models/walletModel";
 import {useWindowSize} from "../../../hooks/useWindowSize";
 import {Tab} from "../views/AssetInfo/Tabs/Tab";
 import {TabContent} from "../views/AssetInfo/Tabs/TabContent";
+import {tokenAmountValidator} from "../models/tokenBuyValidator";
 
 export const AssetsDetailsController = (): JSX.Element => {
   const id = parseInt(useRouter().query.id as string);
@@ -82,6 +83,16 @@ export const AssetsDetailsController = (): JSX.Element => {
       {type: 'string2', value: 'WiFi'}
     ],
   }
+  const tokenPrice = 50;
+  const validateInvestInput = async (e: any) => {
+    const amount = Number(e.target.value);
+    const res = await tokenAmountValidator.isAmountValid({amount}, investInfo.tokensLeft, balance, tokenPrice)
+    if (typeof res === 'string') {
+      setValidationInvestError(res);
+    } else {
+      setValidationInvestError('')
+    }
+  }
   return (
     xs ?
       <>
@@ -100,7 +111,7 @@ export const AssetsDetailsController = (): JSX.Element => {
                            currentSlide={currentSlide} isFullWidth={isFullWidth} setIsFullWidth={setIsFullWidth}
                            setCurrentSlide={setCurrentSlide} setActiveTab={setActiveTab} activeTab={activeTab}
                            location={location} validationInvestError={validationInvestError}
-                           setValidationInvestError={setValidationInvestError} investAmount={investAmount}
+                           validateInvestInput={validateInvestInput} investAmount={investAmount}
                            setInvestAmount={setInvestAmount}/>
               </div>
             </TabContent>
@@ -123,16 +134,15 @@ export const AssetsDetailsController = (): JSX.Element => {
                        account={account} isFullWidth={isFullWidth} setIsFullWidth={setIsFullWidth}
                        setCurrentSlide={setCurrentSlide} setActiveTab={setActiveTab} activeTab={activeTab}
                        location={location} validationInvestError={validationInvestError}
-                       setValidationInvestError={setValidationInvestError} investAmount={investAmount}
+                       validateInvestInput={validateInvestInput} investAmount={investAmount}
                        setInvestAmount={setInvestAmount}/>
           </div>
         </div>
         <div className={s.assetInvest}>
           <div className={clsx(s.assetInvestBuy, s.container)}>
             <AssetInvest {...investInfo} balance={balance} account={account}
-                         validationInvestError={validationInvestError}
-                         setValidationInvestError={setValidationInvestError} investAmount={investAmount}
-                         setInvestAmount={setInvestAmount}/>
+                         validationInvestError={validationInvestError} investAmount={investAmount}
+                         setInvestAmount={setInvestAmount} validateInvestInput={validateInvestInput}/>
           </div>
           <div className={clsx(s.assetInvestDetails, s.container)}>
             <AssetInvestDetails/>
