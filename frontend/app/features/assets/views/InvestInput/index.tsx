@@ -1,28 +1,34 @@
 import s from './styles.module.scss'
-import {useRef} from "react";
 import clsx from "clsx";
+import React from "react";
 
 type Props = {
-  balance: number;
   validationInvestError: string;
-  validateInput: (e: any) => void;
-  setInvestAmount: (value: number) => void;
+  validateInput: (value: string) => void;
+  investAmount: string;
+  setInvestAmount: (value: string) => void;
+  tokensLeft: number;
 }
 export const InvestInput = (props: Props) => {
-  const {balance, setInvestAmount, validationInvestError, validateInput} = props
-  const inputRef = useRef(null);
+  const {tokensLeft, setInvestAmount, validationInvestError, validateInput, investAmount} = props
   const setMax = () => {
-    // @ts-ignore
-    inputRef.current.value = balance
+    setInvestAmount(tokensLeft.toString());
   }
+  const onlyNumbers = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const regExp = /^[0-9\b]+$/;
+    if (e.target.value === '' || regExp.test(e.target.value)) {
+      setInvestAmount(e.target.value);
+    }
+  }
+
   return (
     <>
       <form className={clsx(s.inputWrapper, !!validationInvestError && s.inputInvalid)}>
-        <input placeholder={'Enter Amount'} className={s.input} ref={inputRef} onChange={e => {
-          validateInput(e)
-          setInvestAmount(Number(e.target.value))
+        <input placeholder={'Enter LP Token Amount'} value={investAmount} className={s.input} onChange={e => {
+          validateInput(investAmount)
+          onlyNumbers(e)
         }}
-               type={"number"}/>
+        />
         <p className={s.maxButton} onClick={setMax}>Max</p>
       </form>
       {!!validationInvestError && <p className={s.error}>{validationInvestError}</p>}

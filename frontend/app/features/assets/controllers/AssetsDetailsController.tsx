@@ -3,7 +3,7 @@ import {AssetInvest} from "../views/AssetInvest";
 import {AssetInfo} from "../views/AssetInfo";
 import * as assetDetailsModel from "../models/assetDetailsModel";
 import {useAtomValue, useSetAtom} from "jotai";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import {bnToInt} from "../../../utils/objectUtils";
 import clsx from "clsx";
@@ -30,7 +30,7 @@ export const AssetsDetailsController = (): JSX.Element => {
   const [isFullWidth, setIsFullWidth] = useState<boolean>(false);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [activeTab, setActiveTab] = useState("details");
-  const [investAmount, setInvestAmount] = useState(0)
+  const [investAmount, setInvestAmount] = useState<string>('')
   const [validationInvestError, setValidationInvestError] = useState<string>('')
   const location = {
     lat: 50.450001,
@@ -84,8 +84,8 @@ export const AssetsDetailsController = (): JSX.Element => {
     ],
   }
   const tokenPrice = 50;
-  const validateInvestInput = async (e: any) => {
-    const amount = Number(e.target.value);
+  const validateInvestInput = async (value: string): Promise<boolean> => {
+    const amount = Number(value);
     const res = await tokenAmountValidator.isAmountValid({
       amount,
       tokensLeft: investInfo.tokensLeft,
@@ -94,8 +94,10 @@ export const AssetsDetailsController = (): JSX.Element => {
     })
     if (res.errors.amount?.length) {
       setValidationInvestError(res.errors.amount[0]);
+      return res.isValid;
     } else {
       setValidationInvestError('')
+      return res.isValid;
     }
   }
 

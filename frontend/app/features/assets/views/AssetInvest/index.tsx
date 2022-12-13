@@ -4,9 +4,8 @@ import detailsIcon from '../../../../../public/svg/details.svg'
 import {ProgressBarText} from "../ProgressBar/ProgressBarText";
 import {Button} from "../../../../shared/ui/views/Button";
 import {InvestInput} from "../InvestInput";
-import {useState} from "react";
 import {paths} from "../../../../../pkg/paths";
-import Link from "next/link";
+import {useRouter} from "next/router";
 
 type InvestBlockProps = {
   tokensLeft: number,
@@ -16,10 +15,10 @@ type InvestBlockProps = {
   id: number,
   balance: number;
   account: string;
-  investAmount: number;
-  setInvestAmount: (value: number) => void;
+  investAmount: string;
+  setInvestAmount: (value: string) => void;
   validationInvestError: string;
-  validateInvestInput: (e: any) => void;
+  validateInvestInput: (value: string) => Promise<boolean>;
 }
 
 export const AssetInvest = ({
@@ -35,6 +34,13 @@ export const AssetInvest = ({
                               validationInvestError,
                               validateInvestInput
                             }: InvestBlockProps) => {
+  const router = useRouter();
+  const onTokenBuy = async() => {
+    const isValid = await validateInvestInput(investAmount);
+    if (isValid){
+     await router.push(paths.investAsset({id}))
+    }
+  }
   return (
     <div className={s.root}>
       <div className={s.tokenPrice}>
@@ -42,9 +48,9 @@ export const AssetInvest = ({
         <p className={s.tokenPrice_text}><span className={s.tokenPrice_value}>50</span> USDT</p>
       </div>
       {account && <div className={s.investInput}>
-        <InvestInput balance={balance} setInvestAmount={setInvestAmount}
+        <InvestInput tokensLeft={tokensLeft} setInvestAmount={setInvestAmount}
                      validationInvestError={validationInvestError}
-         validateInput={validateInvestInput}/>
+                     validateInput={validateInvestInput} investAmount={investAmount}/>
         <p className={s.total}>Total: <span className={s.balance}>{balance.toFixed(2)} USDT</span></p>
       </div>}
       <div className={s.infoBlock}>
@@ -64,12 +70,9 @@ export const AssetInvest = ({
         </div>
       </div>
       <ProgressBarText tokensLeft={tokensLeft} tokensTotal={tokensTotalSupply}/>
-      <Link href={paths.investAsset({id})}>
-        <Button className={s.buyTokensButton} disabled={!investAmount || !!validationInvestError}
-                onClick={() => paths.investAsset({id})}>
+        <Button className={s.buyTokensButton} disabled={!investAmount || !!validationInvestError} onClick={onTokenBuy}>
           Buy Tokens
         </Button>
-      </Link>
     </div>
   );
 };

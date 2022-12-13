@@ -35,9 +35,9 @@ type AssetInfoProps = {
   activeTab: string;
   setActiveTab: (value: string) => void;
   location: { lat: number, lng: number };
-  investAmount: number;
-  setInvestAmount: (value: number) => void;
-  validateInvestInput: (value: any) => void
+  investAmount: string;
+  setInvestAmount: (value: string) => void;
+  validateInvestInput: (value: string) => Promise<boolean>
   validationInvestError: string;
 }
 export const AssetInfo = ({

@@ -7,12 +7,12 @@ const ev = new ElegantValidator(defaultValidators, defaultMessagesEn)
 
 const isValidAmount = (formData: any) =>{
   const {amount, tokensLeft, userBalance, tokenPrice} = formData.resource
-  const tokenToBuy = tokenPrice * tokensLeft;
-  if(amount > userBalance){
+  const tokenToBuyInUsd = tokenPrice * Number(amount);
+  if(tokenToBuyInUsd > userBalance){
     return 'Not enough balance!'
   }
-  if(amount > tokenToBuy){
-    return `Tokens left: ${tokensLeft}. You want to buy: ${amount / tokenPrice}`
+  if(amount > tokensLeft){
+    return `Tokens left: ${tokensLeft}. You want to buy: ${amount}`
   }
 }
 
