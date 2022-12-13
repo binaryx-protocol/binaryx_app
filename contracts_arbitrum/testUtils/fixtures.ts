@@ -16,68 +16,84 @@ export const defaultAssetAttrs = (): AssetInput => ({
 });
 
 export const addressesProviderFixture = async () => {
-  const addressesProvider = await hre.ethers.getContractFactory('AddressesProvider');
-  return await addressesProvider.deploy();
-}
-
-export const rewardsDistributorWithPoolFixture = async () => {
-  const [owner, alice, bob, carol] = await hre.ethers.getSigners();
-
-  const UsdtToken = await hre.ethers.getContractFactory('UsdtfToken');
-  const usdtToken = await UsdtToken.deploy(ethers.constants.WeiPerEther.mul(1000));
-
-  const RewardDistributor = await hre.ethers.getContractFactory('RewardsDistributor');
-  const rewardDistributor = await RewardDistributor.deploy(usdtToken.address);
-  usdtToken.transfer(rewardDistributor.address, ethers.utils.parseUnits('1000', 6));
-
-  const Asset = await hre.ethers.getContractFactory('Asset');
-  const asset = await Asset.deploy();
-  await asset.setRewardsDistributor(rewardDistributor.address);
-
-  await rewardDistributor.addPool(asset.address, 18, ethers.utils.parseUnits('175', 6));
-
-  return { rewardDistributor, usdtToken, asset, owner, alice, bob, carol };
+  const AddressesProvider = await hre.ethers.getContractFactory('AddressesProvider');
+  const addressesProvider = await AddressesProvider.deploy();
+  return { addressesProvider };
 };
 
-export const rewardsDistributorWithUSDTAndAssetFixture = async () => {
-  const [owner, alice, bob, carol] = await hre.ethers.getSigners();
+export const assetPriceOracleFixture = async () => {
+  const [owner] = await hre.ethers.getSigners();
+  const { addressesProvider } = await addressesProviderFixture();
+  const AssetPriceOracle = await hre.ethers.getContractFactory('AssetPriceOracle');
+  const assetPriceOracle = await AssetPriceOracle.deploy(addressesProvider.address);
+  addressesProvider.setAssetPriceOracle(assetPriceOracle.address);
+  addressesProvider.setAssetPriceOracleAdmin(owner.address);
+  return { addressesProvider, assetPriceOracle };
 
-  const UsdtToken = await hre.ethers.getContractFactory('UsdtfToken');
-  const usdtToken = await UsdtToken.deploy(ethers.constants.WeiPerEther.mul(1000));
-
-  const RewardDistributor = await hre.ethers.getContractFactory('RewardsDistributor');
-  const rewardDistributor = await RewardDistributor.deploy(usdtToken.address);
-
-  const Asset = await hre.ethers.getContractFactory('Asset');
-  const asset = await Asset.deploy();
-  await asset.setRewardsDistributor(rewardDistributor.address);
-
-  await rewardDistributor.addPool(asset.address, 18, ethers.utils.parseUnits('175', 6));
-
-  return { rewardDistributor, usdtToken, asset, owner, alice, bob, carol };
 };
 
 export const rewardsDistributorFixture = async () => {
   const [owner, alice, bob, carol] = await hre.ethers.getSigners();
-  addressesProviderFixture();
+  const { addressesProvider, assetPriceOracle } = await assetPriceOracleFixture();
   const UsdtToken = await hre.ethers.getContractFactory('UsdtfToken');
   const usdtToken = await UsdtToken.deploy(ethers.constants.WeiPerEther.mul(1000));
 
   const RewardDistributor = await hre.ethers.getContractFactory('RewardsDistributor');
-  const rewardDistributor = await RewardDistributor.deploy(usdtToken.address);
+  const rewardDistributor = await RewardDistributor.deploy(usdtToken.address, addressesProvider.address);
   usdtToken.transfer(rewardDistributor.address, ethers.utils.parseUnits('1000', 6));
-  return { rewardDistributor, usdtToken, owner, alice, bob, carol };
+  await addressesProvider.setRewardsDistributor(rewardDistributor.address);
+  await addressesProvider.setRewardsDistributorAdmin(owner.address);
+  return {
+    rewardDistributor,
+    usdtToken,
+    owner,
+    alice,
+    bob,
+    carol,
+    addressesProvider,
+    assetPriceOracle,
+  };
 };
 
 export const assetFixture = async () => {
   const [owner, alice, bob, carol] = await hre.ethers.getSigners();
-
-  const UsdtToken = await hre.ethers.getContractFactory('UsdtfToken');
-  const usdtToken = await UsdtToken.deploy(ethers.utils.parseUnits("10000", 6));
+  const {
+    rewardDistributor,
+    addressesProvider,
+    usdtToken,
+    assetPriceOracle,
+  } = await rewardsDistributorFixture();
 
   const Asset = await hre.ethers.getContractFactory('Asset');
-  const asset = await Asset.deploy(ethers.constants.WeiPerEther.mul(175), usdtToken.address);
-  return { asset, usdtToken, owner, alice, bob, carol };
+  const asset = await Asset.deploy(addressesProvider.address, 'Asset', 'AST', ethers.constants.WeiPerEther.mul(175), usdtToken.address);
+  assetPriceOracle.addAsset(asset.address, ethers.utils.parseUnits('50', 6));
+  return {
+    asset,
+    usdtToken,
+    rewardDistributor,
+    addressesProvider,
+    assetPriceOracle,
+    owner,
+    alice,
+    bob,
+    carol,
+  };
+};
+
+export const rewardsDistributorWithPoolFixture = async () => {
+  const [owner, alice, bob, carol] = await hre.ethers.getSigners();
+  const { rewardDistributor, asset, usdtToken, addressesProvider } = await assetFixture();
+  const maxTotalSupply = await asset.maxTotalSupply();
+  await rewardDistributor.addPool(asset.address, 18, maxTotalSupply);
+  return { rewardDistributor, usdtToken, asset, addressesProvider, owner, alice, bob, carol };
+};
+
+export const rewardsDistributorWithUSDTAndAssetFixture = async () => {
+  const [owner, alice, bob, carol] = await hre.ethers.getSigners();
+  const { rewardDistributor, asset, usdtToken } = await rewardsDistributorWithPoolFixture();
+  await usdtToken.approve(asset.address, ethers.constants.MaxUint256);
+  await asset.invest(owner.address, ethers.utils.parseEther('175'));
+  return { rewardDistributor, usdtToken, asset, owner, alice, bob, carol };
 };
 
 // export const controllerFixture = async () => {

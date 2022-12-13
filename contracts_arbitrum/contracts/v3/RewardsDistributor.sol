@@ -82,7 +82,7 @@ contract RewardsDistributor is IRewardsDistributor {
         uint256 startTime = emissionPoint.startTime > pool.lastRewardTime ? emissionPoint.startTime : pool.lastRewardTime;
         uint256 duration = block.timestamp - startTime;
         uint256 reward = duration * emissionPoint.rewardsPerSecond;
-        pool.accRewardPerShare = pool.accRewardPerShare + (reward * 1e12 / pool.totalSupply);
+        pool.accRewardPerShare = pool.accRewardPerShare + (reward * 1e12 / (pool.totalSupply * rewardTokenDecimals / pool.decimals));
         pool.lastRewardTime = block.timestamp;
       } else {
         for (uint256 j = firstEmissionPoint; j <= lastEmissionPoint; j++) {
@@ -91,7 +91,7 @@ contract RewardsDistributor is IRewardsDistributor {
           uint256 endTime = emissionPoint.endTime > block.timestamp ? block.timestamp : emissionPoint.endTime;
           uint256 duration = endTime - startTime;
           uint256 reward = duration * emissionPoint.rewardsPerSecond;
-          pool.accRewardPerShare = pool.accRewardPerShare + (reward * 1e12 / pool.totalSupply);
+          pool.accRewardPerShare = pool.accRewardPerShare + (reward * 1e12 / (pool.totalSupply * rewardTokenDecimals / pool.decimals));
           pool.lastRewardTime = endTime;
         }
       }
@@ -162,7 +162,7 @@ contract RewardsDistributor is IRewardsDistributor {
       uint256 startTime = emissionPoint.startTime > pool.lastRewardTime ? emissionPoint.startTime : pool.lastRewardTime;
       uint256 duration = block.timestamp - startTime;
       uint256 reward = duration * emissionPoint.rewardsPerSecond;
-      pool.accRewardPerShare = pool.accRewardPerShare + (reward * 1e12 / pool.totalSupply);
+      pool.accRewardPerShare = pool.accRewardPerShare + (reward * 1e12 / (pool.totalSupply * rewardTokenDecimals / pool.decimals));
       pool.lastRewardTime = block.timestamp;
     }
     else {
@@ -172,7 +172,7 @@ contract RewardsDistributor is IRewardsDistributor {
         uint256 startTime = emissionPoint.startTime > pool.lastRewardTime ? emissionPoint.startTime : pool.lastRewardTime;
         uint256 duration = endTime - startTime;
         uint256 reward = duration * emissionPoint.rewardsPerSecond;
-        pool.accRewardPerShare = pool.accRewardPerShare + (reward * 1e12 / pool.totalSupply);
+        pool.accRewardPerShare = pool.accRewardPerShare + (reward * 1e12 / (pool.totalSupply * rewardTokenDecimals / pool.decimals));
         pool.lastRewardTime = emissionPoint.endTime;
       }
       pool.currentEmissionPoint = lastEmissionPoint;

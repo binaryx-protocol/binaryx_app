@@ -27,7 +27,7 @@ const mockData = {
       timeElapsed: 38,
       result: ethers.utils.parseUnits('52.571428', 6),
     },
-    totalSupply: ethers.utils.parseUnits('175', 6),
+    totalSupply: ethers.utils.parseUnits('175', 18),
     emissionPoints: {
       interval: 10,
       amount: 4,
@@ -44,7 +44,7 @@ const mockData = {
       timeElapsed: 9,
       result: ethers.utils.parseUnits('5.142857', 6),
     },
-    totalSupply: ethers.utils.parseUnits('175', 6),
+    totalSupply: ethers.utils.parseUnits('175', 18),
     emissionPoints: {
       interval: 100,
       amount: 4,
@@ -57,21 +57,23 @@ const commissionData = {
   assetReserveAddress: '0x0000000000000000000000000000000000000002',
   companyCommission: 200, // 1000 = 10% | 100 = 1% | 10 = 0.1%
   assetReserveCommission: 200, // 1000 = 10% | 100 = 1% | 10 = 0.1%
-}
+};
 
 describe('RewardDistributor', function() {
   it('Deploy RewardDistributor', async function() {
-    const { rewardDistributor, usdtToken, owner } = await loadFixture(rewardsDistributorFixture);
+    const {
+      rewardDistributor,
+      usdtToken,
+      addressesProvider,
+    } = await loadFixture(rewardsDistributorFixture);
     assert.equal(await rewardDistributor.poolLength(), 0);
     assert.equal(await rewardDistributor.rewardToken(), usdtToken.address);
-    assert.equal(await rewardDistributor.owner(), owner.address);
+    assert.equal(await rewardDistributor.addressesProvider(), addressesProvider.address);
 
   });
   it('Add pool', async function() {
     const totalSupply = mockData.rewardDataOne.totalSupply;
-    const { rewardDistributor } = await loadFixture(rewardsDistributorFixture);
-    const { asset } = await loadFixture(assetFixture);
-    asset.setRewardsDistributor(rewardDistributor.address);
+    const { asset, rewardDistributor } = await loadFixture(assetFixture);
     await rewardDistributor.addPool(asset.address, 18, totalSupply);
     const poolInfo = await rewardDistributor.poolInfo(asset.address);
     assert.equal(poolInfo.totalSupply.toString(), totalSupply.toString());
@@ -134,15 +136,14 @@ describe('RewardDistributor', function() {
     await rewardDistributor.initializePool(asset.address, commissionData.companyAddress, commissionData.assetReserveAddress, commissionData.companyCommission, commissionData.assetReserveCommission);
     await mine(34);
     const rewardDistributorBalanceBefore = await usdtToken.balanceOf(rewardDistributor.address);
-    assert.equal(rewardDistributorBalanceBefore.toString(), '0');
+    assert.equal(rewardDistributorBalanceBefore.toString(), '1000000000');
     await usdtToken.connect(owner).approve(rewardDistributor.address, ethers.utils.parseUnits('1000', 6));
     await rewardDistributor.connect(owner).payForRent(asset.address, ethers.utils.parseUnits('1000', 6), emissionPoints.startTimes[0], emissionPoints.endTimes[0]);
     const rewardDistributorBalanceAfter = await usdtToken.balanceOf(rewardDistributor.address);
-    assert.equal(rewardDistributorBalanceAfter.toString(), ethers.utils.parseUnits('960', 6).toString());
+    assert.equal(rewardDistributorBalanceAfter.toString(), ethers.utils.parseUnits('1960', 6).toString());
     await rewardDistributor.claim(alice.address, [asset.address]);
     await rewardDistributor.claim(bob.address, [asset.address]);
     await rewardDistributor.claim(carol.address, [asset.address]);
-
 
     //Get Pool Info
     const poolInfo = await rewardDistributor.poolInfo(asset.address);
@@ -153,13 +154,12 @@ describe('RewardDistributor', function() {
     const carolBalance = await usdtToken.balanceOf(carol.address);
 
     const rewardDistributorBalance = await usdtToken.balanceOf(rewardDistributor.address);
-
-    assert.equal(poolInfo.totalSupply.toString(), mockData.rewardDataOne.totalSupply);
+    assert.equal(poolInfo.totalSupply.toString(), mockData.rewardDataOne.totalSupply.toString());
     assert.equal(poolInfo.currentEmissionPoint.toString(), '3');
     assert.equal(aliceBalance.toString(), mockData.rewardDataOne.alice.result.toString());
     assert.equal(bobBalance.toString(), mockData.rewardDataOne.bob.result.toString());
     assert.equal(carolBalance.toString(), mockData.rewardDataOne.carol.result.toString());
-    assert.equal(rewardDistributorBalance.toString(), '868000001');
+    assert.equal(rewardDistributorBalance.toString(), '1868000001');
   });
   it('Claim reward flow (3 users) with more then 1 emission point', async function() {
     const {
@@ -169,7 +169,7 @@ describe('RewardDistributor', function() {
       alice,
       bob,
       carol,
-    } = await loadFixture(rewardsDistributorWithPoolFixture);
+    } = await loadFixture(rewardsDistributorWithUSDTAndAssetFixture);
     await asset.transfer(alice.address, mockData.rewardDataOne.alice.amount);
     await asset.transfer(bob.address, mockData.rewardDataOne.bob.amount);
     await asset.transfer(carol.address, mockData.rewardDataOne.carol.amount);
@@ -208,7 +208,7 @@ describe('RewardDistributor', function() {
       usdtToken,
       alice,
       bob,
-    } = await loadFixture(rewardsDistributorWithPoolFixture);
+    } = await loadFixture(rewardsDistributorWithUSDTAndAssetFixture);
     await asset.transfer(alice.address, mockData.rewardDataTwo.alice.amount);
     await asset.transfer(bob.address, mockData.rewardDataTwo.bob.amount);
     let tempTime = await time.latest() + 1;
@@ -245,7 +245,7 @@ describe('RewardDistributor', function() {
       alice,
       bob,
       carol,
-    } = await loadFixture(rewardsDistributorWithPoolFixture);
+    } = await loadFixture(rewardsDistributorWithUSDTAndAssetFixture);
     await asset.transfer(alice.address, mockData.rewardDataOne.alice.amount);
     await asset.transfer(bob.address, mockData.rewardDataOne.bob.amount);
     await asset.transfer(carol.address, mockData.rewardDataOne.carol.amount);
@@ -268,7 +268,7 @@ describe('RewardDistributor', function() {
       asset,
       alice,
       bob,
-    } = await loadFixture(rewardsDistributorWithPoolFixture);
+    } = await loadFixture(rewardsDistributorWithUSDTAndAssetFixture);
     await asset.transfer(alice.address, mockData.rewardDataTwo.alice.amount);
     await asset.transfer(bob.address, mockData.rewardDataTwo.bob.amount);
     let tempTime = await time.latest() + 1;

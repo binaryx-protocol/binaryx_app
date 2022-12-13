@@ -20,7 +20,7 @@ const config: HardhatUserConfig = {
     hardhat: {
       chainId: 421613,
       forking: {
-        url: 'https://goerli-rollup.arbitrum.io/rpc',
+        url: 'https://arb-goerli.g.alchemy.com/v2/i7XMrv80YbBZuJBt6u0I7zaAmY9gzERx',
       },
       accounts: {
         mnemonic: process.env['MNEMONIC'],
