@@ -22,16 +22,6 @@ export const AdminAssetsListController = () => {
     <div className={s.root}>
       <Container>
         <div className={s.contentWrapper}>
-          <SideMenu className={s.pageMenu}>
-            <SideMenuNavItem icon={<IconProperty/>} title="Asset Overview" url="/account-v2"/>
-            <SideMenuNavItem icon={<IconCoins/>} title="Marketplace" url="/assets-v2"/>
-            <SideMenuNavItem icon={<IconGift/>} title="Refer and Earn" url="#"/>
-            <SideMenuNavItem icon={<IconHistory/>} title="Transaction" url="#"/>
-            <SideMenuDivider/>
-            <SideMenuNavItem icon={<IconSettings/>} title="Settings" url="#"/>
-            <SideMenuNavItem icon={<IconNotification/>} title="Notifications" url="#"/>
-          </SideMenu>
-
           <div className={s.pageContent}>
             <div className={s.crudTopNav}>
               <h1>

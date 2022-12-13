@@ -41,7 +41,7 @@ const $doCreateAsset = atom(null, async (get, set, form: UiNewAssetForm) => {
   // @ts-ignore
   await manager?.listAsset(...Object.values(formValues));
   alert("You will see your asset soon. Please, refresh the page.");
-  router.push(paths.listAssets());
+  await router.push(paths.listAssets());
 })
 
 export const $onFormChange = atom(null, (get, set, args: UiNewAssetFormChangeArgs) => {

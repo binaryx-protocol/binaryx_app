@@ -1,0 +1,17 @@
+.root{
+  p{
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+  }
+}
+.tokens{
+  margin: 16px 0 8px 0;
+}
+.tokensLeft{
+  display: flex;
+  justify-content: space-between;
+}
+.collected{
+  margin: 8px 0 24px 0;
+}
