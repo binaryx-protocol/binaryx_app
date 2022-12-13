@@ -1,0 +1,13 @@
+.root{
+  display: flex;
+  justify-content: center;
+}
+.welcomeScreen{
+  border: 1px solid red;
+  //var(--color--border);
+  background-color: var(--color--primary-bg);
+  height: 322px;
+  width: 50vw;
+  border-radius: 24px;
+}
+

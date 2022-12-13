@@ -1,6 +1,15 @@
 import {UiForm} from "../../../pkg/formType";
 import {BigNumber} from "ethers";
 
+export enum AssetListingStatus {
+  welcome,
+  generalInfo,
+  legalInfo,
+  investmentAndReturn,
+  RentalAndManagement,
+  lastScreen
+}
+
 export enum AssetStatuses {
   'upcoming' = 1,
   'active'= 2,

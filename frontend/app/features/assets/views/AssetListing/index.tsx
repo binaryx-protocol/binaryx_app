@@ -1,9 +1,11 @@
-import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
-
+import {WelcomeScreen} from "./WelcomeScreen";
+import s from './styles.module.scss'
 export const AssetListing = () =>{
   return(
-    <div>
-1
+    <div className={s.root}>
+      <div className={s.welcomeScreen}>
+        <WelcomeScreen />
+      </div>
     </div>
   )
 }
