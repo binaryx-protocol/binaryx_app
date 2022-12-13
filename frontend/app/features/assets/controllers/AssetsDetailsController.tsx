@@ -14,7 +14,7 @@ import {useWindowSize} from "../../../hooks/useWindowSize";
 import {Tab} from "../views/AssetInfo/Tabs/Tab";
 import {TabContent} from "../views/AssetInfo/Tabs/TabContent";
 import {tokenAmountValidator} from "../models/tokenBuyValidator";
-import _ from 'lodash'
+
 export const AssetsDetailsController = (): JSX.Element => {
   const id = parseInt(useRouter().query.id as string);
   const $contractError = useAtomValue(assetDetailsModel.$contractError)

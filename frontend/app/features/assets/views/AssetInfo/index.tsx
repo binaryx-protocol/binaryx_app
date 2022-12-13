@@ -1,5 +1,4 @@
 import s from './styles.module.scss';
-import ellipseIcon from '../../../../../public/feature/assets/ellipse .svg'
 import Image from "next/image";
 import {DesktopCarousel} from "../Gallery/DesktopCarousel";
 import {Tabs} from "./Tabs/Tabs";
@@ -90,7 +89,7 @@ export const AssetInfo = ({
         <div className={s.blockchainAddress}>
           <p className={s.propertyAddress_text}>Property Address</p>
           <div className={s.blockchainAddress_address}>
-            <Image src={ellipseIcon} alt={'ellipseIcon'} className={s.ellipseIcon}/>
+            <Image src={'/feature/assets/ellipse.svg'} alt={'ellipseIcon'} className={s.ellipseIcon} width={15} height={15}/>
             <p>0x3820...74dc2</p>
           </div>
         </div>

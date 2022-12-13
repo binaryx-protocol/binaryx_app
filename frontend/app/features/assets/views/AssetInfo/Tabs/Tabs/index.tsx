@@ -1,15 +1,9 @@
-import {useState} from "react";
 import {Tab} from "../Tab";
 import {TabContent} from "../TabContent";
 import s from './styles.module.scss'
 import {Location} from "../../../Location";
 import {IconWrapper} from "../../../IconWrapper";
 import Image from "next/image";
-import bedAIcon from "../../../../../../../public/feature/assets/bed.svg";
-import bathIcon from "../../../../../../../public/feature/assets/bath.svg";
-import peopleIcon from "../../../../../../../public/feature/assets/people.svg";
-import squareIcon from "../../../../../../../public/feature/assets/square.svg";
-import houseIcon from "../../../../../../../public/feature/assets/house.svg";
 
 type Props = {
   activeTab: string;
@@ -32,23 +26,23 @@ export const Tabs = (props: Props) => {
         <TabContent id="details" activeTab={activeTab}>
           <div className={s.detailsIcons}>
             <IconWrapper classname={s.detailsIconElem}>
-              <Image src={bedAIcon} alt={'bedAIcon'}/>
+              <Image src={'/feature/assets/bed.svg'} alt={'bedAIcon'} width={25} height={25}/>
               <p>3 Bed</p>
             </IconWrapper>
             <IconWrapper classname={s.detailsIconElem}>
-              <Image src={bathIcon} alt={'bathIcon'}/>
+              <Image src={'/feature/assets/bath.svg'} alt={'bathIcon'} width={25} height={25}/>
               <p>2 Bath</p>
             </IconWrapper>
             <IconWrapper classname={s.detailsIconElem}>
-              <Image src={squareIcon} alt={'squareIcon'}/>
+              <Image src={'/feature/assets/square.svg'} alt={'squareIcon'} width={25} height={25}/>
               <p>1726 sqft</p>
             </IconWrapper>
             <IconWrapper classname={s.detailsIconElem}>
-              <Image src={houseIcon} alt={'houseIcon'}/>
+              <Image src={'/feature/assets/house.svg'} alt={'houseIcon'} width={25} height={25}/>
               <p>Single Family</p>
             </IconWrapper>
             <IconWrapper classname={s.detailsIconElem}>
-              <Image src={peopleIcon} alt={'peopleIcon'}/>
+              <Image src={'/feature/assets/people.svg'} alt={'peopleIcon'} width={25} height={25}/>
               <p>Occupied</p>
             </IconWrapper>
           </div>
