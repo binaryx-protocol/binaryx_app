@@ -1,13 +1,59 @@
-.root{
+.root {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
 }
-.welcomeScreen{
-  border: 1px solid red;
-  //var(--color--border);
+.navigation{
+  margin: 24px 34px;
+}
+.backButton {
+  display: flex;
+  align-items: center;
+}
+.backText{
+  font-size: 24px;
+  font-weight: 700;
+  padding-left: 16px;
+}
+
+.backButtonIconWrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color--secondary-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover{
+    cursor: pointer;
+  }
+}
+
+.backButtonIcon {
+  transform: rotate(90deg);
+}
+
+.infoScreen {
+  align-self: center;
+  border: 1px solid var(--color--border);
   background-color: var(--color--primary-bg);
   height: 322px;
   width: 50vw;
   border-radius: 24px;
 }
 
+.navigationText {
+  font-size: 12px;
+}
+
+.navigationDisabled {
+  color: var(--color-text-secondary);
+  font-weight: 700;
+}
+
+.navigationActive {
+  font-weight: 700;
+}
+.mainForms{
+  display: flex;
+  justify-content: center;
+}

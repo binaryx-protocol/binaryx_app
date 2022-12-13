@@ -1,0 +1,45 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 14px;
+  p {
+    margin: 0;
+  }
+}
+
+.applyToSell {
+  font-size: 16px;
+  font-weight: 700;
+  padding: 24px 0 4px;
+}
+
+.cashOffer {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+.duration{
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  margin-top: 24px;
+  p{
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    padding-left: 10px;
+  }
+}
+.continueButton{
+  display: flex;
+  align-items: center;
+  background-color: #6F4DC4;
+}
+.arrowIcon{
+  transform: rotate(270deg);
+  margin-left: 14px;
+  path{
+    stroke: var(--color--primary-bg);
+  }
+}

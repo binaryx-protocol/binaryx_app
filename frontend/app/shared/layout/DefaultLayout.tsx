@@ -37,7 +37,9 @@ export const DefaultLayout = ({ children }: { children: any }) => {
           </div>
           : null
       }
-      {children}
+     <div className={s.content}>
+       {children}
+     </div>
       </div>
       <div className={s.footer}>
         <p>© 2022 Binaryx</p>

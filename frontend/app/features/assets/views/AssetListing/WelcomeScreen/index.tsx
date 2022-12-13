@@ -2,26 +2,33 @@ import s from './styles.module.scss'
 import Image from "next/image";
 import {Button} from "../../../../../shared/ui/views/Button";
 import { ArrowIcon } from 'features/account/views/svg/ArrowIcon';
+import {ArrowIconWithoutLine} from "../../ArrowIconWithoutLine";
+import {AssetListingStatus} from "../../../types";
 
-export const WelcomeScreen = () =>{
+type Props = {
+  onStatusChange: (value: AssetListingStatus) => void;
+}
+
+export const WelcomeScreen = (props: Props) =>{
+  const {onStatusChange} = props
   return(
     <div className={s.root}>
-    <Image src={'/feature/assets/paper.svg'} alt={'paper'} width={70} height={70}/>
-      <p>
+    <Image src={'/feature/assets/paper.svg'} alt={'paper'} width={100} height={100}/>
+      <p className={s.applyToSell}>
         Apply to sell your property on Binaryx
       </p>
-      <p>
+      <p className={s.cashOffer}>
         Get a cash offer, sell within a few days.
       </p>
-      <div>
-        <Image src={'/feature/assets/clock.svg'} alt={'clock'} width={20} height={20}/>
+      <div className={s.duration}>
+        <Image src={'/feature/assets/clock.svg'} alt={'clock'} width={13} height={13}/>
         <p>
           Duration 5 minutes
         </p>
       </div>
-      <Button>
+      <Button className={s.continueButton} onClick={()=>onStatusChange(AssetListingStatus.generalInfo)}>
         Continue
-        <Image src={'/svg/arrow.svg'} alt={'paper'} width={15} height={15}/>
+        <ArrowIconWithoutLine classname={s.arrowIcon} width={11} height={12}/>
       </Button>
     </div>
   )

@@ -6,7 +6,7 @@ export enum AssetListingStatus {
   generalInfo,
   legalInfo,
   investmentAndReturn,
-  RentalAndManagement,
+  rentalAndManagement,
   lastScreen
 }
 
