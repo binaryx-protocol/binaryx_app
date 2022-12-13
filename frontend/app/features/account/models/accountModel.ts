@@ -1,10 +1,10 @@
 import {atom, PrimitiveAtom} from 'jotai'
 import {waitFor} from "../../../utils/pageLoadUtiils";
 import {onlyFields} from "../../../utils/objectUtils";
-import {BigNumber} from "ethers";
+import {BigNumber, Contract} from "ethers";
 import {BcAsset} from "../../assets/types";
 import {
-  $assetsTokenSmartContractSigned,
+  $assetsTokenSmartContractSigned, $rewardDistributorContractSigned,
   AssetManager
 } from "../../assets/models/smartContractsFactory";
 
@@ -77,15 +77,61 @@ export const $accountInfo = atom<UiAccountInfo | null>((get) => {
 // setters
 export const $doLoadMyRewards = atom(null, async (get, set) => {
   await waitFor(() => !!get($assetsTokenSmartContractSigned), 3)
-
   const sc = get($assetsTokenSmartContractSigned) as AssetManager
   const response = await sc.getMyRewardsPerAsset();
   set($apiRewardsResponse, response);
 })
 
+// total:{
+//   totalRentBalance,
+//     currentAccountValue,
+//     totalClaimable,
+//     propertiesOwned,
+//     totalPropertyValue
+// }
+
+// asset:{
+//   photo,
+//     title,
+//     address,
+//     cocRate,
+//     totalEarnedFromAsset,
+//     currentRentBalance(avaliable to calim)
+// }
+
+export const $doLoadMyRewardsNew = atom(null, async (get, set) => {
+  await waitFor(() => !!get($rewardDistributorContractSigned), 3);
+  const sc = get($rewardDistributorContractSigned) as Contract;
+  const allPools = await sc.registeredAssets(0) //TODO: replace with all pools when contracts be ready
+  let totalClaimableRewards = BigNumber.from(0);
+  const assetInfo = await Promise.all([allPools].map(async (elem: any) => {
+    const signerAddress = sc.signer.getAddress();
+    const currentRentBalance = await sc.claimableRewards(signerAddress, [elem]);
+    const userInfo = await sc.userInfo(allPools, '0xDC89F9576281e87f78EeF7ddDEBD61f7e7D82f82');
+    totalClaimableRewards.add(currentRentBalance[0])
+    return {
+      photo: 'https://ns.clubmed.com/dream/RESORTS_3T___4T/Asie_et_Ocean_indien/Bali/169573-1lng9n8nnf-swhr.jpg',
+      title: 'Villa Camilla 2',
+      address: 'Jl. Pantai Batu Bolong No.44',
+      earnedFromAsset: 10,
+      currentRentBalance: currentRentBalance[0]
+    }
+  }))
+  const res = {
+    total: {},
+
+  }
+
+})
+
 export const $doClaimMyRewards = atom(null, async (get, set) => {
-  const sc = get($assetsTokenSmartContractSigned) as AssetManager
-  await sc.claimRewardsInUsdt();
+  const sc = get($rewardDistributorContractSigned) as Contract;
+  const allPools = await sc.registeredAssets(0)
+  try {
+    await sc.claim(sc.signer.getAddress(), [allPools]);
+  } catch (e) {
+    console.log(e)
+  }
 })
 
 const transformAssetBcToUi = (bcAsset: BcAsset): UIAsset => {

@@ -20,12 +20,14 @@ import {paths} from "../../../../../pkg/paths";
 
 export const AccountController = () => {
   const doLoadMyRewards = useSetAtom(accountModel.$doLoadMyRewards);
+  const doLoadMyRewardsNew = useSetAtom(accountModel.$doLoadMyRewardsNew);
   const doClaimMyRewards = useSetAtom(accountModel.$doClaimMyRewards);
   const accountInfo = useAtomValue(accountModel.$accountInfo);
   const {isConnected, address} = useAccount()
   useEffect(() => {
     if (isConnected) {
       doLoadMyRewards();
+      doLoadMyRewardsNew();
     }
   }, [isConnected]);
 

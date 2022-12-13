@@ -6,6 +6,7 @@ import {
 import {accountManagerAbi, assetsManagerAbi, controllerAbi, erc1155Abi} from "../../../core/abis";
 import {Contract, ethers} from "ethers";
 import {BcAsset} from "../types";
+import rewardDistributorAbi from '../../../abis/rewardDistributorAbi.json'
 
 export type AssetManager = Contract & {
   listAssets: () => Promise<[BcAsset[], any]>
@@ -38,6 +39,16 @@ export const $assetsTokenSmartContractSigned = atom<AssetManager | null>((get) =
   }
   const smartContract = new ethers.Contract(rpcConfig.contractsAddresses.assetsTokenAddress, abi, provider)
   return smartContract.connect(provider.getSigner()) as AssetManager
+})
+
+export const $rewardDistributorContractSigned = atom<Contract | null>((get) => {
+  const rpcConfig = get($rpcConfig)
+  const provider = get($userRpcProvider)
+  if (!rpcConfig || !provider) {
+    return null
+  }
+  const smartContract = new ethers.Contract('0x55f5d27B394e3CF69B5a68a4b9FcE01Ef280f05A', rewardDistributorAbi, provider)
+  return smartContract.connect(provider.getSigner()) as Contract
 })
 
 export const $controllerSmartContractSigned = atom<Controller | null>((get) => {
