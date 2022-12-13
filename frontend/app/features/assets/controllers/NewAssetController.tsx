@@ -5,6 +5,7 @@ import {AssetFormFields} from "../views/AssetFormFields";
 import {SyntheticEvent, useEffect} from "react";
 import {Button} from "../../../shared/ui/views/Button";
 import {useAccount} from "wagmi";
+import {AssetListing} from "../views/AssetListing";
 
 export const NewAssetController = () => {
   const form = useAtomValue(newAssetModel.$form)
@@ -24,23 +25,21 @@ export const NewAssetController = () => {
   }
 
   return (
-    <div className={s.page}>
-      <div className={s.container}>
-        {
-          address
-            ? (
-              <form noValidate onSubmit={onSubmitLocal}>
-                <AssetFormFields form={form} onChange={onFormChange} />
-                <div className={s.formActions}>
-                  <Button type="submit">
-                    Create
-                  </Button>
-                </div>
-              </form>
-            )
-            : "Please connect your wallet first"
-        }
-      </div>
-    </div>
+    <AssetListing/>
   )
 }
+
+
+// <div className={s.page}>
+//   <div className={s.container}>
+//     <form noValidate onSubmit={onSubmitLocal}>
+//       <AssetFormFields form={form} onChange={onFormChange} />
+//       <div className={s.formActions}>
+//         <Button type="submit">
+//           Create
+//         </Button>
+//       </div>
+//     </form>
+//
+//   </div>
+// </div>
