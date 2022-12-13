@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 
 const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545/');
 const wallet = new ethers.Wallet(
-  '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80',
+  process.env.PRIVATE_KEY_KYC_STORE_CONTROLLER,
   provider
 )
 
@@ -14,7 +14,7 @@ const abi = [
 ];
 
 // The Contract object
-const kycSc = new ethers.Contract('0x9E545E3C0baAB3E08CdfD552C960A1050f373042', abi, provider);
+const kycSc = new ethers.Contract(process.env.A_KYC_STORE, abi, provider);
 
 export {
   kycSc,

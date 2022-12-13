@@ -16,11 +16,7 @@ export class HooksManager {
   async create(data: HookData) {
     const { id } = await this.hookRepository.save({ data });
     if (data.type === 'applicantReviewed' && data.reviewResult.reviewAnswer === 'GREEN') {
-      const owner = await kycSc.owner();
-      console.log('owner', owner)
-      await kycSc.connect(wallet).approve('0x70997970C51812dc3A010C7d01b50e0d17dc79C8', '123')
-      const isApproved = await kycSc.connect(wallet).isApproved('0x70997970C51812dc3A010C7d01b50e0d17dc79C8')
-      console.log('isApproved', isApproved)
+      await kycSc.connect(wallet).approve(data.externalUserId, data.clientId)
     }
     await this.hookRepository.update({ id }, { isStoredInBlockchain: true })
     const hook = await this.hookRepository.findOne({ id });
