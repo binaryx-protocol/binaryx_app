@@ -5,6 +5,7 @@ import {Tabs} from "./Tabs/Tabs";
 import {MobileCarousel} from "../Gallery/MobileCarousel";
 import {useWindowSize} from "../../../../hooks/useWindowSize";
 import {AssetInvest} from "../AssetInvest";
+import {UiAssetInvestForm} from "../../types";
 
 type AssetInfoProps = {
   title: string,
@@ -35,10 +36,12 @@ type AssetInfoProps = {
   activeTab: string;
   setActiveTab: (value: string) => void;
   location: { lat: number, lng: number };
-  investAmount: string;
-  setInvestAmount: (value: string) => void;
-  validateInvestInput: (value: string) => Promise<boolean>
-  validationInvestError: string;
+  form: UiAssetInvestForm,
+  onFormSubmit:any,
+  onChangeForm: ({
+                   values,
+                   touches
+                 }: { values: UiAssetInvestForm['values'], touches: UiAssetInvestForm['touches'] }) => void
 }
 export const AssetInfo = ({
                             title,
@@ -69,10 +72,9 @@ export const AssetInfo = ({
                             setActiveTab,
                             location,
                             activeTab,
-                            validateInvestInput,
-                            validationInvestError,
-                            setInvestAmount,
-                            investAmount
+                            form,
+                            onChangeForm,
+                            onFormSubmit
                           }: AssetInfoProps) => {
   const {xs} = useWindowSize()
 
@@ -89,16 +91,20 @@ export const AssetInfo = ({
         <div className={s.blockchainAddress}>
           <p className={s.propertyAddress_text}>Property Address</p>
           <div className={s.blockchainAddress_address}>
-            <Image src={'/feature/assets/ellipse.svg'} alt={'ellipseIcon'} className={s.ellipseIcon} width={15} height={15}/>
+            <Image src={'/feature/assets/ellipse.svg'} alt={'ellipseIcon'} className={s.ellipseIcon} width={15}
+                   height={15}/>
             <p>0x3820...74dc2</p>
           </div>
         </div>
       </div>
       <div className={s.assetInvest}>
-        {xs && <AssetInvest coc={coc} id={id} irr={irr} tokensTotalSupply={tokensTotalSupply} tokensLeft={tokensLeft}
+        {xs && <AssetInvest form={form} onChangeForm={onChangeForm} coc={coc} id={id} irr={irr}
+                            tokensTotalSupply={tokensTotalSupply}
+                            tokensLeft={tokensLeft}
                             balance={balance}
-                            account={account} setInvestAmount={setInvestAmount} investAmount={investAmount}
-                            validationInvestError={validationInvestError} validateInvestInput={validateInvestInput}/>}
+                            account={account}
+                            onFormSubmit={onFormSubmit}
+        />}
       </div>
       <div className={s.carousel}>
         {xs ? <MobileCarousel images={images}/> :

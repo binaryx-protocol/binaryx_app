@@ -2,9 +2,10 @@ import s from './AssetsDetailsController.module.scss'
 import {AssetInvest} from "../views/AssetInvest";
 import {AssetInfo} from "../views/AssetInfo";
 import * as assetDetailsModel from "../models/assetDetailsModel";
-import {useAtomValue, useSetAtom} from "jotai";
+import * as investAssetModel from "../models/investAssetModel";
+
+import {useAtom, useAtomValue, useSetAtom} from "jotai";
 import React, {useEffect, useState} from "react";
-import {useRouter} from "next/router";
 import {bnToInt} from "../../../utils/objectUtils";
 import clsx from "clsx";
 import {AssetInvestDetails} from "../views/AssetInvestDetails";
@@ -14,9 +15,16 @@ import {useWindowSize} from "../../../hooks/useWindowSize";
 import {Tab} from "../views/AssetInfo/Tabs/Tab";
 import {TabContent} from "../views/AssetInfo/Tabs/TabContent";
 import {tokenAmountValidator} from "../models/tokenBuyValidator";
+import {useOnPageLoad} from "../../../hooks/useOnPageLoad";
+import * as newAssetModel from "../models/newAssetModel";
+import {$onSubmitValue} from "../models/investAssetModel";
 
 export const AssetsDetailsController = (): JSX.Element => {
-  const id = parseInt(useRouter().query.id as string);
+  const [id, setId] = useAtom(investAssetModel.$assetId);
+  const onChangeForm = useSetAtom(investAssetModel.$onFormChange)
+  const form = useAtomValue(investAssetModel.$form)
+  const onFormSubmit = useSetAtom(investAssetModel.$onSubmitValue)
+
   const $contractError = useAtomValue(assetDetailsModel.$contractError)
   const $asset = useAtomValue(assetDetailsModel.$asset)
   const $assetMetaData = useAtomValue(assetDetailsModel.$assetMetaData)
@@ -30,13 +38,11 @@ export const AssetsDetailsController = (): JSX.Element => {
   const [isFullWidth, setIsFullWidth] = useState<boolean>(false);
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [activeTab, setActiveTab] = useState("details");
-  const [investAmount, setInvestAmount] = useState<string>('')
-  const [validationInvestError, setValidationInvestError] = useState<string>('')
   const location = {
     lat: 50.450001,
     lng: 30.523333,
   }
-
+  useOnPageLoad(setId);
   useEffect(() => {
     if (Number.isInteger(id)) {
       $doLoadAsset({id})
@@ -83,25 +89,6 @@ export const AssetsDetailsController = (): JSX.Element => {
       {type: 'string2', value: 'WiFi'}
     ],
   }
-  const tokenPrice = 50;
-  const validateInvestInput = async (value: string): Promise<boolean> => {
-    const amount = Number(value);
-    const res = await tokenAmountValidator.isAmountValid({
-      amount,
-      tokensLeft: investInfo.tokensLeft,
-      userBalance:balance,
-      tokenPrice
-    })
-    if (res.errors.amount?.length) {
-      setValidationInvestError(res.errors.amount[0]);
-      return res.isValid;
-    } else {
-      setValidationInvestError('')
-      return res.isValid;
-    }
-  }
-
-
   return (
     xs ?
       <>
@@ -119,9 +106,7 @@ export const AssetsDetailsController = (): JSX.Element => {
                 <AssetInfo {...assetInfo} images={images} balance={balance} account={account} {...investInfo}
                            currentSlide={currentSlide} isFullWidth={isFullWidth} setIsFullWidth={setIsFullWidth}
                            setCurrentSlide={setCurrentSlide} setActiveTab={setActiveTab} activeTab={activeTab}
-                           location={location} validationInvestError={validationInvestError}
-                           validateInvestInput={validateInvestInput} investAmount={investAmount}
-                           setInvestAmount={setInvestAmount}/>
+                           location={location} form={form} onChangeForm={onChangeForm} onFormSubmit={onFormSubmit}/>
               </div>
             </TabContent>
             <TabContent id="financials" activeTab={activeTabMobile}>
@@ -142,16 +127,14 @@ export const AssetsDetailsController = (): JSX.Element => {
                        images={images} balance={balance}
                        account={account} isFullWidth={isFullWidth} setIsFullWidth={setIsFullWidth}
                        setCurrentSlide={setCurrentSlide} setActiveTab={setActiveTab} activeTab={activeTab}
-                       location={location} validationInvestError={validationInvestError}
-                       validateInvestInput={validateInvestInput} investAmount={investAmount}
-                       setInvestAmount={setInvestAmount}/>
+                       location={location}
+                       form={form} onChangeForm={onChangeForm} onFormSubmit={onFormSubmit}/>
           </div>
         </div>
         <div className={s.assetInvest}>
           <div className={clsx(s.assetInvestBuy, s.container)}>
-            <AssetInvest {...investInfo} balance={balance} account={account}
-                         validationInvestError={validationInvestError} investAmount={investAmount}
-                         setInvestAmount={setInvestAmount} validateInvestInput={validateInvestInput}/>
+            <AssetInvest {...investInfo} balance={balance} account={account} form={form} onChangeForm={onChangeForm}
+                         onFormSubmit={onFormSubmit}/>
           </div>
           <div className={clsx(s.assetInvestDetails, s.container)}>
             <AssetInvestDetails/>

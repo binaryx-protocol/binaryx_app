@@ -6,6 +6,8 @@ import {Button} from "../../../../shared/ui/views/Button";
 import {InvestInput} from "../InvestInput";
 import {paths} from "../../../../../pkg/paths";
 import {useRouter} from "next/router";
+import {UiAssetInvestForm, UiNewAssetForm} from "../../types";
+import {UiForm} from "../../../../../pkg/formType";
 
 type InvestBlockProps = {
   tokensLeft: number,
@@ -15,10 +17,12 @@ type InvestBlockProps = {
   id: number,
   balance: number;
   account: string;
-  investAmount: string;
-  setInvestAmount: (value: string) => void;
-  validationInvestError: string;
-  validateInvestInput: (value: string) => Promise<boolean>;
+  form: UiAssetInvestForm,
+  onChangeForm: ({
+                   values,
+                   touches
+                 }: { values: UiAssetInvestForm['values'], touches: UiAssetInvestForm['touches'] }) => void;
+  onFormSubmit: any;
 }
 
 export const AssetInvest = ({
@@ -29,30 +33,20 @@ export const AssetInvest = ({
                               account,
                               tokensLeft,
                               tokensTotalSupply,
-                              investAmount,
-                              setInvestAmount,
-                              validationInvestError,
-                              validateInvestInput
+                              onChangeForm,
+                              form,
+                              onFormSubmit
                             }: InvestBlockProps) => {
-  const router = useRouter();
-  const onTokenBuy = async() => {
-    const isValid = await validateInvestInput(investAmount);
-    if (isValid){
-     await router.push(paths.investAsset({id}))
-    }
-  }
   return (
     <div className={s.root}>
       <div className={s.tokenPrice}>
         <p className={s.tokenPrice_text}>Token Price</p>
         <p className={s.tokenPrice_text}><span className={s.tokenPrice_value}>50</span> USDT</p>
       </div>
-      {account && <div className={s.investInput}>
-        <InvestInput tokensLeft={tokensLeft} setInvestAmount={setInvestAmount}
-                     validationInvestError={validationInvestError}
-                     validateInput={validateInvestInput} investAmount={investAmount}/>
+      {account && <form className={s.investInput}>
+        <InvestInput inputName={"amount"} tokensLeft={tokensLeft} form={form} onChange={onChangeForm}/>
         <p className={s.total}>Total: <span className={s.balance}>{balance.toFixed(2)} USDT</span></p>
-      </div>}
+      </form>}
       <div className={s.infoBlock}>
         <div className={s.infoBlockElem}>
           <div className={s.detailsElem}>
@@ -70,9 +64,9 @@ export const AssetInvest = ({
         </div>
       </div>
       <ProgressBarText tokensLeft={tokensLeft} tokensTotal={tokensTotalSupply}/>
-        <Button className={s.buyTokensButton} disabled={!investAmount || !!validationInvestError} onClick={onTokenBuy}>
-          Buy Tokens
-        </Button>
+      <Button className={s.buyTokensButton} onClick={onFormSubmit}>
+        Buy Tokens
+      </Button>
     </div>
   );
 };
