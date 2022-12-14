@@ -78,6 +78,7 @@ class HttpClient {
 
 const baseUrl = {
   'localhost': 'http://localhost:3001',
+  'localhost.com': 'http://localhost.com:3001',
   'staging.binaryx.com': 'https://api-staging.binaryx.com',
   'dev.binaryx.com': 'https://api-dev.binaryx.com',
   'binaryx.com': 'https://api.binaryx.com',
