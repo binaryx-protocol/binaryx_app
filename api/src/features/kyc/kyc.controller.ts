@@ -3,7 +3,7 @@ import { Request } from 'express';
 import {ConfigService} from "@nestjs/config";
 import { sdk } from "sumsub-node-sdk";
 import {HookData} from "./types";
-import {HooksManager} from "./hooks-manager";
+import {HooksManager} from "./hooks.manager";
 
 @Controller('kyc')
 export class KycController {

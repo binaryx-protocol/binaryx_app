@@ -5,26 +5,21 @@ import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "hardhat/console.sol";
 
 contract KycStore is OwnableUpgradeable {
-  struct User {
-    string id;
-    bool isApproved;
-  }
-
-  mapping(address => User) users;
+  mapping(address => bool) users;
 
   function initialize() initializer external {
     __Ownable_init();
   }
 
   function isApproved(address userAddress) public view returns(bool) {
-    return users[userAddress].isApproved;
+    return users[userAddress];
   }
 
   function approve(address userAddress, string calldata id) onlyOwner public {
-    users[userAddress] = User(id, true);
+    users[userAddress] = true;
   }
 
   function disable(address userAddress) onlyOwner public {
-    users[userAddress].isApproved = false;
+    users[userAddress] = false;
   }
 }
