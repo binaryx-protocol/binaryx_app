@@ -12,7 +12,8 @@ export type ContractAddresses = {
   usdtL1Address: string;
   usdtL2Address: string;
   assetsTokenAddress: string;
-  controllerAddress: string;
+  controllerAddress: string; // deprecated
+  kycStoreAddress: string;
 }
 
 export type ChainInfo = {
@@ -79,7 +80,8 @@ export const CHAIN_INFO: ChainsInfo = {
       usdtL1Address: '',
       usdtL2Address: deploysLocalhost.Usdt,
       assetsTokenAddress: deploysLocalhost.AssetsManager,
-      controllerAddress: deploysLocalhost.Controller
+      controllerAddress: deploysLocalhost.Controller,
+      kycStoreAddress: deploysLocalhost.KycStore,
     }
   },
   [SupportedChainId.ARBITRUM_GOERLI]: {
@@ -89,7 +91,8 @@ export const CHAIN_INFO: ChainsInfo = {
       usdtL1Address: '',
       usdtL2Address: deploysArbitrumGoerli.Usdt,
       assetsTokenAddress: deploysArbitrumGoerli.AssetsManager,
-      controllerAddress: deploysArbitrumGoerli.Controller
+      controllerAddress: deploysArbitrumGoerli.Controller,
+      kycStoreAddress: deploysArbitrumGoerli.KycStore,
     },
   }
 }
