@@ -4,10 +4,13 @@ import {useEffect, useState} from "react";
 import {httpClient} from "../../../core/http-client";
 import {useAtomValue} from "jotai";
 import {$connectedAccount} from "../../../core/models/walletModel";
+import {$isKycApproved} from "../models/kycModel";
 
 export const KycController = () => {
   const [token, setToken] = useState('')
   const account = useAtomValue($connectedAccount)
+  const isKycApproved = useAtomValue($isKycApproved)
+  console.log('isKycApproved', isKycApproved)
 
   useEffect(() =>{
     const fetchToken = async () => {
