@@ -117,8 +117,8 @@ export const getActiveConfig = (preferredRpcName: string) :ChainInfo | null => {
     return null;
   }
   const rpcName = preferredRpcName || {
-    'localhost': 'localhost',
-    'localhost.com': 'localhost',
+    'localhost': 'arbitrumGoerli',
+    'localhost.com': 'arbitrumGoerli',
     'dev.binaryx.com': 'arbitrumGoerli',
     'staging.binaryx.com': 'arbitrumGoerli',
     'i2.binaryx.com': 'arbitrumGoerli',
