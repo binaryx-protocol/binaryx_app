@@ -22,12 +22,13 @@ const config: HardhatUserConfig = {
     hardhat: {
       chainId: 421613,
       forking: {
-        url: 'https://arb1.arbitrum.io/rpc',
+        url: 'https://arb-goerli.g.alchemy.com/v2/i7XMrv80YbBZuJBt6u0I7zaAmY9gzERx',
       },
       accounts: {
         mnemonic: process.env['MNEMONIC'] || DEFAULT_MNEMONIC,
         count: 10,
       },
+      deploy: [ 'deploy/dev' ],
       tags: ["test", "local"]
     },
     localhost: {
@@ -50,6 +51,8 @@ const config: HardhatUserConfig = {
   namedAccounts: {
     deployer: 0,
     tokenOwner: 1,
+    company: 2,
+    assetReserve: 3,
   },
   paths: {
     deploy: 'deploy',

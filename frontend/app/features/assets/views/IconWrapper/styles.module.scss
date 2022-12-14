@@ -1,0 +1,28 @@
+.root{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  max-height: 72px;
+  width: 100%;
+  background-color: var(--color--secondary-bg);
+  border-radius: 12px;
+  padding: 12px;
+  p{
+    margin: 5px;
+  }
+}
+@media (max-width: 480px) {
+  .root{
+    max-height: 44px;
+    min-width: 40vw;
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 360px) {
+  .root {
+    min-width: 45vw;
+  }
+}
+

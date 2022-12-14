@@ -1,3 +1,33 @@
+.galleryRoot{
+  display: flex;
+  margin-top: 16px;
+}
+.image{
+  border-radius: 12px;
+  &:hover{
+    cursor: pointer;
+  }
+}
+.imageMain{
+  height: 51vh !important;
+}
+.currentSlide{
+  width: 80%;
+}
+.listOfSlides{
+  width: 20%;
+  margin-left: 12px;
+}
+.listOfImages{
+  margin-bottom: 8px !important;
+}
+.listOfSlidesCarousel{
+  height: 51vh;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+  }
+}
 .gallery {
   display: flex;
   height: 270px;
@@ -22,10 +52,6 @@
   object-fit: cover;
 }
 
-.image:hover {
-  transform: scale(1.15);
-}
-
 .carouselProvider {
   display: flex;
   height: 100%;
@@ -41,7 +67,7 @@
   outline: none;
 }
 
-.imageFullWidthContol {
+.imageFullWidthControl {
   display: flex;
   flex-direction: column;
 }

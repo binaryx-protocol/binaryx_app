@@ -1,0 +1,25 @@
+.wrapper{
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 12px 0;
+  p{
+    margin: 0;
+  }
+  &:last-child{
+    padding-bottom: 0;
+  }
+}
+.borderTop{
+  border-top: 1px solid var(--color--border);
+}
+.borderBottom{
+  border-bottom: 1px solid var(--color--border);
+}
+.boldText{
+  font-weight: 700;
+}
+.greyText{
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}

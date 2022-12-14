@@ -27,7 +27,7 @@ export type BcAssetMetaData = {
 export type UiAssetComputed = {
   tokensSold: number,
   tokensLeft: number,
-  progress: number,
+  tokensTotalSupply: number,
 }
 
 export type UiNewAssetFormValues = {
@@ -47,3 +47,14 @@ export type UiNewAssetFormChangeArgs = {
   values: UiNewAssetForm['values'],
   touches: UiNewAssetForm['touches'],
 }
+
+
+export type UiAssetInvestFormValues = {
+  amount: string,
+}
+export type UiAssetInvestForm = UiForm<UiAssetInvestFormValues>
+export type UiAssetInvestFormChangeArgs = {
+  values: UiAssetInvestForm['values'],
+  touches: UiAssetInvestForm['touches'],
+}
+

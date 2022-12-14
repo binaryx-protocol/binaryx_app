@@ -7,8 +7,30 @@
   text-align: center;
   border-radius: 5px;
 }
+.footer{
+  display: flex;
+  justify-content: center;
+  margin: 32px;
+  p{
+    margin: 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-text-secondary)
+  }
+}
 
-.defaultLayout{
-  min-width: 1000px;
-  overflow-x: auto;
+.contentWrapper{
+  display: flex;
+  justify-content: center;
+}
+.pageMenu{
+  flex-shrink: 0;
+  width: 240px;
+  margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+  .pageMenu,.header{
+    display: none;
+  }
 }
