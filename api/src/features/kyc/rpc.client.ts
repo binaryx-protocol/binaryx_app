@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 
 const abi = [
   "function isApproved(address userAddress) public view returns(bool)",
-  "function approve(address userAddress, string calldata id) onlyOwner public",
+  "function approve(address userAddress) onlyOwner public",
   "function disable(address userAddress) onlyOwner public",
   "function owner() public view returns(address)",
 ];
@@ -27,7 +27,11 @@ export class RpcClient {
     this.kycScSigned = this.kycSc.connect(this.wallet)
   }
 
-  async approve(address: string, clientId: string) {
-    this.kycScSigned.approve(address, clientId)
+  async isApproved(address: string): Promise<boolean> {
+    return this.kycScSigned.isApproved(address)
+  }
+
+  async approve(address: string) {
+    this.kycScSigned.approve(address)
   }
 }

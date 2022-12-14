@@ -11,7 +11,7 @@ export class KycController {
   private readonly config: ConfigService
 
   @Inject(HooksManager)
-  private readonly hooksHandler: HooksManager;
+  private readonly hooksManager: HooksManager;
 
   @Post('sumsubCreateToken')
   async sumsubCreateToken(@Req() request: Request): Promise<any> {
@@ -30,6 +30,8 @@ export class KycController {
       console.log('e', e)
     }
 
+    await this.hooksManager.updateScIfApprovedBySumSub(request.body.userId);
+
     return {
       accessToken: response.data
     }
@@ -38,7 +40,7 @@ export class KycController {
   @Post('sumsubOnSuccess')
   async sumsubOnSuccess(@Req() request: Request): Promise<any> {
     const eventData = request.body as HookData
-    const { hook } = await this.hooksHandler.create(eventData)
+    const { hook } = await this.hooksManager.create(eventData)
     return hook
   }
 }

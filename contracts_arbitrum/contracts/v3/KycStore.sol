@@ -6,6 +6,7 @@ import "hardhat/console.sol";
 
 contract KycStore is OwnableUpgradeable {
   mapping(address => bool) users;
+  mapping(address => uint) approvedAt;
 
   function initialize() initializer external {
     __Ownable_init();
@@ -15,8 +16,9 @@ contract KycStore is OwnableUpgradeable {
     return users[userAddress];
   }
 
-  function approve(address userAddress, string calldata id) onlyOwner public {
+  function approve(address userAddress) onlyOwner public {
     users[userAddress] = true;
+    approvedAt[userAddress] = block.timestamp;
   }
 
   function disable(address userAddress) onlyOwner public {

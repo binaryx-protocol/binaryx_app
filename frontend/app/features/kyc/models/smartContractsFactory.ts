@@ -19,5 +19,6 @@ export const $kycStoreScPublic = atom<KycStoreSc | null>((get) => {
   if (!rpcConfig || !provider) {
     return null
   }
+  console.log('rpcConfig', rpcConfig)
   return new ethers.Contract(rpcConfig.contractsAddresses.kycStoreAddress, abi, provider) as KycStoreSc
 })

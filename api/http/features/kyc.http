@@ -3,7 +3,7 @@ Content-Type: application/json
 Cookie: key=first-value
 
 {
-  "userId": "0x123"
+  "userId": "0xD5742FAfb58CAbb89A355Ce67c2b0c9Dede6DDFB"
 }
 
 ###
