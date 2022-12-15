@@ -4,11 +4,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {TypeOrmConfigService} from "./common/typeorm";
+import { KycModule } from './features/kyc/kyc.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
+    KycModule,
   ],
   controllers: [AppController],
   providers: [AppService],

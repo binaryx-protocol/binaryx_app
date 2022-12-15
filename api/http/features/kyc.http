@@ -1,0 +1,27 @@
+POST http://localhost:3001/kyc/sumsubCreateToken HTTP/1.1
+Content-Type: application/json
+Cookie: key=first-value
+
+{
+  "userId": "0xD5742FAfb58CAbb89A355Ce67c2b0c9Dede6DDFB"
+}
+
+###
+POST http://localhost:3001/kyc/sumsubOnSuccess HTTP/1.1
+Content-Type: application/json
+Cookie: key=first-value
+
+{
+  "applicantId": "xxxxxxb47e9bfb0001745e5c",
+  "inspectionId": "xxxxxxb47e9bfb0001745e5d",
+  "applicantType": "individual",
+  "correlationId": "xxxxxx015806e21fa6eeda90771aa635",
+  "levelName": "basic-kyc-level",
+  "sandboxMode": true,
+  "externalUserId": "dev.3",
+  "type": "applicantReviewed",
+  "reviewResult": { "reviewAnswer": "GREEN" },
+  "reviewStatus": "completed",
+  "createdAt": "2022-12-09 19:01:28+0000",
+  "clientId": "xxxxxx_llc"
+}

@@ -5,6 +5,7 @@ import deploysLocalhost from '../../../deploys/localhost.json'
 export enum SupportedChainId {
   ARBITRUM_ONE = 42161,
   ARBITRUM_GOERLI = 421613,
+  LOCALHOST = 31337,
 }
 
 export type ContractAddresses = {
@@ -12,15 +13,13 @@ export type ContractAddresses = {
   usdtL1Address: string;
   usdtL2Address: string;
   assetsTokenAddress: string;
-  controllerAddress: string;
+  controllerAddress: string; // deprecated
+  kycStoreAddress: string;
 }
 
 export type ChainInfo = {
   chainInfo: Chain,
   contractsAddresses: ContractAddresses
-}
-export type ChainsInfo = {
-  [key in SupportedChainId]: ChainInfo;
 }
 
 const arbitrum: Chain = {
@@ -55,6 +54,22 @@ export const arbitrumFork: Chain = {
   }
 }
 
+export const localhost: Chain = {
+  id: SupportedChainId.LOCALHOST,
+  rpcUrls: {
+    default: `http://127.0.0.1:8545/`,
+  },
+  name: 'Localhost',
+  network: 'Localhost',
+  nativeCurrency: {name: 'Ether', symbol: 'ETH', decimals: 18},
+  blockExplorers: {
+    default: {
+      url: 'https://arbiscan.io/',
+      name: 'arbiscan'
+    }
+  }
+}
+
 export const arbitrumGoerli: Chain = {
   id: SupportedChainId.ARBITRUM_GOERLI,
   rpcUrls: {
@@ -71,39 +86,44 @@ export const arbitrumGoerli: Chain = {
   }
 }
 
-export const CHAIN_INFO: ChainsInfo = {
-  [SupportedChainId.ARBITRUM_ONE]: {
-    chainInfo: arbitrum,
-    contractsAddresses: {
-      bnrxRootToken: deploysLocalhost.BNRXToken,
-      usdtL1Address: '',
-      usdtL2Address: deploysLocalhost.Usdt,
-      assetsTokenAddress: deploysLocalhost.AssetsManager,
-      controllerAddress: deploysLocalhost.Controller
-    }
-  },
-  [SupportedChainId.ARBITRUM_GOERLI]: {
-    chainInfo: arbitrumGoerli,
-    contractsAddresses: {
-      bnrxRootToken: deploysArbitrumGoerli.BNRXToken,
-      usdtL1Address: '',
-      usdtL2Address: deploysArbitrumGoerli.Usdt,
-      assetsTokenAddress: deploysArbitrumGoerli.AssetsManager,
-      controllerAddress: deploysArbitrumGoerli.Controller
-    },
+function deployedAddresses(deploys: any): ContractAddresses {
+  return {
+    bnrxRootToken: deploys.BNRXToken,
+    usdtL1Address: '',
+    usdtL2Address: deploys.Usdt,
+    assetsTokenAddress: deploys.AssetsManager,
+    controllerAddress: deploys.Controller,
+    kycStoreAddress: deploys.KycStore,
   }
 }
-export const getActiveConfig = () :ChainInfo | null => {
-  if (typeof window !== "undefined") {
-    const configNameByDomain =
-      {
-        'localhost': CHAIN_INFO[SupportedChainId.ARBITRUM_GOERLI],
-        'dev.binaryx.com': CHAIN_INFO[SupportedChainId.ARBITRUM_GOERLI],
-        'staging.binaryx.com': CHAIN_INFO[SupportedChainId.ARBITRUM_GOERLI],
-        'i2.binaryx.com': CHAIN_INFO[SupportedChainId.ARBITRUM_GOERLI],
-      }[window.location.hostname];
-    return configNameByDomain!;
+
+export const chainInfo = {
+  // arbitrumMain: {
+  //   chainInfo: arbitrum,
+  //   contractsAddresses: deployedAddresses(?)
+  // },
+  arbitrumGoerli: {
+    chainInfo: arbitrumGoerli,
+    contractsAddresses: deployedAddresses(deploysArbitrumGoerli as any)
+  },
+  localhost: {
+    chainInfo: localhost,
+    contractsAddresses: deployedAddresses(deploysLocalhost as any)
   }
-  return null;
+}
+
+export const getActiveConfig = (preferredRpcName: string = '') :ChainInfo | null => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+  const rpcName = preferredRpcName || {
+    'localhost': 'arbitrumGoerli',
+    'localhost.com': 'arbitrumGoerli',
+    'dev.binaryx.com': 'arbitrumGoerli',
+    'staging.binaryx.com': 'arbitrumGoerli',
+    'i2.binaryx.com': 'arbitrumGoerli',
+  }[window.location.hostname];
+
+  return chainInfo[rpcName as keyof typeof chainInfo]!;
 }
 

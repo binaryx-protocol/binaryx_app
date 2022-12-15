@@ -10,6 +10,8 @@ require('solidity-coverage')
 require('dotenv').config();
 const { hardhatConfig } = require('arb-shared-dependencies');
 
+const DEFAULT_MNEMONIC = 'test test test test test test test test test test test junk'
+
 const accounts =
   process.env['PRIVATE_KEY']
     ? [process.env['PRIVATE_KEY']] : { mnemonic: process.env['MNEMONIC'] };
@@ -23,7 +25,7 @@ const config: HardhatUserConfig = {
         url: 'https://arb-goerli.g.alchemy.com/v2/i7XMrv80YbBZuJBt6u0I7zaAmY9gzERx',
       },
       accounts: {
-        mnemonic: process.env['MNEMONIC'],
+        mnemonic: process.env['MNEMONIC'] || DEFAULT_MNEMONIC,
         count: 10,
       },
       deploy: [ 'deploy/dev' ],

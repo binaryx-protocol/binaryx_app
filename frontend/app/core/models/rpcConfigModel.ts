@@ -3,10 +3,12 @@
 import { atom } from 'jotai'
 import {ethers} from "ethers";
 import {ChainInfo, getActiveConfig} from "../../shared/walletsConnect";
+import {$featureFlags} from "./featureFlagsModel";
 
 // computed
 export const $rpcConfig = atom<ChainInfo | null>((get) => {
-  return getActiveConfig()
+  const featureFlags = get($featureFlags)
+  return getActiveConfig(featureFlags.FF_RPC_NAME)
 })
 
 export const $publicRpcProvider = atom<ethers.providers.JsonRpcProvider | null>((get) => {

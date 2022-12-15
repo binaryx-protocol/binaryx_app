@@ -96,29 +96,11 @@ export const rewardsDistributorWithUSDTAndAssetFixture = async () => {
   return { rewardDistributor, usdtToken, asset, owner, alice, bob, carol };
 };
 
-// export const controllerFixture = async () => {
-//   const [owner, wallet2] = await ethers.getSigners();
-//
-//   const SeriesMaster = await ethers.getContractFactory('SeriesMaster');
-//   const seriesMaster = await upgrades.deployProxy(SeriesMaster, ['https://binaryx.com/dashpanel/entity/']);
-//
-//   const UsdtfToken = await ethers.getContractFactory('UsdtfToken');
-//   const usdtfToken = await UsdtfToken.deploy(web3.utils.toBN(1).mul(web3.utils.toBN(1e6)).toString());
-//
-//   const AssetsManager = await ethers.getContractFactory('AssetsManager');
-//   const assetsManager = await AssetsManager.deploy(usdtfToken.address);
-//
-//   const Controller = await ethers.getContractFactory('Controller');
-//   const controller = await upgrades.deployProxy(Controller, [seriesMaster.address, assetsManager.address]);
-//
-//   return { controller, owner, wallet2 };
-// };
+export const kycStoreFixture = async () => {
+  const [owner, wallet2] = await hre.ethers.getSigners();
 
-// export const seriesMasterFixture = async () => {
-//   const [owner, wallet2] = await ethers.getSigners();
-//
-//   const SeriesMaster = await ethers.getContractFactory('SeriesMaster');
-//   const seriesMaster = await upgrades.deployProxy(SeriesMaster, ['https://binaryx.com/dashpanel/entity/']);
-//
-//   return { seriesMaster, owner, wallet2 };
-// };
+  const KycStore = await hre.ethers.getContractFactory('KycStore');
+  const kycStore = await hre.upgrades.deployProxy(KycStore, []);
+
+  return { kycStore, owner, wallet2 };
+};

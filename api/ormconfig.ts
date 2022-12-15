@@ -11,7 +11,7 @@ export = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  entities: ['src/app/**/*.entity.ts'],
+  entities: ['src/**/*.entity.ts'],
   migrations: ['src/migration/*.{ts,js}'],
   cli: {
     migrationsDir: 'src/migration',
