@@ -2,26 +2,25 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 
-import { User } from './user.entity';
+import { Asset } from './asset.entity';
 
 @Injectable()
 export class AssetService {
   constructor(
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    @InjectRepository(Asset)
+    private assetsRepository: Repository<Asset>,
   ) {}
 
   // TODO replace any
   create(user: any) {
-     this.usersRepository.save(user);
-    return this.usersRepository.save(user);
+    return this.assetsRepository.save(user);
   }
 
-  findOne(params: FindOneOptions<User> = {}) {
-    return this.usersRepository.findOne(params);
+  findOne(params: FindOneOptions<Asset> = {}) {
+    return this.assetsRepository.findOne(params);
   }
 
-  findAll(params: FindManyOptions<User> = {}) {
-    return this.usersRepository.find(params);
+  findAll(params: FindManyOptions<Asset> = {}) {
+    return this.assetsRepository.find(params);
   }
 }

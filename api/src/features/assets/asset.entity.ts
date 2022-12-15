@@ -11,52 +11,58 @@ export class Asset {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
-  cTitle: string;
+  @Column()
+  scAddress: string;
 
-  @Column({ nullable: false })
-  cStatus: string;
+  @Column()
+  scId: string;
 
-  @Column({ nullable: false })
+  @Column()
+  cTitle: string; // cache only
+
+  @Column()
+  cStatus: string; // cache only
+
+  @Column()
   landType: string;
 
-  @Column({ nullable: false })
+  @Column()
   landArea: number;
 
-  @Column({ nullable: false })
+  @Column()
   propertyType: string;
 
-  @Column({ nullable: false })
+  @Column()
   propertyArea: string;
 
-  @Column({ nullable: false })
+  @Column()
   beds: number;
 
-  @Column({ nullable: false })
+  @Column()
   bedrooms: number;
 
-  @Column({ nullable: false })
+  @Column()
   roomsTotal: number;
 
-  @Column({ nullable: false })
+  @Column()
   kitchens: number;
 
-  @Column({ nullable: false })
+  @Column()
   livingRooms: number;
 
-  @Column({ nullable: false })
+  @Column()
   terraces: number;
 
-  @Column({ nullable: false })
+  @Column()
   balconies: number;
 
-  @Column({ nullable: false })
+  @Column()
   garages: number;
 
-  @Column({ nullable: false })
+  @Column()
   bathRooms: number;
 
-  @Column({ nullable: false })
+  @Column()
   occupation: string;
 
   @Column({ nullable: false, type: 'jsonb' })
@@ -65,32 +71,32 @@ export class Asset {
   @Column({ nullable: false, type: 'jsonb' })
   documents: string[];
 
-  @Column({ nullable: false })
+  @Column()
   averageCoCPercentage: number;
 
-  @Column({ nullable: false })
+  @Column()
   projectedIrrPercentage: number;
 
-  @Column({ nullable: false })
+  @Column()
   taxesPercentage: number;
 
-  @Column({ nullable: false })
+  @Column()
   insurancePercentage: number;
 
-  @Column({ nullable: false })
+  @Column()
   propertyManagementPercentage: number;
 
-  @Column({ nullable: false })
+  @Column()
   utilitiesPercentage: number;
 
-  @Column({ nullable: false })
+  @Column()
   llcAdministrationFeePercentage: number;
 
   @Column()
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @Column()
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 }
