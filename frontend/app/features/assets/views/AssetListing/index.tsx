@@ -1,5 +1,5 @@
 import s from './styles.module.scss'
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import {
   AssetListingStatus,
@@ -27,6 +27,8 @@ type Props = {
   legalInfoForm: UiLegalInfoForm;
   investmentReturnForm: UiInvestmentReturnForm;
   rentalManagementForm: UiRentalManagementForm;
+  currentForm: UiForm<any>;
+  onCurrentFormChange: (form: UiForm<any>) => void;
   returnHome: () => void;
   onChange: ({
                changeArgs,
@@ -43,8 +45,24 @@ export const AssetListing = (props: Props) => {
     legalInfoForm,
     investmentReturnForm,
     rentalManagementForm,
-    returnHome
+    returnHome,
+    onCurrentFormChange,
+    currentForm
   } = props;
+  useEffect(() => {
+    if (assetListingStatus === AssetListingStatus.generalInfo) {
+      onCurrentFormChange(generalInfoForm)
+    }
+    if (assetListingStatus === AssetListingStatus.legalInfo) {
+      onCurrentFormChange(legalInfoForm)
+    }
+    if (assetListingStatus === AssetListingStatus.investmentAndReturn) {
+      onCurrentFormChange(investmentReturnForm)
+    }
+    if (assetListingStatus === AssetListingStatus.rentalAndManagement) {
+      onCurrentFormChange(rentalManagementForm)
+    }
+  }, [generalInfoForm.isValid, legalInfoForm.isValid, investmentReturnForm.isValid, rentalManagementForm.isValid])
 
   const backButton = () => {
     if (assetListingStatus === AssetListingStatus.generalInfo) onChangeAssetListingStatus(AssetListingStatus.welcome)
@@ -53,17 +71,20 @@ export const AssetListing = (props: Props) => {
     if (assetListingStatus === AssetListingStatus.rentalAndManagement) onChangeAssetListingStatus(AssetListingStatus.investmentAndReturn)
   }
   const continueButton = () => {
-    if (assetListingStatus === AssetListingStatus.generalInfo) {
+    if (assetListingStatus === AssetListingStatus.generalInfo && generalInfoForm.isValid) {
       onChangeAssetListingStatus(AssetListingStatus.legalInfo)
+      onCurrentFormChange(legalInfoForm)
     }
-    if (assetListingStatus === AssetListingStatus.legalInfo) {
-      onChangeAssetListingStatus(AssetListingStatus.investmentAndReturn)
+    if (assetListingStatus === AssetListingStatus.legalInfo && legalInfoForm.isValid) {
+      onChangeAssetListingStatus(AssetListingStatus.investmentAndReturn);
+      onCurrentFormChange(investmentReturnForm)
     }
-    if (assetListingStatus === AssetListingStatus.investmentAndReturn) {
+    if (assetListingStatus === AssetListingStatus.investmentAndReturn && investmentReturnForm.isValid) {
       onChangeAssetListingStatus(AssetListingStatus.rentalAndManagement)
+      onCurrentFormChange(rentalManagementForm)
     }
-    if (assetListingStatus === AssetListingStatus.rentalAndManagement) {
-      onChangeAssetListingStatus(AssetListingStatus.lastScreen)
+    if (assetListingStatus === AssetListingStatus.rentalAndManagement && rentalManagementForm.isValid) {
+      onChangeAssetListingStatus(AssetListingStatus.lastScreen);
     }
   }
 
@@ -97,7 +118,6 @@ export const AssetListing = (props: Props) => {
     };
     return props
   }
-
   return (
     <div className={s.root}>
       <div className={s.navigation}>
@@ -143,7 +163,8 @@ export const AssetListing = (props: Props) => {
               <div className={s.continueBlock}>
                 <Image alt={'detail'} src={'/svg/details.svg'} width={15} height={15}/>
                 <p className={s.warning}>Please complete all forms above to -</p>
-                <Button className={clsx(s.continueButtonForm, s.continueButtonFormActive)} onClick={continueButton}>
+                <Button className={clsx(s.continueButtonForm, currentForm.isValid && s.continueButtonFormActive)}
+                        onClick={continueButton} disabled={!currentForm.isValid}>
                   <p>Continue</p>
                   <ArrowIconWithoutLine width={13} height={13} classname={s.continueArrow}/>
                 </Button>

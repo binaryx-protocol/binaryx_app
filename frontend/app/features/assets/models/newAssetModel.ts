@@ -193,14 +193,3 @@ const $doValidateFormValues = atom(null, (get, set, args: { changeArgs: UiFormCh
       })
   }
 })
-
-export const $onSubmit = atom(null, (get, set) => {
-  // set($form, f => ({ ...f, isSubmitTouched: true }))
-  //
-  // const form = get($form)
-  // if (form.isValid) {
-  //   set($doCreateAsset, form)
-  // } else {
-  //   console.log('form', form)
-  // }
-})
