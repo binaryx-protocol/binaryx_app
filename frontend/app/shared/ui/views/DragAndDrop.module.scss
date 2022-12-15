@@ -1,0 +1,63 @@
+.title{
+  padding:0 0 8px 7px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+.dragAndDropBox {
+  height: 152px;
+  width: 100%;
+  border: 2px dashed var(--drag_and_drop-border-color);
+  background-color: var(--color--secondary-bg);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+  }
+}
+
+.dragAndDropActive {
+  background-color: #6F4DC4;
+  color: var(--color--primary-bg);
+  border: 1px solid var(--color--primary-bg);
+}
+
+.dragText {
+  padding-bottom: 8px;
+}
+
+.orText {
+  padding-bottom: 8px;
+  color: var(--color-text-secondary);
+}
+
+.browseFilesButton {
+  background-color: #6F4DC4;
+}
+
+.fileInput {
+  display: none;
+}
+
+.fileBlock {
+  margin-top: 12px;
+  display: flex;
+}
+
+.fileElem {
+  padding: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color--secondary-bg);
+  margin-left: 8px;
+}

@@ -4,10 +4,10 @@ import {Button} from "../../../../../shared/ui/views/Button";
 import {ArrowIconWithoutLine} from "../../ArrowIconWithoutLine";
 import {AssetListingStatus} from "../../../types";
 type Props = {
-  onStatusChange: (value: AssetListingStatus) => void;
+  returnHome: () => void;
 }
 export const LastScreen = (props: Props) =>{
-  const {onStatusChange} = props
+  const {returnHome} = props
 
   return(
     <div className={s.root}>
@@ -21,7 +21,7 @@ export const LastScreen = (props: Props) =>{
       </p>
      <p className={s.propertyText}>Once we have reviewed your property information, we will contact you via <br/>
        email if your property meets our criteria.</p>
-      <Button className={s.continueButton} onClick={()=>onStatusChange(AssetListingStatus.welcome)}>
+      <Button className={s.continueButton} onClick={returnHome}>
         Continue
         <ArrowIconWithoutLine classname={s.arrowIcon} width={11} height={12}/>
       </Button>

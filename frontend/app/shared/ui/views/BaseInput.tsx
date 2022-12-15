@@ -1,24 +1,88 @@
 import clsx from 'clsx'
 import s from "./BaseInput.module.scss";
-import React from "react";
+import React, {useRef} from "react";
+import {ListAssetsFormsNames} from "../../../features/assets/types";
+import {UiForm} from "../../../../pkg/formType";
+//TODO: finish after MVP
 
-type Props = {
+// type DropDownProps = {
+//   dropDownValuesArray: any[];
+// }
+//
+// const DropDown = (props: DropDownProps) => {
+//   const {dropDownValuesArray} = props
+//   const [dropDownValue, setDropDownValue] = useState(dropDownValuesArray[0]);
+//   const [closeDropdown, setCloseDropdown] = useState(true);
+//   const showElem = (value: string) => {
+//     // @ts-ignore
+//     inputRef.current.value = `${value}`;
+//     setCloseDropdown(true);
+//   }
+//   return (
+//     <div>
+//       <div>
+//         <p>
+//           {dropDownValue}
+//         </p>
+//         <ArrowIconWithoutLine width={15} height={15} classname={s.arrowIcon}/>
+//       </div>
+//       <div className={clsx(s.option, closeDropdown && s.optionClosed)}>
+//         {dropDownValuesArray.map((elem) => (
+//           <div key={elem} className={s.optionElem} onClick={() => showElem(elem)}>{elem}</div>
+//         ))}
+//       </div>
+//     </div>
+//   )
+// }
+
+type InputProps = {
   title: string;
   placeholder: string;
-  className?: string
-  onChange: any
-  onBlur: any;
-  inputProps: any
+  onChange: (formName: ListAssetsFormsNames, form: UiForm<any>, e: HTMLInputElement) => void;
+  form: UiForm<any>;
+  formType: ListAssetsFormsNames;
+  inputProps:  any;
+  classname?: string
+  inputType?: 'number' | 'string';
+  //onBlur: any;
+  // withDropdown?: boolean;
+  // dropDownValuesArray?: any[];
 }
 
-export const BaseInput = ((props: Props) => {
-  const {className, title, placeholder, onChange, onBlur, inputProps} = props
+export const BaseInput = ((props: InputProps) => {
+  const {classname, title, placeholder, onChange, inputProps, inputType = 'string', formType, form} = props
+  const inputRef = useRef<HTMLInputElement>(null);
+  const onlyNumbers = (value: string) => {
+    const regExp = /^[0-9\b]+$/;
+    if (value === '' || regExp.test(value)) {
+      return value;
+    } else {
+      return ''
+    }
+  }
 
+  const changeNumberValue = (increment: boolean) => {
+    let currentValue = inputRef.current!.value;
+    let newValue = increment ? Number(currentValue) + 1 : Number(currentValue) - 1;
+    inputRef.current!.value = onlyNumbers(newValue.toString())
+    onChange(formType, form, inputRef.current!)
+  }
   return (
-    <div>
+    <div className={classname}>
       <p className={s.title}>{title}</p>
-      <input type="text" className={clsx(className, s.root)} placeholder={placeholder} onChange={onChange}
-             onBlur={onBlur} {...inputProps}/>
+      <div className={clsx(s.inputWrapper, inputProps['aria-invalid'] && s.invalidInput)}>
+        <input placeholder={placeholder} onChange={(e) => onChange(formType, form, e.target)} {...inputProps}
+               ref={inputRef} className={s.input}/>
+        {inputType === 'number' && <div className={s.signs}>
+          <div className={s.sign} onClick={() => changeNumberValue(true)}>
+            +
+          </div>
+          <div className={s.sign} onClick={() => changeNumberValue(false)}>
+            -
+          </div>
+        </div>}
+      </div>
+      {/*{(withDropdown && dropDownValuesArray) && <DropDown dropDownValuesArray={dropDownValuesArray}/>}*/}
     </div>
   )
 })

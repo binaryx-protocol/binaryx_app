@@ -57,3 +57,62 @@
   display: flex;
   justify-content: center;
 }
+.formsWrapper{
+  display: flex;
+  flex-direction: column;
+}
+.form{
+  width: 50vw;
+  border: 1px solid var(--color--border);
+  border-radius: 24px;
+  padding: 24px;
+  margin-left: 8px;
+}
+.footerElems{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 40px;
+  margin-left: 8px;
+}
+.backButtonForm{
+  display: flex;
+  align-items: center;
+  background-color: var(--color--secondary-bg);
+  p{
+    color:var(--color-text-secondary);
+  }
+}
+.backArrow{
+  transform: rotate(90deg);
+  margin-right: 16px;
+  path{
+    stroke: var(--color-text-secondary);
+  }
+}
+.continueBlock{
+  display: flex;
+  align-items: center;
+}
+.warning{
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--font-color_placeholder);
+  padding-left: 10px;
+}
+.continueButtonForm{
+  display: flex;
+  align-items: center;
+  background-color: var(--font-color_placeholder);
+  margin-left: 16px;
+}
+.continueButtonFormActive{
+  background-color: #6F4DC4;
+}
+.continueArrow{
+  transform: rotate(270deg);
+  margin-left: 16px;
+    path{
+      stroke: var(--color--primary-bg);
+    }
+}

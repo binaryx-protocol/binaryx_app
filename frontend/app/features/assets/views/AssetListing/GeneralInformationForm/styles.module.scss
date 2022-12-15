@@ -1,0 +1,62 @@
+.root {
+  p {
+    margin: 0;
+  }
+}
+
+.headerWrapper {
+  margin-bottom: 16px;
+}
+
+.header {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.headerDescription {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.twoInputs {
+  display: flex;
+  align-items: flex-end;
+}
+
+.baseInput, .baseSelect {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.baseSelect {
+  margin-right: 8px;
+}
+
+.baseInput {
+  &:not(&:first-child ) {
+    margin-left: 8px;
+  }
+}
+
+.textArea {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.fourInputs {
+  display: flex;
+}
+
+.switcher {
+  width: 100%;
+  margin-left: 8px;
+}
+
+.dragAndDrop {
+  margin-top: 16px;
+}
+
+.headerSecond {
+  margin-top: 32px;
+}
