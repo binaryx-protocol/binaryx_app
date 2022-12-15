@@ -104,11 +104,11 @@ export const chainInfo = {
   // },
   arbitrumGoerli: {
     chainInfo: arbitrumGoerli,
-    contractsAddresses: deployedAddresses(deploysArbitrumGoerli)
+    contractsAddresses: deployedAddresses(deploysArbitrumGoerli as any)
   },
   localhost: {
     chainInfo: localhost,
-    contractsAddresses: deployedAddresses(deploysLocalhost)
+    contractsAddresses: deployedAddresses(deploysLocalhost as any)
   }
 }
 
@@ -124,6 +124,6 @@ export const getActiveConfig = (preferredRpcName: string) :ChainInfo | null => {
     'i2.binaryx.com': 'arbitrumGoerli',
   }[window.location.hostname];
 
-  return chainInfo[rpcName]!;
+  return chainInfo[rpcName || 'arbitrumGoerli']!;
 }
 
