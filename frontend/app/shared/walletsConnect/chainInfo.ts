@@ -86,7 +86,7 @@ export const arbitrumGoerli: Chain = {
   }
 }
 
-function deployedAddresses(deploys): ContractAddresses {
+function deployedAddresses(deploys: any): ContractAddresses {
   return {
     bnrxRootToken: deploys.BNRXToken,
     usdtL1Address: '',
@@ -112,7 +112,7 @@ export const chainInfo = {
   }
 }
 
-export const getActiveConfig = (preferredRpcName: string) :ChainInfo | null => {
+export const getActiveConfig = (preferredRpcName: string = '') :ChainInfo | null => {
   if (typeof window === "undefined") {
     return null;
   }
@@ -124,6 +124,6 @@ export const getActiveConfig = (preferredRpcName: string) :ChainInfo | null => {
     'i2.binaryx.com': 'arbitrumGoerli',
   }[window.location.hostname];
 
-  return chainInfo[rpcName || 'arbitrumGoerli']!;
+  return chainInfo[rpcName as keyof typeof chainInfo]!;
 }
 
