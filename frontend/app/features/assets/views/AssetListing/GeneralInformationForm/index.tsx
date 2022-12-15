@@ -65,7 +65,8 @@ export const GeneralInformationForm = (props: Props) => {
       </div>
       <div className={s.textArea}>
         <TextArea placeholder={'Description'} title={'Description'} name={'description'}
-                  onChange={(e: any) => onChangeLocal(ListAssetsFormsNames.generalInfoForm, generalInfoForm, e.target)}/>
+                  onChange={(e: any) => onChangeLocal(ListAssetsFormsNames.generalInfoForm, generalInfoForm, e.target)}
+                  inputProps={inputProps(generalInfoForm, 'description')}/>
       </div>
       <div className={s.fourInputs}>
         <BaseInput title={'Beds'} placeholder={'Beds'}

@@ -29,7 +29,7 @@ export const BaseSelect = (props: Props) => {
   return (
     <div className={clsx(s.selectWrapper, classname)}>
       <p className={s.title}>{title}</p>
-      <div className={clsx(s.select, inputProps['aria-invalid'] && s.invalid)}
+      <div className={clsx(s.select, inputProps['aria-invalid'] && s.invalidInput)}
            onClick={() => setCloseDropdown(!closeDropdown)}>
         <input readOnly placeholder={placeholder} {...inputProps}
                ref={inputRef}/>

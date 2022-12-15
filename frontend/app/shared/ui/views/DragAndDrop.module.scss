@@ -20,7 +20,9 @@
     font-size: 14px;
   }
 }
-
+.invalidInput{
+  border: 1px solid red;
+}
 .dragAndDropActive {
   background-color: #6F4DC4;
   color: var(--color--primary-bg);
