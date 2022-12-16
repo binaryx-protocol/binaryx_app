@@ -1,0 +1,51 @@
+### Invalid asset
+POST http://localhost:3001/assets HTTP/1.1
+Content-Type: application/json
+Cookie: key=first-value
+
+
+{
+  "attrs": {
+    "scAddress": "Foo",
+    "scId": "Foo",
+    "cTitle": "Foo"
+  }
+}
+
+
+### OK asset
+POST http://localhost:3001/assets HTTP/1.1
+Content-Type: application/json
+Cookie: key=first-value
+
+{
+  "attrs": {
+    "scAddress": "0x12345E3C0baAB3E08CdfD552C960A1050f373042",
+    "scId": "Foo",
+    "cTitle": "cTitle",
+    "cStatus": "cStatus",
+    "landType": "landType",
+    "landArea": 155,
+    "propertyType": "propertyType",
+    "propertyArea": "propertyArea",
+    "beds": 2,
+    "bedrooms": 2,
+    "roomsTotal": 2,
+    "kitchens": 1,
+    "livingRooms": 3,
+    "terraces": 0,
+    "balconies": 2,
+    "garages": 1,
+    "bathRooms": 2,
+    "occupation": "occupation",
+    "images": ["images"],
+    "documents": ["documents", "documents"],
+    "averageCoCPercentage": 12,
+    "projectedIrrPercentage": 12,
+    "taxesPercentage": 1,
+    "insurancePercentage": 0,
+    "propertyManagementPercentage": 12,
+    "utilitiesPercentage": 12,
+    "llcAdministrationFeePercentage": 12
+  }
+}
