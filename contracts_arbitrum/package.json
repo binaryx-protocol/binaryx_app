@@ -24,7 +24,6 @@
     "arb-shared-dependencies": "^1.0.0",
     "dotenv": "^8.2.0",
     "hardhat-deploy": "^0.11.22",
-    "hardhat-deploy-ethers": "^0.3.0-beta.13",
     "hardhat-erc1820": "^0.1.0",
     "hardhat-gas-reporter": "^1.0.9",
     "ts-node": "^10.9.1",
