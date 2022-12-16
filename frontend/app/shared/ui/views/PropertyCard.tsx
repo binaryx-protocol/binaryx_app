@@ -21,11 +21,11 @@ export const PropertyCard = (props: Props) => {
     <>
       <div className={clsx(s.propertyCard, isActive ? s.purpleBorder : s.grayBorder)}>
         <div className={s.mainInfo}>
-          <Image src={property.asset.propertyInfo_images} alt={'propertyImage'} className={s.propertyImage} width={123}
+          <img src={property.asset.propertyInfo_images} alt={'image'} className={s.propertyImage} width={123}
                  height={92}/>
           <div className={s.propertyNameAddr}>
-            <p className={clsx(s.propertyName, s.upperText)}>{'property.asset.name'}</p>
-            <p className={s.greyText}>{'property.asset.name'}</p>
+            <p className={clsx(s.propertyName, s.upperText)}>{property.asset.name}</p>
+            <p className={s.greyText}>{property.asset.name}</p>
           </div>
           {xs ? <div className={s.propertyInfo}>
               <div>
