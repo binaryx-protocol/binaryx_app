@@ -16,7 +16,10 @@ const accounts =
   process.env['PRIVATE_KEY']
     ? [process.env['PRIVATE_KEY']] : { mnemonic: process.env['MNEMONIC'] };
 
-const hardhatNetwork = process.env.FORK ?
+const hardhatNetwork = process.env.NO_FORK ?
+  {
+    deploy: ['deploy/dev']
+  }:
   {
     chainId: 421613,
     forking: {
@@ -28,9 +31,6 @@ const hardhatNetwork = process.env.FORK ?
     },
     deploy: [ 'deploy/dev' ],
     tags: ["test", "local"]
-  }
-  : {
-    deploy: ['deploy/dev']
   }
 
 const config: HardhatUserConfig = {

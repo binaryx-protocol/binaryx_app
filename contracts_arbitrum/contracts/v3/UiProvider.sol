@@ -2,12 +2,9 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol";
-import "@openzeppelin/contracts/utils/Base64.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
 import "./PropertyFactory.sol";
 import "./Asset.sol";
-import "hardhat/console.sol";
+//import "hardhat/console.sol";
 
 contract UiProvider is OwnableUpgradeable {
   PropertyFactory _assetFactory;
