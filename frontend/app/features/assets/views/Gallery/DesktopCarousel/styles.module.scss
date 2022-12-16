@@ -5,7 +5,8 @@
 }
 
 .imageMain {
-  height: 51vh !important;
+  height: 100%;
+  border-radius: 12px;
 }
 
 .currentSlide {
@@ -58,6 +59,7 @@
   height: 80px;
   font-size: 30px;
 }
+
 .image {
   cursor: pointer;
   transition: all .3s ease;
@@ -65,6 +67,7 @@
   border-radius: 12px;
   width: 100%;
   height: 23.5%;
+
   &:hover {
     cursor: pointer;
   }

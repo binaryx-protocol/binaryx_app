@@ -25,7 +25,6 @@ type Props = {
 
 export const DesktopCarousel = (props: Props) => {
   const {images, setIsFullWidth, isFullWidth, setCurrentSlide, currentSlide} = props
-  console.log(currentSlide)
   const displayIsShow = isFullWidth ? 'block' : 'none';
 
   const styleForArrows = {
@@ -111,7 +110,7 @@ export const DesktopCarousel = (props: Props) => {
             <Slider>
               {images.map((image, index) => (
                 <Slide index={index} key={index}>
-                  <CarouselImage hasMasterSpinner={false} src={image.src} className={clsx(s.image, s.imageMain)}
+                  <CarouselImage hasMasterSpinner={false} src={image.src} className={s.imageMain}
                                  onClick={() => {
                                    toggleFullWidth(), toggleCurrentSlide(index);
                                  }}/>
@@ -121,8 +120,9 @@ export const DesktopCarousel = (props: Props) => {
           </CarouselProvider>
         </div>
         <div className={s.listOfSlides}>
-          {images.map((image, index) => (
-            <img src={image.src} alt={'image'} className={clsx(s.image)} key={index}/>
+          {images.slice(0, 4).map((image, index) => (
+            <img src={image.src} alt={'image'} className={clsx(s.image)} key={index}
+                 onClick={() => setCurrentSlide(index)}/>
           ))}
         </div>
       </div>
