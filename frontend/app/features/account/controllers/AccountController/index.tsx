@@ -7,12 +7,15 @@ import {PropertyCard} from "../../../../shared/ui/views/PropertyCard";
 import {Button} from "../../../../shared/ui/views/Button";
 import {ArrowIcon} from "../../views/svg/ArrowIcon";
 import {DetailsTable} from "../../views/DetailsTable";
+import {useWindowSize} from "../../../../hooks/useWindowSize";
 
 export const AccountController = () => {
   const doLoadMyRewards = useSetAtom(accountModel.$doLoadMyRewards);
   const doClaimMyRewards = useSetAtom(accountModel.$doClaimMyRewards);
   const accountInfo = useAtomValue(accountModel.$accountInfo);
   const {isConnected, address} = useAccount()
+  const {xs} = useWindowSize()
+
   useEffect(() => {
     if (isConnected) {
       doLoadMyRewards();
@@ -50,7 +53,7 @@ export const AccountController = () => {
               </div>
             </div>
             <div>
-              <p className={s.property}>Your Property</p>
+              {!xs && <p className={s.property}>Your Property</p>}
               {accountInfo && accountInfo.rewards.map((reward,i) =>(
                 <PropertyCard property={reward} key={i}/>
               ))}

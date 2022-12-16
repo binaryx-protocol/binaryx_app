@@ -6,6 +6,7 @@ import Image from "next/image";
 import IconCoins from "../../assets/views/SideMenu/icons/IconCoins";
 import IconProperty from "../../assets/views/SideMenu/icons/IconProperty";
 import {UiAccountInfo} from "../models/accountModel";
+import {useWindowSize} from "../../../hooks/useWindowSize";
 
 type Props = {
   property: UiAccountInfo;
@@ -14,27 +15,28 @@ type Props = {
 export const DetailsTable = (props: Props) => {
   const {property} = props
   const currentAccountValue = property.totalPropertyValue + property.totalEarned;
+  const {xs} = useWindowSize()
   return (
     <table className={s.tableDetails}>
       <tbody>
       <tr className={s.trFirst}>
         <td className={clsx(s.accountDetails, s.horizontalBorder)}>
-          <div>
+          {!xs && <div>
             <div className={s.iconWrapper}>
               <Image src={walletIcon} alt={'walletIcon'}/>
             </div>
-          </div>
+          </div>}
           <div>
             <p className={s.details_text_grey}>Current Account Value</p>
             <p className={s.details_text_purple}>${currentAccountValue.toFixed(2)}</p>
           </div>
         </td>
         <td className={s.accountDetails}>
-          <div>
+          {!xs && <div>
             <div className={s.iconWrapper}>
               <IconProperty classname={s.iconsColor}/>
             </div>
-          </div>
+          </div>}
           <div>
             <p className={s.details_text_grey}>Properties Ownew</p>
             <p className={s.details_text_purple}>{property.rewards.length}</p>
@@ -43,22 +45,22 @@ export const DetailsTable = (props: Props) => {
       </tr>
       <tr className={s.trSecond}>
         <td className={clsx(s.accountDetails, s.horizontalBorder)}>
-          <div>
+          {!xs && <div>
             <div className={s.iconWrapper}>
               <IconCoins width={20} height={20} classname={s.iconsColor}/>
             </div>
-          </div>
+          </div>}
           <div>
             <p className={s.details_text_grey}>Total Rent Earned</p>
             <p className={s.details_text_purple}>+ ${property.totalEarned}</p>
           </div>
         </td>
         <td className={s.accountDetails}>
-          <div>
+          {!xs && <div>
             <div className={s.iconWrapper}>
               <Image src={graphicIcon} alt={'graphicIcon'}/>
             </div>
-          </div>
+          </div>}
           <div>
             <p className={s.details_text_grey}>Total Property Value</p>
             <p className={s.details_text_purple}>${property.totalPropertyValue}</p>
