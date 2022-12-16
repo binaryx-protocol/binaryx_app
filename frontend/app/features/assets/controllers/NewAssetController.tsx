@@ -30,9 +30,10 @@ export const NewAssetController = () => {
   }
 
   return (
-    <AssetListing assetListingStatus={assetListingStatus} onChangeAssetListingStatus={setAssetListingStatus}
-                  onChange={onFormChange} generalInfoForm={generalInfoForm} legalInfoForm={legalInfoForm}
-                  investmentReturnForm={investmentReturnForm} rentalManagementForm={rentalManagementForm}
-                  returnHome={returnHome} currentForm={currentForm} onCurrentFormChange={setCurrentForm}/>
+    address ? <AssetListing assetListingStatus={assetListingStatus} onChangeAssetListingStatus={setAssetListingStatus}
+                            onChange={onFormChange} generalInfoForm={generalInfoForm} legalInfoForm={legalInfoForm}
+                            investmentReturnForm={investmentReturnForm} rentalManagementForm={rentalManagementForm}
+                            returnHome={returnHome} currentForm={currentForm}
+                            onCurrentFormChange={setCurrentForm}/> : <><p>Please Connect your wallet!</p></>
   )
 }
