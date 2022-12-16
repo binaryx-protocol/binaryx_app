@@ -9,10 +9,11 @@ import {
   Slide,
   ButtonBack,
   ButtonNext,
-  Image,
+  Image as CarouselImage,
 } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import clsx from "clsx";
+import Image from "next/image";
 
 type Props = {
   isFullWidth: boolean;
@@ -24,7 +25,7 @@ type Props = {
 
 export const DesktopCarousel = (props: Props) => {
   const {images, setIsFullWidth, isFullWidth, setCurrentSlide, currentSlide} = props
-
+  console.log(currentSlide)
   const displayIsShow = isFullWidth ? 'block' : 'none';
 
   const styleForArrows = {
@@ -87,7 +88,7 @@ export const DesktopCarousel = (props: Props) => {
             {images.map((image, index) => {
               return (
                 <Slide index={index} key={index}>
-                  <Image
+                  <CarouselImage
                     src={image.src}
                     hasMasterSpinner={false}
                     style={{borderRadius: '10px'}}
@@ -107,39 +108,22 @@ export const DesktopCarousel = (props: Props) => {
         <div className={s.currentSlide}>
           <CarouselProvider naturalSlideWidth={67} naturalSlideHeight={43} totalSlides={images?.length}
                             infinite={true} currentSlide={currentSlide} orientation={'vertical'}>
-            <div className={s.imageFullWidthControl}>
-              <CloseIcon
-                className={s.closeIcon}
-                onClick={toggleFullWidth}
-                style={{display: displayIsShow}}
-              />
-              <ButtonBack style={styleForArrows} className={s.buttonBack}>
-                <ArrowBackIosIcon className={s.arrowBack}/>
-              </ButtonBack>
-            </div>
             <Slider>
               {images.map((image, index) => (
                 <Slide index={index} key={index}>
-                  <Image hasMasterSpinner={false} src={image.src} className={clsx(s.image, s.imageMain)}
-                         onClick={() => {
-                           toggleFullWidth(), toggleCurrentSlide(index);
-                         }}/>
+                  <CarouselImage hasMasterSpinner={false} src={image.src} className={clsx(s.image, s.imageMain)}
+                                 onClick={() => {
+                                   toggleFullWidth(), toggleCurrentSlide(index);
+                                 }}/>
                 </Slide>
               ))}
             </Slider>
           </CarouselProvider>
         </div>
         <div className={s.listOfSlides}>
-          <CarouselProvider naturalSlideWidth={70} naturalSlideHeight={42} totalSlides={images?.length}
-                            orientation={'vertical'} infinite={true} className={s.listOfSlidesCarousel}>
-            <div className={s.listOfSlidesCarouselChild}>
-              {images.map((image, index) => (
-                <Slide index={index} key={index} onClick={() => setCurrentSlide(index)} className={s.listOfImages}>
-                  <Image hasMasterSpinner={false} src={image.src} className={clsx(s.image)}/>
-                </Slide>
-              ))}
-            </div>
-          </CarouselProvider>
+          {images.map((image, index) => (
+            <img src={image.src} alt={'image'} className={clsx(s.image)} key={index}/>
+          ))}
         </div>
       </div>
     </>
