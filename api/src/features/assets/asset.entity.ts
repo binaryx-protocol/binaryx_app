@@ -65,11 +65,38 @@ export class Asset {
   @Column()
   occupation: string;
 
-  @Column({ nullable: false, type: 'jsonb' })
+  @Column({ nullable: false, type: 'jsonb', default: [] })
   images: string[];
 
-  @Column({ nullable: false, type: 'jsonb' })
-  documents: string[];
+  @Column({ nullable: false, type: 'jsonb', default: [] })
+  saleDocuments: string[];
+
+  @Column({ nullable: false, type: 'jsonb', default: [] })
+  agreementIntent: string[];
+
+  @Column({ nullable: false, type: 'jsonb', default: [] })
+  sellingAgreement: string[];
+
+  @Column({ nullable: false, type: 'jsonb', default: [] })
+  llcPropertyDocuments: string[];
+
+  @Column({ nullable: false, type: 'jsonb', default: [] })
+  ownershipAgreement: string[];
+
+  @Column({ nullable: false, type: 'jsonb', default: [] })
+  tokenizationAgreement: string[];
+
+  @Column({ nullable: false, type: 'jsonb', default: [] })
+  llcFormationDocument: string[];
+
+  @Column({ nullable: false, type: 'jsonb', default: [] })
+  notaryConclusion: string[];
+
+  @Column({ nullable: false, type: 'jsonb', default: [] })
+  managementDocuments: string[];
+
+  @Column({ nullable: false, type: 'jsonb', default: [] })
+  rentalAgreement: string[];
 
   @Column()
   averageCoCPercentage: number;
