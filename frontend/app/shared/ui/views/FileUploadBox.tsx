@@ -11,13 +11,11 @@ type Props = {
   title: string;
   placeholder: string;
   name: string;
-  onFileUpload: (formName: ListAssetsFormsNames, form: UiForm<any>, name: string, files: any[]) => void;
-  form: UiForm<any>;
-  formType: ListAssetsFormsNames;
+  onFileUpload: (name: string, files: any[]) => void;
   classname?: string;
 }
 export const FileUploadBox = (props: Props) => {
-  const {placeholder, onFileUpload, title,name,form,formType, classname = ''} = props
+  const {placeholder, onFileUpload, title,name, classname = ''} = props
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [fileList, setFileList] = useState<File[]>()
   const onFileUploadBrowse = () => {
@@ -28,7 +26,7 @@ export const FileUploadBox = (props: Props) => {
     const fileListArray: File[] = Array.from(e.target.files);
     setFileList(fileListArray)
     const fileArrayString = await toBase64FilesArray(fileListArray);
-    onFileUpload(formType, form, name, fileArrayString)
+    onFileUpload(name, fileArrayString)
   }
 
   return (

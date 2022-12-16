@@ -1,5 +1,5 @@
 import s from './BaseSelect.module.scss'
-import {ArrowIconWithoutLine} from "../../../features/assets/views/ArrowIconWithoutLine";
+import {ArrowIconWithoutLine} from "./ArrowIconWithoutLine";
 import React, {useRef, useState} from "react";
 import clsx from "clsx";
 import {ListAssetsFormsNames} from "../../../features/assets/types";
@@ -9,22 +9,20 @@ type Props = {
   placeholder: string;
   title: string;
   optionArray: string[] | number[]
-  onChange: (formName: ListAssetsFormsNames, form: UiForm<any>, e: HTMLInputElement) => void;
-  formType: ListAssetsFormsNames;
-  form: UiForm<any>;
+  onChange: (element: HTMLInputElement) => void;
   inputProps: any;
   classname?: string;
 }
 
 export const BaseSelect = (props: Props) => {
-  const {placeholder, optionArray, inputProps, formType, form, onChange, title, classname} = props;
+  const {placeholder, optionArray, inputProps, onChange, title, classname} = props;
   const [closeDropdown, setCloseDropdown] = useState(true);
   const inputRef = useRef<any>(null)
   const showElem = (value: string | number) => {
     // @ts-ignore
     inputRef.current.value = `${value}`;
     setCloseDropdown(true);
-    onChange(formType, form, inputRef.current)
+    onChange(inputRef.current)
   }
   return (
     <div className={clsx(s.selectWrapper, classname)}>

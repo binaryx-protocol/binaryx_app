@@ -4,7 +4,12 @@ import {useAtomValue, useSetAtom} from "jotai";
 import {SyntheticEvent, useEffect, useState} from "react";
 import {useAccount} from "wagmi";
 import {AssetListing} from "../views/AssetListing";
-import {AssetListingStatus} from "../types";
+import {
+  AssetListingStatus,
+  ListAssetsFormsNames, UiGeneralInfoForm, UiGeneralInfoFormValues, UiInvestmentReturnForm,
+  UiInvestmentReturnFormValues, UiLegalInfoForm, UiLegalInfoFormValues, UiRentalManagementForm,
+  UiRentalManagementFormValues
+} from "../types";
 import {useRouter} from "next/router";
 import {paths} from "../../../../pkg/paths";
 import {UiForm} from "../../../../pkg/formType";
@@ -28,12 +33,35 @@ export const NewAssetController = () => {
   const returnHome = async () => {
     await router.push(paths.home())
   }
+  const onChangeLocal = (formName: ListAssetsFormsNames, form: UiGeneralInfoForm | UiLegalInfoForm | UiRentalManagementForm | UiInvestmentReturnForm, elem: HTMLInputElement) => {
+    const values = {
+      ...form.values,
+      [elem.name]: elem.value,
+    };
+    onFormChange({changeArgs: {values, touches: form.touches}, formName})
+  }
+  const onClickLocal = (formName: ListAssetsFormsNames, form: UiGeneralInfoForm | UiLegalInfoForm | UiRentalManagementForm | UiInvestmentReturnForm, name: string, value: string) => {
+    const values = {
+      ...form.values,
+      [name]: value,
+    };
+    onFormChange({changeArgs: {values, touches: form.touches}, formName})
+  }
+  const onFileUploadLocal = (formName: ListAssetsFormsNames, form: UiGeneralInfoForm | UiLegalInfoForm | UiRentalManagementForm | UiInvestmentReturnForm, name: string, files: string[]) => {
+    const values = {
+      ...form.values,
+      [name]: files,
+    };
+    onFormChange({changeArgs: {values, touches: form.touches}, formName})
+  }
+
 
   return (
-    address ? <AssetListing assetListingStatus={assetListingStatus} onChangeAssetListingStatus={setAssetListingStatus}
-                            onChange={onFormChange} generalInfoForm={generalInfoForm} legalInfoForm={legalInfoForm}
-                            investmentReturnForm={investmentReturnForm} rentalManagementForm={rentalManagementForm}
-                            returnHome={returnHome} currentForm={currentForm}
-                            onCurrentFormChange={setCurrentForm}/> : <><p>Please Connect your wallet!</p></>
+    <AssetListing assetListingStatus={assetListingStatus} onChangeAssetListingStatus={setAssetListingStatus}
+                  onChangeLocal={onChangeLocal} generalInfoForm={generalInfoForm} legalInfoForm={legalInfoForm}
+                  investmentReturnForm={investmentReturnForm} rentalManagementForm={rentalManagementForm}
+                  onReturnHome={returnHome} currentForm={currentForm}
+                  onCurrentFormChange={setCurrentForm} onClickLocal={onClickLocal} onFileUploadLocal={onFileUploadLocal}/>
+    // : <><p>Please Connect your wallet!</p></>
   )
 }

@@ -14,7 +14,6 @@ type Props = {
 }
 export const TextArea = (props: Props) => {
   const {placeholder, title, onChange, name, inputProps} = props
-  console.log(inputProps)
   return (
     <div>
       <p className={s.title}>{title}</p>

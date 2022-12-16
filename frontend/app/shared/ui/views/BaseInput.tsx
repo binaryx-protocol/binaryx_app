@@ -38,10 +38,8 @@ import {UiForm} from "../../../../pkg/formType";
 type InputProps = {
   title: string;
   placeholder: string;
-  onChange: (formName: ListAssetsFormsNames, form: UiForm<any>, e: HTMLInputElement) => void;
-  form: UiForm<any>;
-  formType: ListAssetsFormsNames;
-  inputProps:  any;
+  onChange: (e: HTMLInputElement) => void;
+  inputProps: any;
   classname?: string
   inputType?: 'number' | 'string';
   //onBlur: any;
@@ -50,7 +48,7 @@ type InputProps = {
 }
 
 export const BaseInput = ((props: InputProps) => {
-  const {classname, title, placeholder, onChange, inputProps, inputType = 'string', formType, form} = props
+  const {classname, title, placeholder, onChange, inputProps, inputType = 'string'} = props
   const inputRef = useRef<HTMLInputElement>(null);
   const onlyNumbers = (value: string) => {
     const regExp = /^[0-9\b]+$/;
@@ -65,13 +63,13 @@ export const BaseInput = ((props: InputProps) => {
     let currentValue = inputRef.current!.value;
     let newValue = increment ? Number(currentValue) + 1 : Number(currentValue) - 1;
     inputRef.current!.value = onlyNumbers(newValue.toString())
-    onChange(formType, form, inputRef.current!)
+    onChange(inputRef.current!)
   }
   return (
     <div className={classname}>
       <p className={s.title}>{title}</p>
       <div className={clsx(s.inputWrapper, inputProps['aria-invalid'] && s.invalidInput)}>
-        <input placeholder={placeholder} onChange={(e) => onChange(formType, form, e.target)} {...inputProps}
+        <input placeholder={placeholder} onChange={(e) => onChange(e.target)} {...inputProps}
                ref={inputRef} className={s.input}/>
         {inputType === 'number' && <div className={s.signs}>
           <div className={s.sign} onClick={() => changeNumberValue(true)}>

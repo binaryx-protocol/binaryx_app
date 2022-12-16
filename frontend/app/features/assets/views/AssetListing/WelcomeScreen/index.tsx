@@ -1,8 +1,7 @@
 import s from './styles.module.scss'
 import Image from "next/image";
 import {Button} from "../../../../../shared/ui/views/Button";
-import { ArrowIcon } from 'features/account/views/svg/ArrowIcon';
-import {ArrowIconWithoutLine} from "../../ArrowIconWithoutLine";
+import {ArrowIconWithoutLine} from "../../../../../shared/ui/views/ArrowIconWithoutLine";
 import {AssetListingStatus} from "../../../types";
 
 type Props = {

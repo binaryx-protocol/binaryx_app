@@ -1,8 +1,7 @@
 import s from './styles.module.scss'
 import Image from "next/image";
 import {Button} from "../../../../../shared/ui/views/Button";
-import {ArrowIconWithoutLine} from "../../ArrowIconWithoutLine";
-import {AssetListingStatus} from "../../../types";
+import {ArrowIconWithoutLine} from "../../../../../shared/ui/views/ArrowIconWithoutLine";
 type Props = {
   returnHome: () => void;
 }

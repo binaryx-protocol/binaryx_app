@@ -6,9 +6,8 @@ import {
   ListAssetsFormsNames,
   Occupation,
   PropertyType,
-  UiFormChangeArgs,
+  UiFormChangeArgs, UiGeneralInfoForm, UiInvestmentReturnForm, UiLegalInfoForm, UiRentalManagementForm,
 } from "../types";
-import {UiForm} from "../../../../pkg/formType";
 import {assetValidator} from "./assetValidator";
 
 const defaultAttrs = (): DefaultAssetListAttr => ({
@@ -29,7 +28,7 @@ const defaultAttrs = (): DefaultAssetListAttr => ({
     garages: 0,
     bathrooms: 0,
     occupation: Occupation.occupied,
-    images: [''],
+    images: [],
     country: '',
     state: '',
     city: '',
@@ -39,16 +38,16 @@ const defaultAttrs = (): DefaultAssetListAttr => ({
     latitude: '',
   },
   legalInfo: {
-    saleDocuments: [''],
-    agreementIntent: [''],
-    sellingAgreement: [''],
-    llcPropertyDocuments: [''],
-    ownershipAgreement: [''],
-    tokenizationAgreement: [''],
-    llcFormationDocument: [''],
-    notaryConclusion: [''],
-    managementDocuments: [''],
-    rentalAgreement: [''],
+    saleDocuments: [],
+    agreementIntent: [],
+    sellingAgreement: [],
+    llcPropertyDocuments: [],
+    ownershipAgreement:[],
+    tokenizationAgreement:[],
+    llcFormationDocument: [],
+    notaryConclusion:[],
+    managementDocuments: [],
+    rentalAgreement: [],
   },
   investmentReturn: {
     tokenName: '',
@@ -76,28 +75,28 @@ const defaultAttrs = (): DefaultAssetListAttr => ({
 })
 
 // stores
-export const $generalInfoForm = atom<UiForm<any>>({
+export const $generalInfoForm = atom<UiGeneralInfoForm>({
   values: defaultAttrs().generalInfo,
   errors: {},
   touches: {},
   isValid: false,
   isSubmitTouched: false,
 })
-export const $legalInfoForm = atom<UiForm<any>>({
+export const $legalInfoForm = atom<UiLegalInfoForm>({
   values: defaultAttrs().legalInfo,
   errors: {},
   touches: {},
   isValid: false,
   isSubmitTouched: false,
 })
-export const $investmentReturnForm = atom<UiForm<any>>({
+export const $investmentReturnForm = atom<UiInvestmentReturnForm>({
   values: defaultAttrs().investmentReturn,
   errors: {},
   touches: {},
   isValid: false,
   isSubmitTouched: false,
 })
-export const $rentalManagementForm = atom<UiForm<any>>({
+export const $rentalManagementForm = atom<UiRentalManagementForm>({
   values: defaultAttrs().rentalManagement,
   errors: {},
   touches: {},
@@ -135,20 +134,52 @@ export const $onFormChange = atom(null, (get, set, args: { changeArgs: UiFormCha
 
 const $doUpdateFormValues = atom(null, (get, set, args: { changeArgs: UiFormChangeArgs, formName: ListAssetsFormsNames }) => {
   const {changeArgs, formName} = args
-  const form = get(listAssetsForms[formName])
+  if(formName === ListAssetsFormsNames.generalInfoForm){
+    const form = get(listAssetsForms[formName])
 
-  const newForm = {
-    ...form,
-    values: changeArgs.values,
-    touches: changeArgs.touches,
+    const newForm = {
+      ...form,
+      values: changeArgs.values,
+      touches: changeArgs.touches,
+    }
+    set(listAssetsForms[formName], newForm)
   }
-  set(listAssetsForms[formName], newForm)
+  if(formName === ListAssetsFormsNames.legalInfoForm){
+    const form = get(listAssetsForms[formName])
+
+    const newForm = {
+      ...form,
+      values: changeArgs.values,
+      touches: changeArgs.touches,
+    }
+    set(listAssetsForms[formName], newForm)
+  }
+  if(formName === ListAssetsFormsNames.investmentReturnForm){
+    const form = get(listAssetsForms[formName])
+
+    const newForm = {
+      ...form,
+      values: changeArgs.values,
+      touches: changeArgs.touches,
+    }
+    set(listAssetsForms[formName], newForm)
+  }
+  if(formName === ListAssetsFormsNames.rentalManagementForm){
+    const form = get(listAssetsForms[formName])
+
+    const newForm = {
+      ...form,
+      values: changeArgs.values,
+      touches: changeArgs.touches,
+    }
+    set(listAssetsForms[formName], newForm)
+  }
 })
 
 const $doValidateFormValues = atom(null, (get, set, args: { changeArgs: UiFormChangeArgs, formName: ListAssetsFormsNames }) => {
   const {changeArgs, formName} = args
-  const form = get(listAssetsForms[formName])
   if (formName === ListAssetsFormsNames.generalInfoForm) {
+    const form = get(listAssetsForms[formName])
     assetValidator.isGeneralInfoValid(changeArgs.values)
       .then(({errors, isValid}) => {
         const newForm = {
@@ -160,6 +191,7 @@ const $doValidateFormValues = atom(null, (get, set, args: { changeArgs: UiFormCh
       })
   }
   if (formName === ListAssetsFormsNames.legalInfoForm) {
+    const form = get(listAssetsForms[formName])
     assetValidator.isLegalInfoValid(changeArgs.values)
       .then(({errors, isValid}) => {
         const newForm = {
@@ -171,6 +203,7 @@ const $doValidateFormValues = atom(null, (get, set, args: { changeArgs: UiFormCh
       })
   }
   if (formName === ListAssetsFormsNames.investmentReturnForm) {
+    const form = get(listAssetsForms[formName])
     assetValidator.isInvestmentReturnValid(changeArgs.values)
       .then(({errors, isValid}) => {
         const newForm = {
@@ -182,6 +215,7 @@ const $doValidateFormValues = atom(null, (get, set, args: { changeArgs: UiFormCh
       })
   }
   if (formName === ListAssetsFormsNames.rentalManagementForm) {
+    const form = get(listAssetsForms[formName])
     assetValidator.isRentalManagementValid(changeArgs.values)
       .then(({errors, isValid}) => {
         const newForm = {

@@ -118,16 +118,16 @@ export type UiRentalManagementFormChangeArgs = {
 
 //Legal Info Form
 export type UiLegalInfoFormValues = {
-  saleDocuments: string[];
-  agreementIntent: string[];
-  sellingAgreement: string[];
-  llcPropertyDocuments: string[];
-  ownershipAgreement: string[];
-  tokenizationAgreement: string[];
-  llcFormationDocument: string[];
-  notaryConclusion: string[];
-  managementDocuments: string[];
-  rentalAgreement: string[];
+  saleDocuments: [];
+  agreementIntent: [];
+  sellingAgreement: [];
+  llcPropertyDocuments: [];
+  ownershipAgreement: [];
+  tokenizationAgreement: [];
+  llcFormationDocument: [];
+  notaryConclusion: [];
+  managementDocuments: [];
+  rentalAgreement: [];
 }
 
 export type UiLegalInfoForm = UiForm<UiLegalInfoFormValues>
@@ -154,7 +154,7 @@ export type UiGeneralInfoFormValues = {
   garages: number;
   bathrooms: number;
   occupation: Occupation;
-  images: string[];
+  images: [];
   country: string;
   state: string;
   city: string;
@@ -195,5 +195,8 @@ export enum ListAssetsFormsNames {
 }
 
 export type ListAssetsForms = {
-  [key in ListAssetsFormsNames]: WritableAtom<UiGeneralInfoForm, UiGeneralInfoForm>
+  generalInfoForm: WritableAtom<UiGeneralInfoForm, UiGeneralInfoForm>,
+  legalInfoForm: WritableAtom<UiLegalInfoForm, UiLegalInfoForm>,
+  investmentReturnForm: WritableAtom<UiInvestmentReturnForm, UiInvestmentReturnForm>,
+  rentalManagementForm: WritableAtom<UiRentalManagementForm, UiRentalManagementForm>,
 }

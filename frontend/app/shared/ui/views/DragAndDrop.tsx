@@ -5,19 +5,15 @@ import {DropTargetMonitor, useDrop} from "react-dnd";
 import {NativeTypes} from "react-dnd-html5-backend";
 import clsx from "clsx";
 import {toBase64FilesArray} from "../../../utils/toBase64";
-import {ListAssetsFormsNames} from "../../../features/assets/types";
-import {UiForm} from "../../../../pkg/formType";
 
 type Props = {
   title: string;
   name: string;
-  onFileUpload: (formName: ListAssetsFormsNames, form: UiForm<any>, name: string, files: any[]) => void;
-  form: UiForm<any>;
-  formType: ListAssetsFormsNames;
+  onFileUpload: (name: string, files: any[]) => void;
 }
 
 export const DragAndDrop = (props: Props) => {
-  const {formType, form, title, name, onFileUpload} = props;
+  const {title, name, onFileUpload} = props;
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [fileList, setFileList] = useState<File[]>()
 
@@ -48,7 +44,7 @@ export const DragAndDrop = (props: Props) => {
     if (fileList) {
       const res = async () => {
         const fileArray = await toBase64FilesArray(fileList);
-        onFileUpload(formType, form, name, fileArray)
+        onFileUpload(name, fileArray)
       }
       res()
     }

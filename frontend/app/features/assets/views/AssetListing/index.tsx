@@ -13,7 +13,7 @@ import {LastScreen} from "./LastScreen";
 import {StatusBar} from "./StatusBar";
 import {UiForm} from "../../../../../pkg/formType";
 import {Button} from "../../../../shared/ui/views/Button";
-import {ArrowIconWithoutLine} from "../ArrowIconWithoutLine";
+import {ArrowIconWithoutLine} from "../../../../shared/ui/views/ArrowIconWithoutLine";
 import clsx from "clsx";
 import {GeneralInformationForm} from "./GeneralInformationForm";
 import {LegalInfoForm} from "./LegalInfoForm";
@@ -29,24 +29,25 @@ type Props = {
   rentalManagementForm: UiRentalManagementForm;
   currentForm: UiForm<any>;
   onCurrentFormChange: (form: UiForm<any>) => void;
-  returnHome: () => void;
-  onChange: ({
-               changeArgs,
-               formName
-             }: { changeArgs: { values: UiGeneralInfoForm['values'], touches: UiGeneralInfoForm['touches'] }, formName: ListAssetsFormsNames }) => void
+  onReturnHome: () => void;
+  onFileUploadLocal: (formName: ListAssetsFormsNames, form: UiGeneralInfoForm | UiLegalInfoForm | UiRentalManagementForm | UiInvestmentReturnForm, name: string, files: string[]) => void;
+  onClickLocal: (formName: ListAssetsFormsNames, form: UiGeneralInfoForm | UiLegalInfoForm | UiRentalManagementForm | UiInvestmentReturnForm, name: string, value: string) => void;
+  onChangeLocal: (formName: ListAssetsFormsNames, form: UiGeneralInfoForm | UiLegalInfoForm | UiRentalManagementForm | UiInvestmentReturnForm, elem: HTMLInputElement) => void
 }
 
 export const AssetListing = (props: Props) => {
   const {
     assetListingStatus,
     onChangeAssetListingStatus,
-    onChange,
+    onChangeLocal,
     generalInfoForm,
     legalInfoForm,
     investmentReturnForm,
     rentalManagementForm,
-    returnHome,
+    onReturnHome,
     onCurrentFormChange,
+    onClickLocal,
+    onFileUploadLocal,
     currentForm
   } = props;
   useEffect(() => {
@@ -87,27 +88,26 @@ export const AssetListing = (props: Props) => {
       onChangeAssetListingStatus(AssetListingStatus.lastScreen);
     }
   }
+  const onClickLocalGeneralForm = (inputName: string, inputValue: string) => {
+    onClickLocal(ListAssetsFormsNames.generalInfoForm, generalInfoForm, inputName, inputValue);
+  }
+  const onChangeLocalGeneralForm = (element: HTMLInputElement) => {
+    onChangeLocal(ListAssetsFormsNames.generalInfoForm, generalInfoForm, element);
+  }
+  const onFileUploadLocalGeneralForm = (inputName: string, files: string[]) => {
+    onFileUploadLocal(ListAssetsFormsNames.generalInfoForm, generalInfoForm, inputName, files);
+  }
 
-  const onChangeLocal = (formName: ListAssetsFormsNames, form: UiForm<any>, elem: HTMLInputElement) => {
-    const values = {
-      ...form.values,
-      [elem.name]: elem.value,
-    };
-    onChange({changeArgs: {values, touches: form.touches}, formName})
+  const onFileUploadLocalLegalForm = (inputName: string, files: string[]) =>{
+    onFileUploadLocal(ListAssetsFormsNames.legalInfoForm, legalInfoForm, inputName, files);
   }
-  const onClickLocal = (formName: ListAssetsFormsNames, form: UiForm<any>, name: string, value: string) => {
-    const values = {
-      ...form.values,
-      [name]: value,
-    };
-    onChange({changeArgs: {values, touches: form.touches}, formName})
+
+  const onChangeLocalInvestmentReturnForm = (element: HTMLInputElement) => {
+    onChangeLocal(ListAssetsFormsNames.investmentReturnForm, investmentReturnForm, element);
   }
-  const onFileUpload = (formName: ListAssetsFormsNames, form: UiForm<any>, name: string, files: string[]) => {
-    const values = {
-      ...form.values,
-      [name]: files,
-    };
-    onChange({changeArgs: {values, touches: form.touches}, formName})
+
+  const onChangeLocalRentalManagementForm = (element: HTMLInputElement) => {
+    onChangeLocal(ListAssetsFormsNames.rentalManagementForm, rentalManagementForm, element);
   }
 
   const inputProps = (form: UiForm<any>, name: string) => {
@@ -124,7 +124,7 @@ export const AssetListing = (props: Props) => {
         <div className={s.navigationText}><span className={s.navigationDisabled}>Home</span> · <span
           className={s.navigationActive}>List Property</span></div>
         <div className={s.backButton}>
-          <div className={s.backButtonIconWrapper} onClick={returnHome}>
+          <div className={s.backButtonIconWrapper} onClick={onReturnHome}>
             <Image src={'/svg/arrow.svg'} alt={'paper'} width={15} height={15} className={s.backButtonIcon}/>
           </div>
           <p className={s.backText}>
@@ -144,16 +144,16 @@ export const AssetListing = (props: Props) => {
             <div className={s.form}>
               {assetListingStatus === AssetListingStatus.generalInfo &&
                 <GeneralInformationForm generalInfoForm={generalInfoForm} inputProps={inputProps}
-                                        onChangeLocal={onChangeLocal} onClickLocal={onClickLocal}
-                                        onFileUpload={onFileUpload}/>}
+                                        onChangeLocal={onChangeLocalGeneralForm} onClickLocal={onClickLocalGeneralForm}
+                                        onFileUpload={onFileUploadLocalGeneralForm}/>}
               {assetListingStatus === AssetListingStatus.legalInfo &&
-                <LegalInfoForm legalInfoForm={legalInfoForm} onFileUpload={onFileUpload}/>}
+                <LegalInfoForm onFileUpload={onFileUploadLocalLegalForm}/>}
               {assetListingStatus === AssetListingStatus.investmentAndReturn &&
                 <InvestmentReturnForm investmentReturnForm={investmentReturnForm} inputProps={inputProps}
-                                      onChangeLocal={onChangeLocal}/>}
+                                      onChangeLocal={onChangeLocalInvestmentReturnForm}/>}
               {assetListingStatus === AssetListingStatus.rentalAndManagement &&
                 <RentalManagementForm rentalManagementForm={rentalManagementForm} inputProps={inputProps}
-                                      onChangeLocal={onChangeLocal}/>}
+                                      onChangeLocal={onChangeLocalRentalManagementForm}/>}
             </div>
             <div className={s.footerElems}>
               <Button className={s.backButtonForm} onClick={backButton}>
@@ -175,7 +175,7 @@ export const AssetListing = (props: Props) => {
       }
       {assetListingStatus === AssetListingStatus.lastScreen &&
         <div className={s.infoScreen}>
-          <LastScreen returnHome={returnHome}/>
+          <LastScreen returnHome={onReturnHome}/>
         </div>
       }
     </div>
