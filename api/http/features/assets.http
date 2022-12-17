@@ -1,8 +1,22 @@
+### Get assets - no params
+GET http://localhost:3001/assets HTTP/1.1
+Content-Type: application/json
+Cookie: key=first-value
+
+### Get asset
+GET http://localhost:3001/assets/4 HTTP/1.1
+Content-Type: application/json
+Cookie: key=first-value
+
+### Get asset - not found
+GET http://localhost:3001/assets/0 HTTP/1.1
+Content-Type: application/json
+Cookie: key=first-value
+
 ### Invalid asset
 POST http://localhost:3001/assets HTTP/1.1
 Content-Type: application/json
 Cookie: key=first-value
-
 
 {
   "attrs": {
@@ -11,7 +25,6 @@ Cookie: key=first-value
     "cTitle": "Foo"
   }
 }
-
 
 ### OK asset
 POST http://localhost:3001/assets HTTP/1.1
@@ -39,7 +52,16 @@ Cookie: key=first-value
     "bathRooms": 2,
     "occupation": "occupation",
     "images": ["images"],
-    "documents": ["documents", "documents"],
+    "saleDocuments": ["saleDocuments"],
+    "agreementIntent": ["doc"],
+    "sellingAgreement": ["doc"],
+    "llcPropertyDocuments": ["doc"],
+    "ownershipAgreement": ["doc"],
+    "tokenizationAgreement": ["doc"],
+    "llcFormationDocument": ["doc"],
+    "notaryConclusion": ["doc"],
+    "managementDocuments": ["doc"],
+    "rentalAgreement": ["doc"],
     "averageCoCPercentage": 12,
     "projectedIrrPercentage": 12,
     "taxesPercentage": 1,
