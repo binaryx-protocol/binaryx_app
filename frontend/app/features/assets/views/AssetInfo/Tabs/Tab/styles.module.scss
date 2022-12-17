@@ -21,7 +21,7 @@
 
 .active {
   border-radius: 12px;
-  background-color: #6F4DC4;
+  background-color: var(--color-main);
   color: var(--color--primary-bg);
 }
 .withUnderlineInactive{
@@ -30,7 +30,7 @@
 .underline{
   width: 32px;
   height: 4px;
-  background-color: #6F4DC4;
+  background-color: var(--color-main);
   border-radius: 8px;
 }
 @media (max-width: 480px) {

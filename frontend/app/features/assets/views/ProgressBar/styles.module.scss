@@ -7,7 +7,7 @@
 
 .filler {
   height: 100%;
-  background-color: #6F4DC4;
+  background-color: var(--color-main);
   transition: width 0.33s;
   border-radius: 12px;
 }
