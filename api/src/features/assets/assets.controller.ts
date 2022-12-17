@@ -40,7 +40,6 @@ export class AssetsController {
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response
   ) {
-    console.log('request.params.id', request.params.id)
     const resources = await this.assetsRepository.find()
     response.json({ resources })
   }
@@ -50,7 +49,6 @@ export class AssetsController {
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response
   ) {
-    console.log('request.params.id', request.params.id)
     const resource = await this.assetsRepository.findOne(request.params.id)
     if (!resource) {
       response.status(HttpStatus.NOT_FOUND)
