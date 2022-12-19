@@ -1,79 +1,130 @@
-.tokenPrice{
+.tokenPrice {
   margin-bottom: 16px;
-  p{
+
+  p {
     margin: 0;
   }
 }
-.tokenPrice_text{
+
+.tokenPrice_text {
   font-size: 14px;
   color: var(--color-text-secondary);
   font-weight: 400;
 }
-.tokenPrice_value{
+
+.tokenPrice_value {
   font-size: 24px;
   font-weight: 700;
   color: var(--color-main);
 }
-.infoBlock{
+
+.infoBlock {
   border-top: 1px solid var(--color--border);
   border-bottom: 1px solid var(--color--border);
   padding: 16px 0;
-  p{
+
+  p {
     margin: 0;
   }
 }
-.infoBlockElem{
+
+.infoBlockElem {
   display: flex;
   justify-content: space-between;
   padding-bottom: 12px;
-  &:last-child{
+
+  &:last-child {
     padding-bottom: 0;
   }
 }
-.detailsElem{
+
+.detailsElem {
   display: flex;
   align-items: center;
 }
-.detailsIcon{
+
+.tooltipIrrText, .tooltipCocText {
+  visibility: hidden;
+  min-width: 180px;
+  background-color: var(--color-main);
+  color: var(--color--primary-bg);
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  font-size: 14px;
+  position: absolute;
+  z-index: 1;
+}
+
+.detailsIcon {
   margin-left: 5px;
-  &:hover{
+  position: relative;
+  background-image: url('/svg/details.svg');
+  width: 13px;
+  height: 13px;
+  background-size: contain;
+
+  &:hover {
     cursor: pointer;
   }
 }
-.detailsElem_text{
+
+.tooltipIrr {
+  &:hover {
+    .tooltipIrrText {
+      visibility: visible;
+    }
+  }
+}
+
+.tooltipCoc {
+  &:hover {
+    .tooltipCocText {
+      visibility: visible;
+    }
+  }
+}
+
+.detailsElem_text {
   color: var(--color-text-secondary);
   font-size: 14px;
 }
-.detailsPercent{
+
+.detailsPercent {
   font-size: 18px;
   font-weight: 700;
   color: var(--color-main);
 }
-.buyTokensButton{
+
+.buyTokensButton {
   width: 100%;
   height: 48px;
   background-color: var(--color-main);
 }
-.investInput{
+
+.investInput {
   border-top: 1px solid var(--color--border);
   padding-top: 16px;
 }
-.total{
+
+.total {
   font-size: 14px;
   font-weight: 400;
   margin: 8px 0 16px 0;
   color: var(--color-text-secondary);
 }
-.balance{
+
+.balance {
   font-size: 14px;
   font-weight: 700;
   color: var(--color-main);
 }
+
 @media (max-width: 480px) {
-  .tokenPrice_text{
+  .tokenPrice_text {
     font-size: 12px;
   }
-  .detailsPercent{
+  .detailsPercent {
     font-size: 16px;
   }
 }

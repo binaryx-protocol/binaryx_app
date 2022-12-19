@@ -1,22 +1,29 @@
 .galleryRoot {
   display: flex;
   margin-top: 16px;
-  height: 51vh
 }
 
-.imageMain {
-  height: 100%;
-  border-radius: 12px;
+.currentSlideWrapper {
+  width: 80%;
 }
 
 .currentSlide {
-  width: 80%;
+  width: 100%;
+  border-radius: 12px;
+  height: 99%;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.slider:focus {
+  outline: none;
 }
 
 .listOfSlides {
   width: 20%;
   margin-left: 12px;
-  overflow: hidden;
 }
 
 .carouselProvider {
@@ -28,10 +35,6 @@
   left: 0;
   z-index: 1;
   background-color: #fafafa;
-}
-
-.slider:focus {
-  outline: none;
 }
 
 .buttonNext {
@@ -61,12 +64,8 @@
 }
 
 .image {
-  cursor: pointer;
-  transition: all .3s ease;
-  object-fit: cover;
   border-radius: 12px;
   width: 100%;
-  height: 23.5%;
 
   &:hover {
     cursor: pointer;
