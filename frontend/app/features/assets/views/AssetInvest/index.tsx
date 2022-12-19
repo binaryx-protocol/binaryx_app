@@ -4,10 +4,7 @@ import detailsIcon from '../../../../../public/svg/details.svg'
 import {ProgressBarText} from "../ProgressBar/ProgressBarText";
 import {Button} from "../../../../shared/ui/views/Button";
 import {InvestInput} from "../InvestInput";
-import {paths} from "../../../../../pkg/paths";
-import {useRouter} from "next/router";
-import {UiAssetInvestForm, UiNewAssetForm} from "../../types";
-import {UiForm} from "../../../../../pkg/formType";
+import {UiAssetInvestForm} from "../../types";
 
 type InvestBlockProps = {
   tokensLeft: number,

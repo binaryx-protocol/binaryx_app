@@ -2,7 +2,7 @@ import s from './styles.module.scss'
 import clsx from "clsx";
 import React, {useRef} from "react";
 import {UiInputChangeEvent} from "../../../../types/globals";
-import {UiAssetInvestForm, UiNewAssetForm} from "../../types";
+import {UiAssetInvestForm} from "../../types";
 import {UiForm} from "../../../../../pkg/formType";
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 }
 export const InvestInput = (props: Props) => {
   const {tokensLeft, onChange, form, inputName} = props
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const setMax = () => {
     const values = {
