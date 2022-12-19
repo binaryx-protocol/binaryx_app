@@ -1,16 +1,16 @@
 import s from "./DesktopBar.module.scss";
-import {Button} from "../../ui/views/Button";
-import {paths} from "../../../../pkg/paths";
+import {Button} from "../../../ui/views/Button";
+import {paths} from "../../../../../pkg/paths";
 import Link from "next/link";
-import {Container} from "../../ui/views/Container";
-import {WalletConnect} from "../../ui/views/WalletConnect";
-import arrowIcon from '../../../../public/svg/arrow.svg'
+import {Container} from "../../../ui/views/Container";
+import {WalletConnect} from "../../../ui/views/WalletConnect";
+import arrowIcon from '../../../../../public/svg/arrow.svg'
 import Image from "next/image";
-import {WalletInfo} from "../../ui/views/WalletInfo";
+import {WalletInfo} from "../../../ui/views/WalletInfo";
 import {Connector, useNetwork} from "wagmi";
-import {walletAddressFormatted} from "../../../utils/walletAddressFormatted";
-import {BaseModal} from "../../ui/views/BaseModal";
-import {WrongNetwork} from "../../ui/views/WrongNetwork";
+import {walletAddressFormatted} from "../../../../utils/walletAddressFormatted";
+import {BaseModal} from "../../../ui/views/BaseModal";
+import {WrongNetwork} from "../../../ui/views/WrongNetwork";
 import {useEffect} from "react";
 
 type Props = {

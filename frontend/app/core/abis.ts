@@ -13,7 +13,7 @@ const AssetStruct = `
 const RewardInfo = `
     uint256 assetId,
     uint256 rewardAmountDe6,
-    (${AssetStruct}) asset,
+    (${ AssetStruct }) asset,
     uint256 multiplier,
     uint256 balance
 `
@@ -31,14 +31,14 @@ export const assetsManagerAbi = [
     string memory propertyInfo_images
   ) public`
   ,
-  `function listAssets() public view returns((${AssetStruct})[] memory, uint256[] memory)`,
-  `function getAsset(uint256 id) public view returns((${AssetStruct}) memory)`,
+  `function listAssets() public view returns((${ AssetStruct })[] memory, uint256[] memory)`,
+  `function getAsset(uint256 id) public view returns((${ AssetStruct }) memory)`,
   `function setStatus(uint256 id, uint8 status)`,
   `function investUsingUsdt(uint256 assetId, uint256 assetTokensToBuy)`,
 ]
 
 export const accountManagerAbi = [
-  `function getMyRewardsPerAsset() public view returns((${RewardInfo})[] memory, uint256 totalRewardsDe6, uint256 totalClaimedDe6)`,
+  `function getMyRewardsPerAsset() public view returns((${ RewardInfo })[] memory, uint256 totalRewardsDe6, uint256 totalClaimedDe6)`,
   `function claimRewardsInUsdt() public`,
 ]
 
@@ -53,6 +53,9 @@ export const erc20Abi = [
 
   // Get the account balance
   "function balanceOf(address) view returns (uint)",
+
+  // Get allowance for spender
+  "function allowance(address, address) view returns (uint)",
 
   // Send some of your tokens to someone else
   "function transfer(address to, uint amount)",
@@ -75,3 +78,12 @@ export const controllerAbi = [
     string memory propertyInfo_images
   )`
 ];
+
+export const rewardsDistributorAbi = [
+  `function payForRent(
+  address asset,
+  uint256 amount,
+  uint128 startTime,
+  uint128 endTime
+  )`
+]
