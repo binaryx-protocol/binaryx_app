@@ -1,6 +1,6 @@
 .iconsColor{
     path{
-      stroke: #6F4DC4;
+      stroke: var(--color-main);
     }
 }
 .tableDetails{
@@ -53,7 +53,7 @@
 .details_text_purple{
   font-size: 16px;
   font-weight: 700;
-  color: #6F4DC4;
+  color: var(--color-main);
   margin: 0;
   text-align: left;
 }
@@ -63,7 +63,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(111, 77, 196, 0.12);
+  background-color: rgba(0, 180, 204, 0.12);
   border-radius: 50%;
   margin-right: 8px;
 }

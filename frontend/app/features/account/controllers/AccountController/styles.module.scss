@@ -4,7 +4,7 @@
 
 .arrowIcon {
   path {
-    stroke: #6F4DC4;
+    stroke: var(--color-main);
   }
 }
 
@@ -67,7 +67,7 @@
 
 .claimAllButton {
   width: 100%;
-  background-color: #6F4DC4;
+  background-color: var(--color-main);
   display: flex;
   align-items: center;
   justify-content: center;

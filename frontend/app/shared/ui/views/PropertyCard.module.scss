@@ -18,7 +18,7 @@
 }
 
 .purpleBorder {
-  border: 1px solid #6F4DC4;
+  border: 1px solid var(--color-main);
 }
 
 .mainInfo {
@@ -44,7 +44,7 @@
 .purpleText {
   font-weight: 700;
   font-size: 16px;
-  color: #6F4DC4;
+  color: var(--color-main);
 }
 
 .upperText {
@@ -66,7 +66,7 @@
 }
 
 .claimButton {
-  background-color: #6F4DC4;
+  background-color: var(--color-main);
   width: 62px;
   height: 32px;
   display: flex;
@@ -107,7 +107,7 @@
   font-size: 14px;
   display: flex;
   align-items: center;
-  color: #6F4DC4;
+  color: var(--color-main);
   background-color: rgba(111, 77, 196, 0.12);
 }
 
