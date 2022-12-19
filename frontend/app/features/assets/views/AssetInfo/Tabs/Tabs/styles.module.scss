@@ -20,6 +20,11 @@
 }
 .detailsIconElem{
   margin-right: 8px;
+  p{
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+  }
   &:last-child{
     margin-right: 0;
   }
