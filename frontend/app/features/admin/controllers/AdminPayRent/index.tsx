@@ -10,7 +10,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import * as adminModel from "../../../admin/models/adminModel";
 import dayjs, { Dayjs } from "dayjs";
 import * as accountModel from "../../../account/models/accountModel";
-import { allowanceForRD, approveUSDTForRD } from "../../../admin/models/adminModel";
+import { $allowanceForRD, $approveUSDTForRD } from "../../../admin/models/adminModel";
 import { ethers } from "ethers";
 
 type Props = {
@@ -21,10 +21,10 @@ export const AdminPayRent = ({ assetId }: Props) => {
   const [startDate, setStartDate] = useState<Dayjs | null>(dayjs(new Date()));
   const [endDate, setEndDate] = useState<Dayjs | null>(dayjs(new Date()).add(1, 'month'));
   const [amount, setAmount] = useState<number>(0);
-  const approveUSDTForRD = useSetAtom(adminModel.approveUSDTForRD);
-  const payForRent = useSetAtom(adminModel.payForRent);
-  const doLoadAllowanceForRD = useSetAtom(adminModel.doLoadAllowanceForRD);
-  const allowanceForRD = useAtomValue(adminModel.allowanceForRD);
+  const approveUSDTForRD = useSetAtom(adminModel.$approveUSDTForRD);
+  const payForRent = useSetAtom(adminModel.$payForRent);
+  const doLoadAllowanceForRD = useSetAtom(adminModel.$doLoadAllowanceForRD);
+  const allowanceForRD = useAtomValue(adminModel.$allowanceForRD);
 
   useEffect(() => {
     if (assetId) {

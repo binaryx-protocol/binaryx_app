@@ -9,7 +9,7 @@ import { ChainInfo } from "../walletsConnect";
 
 export type RewardsDistributor = Contract;
 
-export const rewardsDistributorSmartContractPublic = atom<RewardsDistributor | null>((get) => {
+export const $rewardsDistributorSmartContractPublic = atom<RewardsDistributor | null>((get) => {
   const rpcConfig = get($rpcConfig)
   const provider = get($publicRpcProvider)
   if (!rpcConfig || !provider) {
@@ -18,7 +18,7 @@ export const rewardsDistributorSmartContractPublic = atom<RewardsDistributor | n
   return new ethers.Contract(rpcConfig.contractsAddresses.rewardsDistributorAddress, rewardsDistributorAbi, provider) as RewardsDistributor
 })
 
-export const rewardsDistributorSmartContractSigned = atom<RewardsDistributor | null>((get) => {
+export const $rewardsDistributorSmartContractSigned = atom<RewardsDistributor | null>((get) => {
   const rpcConfig = get($rpcConfig) as ChainInfo
 
   const provider = get($userRpcProvider) as ethers.providers.JsonRpcProvider
