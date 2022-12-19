@@ -3,18 +3,6 @@ import { ethers } from 'ethers';
 
 const hre = require('hardhat');
 
-export const defaultAssetAttrs = (): AssetInput => ({
-  name: 'Name',
-  symbol: 'SYM',
-  title: 'Title',
-  description: 'Description is a long story to tell you about the asset. Let\'s write it another time.',
-  status: AssetStatuses.upcoming,
-  tokenInfo_totalSupply: 10_000, // decimals = 0
-  tokenInfo_apr: 10, // percents
-  tokenInfo_tokenPriceDe6: 50 * 1e6, // decimals = 6
-  propertyInfo_images: 'https://ns.clubmed.com/dream/RESORTS_3T___4T/Asie_et_Ocean_indien/Bali/169573-1lng9n8nnf-swhr.jpg,https://api.time.com/wp-content/uploads/2022/07/Worlds-Greatest-Places-2022-BaliIndonesia.jpeg',
-});
-
 export const addressesProviderFixture = async () => {
   const AddressesProvider = await hre.ethers.getContractFactory('AddressesProvider');
   const addressesProvider = await AddressesProvider.deploy();
@@ -96,11 +84,44 @@ export const rewardsDistributorWithUSDTAndAssetFixture = async () => {
   return { rewardDistributor, usdtToken, asset, owner, alice, bob, carol };
 };
 
-export const kycStoreFixture = async () => {
-  const [owner, wallet2] = await hre.ethers.getSigners();
+export const appFixture = async ({ assetsCount } = {}) => {
+  const [owner, alise] = await hre.ethers.getSigners();
 
-  const KycStore = await hre.ethers.getContractFactory('KycStore');
-  const kycStore = await hre.upgrades.deployProxy(KycStore, []);
+  const { addressesProvider } = await addressesProviderFixture();
 
-  return { kycStore, owner, wallet2 };
+  // PropertyFactory
+  const PropertyFactory = await hre.ethers.getContractFactory('PropertyFactory');
+  const propertyFactory = await PropertyFactory.deploy(addressesProvider.address);
+
+  // Pay token
+  const UsdtToken = await hre.ethers.getContractFactory('UsdtfToken');
+  const usdtToken = await UsdtToken.deploy(100_000_000 * 1e6);
+
+  // AssetPriceOracle
+  const AssetPriceOracle = await hre.ethers.getContractFactory('AssetPriceOracle');
+  const assetPriceOracle = await AssetPriceOracle.deploy(addressesProvider.address);
+
+  // RewardDistributor
+  const RewardDistributor = await hre.ethers.getContractFactory('RewardsDistributor');
+  const rewardDistributor = await RewardDistributor.deploy(usdtToken.address, addressesProvider.address);
+
+  // PropertyFactory
+  const UiProvider = await hre.ethers.getContractFactory('UiProvider');
+  const uiProvider = await hre.upgrades.deployProxy(UiProvider, [propertyFactory.address, assetPriceOracle.address]);
+
+  // config app
+  await addressesProvider.setAssetPriceOracle(assetPriceOracle.address);
+  await addressesProvider.setAssetPriceOracleAdmin(owner.address);
+  await addressesProvider.setRewardsDistributor(rewardDistributor.address);
+  await addressesProvider.setRewardsDistributorAdmin(owner.address);
+  usdtToken.transfer(rewardDistributor.address, 1000 * 1e6);
+
+  // assets
+  if (assetsCount) {
+    for(let i = 0; i < assetsCount; i++) {
+      await propertyFactory.deployAssetdeployAsset(addressesProvider.address, `Asset #${i}`, `AST${i}`, 10000, usdtToken.address)
+    }
+  }
+
+  return { propertyFactory, uiProvider, owner, alise };
 };
