@@ -118,11 +118,24 @@ export const appFixture = async () => {
   await addressesProvider.setPropertyFactoryAdmin(owner.address);
   usdtToken.transfer(rewardDistributor.address, 1000 * 1e6);
 
-  return { propertyFactory, uiProvider, usdtToken, owner, alise };
+  return { propertyFactory, uiProvider, usdtToken, assetPriceOracle, addressesProvider, owner, alise };
 };
 
-export const createManyAssets = async ({ propertyFactory, usdtToken, count }) => {
+export const createManyAssets = async ({ propertyFactory, addressesProvider, usdtToken, count }) => {
   for(let i = 0; i < count; i++) {
-    await propertyFactory.deployAsset(propertyFactory.address, `Asset #${i}`, `AST${i}`, 10000, usdtToken.address)
+    await propertyFactory.deployAsset(addressesProvider.address, `Asset #${i}`, `AST${i}`, 10000, usdtToken.address)
+  }
+};
+
+export const investToAllAssets = async ({ propertyFactory, assetPriceOracle, usdtToken, owner }) => {
+  const assetAddresses = await propertyFactory.getAssets()
+  for (let i = 0; i < assetAddresses.length; i++) {
+    const assetAddress = assetAddresses[i];
+    // const Asset = await hre.ethers.getContractFactory('Asset');
+    const asset = await hre.ethers.getContractAt('Asset', assetAddress)
+
+    await assetPriceOracle.setAssetPrice(assetAddress, 50)
+    await usdtToken.approve(asset.address, 250);
+    await asset.invest(owner.address, 5);
   }
 };

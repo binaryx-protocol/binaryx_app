@@ -22,24 +22,33 @@ contract UiProvider is OwnableUpgradeable {
     uint tokenPrice;
   }
 
-  function listAssets() public view returns(Asset[] memory, TokenSellInfo[] memory) {
+  struct AssetInfo{
+    address oea;
+    string name;
+  }
+
+  function listAssets() public view returns(AssetInfo[] memory, TokenSellInfo[] memory) {
     Asset[] memory assets = _assetFactory.getAssets();
-    console.log(assets.length);
     uint count = assets.length;
-    TokenSellInfo[] memory sellInfo = new TokenSellInfo[](count);
+    TokenSellInfo[] memory sellInfos = new TokenSellInfo[](count);
+    AssetInfo[] memory assetInfos = new AssetInfo[](count);
 
     for (uint i = 1; i <= count; i++) {
-      Asset asset = assets[i];
-      sellInfo[i-1] = TokenSellInfo(
+      Asset asset = assets[i-1];
+      sellInfos[i-1] = TokenSellInfo(
         asset.maxTotalSupply(),
         asset.leftToBuy(),
         _assetPriceManager.latestPrice(address(asset))
       );
+      assetInfos[i-1] = AssetInfo(
+        address(asset),
+        "TODO"
+      );
     }
 
     return (
-      assets,
-      sellInfo
+      assetInfos,
+      sellInfos
     );
   }
 

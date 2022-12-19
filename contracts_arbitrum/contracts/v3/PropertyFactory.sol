@@ -19,7 +19,7 @@ contract PropertyFactory {
   Asset[] public assets;
 
   constructor(address _addressesProvider) {
-    addressesProvider = IAddressesProvider(_addressesProvider);
+    addressesProvider = IAddressesProvider(_addressesProvider); // WHY
   }
 
   function getAssetLength() external view returns (uint256) {
@@ -31,8 +31,13 @@ contract PropertyFactory {
   }
 
   function deployAsset(address _addressesProvider, string memory name, string memory symbol, uint256 maxTotalSupply, address buyToken) external onlyOwner {
+    // WHY _addressesProvider is passing while it's in constructor?
     Asset asset = new Asset(_addressesProvider, name, symbol, maxTotalSupply, ERC20(buyToken));
     assets.push(asset);
+    RewardsDistributor rewardsDistributor = RewardsDistributor(addressesProvider.getRewardsDistributor());
+    // ERROR reverted with reason string 'RewardsDistributor: caller is not the RewardsDistributorAdmin' 
+    rewardsDistributor.addPool(address(asset), 18, maxTotalSupply); // WHY maxTotalSupply duplicated
+
     emit NewAsset(address(asset));
   }
 }

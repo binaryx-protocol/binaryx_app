@@ -181,7 +181,7 @@ contract RewardsDistributor is IRewardsDistributor {
 
   function onUserBalanceChanged(address _user, uint256 _balance) external override {
     PoolInfo storage pool = poolInfo[msg.sender];
-    require(pool.lastRewardTime > 0);
+    require(pool.lastRewardTime > 0, "Pool not found");
     _updatePool(msg.sender);
     UserInfo storage user = userInfo[msg.sender][_user];
     if (user.amount > 0) {
