@@ -1,13 +1,8 @@
 import s from './styles.module.scss';
 import Link from 'next/link'
-import ProgressBar from '../../ProgressBar';
 import classNames from 'classnames';
 import {paths} from "../../../../../../pkg/paths";
 import {ProgressBarText} from "../../ProgressBar/ProgressBarText";
-import clsx from "clsx";
-import {Simulate} from "react-dom/test-utils";
-import playing = Simulate.playing;
-
 
 type Props = {
   id: number
