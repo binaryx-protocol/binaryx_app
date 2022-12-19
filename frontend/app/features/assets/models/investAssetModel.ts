@@ -4,8 +4,6 @@ import {
   BcAsset,
   UiAssetInvestForm,
   UiAssetInvestFormChangeArgs,
-  UiNewAssetForm,
-  UiNewAssetFormChangeArgs
 } from "../types";
 import {bnToInt} from "../../../utils/objectUtils";
 import {$usdtBalance, $usdtSmartContractSigned, UsdtManager} from "../../../shared/usdtToken/smartContractsFactory";

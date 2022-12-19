@@ -44,7 +44,7 @@
 .maxButton {
   font-size: 14px;
   font-weight: 600;
-  color: #6F4DC4;
+  color: var(--color-main);
   &:hover{
     cursor: pointer;
   }

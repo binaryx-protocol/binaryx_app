@@ -1,0 +1,31 @@
+.root {
+  p {
+    margin: 0;
+  }
+}
+
+.headerWrapper {
+  margin-bottom: 16px;
+}
+.header {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.headerDescription {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+.twoInputs {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 16px;
+}
+.baseInput {
+  width: 100%;
+  margin-top: 16px;
+  &:not(&:first-child ) {
+    margin-left: 8px;
+  }
+}
