@@ -39,7 +39,7 @@ type InputProps = {
   title: string;
   placeholder: string;
   onChange: (e: HTMLInputElement) => void;
-  inputProps: any;
+  inputProps: { name: string, value: any, "aria-invalid": any };
   classname?: string
   inputType?: 'number' | 'string';
   //onBlur: any;

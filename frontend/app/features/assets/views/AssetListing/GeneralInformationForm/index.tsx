@@ -13,7 +13,7 @@ type Props = {
   onChangeLocal: (element: HTMLInputElement) => void;
   generalInfoForm: UiGeneralInfoForm;
   onFileUpload: (name: string, files: string[]) => void;
-  inputProps: (form: UiForm<any>, name: string) => { name: string, value: any, "aria-invalid": string[] | undefined };
+  inputProps: (form: UiGeneralInfoForm, name: keyof UiGeneralInfoForm['values']) => { name: string, value: any, "aria-invalid": any };
   onClickLocal: (inputName: string, inputValue: string) => void;
 }
 export const GeneralInformationForm = (props: Props) => {

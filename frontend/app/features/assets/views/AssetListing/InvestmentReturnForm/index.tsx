@@ -5,7 +5,7 @@ import {ListAssetsFormsNames, UiInvestmentReturnForm} from "../../../types";
 
 type Props = {
   investmentReturnForm: UiInvestmentReturnForm;
-  inputProps: (form: UiForm<any>, name: string) => { name: string, value: any, "aria-invalid": string[] | undefined };
+  inputProps: (form: UiInvestmentReturnForm, name: keyof UiInvestmentReturnForm['values']) => { name: string, value: any, "aria-invalid": any };
   onChangeLocal: (element: HTMLInputElement) => void;
 
 }

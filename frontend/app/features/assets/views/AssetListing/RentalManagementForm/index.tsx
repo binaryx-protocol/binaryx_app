@@ -5,7 +5,7 @@ import {ListAssetsFormsNames, UiRentalManagementForm} from "../../../types";
 
 type Props = {
   rentalManagementForm: UiRentalManagementForm;
-  inputProps: (form: UiForm<any>, name: string) => { name: string, value: any, "aria-invalid": string[] | undefined };
+  inputProps: (form: UiRentalManagementForm, name: keyof UiRentalManagementForm['values']) => { name: string, value: any, "aria-invalid": any };
   onChangeLocal: (e: HTMLInputElement) => void;
 }
 

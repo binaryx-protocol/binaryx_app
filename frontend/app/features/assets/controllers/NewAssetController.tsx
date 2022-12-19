@@ -24,8 +24,9 @@ export const NewAssetController = () => {
   const onFormChange = useSetAtom(newAssetModel.$onFormChange)
   //const onMount = useSetAtom(newAssetModel.$onMount)
   const [assetListingStatus, setAssetListingStatus] = useState<AssetListingStatus>(AssetListingStatus.welcome)
-  const [currentForm, setCurrentForm] = useState<UiForm<any>>(generalInfoForm)
+  const [currentForm, setCurrentForm] = useState<UiGeneralInfoForm | UiLegalInfoForm | UiRentalManagementForm | UiInvestmentReturnForm>(generalInfoForm)
 
+  console.log(generalInfoForm)
   // useEffect(() => {
   //   onMount()
   // }, [])
@@ -57,11 +58,13 @@ export const NewAssetController = () => {
 
 
   return (
-    <AssetListing assetListingStatus={assetListingStatus} onChangeAssetListingStatus={setAssetListingStatus}
-                  onChangeLocal={onChangeLocal} generalInfoForm={generalInfoForm} legalInfoForm={legalInfoForm}
-                  investmentReturnForm={investmentReturnForm} rentalManagementForm={rentalManagementForm}
-                  onReturnHome={returnHome} currentForm={currentForm}
-                  onCurrentFormChange={setCurrentForm} onClickLocal={onClickLocal} onFileUploadLocal={onFileUploadLocal}/>
-    // : <><p>Please Connect your wallet!</p></>
+    address ?
+      <AssetListing assetListingStatus={assetListingStatus} onChangeAssetListingStatus={setAssetListingStatus}
+                    onChangeLocal={onChangeLocal} generalInfoForm={generalInfoForm} legalInfoForm={legalInfoForm}
+                    investmentReturnForm={investmentReturnForm} rentalManagementForm={rentalManagementForm}
+                    onReturnHome={returnHome} currentForm={currentForm}
+                    onCurrentFormChange={setCurrentForm} onClickLocal={onClickLocal}
+                    onFileUploadLocal={onFileUploadLocal}/>
+      : <><p>Please Connect your wallet!</p></>
   )
 }

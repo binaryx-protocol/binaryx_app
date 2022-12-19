@@ -10,7 +10,7 @@ type Props = {
   title: string;
   optionArray: string[] | number[]
   onChange: (element: HTMLInputElement) => void;
-  inputProps: any;
+  inputProps: { name: string, value: any, "aria-invalid": any };
   classname?: string;
 }
 
@@ -19,7 +19,6 @@ export const BaseSelect = (props: Props) => {
   const [closeDropdown, setCloseDropdown] = useState(true);
   const inputRef = useRef<any>(null)
   const showElem = (value: string | number) => {
-    // @ts-ignore
     inputRef.current.value = `${value}`;
     setCloseDropdown(true);
     onChange(inputRef.current)
@@ -27,7 +26,7 @@ export const BaseSelect = (props: Props) => {
   return (
     <div className={clsx(s.selectWrapper, classname)}>
       <p className={s.title}>{title}</p>
-      <div className={clsx(s.select, inputProps['aria-invalid'] && s.invalidInput)}
+      <div className={clsx(s.select, inputProps["aria-invalid"] && s.invalidInput)}
            onClick={() => setCloseDropdown(!closeDropdown)}>
         <input readOnly placeholder={placeholder} {...inputProps}
                ref={inputRef}/>

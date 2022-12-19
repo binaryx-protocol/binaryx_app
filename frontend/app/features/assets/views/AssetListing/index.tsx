@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import {
   AssetListingStatus,
-  ListAssetsFormsNames,
+  ListAssetsFormsNames, UiFormChangeArgs,
   UiGeneralInfoForm,
   UiInvestmentReturnForm,
   UiLegalInfoForm, UiRentalManagementForm
@@ -27,7 +27,7 @@ type Props = {
   legalInfoForm: UiLegalInfoForm;
   investmentReturnForm: UiInvestmentReturnForm;
   rentalManagementForm: UiRentalManagementForm;
-  currentForm: UiForm<any>;
+  currentForm: UiGeneralInfoForm | UiLegalInfoForm | UiRentalManagementForm | UiInvestmentReturnForm;
   onCurrentFormChange: (form: UiForm<any>) => void;
   onReturnHome: () => void;
   onFileUploadLocal: (formName: ListAssetsFormsNames, form: UiGeneralInfoForm | UiLegalInfoForm | UiRentalManagementForm | UiInvestmentReturnForm, name: string, files: string[]) => void;
@@ -98,7 +98,7 @@ export const AssetListing = (props: Props) => {
     onFileUploadLocal(ListAssetsFormsNames.generalInfoForm, generalInfoForm, inputName, files);
   }
 
-  const onFileUploadLocalLegalForm = (inputName: string, files: string[]) =>{
+  const onFileUploadLocalLegalForm = (inputName: string, files: string[]) => {
     onFileUploadLocal(ListAssetsFormsNames.legalInfoForm, legalInfoForm, inputName, files);
   }
 
@@ -110,7 +110,7 @@ export const AssetListing = (props: Props) => {
     onChangeLocal(ListAssetsFormsNames.rentalManagementForm, rentalManagementForm, element);
   }
 
-  const inputProps = (form: UiForm<any>, name: string) => {
+  const inputPropsGeneralInfoForm = (form: UiGeneralInfoForm, name: keyof UiGeneralInfoForm['values']) => {
     const props = {
       name,
       value: form.values[name],
@@ -118,6 +118,23 @@ export const AssetListing = (props: Props) => {
     };
     return props
   }
+  const inputPropsRentalManagementForm = (form: UiRentalManagementForm, name: keyof UiRentalManagementForm['values']) => {
+    const props = {
+      name,
+      value: form.values[name],
+      'aria-invalid': form.errors[name] && form.errors[name],
+    };
+    return props
+  }
+  const inputPropsInvestmentReturnForm = (form: UiInvestmentReturnForm, name: keyof UiInvestmentReturnForm['values']) => {
+    const props = {
+      name,
+      value: form.values[name],
+      'aria-invalid': form.errors[name] && form.errors[name],
+    };
+    return props
+  }
+
   return (
     <div className={s.root}>
       <div className={s.navigation}>
@@ -143,16 +160,16 @@ export const AssetListing = (props: Props) => {
           <div className={s.formsWrapper}>
             <div className={s.form}>
               {assetListingStatus === AssetListingStatus.generalInfo &&
-                <GeneralInformationForm generalInfoForm={generalInfoForm} inputProps={inputProps}
+                <GeneralInformationForm generalInfoForm={generalInfoForm} inputProps={inputPropsGeneralInfoForm}
                                         onChangeLocal={onChangeLocalGeneralForm} onClickLocal={onClickLocalGeneralForm}
                                         onFileUpload={onFileUploadLocalGeneralForm}/>}
               {assetListingStatus === AssetListingStatus.legalInfo &&
                 <LegalInfoForm onFileUpload={onFileUploadLocalLegalForm}/>}
               {assetListingStatus === AssetListingStatus.investmentAndReturn &&
-                <InvestmentReturnForm investmentReturnForm={investmentReturnForm} inputProps={inputProps}
+                <InvestmentReturnForm investmentReturnForm={investmentReturnForm} inputProps={inputPropsInvestmentReturnForm}
                                       onChangeLocal={onChangeLocalInvestmentReturnForm}/>}
               {assetListingStatus === AssetListingStatus.rentalAndManagement &&
-                <RentalManagementForm rentalManagementForm={rentalManagementForm} inputProps={inputProps}
+                <RentalManagementForm rentalManagementForm={rentalManagementForm} inputProps={inputPropsRentalManagementForm}
                                       onChangeLocal={onChangeLocalRentalManagementForm}/>}
             </div>
             <div className={s.footerElems}>
