@@ -6,16 +6,18 @@ type Props = {
   icon: ReactNode;
   title: string;
   url: string;
+  onClick?: any;
 };
 
 
 const SideMenuNavItem = ({
   icon,
   title,
-  url
+  url,
+  onClick,
 }: Props) => {
   return (
-    <li className={s.sideMenuNavItem}>
+    <li className={s.sideMenuNavItem} onClick={onClick}>
       <Link href={url}>
         <a className={s.link}>
           <div className={s.iconWrap}>{icon}</div>

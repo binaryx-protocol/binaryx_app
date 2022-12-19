@@ -1,28 +1,30 @@
-.root{
+.root {
   height: 64px;
   border-bottom: 1px solid #EFF2F5;
   background-color: #fff;
 }
 
-.container{
+.container {
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 100%;
 }
 
-.logo{
+.logo {
   padding-bottom: 3px;
   padding-left: 10px;
-  img{
+
+  img {
     height: 32px;
     display: block;
   }
 }
 
-.nav{
+.nav {
   margin-left: 160px;
-  a{
+
+  a {
     color: var(--color-text-secondary);
     text-decoration: none;
     padding: 10px 22px;
@@ -30,38 +32,127 @@
   }
 }
 
-.buttons{
+.walletIcon {
+  margin-right: 12px;
+}
+
+.buttons {
   margin: 0 -4px;
   display: flex;
   align-items: center;
 }
 
-.accountAddress{
+.accountAddress {
   margin: 5px 10px;
   text-decoration: underline;
 }
-.wallet{
+
+.wallet {
   margin: 0 20px;
   padding: 4px 8px;
   border: 1px solid var(--color--secondary-bg);
-  border-radius: 12px;
+  border-radius: 24px;
   display: flex;
   align-items: center;
   text-decoration: none;
   color: inherit;
-  &:hover{
+
+  &:hover {
     border: 1px solid #101113;
     border-radius: 12px;
     padding: 4px 8px;
     cursor: pointer;
   }
 }
-.arrow-open{
+
+.arrow-open {
   transform: rotate(180deg);
   transition: 300ms linear all;
 }
 
-.arrow-close{
+.arrow-close {
   transition: 300ms linear all;
   transform: rotate(180deg);
+}
+
+.walletConnectButton {
+  background-color: var(--color-main);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.listPropertyButton {
+  margin-left: 10px;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-main);
+  color: var(--color--primary-bg);
+
+  &:disabled {
+    background-color: var(--color--secondary-bg);
+    color: var(--color-text-primary);
+  }
+
+  p {
+    margin: 0;
+    padding-left: 6px;
+  }
+}
+
+.activePlusIcon {
+  path {
+    fill: var(--color--primary-bg);
+  }
+}
+
+.burger {
+  background-color: var(--color--secondary-bg);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: none;
+  margin-left: 8px;
+}
+
+@media (max-width: 480px) {
+  .nav {
+    display: none;
+  }
+  .logo {
+    img {
+      width: 100px;
+    }
+  }
+  .listPropertyButton {
+    display: none;
+  }
+  .root {
+    border-radius: 0px 0px 12px 12px;
+  }
+  .walletConnectButton {
+    height: 32px;
+
+    p {
+      margin: 0;
+    }
+  }
+  .burger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .accountAddress {
+    display: none;
+  }
+  .walletIconMobile {
+    path {
+      fill: black;
+    }
+  }
+  .wallet{
+    padding: 10px;
+  }
 }

@@ -1,0 +1,17 @@
+.root{
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 11;
+  display: flex;
+}
+.content{
+  width: 60vw;
+  height: 100vh;
+  background-color: #FFFFFF;
+}
+.darkness{
+  width: 40vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.48);
+}

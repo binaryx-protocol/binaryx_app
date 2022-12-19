@@ -11,7 +11,9 @@ import {Connector, useNetwork} from "wagmi";
 import {walletAddressFormatted} from "../../../utils/walletAddressFormatted";
 import {BaseModal} from "../../ui/views/BaseModal";
 import {WrongNetwork} from "../../ui/views/WrongNetwork";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
+import {PlusIcon} from "../../ui/views/PlusIcon";
+import {BurgerMenu} from "../../ui/views/BurgerMenu";
 
 type Props = {
   account: string
@@ -49,10 +51,13 @@ export const DesktopBar = (props: Props) => {
   } = props
   const {chain} = useNetwork()
   const unsupportedChain = chain !== undefined ? chain.unsupported : false;
+  const [burgerOpen, setBurgerOpen] = useState(false);
   useEffect(()=>{
    if(!account) onCurrentWalletClick(false);
   },[account])
   return (
+    <>
+    {burgerOpen && <BurgerMenu onBurgerMenuOpen={setBurgerOpen}/>}
     <div className={s.root}>
       <Container className={s.container}>
         <Link href={paths.home()} passHref>
@@ -86,11 +91,6 @@ export const DesktopBar = (props: Props) => {
           </Link>
         </div>
         <div className={s.buttons}>
-          <Link href={paths.newAsset()}>
-            <Button color="light">
-              List Property
-            </Button>
-          </Link>
           {
             isConnected
               ? (
@@ -98,7 +98,7 @@ export const DesktopBar = (props: Props) => {
                   <div className={s.wallet} onClick={() => {
                     onWalletInfoClick(true)
                   }}>
-                    <WalletIcon/>
+                    <WalletIcon classname={s.walletIcon}/>
                     <span className={s.accountAddress}>{walletAddressFormatted(account)}</span>
                     <Image src={arrowIcon} alt={'arrow'}/>
                   </div>
@@ -108,10 +108,23 @@ export const DesktopBar = (props: Props) => {
                 </>
               )
               :
-              <Button onClick={() => onWalletConnectClick(true)}>
-                Connect Wallet
+              <Button onClick={() => onWalletConnectClick(true)} className={s.walletConnectButton}>
+               <p>
+                 Connect Wallet
+               </p>
               </Button>
           }
+         <div className={s.burger} onClick={()=>setBurgerOpen(true)}>
+           <Image src={'/svg/burger.svg'} alt={'burger'} width={15} height={15}/>
+         </div>
+          <Link href={paths.newAsset()}>
+            <Button color="light" className={s.listPropertyButton} disabled={!account}>
+              <PlusIcon width={15} height={15} classname={account && s.activePlusIcon}/>
+              <p>
+                List Property
+              </p>
+            </Button>
+          </Link>
           {isOpenWalletModal &&
             <BaseModal setIsOpen={onWalletConnectClick}>
               <WalletConnect onWalletConnectClick={onWalletConnectClick} setConnector={setConnector} connector={connector}
@@ -124,14 +137,13 @@ export const DesktopBar = (props: Props) => {
         </div>
       </Container>
     </div>
+    </>
   )
 }
 
-const WalletIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect width="32" height="32" rx="16" fill="#101113"/>
-    <path
-      d="M21.5 12.5H11.5C11.3674 12.5 11.2402 12.4473 11.1464 12.3536C11.0527 12.2598 11 12.1326 11 12C11 11.8674 11.0527 11.7402 11.1464 11.6464C11.2402 11.5527 11.3674 11.5 11.5 11.5H20C20.1326 11.5 20.2598 11.4473 20.3536 11.3536C20.4473 11.2598 20.5 11.1326 20.5 11C20.5 10.8674 20.4473 10.7402 20.3536 10.6464C20.2598 10.5527 20.1326 10.5 20 10.5H11.5C11.1027 10.5016 10.7221 10.6602 10.4412 10.9412C10.1602 11.2221 10.0016 11.6027 10 12V20C10.0016 20.3973 10.1602 20.7779 10.4412 21.0588C10.7221 21.3398 11.1027 21.4984 11.5 21.5H21.5C21.7652 21.5 22.0196 21.3946 22.2071 21.2071C22.3946 21.0196 22.5 20.7652 22.5 20.5V13.5C22.5 13.2348 22.3946 12.9804 22.2071 12.7929C22.0196 12.6054 21.7652 12.5 21.5 12.5ZM19.25 17.75C19.1017 17.75 18.9567 17.706 18.8333 17.6236C18.71 17.5412 18.6139 17.4241 18.5571 17.287C18.5003 17.15 18.4855 16.9992 18.5144 16.8537C18.5434 16.7082 18.6148 16.5746 18.7197 16.4697C18.8246 16.3648 18.9582 16.2933 19.1037 16.2644C19.2492 16.2355 19.4 16.2503 19.537 16.3071C19.6741 16.3639 19.7912 16.46 19.8736 16.5833C19.956 16.7067 20 16.8517 20 17C20 17.1989 19.921 17.3897 19.7803 17.5303C19.6397 17.671 19.4489 17.75 19.25 17.75Z"
-      fill="white"/>
+const WalletIcon = ({classname = '', width = 16, height = 16}) => (
+  <svg width={width} height={height} className={classname} viewBox="0 0 13 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11.5 2.5H1.5C1.36739 2.5 1.24021 2.44732 1.14645 2.35355C1.05268 2.25979 1 2.13261 1 2C1 1.86739 1.05268 1.74021 1.14645 1.64645C1.24021 1.55268 1.36739 1.5 1.5 1.5H10C10.1326 1.5 10.2598 1.44732 10.3536 1.35355C10.4473 1.25979 10.5 1.13261 10.5 1C10.5 0.867392 10.4473 0.740215 10.3536 0.646447C10.2598 0.552679 10.1326 0.5 10 0.5H1.5C1.10268 0.501645 0.722106 0.660209 0.441158 0.941158C0.160209 1.22211 0.00164523 1.60268 0 2V10C0.00164523 10.3973 0.160209 10.7779 0.441158 11.0588C0.722106 11.3398 1.10268 11.4984 1.5 11.5H11.5C11.7652 11.5 12.0196 11.3946 12.2071 11.2071C12.3946 11.0196 12.5 10.7652 12.5 10.5V3.5C12.5 3.23478 12.3946 2.98043 12.2071 2.79289C12.0196 2.60536 11.7652 2.5 11.5 2.5ZM9.25 7.75C9.10166 7.75 8.95666 7.70601 8.83332 7.6236C8.70999 7.54119 8.61386 7.42406 8.55709 7.28701C8.50033 7.14997 8.48547 6.99917 8.51441 6.85368C8.54335 6.7082 8.61478 6.57456 8.71967 6.46967C8.82456 6.36478 8.9582 6.29335 9.10368 6.26441C9.24917 6.23547 9.39997 6.25033 9.53701 6.30709C9.67406 6.36386 9.79119 6.45999 9.8736 6.58332C9.95601 6.70666 10 6.85166 10 7C10 7.19891 9.92098 7.38968 9.78033 7.53033C9.63968 7.67098 9.44891 7.75 9.25 7.75Z" fill="#101113"/>
   </svg>
+
 )

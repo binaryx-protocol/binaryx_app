@@ -32,7 +32,10 @@
 }
 
 @media (max-width: 480px) {
-  .pageMenu,.header{
+  .pageMenu{
     display: none;
+  }
+  .header{
+    width: 100%;
   }
 }
