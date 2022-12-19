@@ -4,11 +4,12 @@ import {useAtomValue} from "jotai";
 import AssetList from '../views/AssetList';
 import {Container} from "../../../shared/ui/views/Container";
 import {NanoLoader} from "../../../shared/ui/views/NanoLoader";
+import {useState} from "react";
 
 export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
   const blockchainAssets = $blockchainAssets.state === 'hasData' ? $blockchainAssets.data : null
-  const [assets, balances] = blockchainAssets || []
+  const [assets, balances] = blockchainAssets || [];
   return (
     <div className={s.root}>
       <Container>

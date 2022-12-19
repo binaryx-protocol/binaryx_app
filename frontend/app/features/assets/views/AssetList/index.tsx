@@ -5,7 +5,7 @@ import {BigNumber} from "ethers";
 
 type Props = {
   assets: BcAsset[]
-  balances: BigNumber[]
+  balances: BigNumber[],
 };
 
 const T = {

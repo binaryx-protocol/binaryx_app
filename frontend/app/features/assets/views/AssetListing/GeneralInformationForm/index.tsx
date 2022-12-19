@@ -1,13 +1,12 @@
 import s from './styles.module.scss'
 import {BaseInput} from "../../../../../shared/ui/views/BaseInput";
-import {LandType, ListAssetsFormsNames, Occupation, PropertyType, UiGeneralInfoForm} from "../../../types";
+import {LandType, Occupation, PropertyType, UiGeneralInfoForm} from "../../../types";
 import {BaseSelect} from "../../../../../shared/ui/views/BaseSelect";
-import {BaseSwitcher} from "../../../../../shared/ui/views/BaseSwitcher";
 import {TextArea} from "../../../../../shared/ui/views/TextArea";
 import {DragAndDrop} from "../../../../../shared/ui/views/DragAndDrop";
-import {UiForm} from "../../../../../../pkg/formType";
 import countryList from 'react-select-country-list'
 import clsx from "clsx";
+import {BaseSwitcherForm} from "../../../../../shared/ui/views/BaseSwitcherForm";
 
 type Props = {
   onChangeLocal: (element: HTMLInputElement) => void;
@@ -20,6 +19,7 @@ export const GeneralInformationForm = (props: Props) => {
   const {onChangeLocal, generalInfoForm, inputProps, onClickLocal, onFileUpload} = props
   const landTypesArray = Object.values(LandType)
   const propertyTypesArray = Object.values(PropertyType)
+
 
   return (
     <div className={s.root}>
@@ -100,8 +100,7 @@ export const GeneralInformationForm = (props: Props) => {
                    onChange={onChangeLocal}
                    classname={s.baseInput} inputType={'number'}/>
 
-        <BaseSwitcher leftTitle={Occupation.occupied} rightTitle={Occupation.notOccupied} form={generalInfoForm}
-                      formType={ListAssetsFormsNames.generalInfoForm} name={'occupation'} onSwitch={onClickLocal}
+        <BaseSwitcherForm leftTitle={Occupation.occupied} rightTitle={Occupation.notOccupied}  name={'occupation'} onSwitch={onClickLocal}
                       title={'Occupation'} classname={s.switcher}/>
       </div>
       <div className={s.dragAndDrop}>

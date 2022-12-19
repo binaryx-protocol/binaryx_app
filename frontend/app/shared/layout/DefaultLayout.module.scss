@@ -21,6 +21,7 @@
 
 .contentWrapper{
   display: flex;
+  justify-content: center;
 }
 .pageMenu{
   flex-shrink: 0;
@@ -35,6 +36,10 @@
   .pageMenu{
     display: none;
   }
+  .content{
+    width: 100vw;
+  }
+
   .header{
     width: 100%;
   }

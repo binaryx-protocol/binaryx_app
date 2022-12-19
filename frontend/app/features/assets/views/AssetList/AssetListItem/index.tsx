@@ -72,37 +72,38 @@ const AssetListItemBoxView = ({
     </div>
   );
 };
-const AssetListItemListView = ({
-                                 id,
-                                 status,
-                                 image,
-                                 title,
-                                 subTitle,
-                                 irr,
-                                 coc,
-                                 tokensLeft,
-                                 tokensTotal,
-                               }: Props) => {
 
-  return (
-    <div className={s.rootListView}>
-      <img src={image.src} onError={({currentTarget}) => {
-        currentTarget.onerror = null;
-        currentTarget.src = imagePlaceholder;
-      }} alt={'imageProperty'}
-           className={s.imageListView}/>
-      <div className={s.titlesListView}>
-        <p className={s.title}>{title}</p>
-        <p className={s.subTitle}>{subTitle}</p>
-      </div>
-    </div>
-  )
-}
+// TODO: finish after MVP
+// const AssetListItemListView = ({
+//                                  id,
+//                                  status,
+//                                  image,
+//                                  title,
+//                                  subTitle,
+//                                  irr,
+//                                  coc,
+//                                  tokensLeft,
+//                                  tokensTotal,
+//                                }: Props) => {
+//
+//   return (
+//     <div className={s.rootListView}>
+//       <img src={image.src} onError={({currentTarget}) => {
+//         currentTarget.onerror = null;
+//         currentTarget.src = imagePlaceholder;
+//       }} alt={'imageProperty'}
+//            className={s.imageListView}/>
+//       <div className={s.titlesListView}>
+//         <p className={s.title}>{title}</p>
+//         <p className={s.subTitle}>{subTitle}</p>
+//       </div>
+//     </div>
+//   )
+// }
 
 const AssetListItem = (props: Props) => {
-
   return (
-    <AssetListItemListView {...props}/>
+    <AssetListItemBoxView {...props}/>
   );
 };
 
