@@ -20,7 +20,7 @@ type Props = {
 export const AdminPayRent = ({ assetId }: Props) => {
   const [startDate, setStartDate] = useState<Dayjs | null>(dayjs(new Date()));
   const [endDate, setEndDate] = useState<Dayjs | null>(dayjs(new Date()).add(1, 'month'));
-  const [amount, setAmount] = useState<number | null>(null);
+  const [amount, setAmount] = useState<number>(0);
   const approveUSDTForRD = useSetAtom(adminModel.approveUSDTForRD);
   const payForRent = useSetAtom(adminModel.payForRent);
   const doLoadAllowanceForRD = useSetAtom(adminModel.doLoadAllowanceForRD);

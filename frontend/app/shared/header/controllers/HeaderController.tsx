@@ -1,9 +1,8 @@
-import { DesktopBar } from "../views";
 import { useAccount, useDisconnect, useSwitchNetwork } from "wagmi";
 import { useAtom } from "jotai";
 import { $connectorAtom, $connectedAccount } from "../../../core/models/walletModel";
 import { useEffect, useState } from "react";
-import { AdminBar } from "../views";
+import { AdminBar, DesktopBar } from "../views";
 
 export const HeaderController = () => {
   const { isConnected } = useAccount()
@@ -25,7 +24,7 @@ export const HeaderController = () => {
 
   return (
     <>
-      {showAdminBar && <AdminBar/>}
+      {showAdminBar && isConnected && <AdminBar/>}
       <DesktopBar isConnected={ isConnected } account={ account[0] }
                   onWalletInfoClick={ setIsOpenWalletInfo }
                   isOpenWalletInfo={ isOpenWalletInfo } connector={ connector }
