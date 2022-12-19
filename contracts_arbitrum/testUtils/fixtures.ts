@@ -84,7 +84,7 @@ export const rewardsDistributorWithUSDTAndAssetFixture = async () => {
   return { rewardDistributor, usdtToken, asset, owner, alice, bob, carol };
 };
 
-export const appFixture = async ({ assetsCount } = {}) => {
+export const appFixture = async () => {
   const [owner, alise] = await hre.ethers.getSigners();
 
   const { addressesProvider } = await addressesProviderFixture();
@@ -114,14 +114,15 @@ export const appFixture = async ({ assetsCount } = {}) => {
   await addressesProvider.setAssetPriceOracleAdmin(owner.address);
   await addressesProvider.setRewardsDistributor(rewardDistributor.address);
   await addressesProvider.setRewardsDistributorAdmin(owner.address);
+  await addressesProvider.setPropertyFactory(propertyFactory.address);
+  await addressesProvider.setPropertyFactoryAdmin(owner.address);
   usdtToken.transfer(rewardDistributor.address, 1000 * 1e6);
 
-  // assets
-  if (assetsCount) {
-    for(let i = 0; i < assetsCount; i++) {
-      await propertyFactory.deployAssetdeployAsset(addressesProvider.address, `Asset #${i}`, `AST${i}`, 10000, usdtToken.address)
-    }
-  }
+  return { propertyFactory, uiProvider, usdtToken, owner, alise };
+};
 
-  return { propertyFactory, uiProvider, owner, alise };
+export const createManyAssets = async ({ propertyFactory, usdtToken, count }) => {
+  for(let i = 0; i < count; i++) {
+    await propertyFactory.deployAsset(propertyFactory.address, `Asset #${i}`, `AST${i}`, 10000, usdtToken.address)
+  }
 };

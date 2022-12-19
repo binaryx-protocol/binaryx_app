@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "./PropertyFactory.sol";
 import "./Asset.sol";
-//import "hardhat/console.sol";
+import "hardhat/console.sol";
 
 contract UiProvider is OwnableUpgradeable {
   PropertyFactory _assetFactory;
@@ -24,6 +24,7 @@ contract UiProvider is OwnableUpgradeable {
 
   function listAssets() public view returns(Asset[] memory, TokenSellInfo[] memory) {
     Asset[] memory assets = _assetFactory.getAssets();
+    console.log(assets.length);
     uint count = assets.length;
     TokenSellInfo[] memory sellInfo = new TokenSellInfo[](count);
 
