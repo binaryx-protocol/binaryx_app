@@ -1,9 +1,7 @@
-import { ReactNode } from 'react';
 import s from './styles.module.scss';
 import AssetListItem from "./AssetListItem";
 import { BcAsset } from 'features/assets/types';
 import {BigNumber} from "ethers";
-import {truncatePercentage} from "../../../../utils/formatNumber";
 
 type Props = {
   assets: BcAsset[]
@@ -24,8 +22,6 @@ const AssetList = ({ assets, balances }: Props) => {
     <div className={s.grid}>
       {
         assets && assets.map((blockchainAsset, index) => {
-          const collectedNumber = blockchainAsset.tokenInfo_totalSupply.toNumber() - balances[index].toNumber()
-          const collectedPercentage = truncatePercentage(collectedNumber / blockchainAsset.tokenInfo_totalSupply.toNumber() * 100)
           return (
             <div key={index} className={s.gridItem}>
               <AssetListItem
@@ -38,7 +34,6 @@ const AssetList = ({ assets, balances }: Props) => {
                 coc={blockchainAsset.tokenInfo_apr.toNumber()}
                 tokensLeft={balances[index].toNumber()}
                 tokensTotal={blockchainAsset.tokenInfo_totalSupply.toNumber()}
-                collected={collectedPercentage}
               />
             </div>
           )
