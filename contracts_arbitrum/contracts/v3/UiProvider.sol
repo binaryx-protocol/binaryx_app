@@ -23,7 +23,7 @@ contract UiProvider is OwnableUpgradeable {
   }
 
   struct AssetInfo{
-    address oea;
+    address pointer;
     string name;
   }
 

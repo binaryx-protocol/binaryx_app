@@ -118,7 +118,7 @@ export const appFixture = async () => {
   await addressesProvider.setPropertyFactoryAdmin(owner.address);
   usdtToken.transfer(rewardDistributor.address, 1000 * 1e6);
 
-  return { propertyFactory, uiProvider, usdtToken, assetPriceOracle, addressesProvider, owner, alise };
+  return { propertyFactory, uiProvider, usdtToken, assetPriceOracle, rewardDistributor, addressesProvider, owner, alise };
 };
 
 export const createManyAssets = async ({ propertyFactory, addressesProvider, usdtToken, count }) => {
@@ -127,12 +127,15 @@ export const createManyAssets = async ({ propertyFactory, addressesProvider, usd
   }
 };
 
-export const investToAllAssets = async ({ propertyFactory, assetPriceOracle, usdtToken, owner }) => {
+export const investToAllAssets = async ({ propertyFactory, assetPriceOracle, rewardDistributor, usdtToken, owner }) => {
   const assetAddresses = await propertyFactory.getAssets()
   for (let i = 0; i < assetAddresses.length; i++) {
     const assetAddress = assetAddresses[i];
-    // const Asset = await hre.ethers.getContractFactory('Asset');
     const asset = await hre.ethers.getContractAt('Asset', assetAddress)
+
+    // tmp - remove from the test once we have core manager
+    await rewardDistributor.addPool(asset.address, 18, 10_000);
+    // tmp
 
     await assetPriceOracle.setAssetPrice(assetAddress, 50)
     await usdtToken.approve(asset.address, 250);
