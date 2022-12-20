@@ -1,5 +1,4 @@
 .root {
-  background-color: #F5F5F5;
   min-height: calc(100vh - 64px);
 }
 
@@ -35,4 +34,9 @@
 
 .loader{
   min-height: 200px;
+}
+@media (max-width: 480px) {
+  .pageContent {
+    padding: 0;
+  }
 }

@@ -2,22 +2,14 @@ import s from './AdminAssetsListController.module.scss'
 import * as assetsModel from "../models/assetsListModel";
 import {useAtomValue} from "jotai";
 import AssetList from '../views/AssetList';
-import SideMenu from '../views/SideMenu';
-import SideMenuNavItem from '../views/SideMenu/SideMenuNavItem';
-import IconProperty from '../views/SideMenu/icons/IconProperty';
-import IconSettings from '../views/SideMenu/icons/IconSettings';
-import IconCoins from '../views/SideMenu/icons/IconCoins';
-import IconGift from '../views/SideMenu/icons/IconGift';
-import IconHistory from '../views/SideMenu/icons/IconHistory';
-import IconNotification from '../views/SideMenu/icons/IconNotification';
-import SideMenuDivider from '../views/SideMenu/SideMenuDivider';
 import {Container} from "../../../shared/ui/views/Container";
 import {NanoLoader} from "../../../shared/ui/views/NanoLoader";
+import {useState} from "react";
 
 export const AdminAssetsListController = () => {
   const $blockchainAssets = useAtomValue(assetsModel.$blockchainAssets)
   const blockchainAssets = $blockchainAssets.state === 'hasData' ? $blockchainAssets.data : null
-  const [assets, balances] = blockchainAssets || []
+  const [assets, balances] = blockchainAssets || [];
   return (
     <div className={s.root}>
       <Container>

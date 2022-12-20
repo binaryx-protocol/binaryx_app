@@ -1,31 +1,27 @@
 import {useState} from "react";
 import clsx from "clsx";
-import s from './BaseSwitcher.module.scss'
-import {ListAssetsFormsNames} from "../../../features/assets/types";
-import {UiForm} from "../../../../pkg/formType";
+import s from './BaseSwitcherForm.module.scss'
 
 type Props = {
   leftTitle: string;
   rightTitle: string;
   name: string;
   onSwitch: any;
-  form: UiForm<any>;
-  formType: ListAssetsFormsNames;
-  title: string;
+  title?: string;
   classname?: string;
 }
 
-export const BaseSwitcher = (props: Props) => {
-  const {leftTitle, rightTitle, formType, form, onSwitch, name, title, classname = ''} = props
+export const BaseSwitcherForm = (props: Props) => {
+  const {leftTitle, rightTitle,  onSwitch, name, title, classname = ''} = props
   const [leftSwitchActive, setLeftSwitchActive] = useState(true);
   const switchValue = (leftActive: boolean) => {
     setLeftSwitchActive(leftActive);
     const value = leftActive ? leftTitle : rightTitle;
-    onSwitch(formType, form, name, value)
+    onSwitch(name, value)
   }
   return (
     <div className={classname}>
-      <p className={s.title}>{title}</p>
+      {title &&  <p className={s.title}>{title}</p>}
       <div className={s.switcherWrapper}>
         <div className={clsx(s.switcherElem, leftSwitchActive ? s.active : s.inactive)}
              onClick={() => switchValue(true)}>
