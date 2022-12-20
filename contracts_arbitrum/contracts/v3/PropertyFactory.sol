@@ -30,9 +30,10 @@ contract PropertyFactory {
     return assets;
   }
 
-  function deployAsset(address _addressesProvider, string memory name, string memory symbol, uint256 maxTotalSupply, address buyToken) external onlyOwner {
-    Asset asset = new Asset(_addressesProvider, name, symbol, maxTotalSupply, ERC20(buyToken));
+  function deployAsset(string memory name, string memory symbol, uint256 maxTotalSupply, address buyToken) external onlyOwner returns(address) {
+    Asset asset = new Asset(address(addressesProvider), name, symbol, maxTotalSupply, ERC20(buyToken));
     assets.push(asset);
     emit NewAsset(address(asset));
+    return address(asset);
   }
 }

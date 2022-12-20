@@ -15,6 +15,8 @@ contract AddressesProvider is IAddressesProvider, Ownable {
   bytes32 private constant EMERGENCY_ADMIN = 'EMERGENCY_ADMIN';
   bytes32 private constant PROPERTY_FACTORY = 'PROPERTY_FACTORY';
   bytes32 private constant PROPERTY_FACTORY_ADMIN = 'PROPERTY_FACTORY_ADMIN';
+  bytes32 private constant CORE_MANAGER = 'CORE_MANAGER';
+  bytes32 private constant CORE_MANAGER_ADMIN = 'CORE_MANAGER_ADMIN';
 
   function setAddress(bytes32 id, address newAddress) external override onlyOwner {
     _addresses[id] = newAddress;
@@ -95,6 +97,24 @@ contract AddressesProvider is IAddressesProvider, Ownable {
   function setPropertyFactoryAdmin(address _propertyFactoryAdmin) external override onlyOwner {
     _addresses[PROPERTY_FACTORY_ADMIN] = _propertyFactoryAdmin;
     emit PropertyFactoryAdminUpdated(_propertyFactoryAdmin);
+  }
+
+  function getCoreManager() external view override returns (address) {
+    return getAddress(CORE_MANAGER);
+  }
+
+  function setCoreManager(address _coreManager) external override onlyOwner {
+    _addresses[CORE_MANAGER] = _coreManager;
+    emit CoreManagerUpdated(_coreManager);
+  }
+
+  function getCoreManagerAdmin() external view override returns (address) {
+    return getAddress(CORE_MANAGER_ADMIN);
+  }
+
+  function setCoreManagerAdmin(address _coreManagerAdmin) external override onlyOwner {
+    _addresses[CORE_MANAGER_ADMIN] = _coreManagerAdmin;
+    emit CoreManagerAdminUpdated(_coreManagerAdmin);
   }
 
 }
