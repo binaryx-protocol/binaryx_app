@@ -29,7 +29,7 @@ module.exports = async ({ getNamedAccounts, ethers, getChainId }) => {
   const assetPrice = await assetPriceOracle.latestPrice(asset.address);
   console.log('Asset price: ', ethers.utils.formatUnits(assetPrice, 6));
 
-  const totalSupply = await asset.totalSupply();
+  const totalSupply = await asset.maxTotalSupply();
   const tx3 = await rewardsDistributor.addPool(asset.address, 18, totalSupply);
   await tx3.wait();
   console.log('Added pool', asset.address);
@@ -38,11 +38,11 @@ module.exports = async ({ getNamedAccounts, ethers, getChainId }) => {
   await tx4.wait();
   console.log('Approved USDT to Asset by deployer', deployer);
 
-  await Promise.all(developers.map(async (developer) => {
-    const txDevInvest = await asset.invest(developer, 500);
-    console.log('Invested 500 USDT to Asset by developer', developer);
-    return txDevInvest.wait();
-  }));
+  for (let i = 0; i < developers.length; i++) {
+    const txDevInvest = await asset.invest(developers[i], 500);
+    await txDevInvest.wait();
+    console.log('Invested 500 USDT to Asset by developer', developers[i]);
+  }
 
   const tx4_1 = await asset.invest(deployer, 500);
   await tx4_1.wait();
@@ -66,6 +66,9 @@ module.exports = async ({ getNamedAccounts, ethers, getChainId }) => {
   console.log('Reward distributor balance', ethers.utils.formatUnits(rewardDistributorBalance, 6));
 
   console.log('Developers', developers);
+
+  const allAssets = await propertyFactory.getAssets();
+  console.log('All assets', allAssets);
 
 };
 module.exports.tags = ['DevAsset', 'local'];
