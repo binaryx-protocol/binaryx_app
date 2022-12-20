@@ -11,6 +11,8 @@ interface IAddressesProvider {
   event EmergencyAdminUpdated(address indexed newAddress);
   event PropertyFactoryUpdated(address indexed newAddress);
   event PropertyFactoryAdminUpdated(address indexed newAddress);
+  event CoreManagerUpdated(address indexed newAddress);
+  event CoreManagerAdminUpdated(address indexed newAddress);
 
   function setAddress(bytes32 id, address newAddress) external;
   function getAddress(bytes32 id) external view returns (address);
@@ -30,4 +32,8 @@ interface IAddressesProvider {
   function setPropertyFactory(address _propertyFactory) external;
   function getPropertyFactoryAdmin() external view returns (address);
   function setPropertyFactoryAdmin(address _propertyFactoryAdmin) external;
+  function getCoreManager() external view returns (address);
+  function setCoreManager(address _coreManager) external;
+  function getCoreManagerAdmin() external view returns (address);
+  function setCoreManagerAdmin(address _coreManagerAdmin) external;
 }
