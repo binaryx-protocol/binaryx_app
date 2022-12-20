@@ -51,7 +51,7 @@ export const AdminBar = () => {
           } }
         >
           { selectedItem === AdminBarItems.PayRent && (
-            <AdminPayRent assetId={ id }/>
+            <AdminPayRent assetId={ id } onClose={handleClose}/>
           ) }
         </Popover>
       </Container>

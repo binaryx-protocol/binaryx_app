@@ -15,9 +15,10 @@ import { ethers } from "ethers";
 
 type Props = {
   assetId: number;
+  onClose: () => void;
 };
 
-export const AdminPayRent = ({ assetId }: Props) => {
+export const AdminPayRent = ({ assetId, onClose }: Props) => {
   const [startDate, setStartDate] = useState<Dayjs | null>(dayjs(new Date()));
   const [endDate, setEndDate] = useState<Dayjs | null>(dayjs(new Date()).add(1, 'month'));
   const [amount, setAmount] = useState<number>(0);
@@ -38,8 +39,8 @@ export const AdminPayRent = ({ assetId }: Props) => {
 
   const onPayForRent = async () => {
     if (!startDate || !endDate || !amount) return;
-    const result = await payForRent({ assetId, startDate, endDate, amount });
-    console.log(result)
+    await payForRent({ assetId, startDate, endDate, amount });
+    onClose();
   }
   return (
     <div className={ s.mainView }>
