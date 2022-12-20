@@ -11,7 +11,7 @@ import {useWindowSize} from "../../../../hooks/useWindowSize";
 
 export const AccountController = () => {
   const doLoadMyRewards = useSetAtom(accountModel.$doLoadMyRewards);
-  const doClaimMyRewards = useSetAtom(accountModel.$doClaimMyRewards);
+  const doClaimAllRewards = useSetAtom(accountModel.$doClaimAllRewards);
   const accountInfo = useAtomValue(accountModel.$accountInfo);
   const {isConnected, address} = useAccount()
   const {xs} = useWindowSize()
@@ -23,7 +23,7 @@ export const AccountController = () => {
   }, [isConnected]);
 
   const onWithdraw = () => {
-    doClaimMyRewards();
+    doClaimAllRewards();
   };
 
   if (!address || !accountInfo) {

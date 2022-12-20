@@ -41,7 +41,7 @@ export const $payForRent = atom(null, async (get, set, update: PayForRentArgs) =
   const startDate = Math.floor(update.startDate.valueOf() / 1000);
   const endDate = Math.floor(update.endDate.valueOf() / 1000);
   // TODO: get asset address from assetId
-  const assetAddress = '0xD665628bF7e57Cf86dd13bcd19257338586D4816'; // Dev only - remove
+  const assetAddress = '0xc3d3C8D670E4230d3AA538eb35a5abaB2E39a245'; // Dev only - remove
   const sc = get($rewardsDistributorSmartContractSigned) as RewardsDistributor
   await sc.payForRent(assetAddress, amountUSDT, startDate, endDate);
 });

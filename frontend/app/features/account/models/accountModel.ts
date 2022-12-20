@@ -1,12 +1,14 @@
 import {atom, PrimitiveAtom} from 'jotai'
 import {waitFor} from "../../../utils/pageLoadUtiils";
 import {onlyFields} from "../../../utils/objectUtils";
-import {BigNumber} from "ethers";
+import { BigNumber, ethers } from "ethers";
 import {BcAsset} from "../../assets/types";
 import {
   $assetsTokenSmartContractSigned,
   AssetManager
 } from "../../assets/models/smartContractsFactory";
+import { $rewardsDistributorSmartContractSigned } from "../../../shared/rewardsDistributor/smartContractsFactory";
+import { $userRpcProvider } from "../../../core/models/rpcConfigModel";
 
 export type BcReward = {
   asset: BcAsset
@@ -87,6 +89,18 @@ export const $doClaimMyRewards = atom(null, async (get, set) => {
   const sc = get($assetsTokenSmartContractSigned) as AssetManager
   await sc.claimRewardsInUsdt();
 })
+
+export const $doClaimAllRewards = atom(null, async (get, set) => {
+  // TODO: implement get all assets per user
+  const userAssets = ['0xc3d3C8D670E4230d3AA538eb35a5abaB2E39a245'];
+  const sc = get($rewardsDistributorSmartContractSigned) as AssetManager
+  const provider = get($userRpcProvider) as ethers.providers.JsonRpcProvider
+  if (!sc || !provider) {
+    return;
+  }
+  const userAddress = await provider.getSigner().getAddress();
+  await sc.claim(userAddress, userAssets);
+});
 
 const transformAssetBcToUi = (bcAsset: BcAsset): UIAsset => {
   return {

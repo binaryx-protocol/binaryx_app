@@ -85,5 +85,6 @@ export const rewardsDistributorAbi = [
   uint256 amount,
   uint128 startTime,
   uint128 endTime
-  )`
+  )`,
+  `function claim(address _user, address[] calldata _assets)`,
 ]
