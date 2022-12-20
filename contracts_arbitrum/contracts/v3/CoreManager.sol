@@ -5,7 +5,7 @@ import "./interfaces/ICoreManager.sol";
 import "./interfaces/IAddressesProvider.sol";
 import "./PropertyFactory.sol";
 
-contract AddressesProvider is ICoreManager {
+contract CoreManager is ICoreManager {
 
   IAddressesProvider public addressesProvider;
 

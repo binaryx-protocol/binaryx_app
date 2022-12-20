@@ -8,7 +8,7 @@ contract AddressesProvider is IAddressesProvider, Ownable {
   mapping(bytes32 => address) private _addresses;
 
   bytes32 private constant REWARDS_DISTRIBUTOR = 'REWARDS_DISTRIBUTOR';
-  bytes32 private constant ASSET_PRICE_ORACLE = 'LENDING_POOL_CONFIGURATOR';
+  bytes32 private constant ASSET_PRICE_ORACLE = 'ASSET_PRICE_ORACLE';
   bytes32 private constant MASTER_SERIES = 'MASTER_SERIES';
   bytes32 private constant REWARD_DISTRIBUTOR_ADMIN = 'REWARD_DISTRIBUTOR_ADMIN';
   bytes32 private constant ASSET_PRICE_ORACLE_ADMIN = 'ASSET_PRICE_ORACLE_ADMIN';

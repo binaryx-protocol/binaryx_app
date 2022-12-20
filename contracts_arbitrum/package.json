@@ -8,7 +8,7 @@
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-network-helpers": "^1.0.7",
-    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers",
+    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.3.0-beta.13",
     "@types/jest": "^29.2.4",
     "chai": "^4.3.4",
     "ethers": "^5.7.2",
