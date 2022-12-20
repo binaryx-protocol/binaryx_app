@@ -2,7 +2,7 @@
   "manifestVersion": "3.2",
   "admin": {
     "address": "0xA56F946D6398Dd7d9D4D9B337Cf9E0F68982ca5B",
-    "txHash": "0x249daa8baff7db6b67a5b1291cee5d86f6edd83150163ab7ac6681eefbf5e888"
+    "txHash": "0x2bb45870d2be4bb4105ca64ee5f0fa09a8b3930e529fb28c7f951c7d79bde937"
   },
   "proxies": [
     {
@@ -21,7 +21,7 @@
     },
     {
       "address": "0x5D42EBdBBa61412295D7b0302d6F50aC449Ddb4F",
-      "txHash": "0x592fbe3d927065e32020b2af41e796fab9cae56e9f34acc229ec59aa0d276502",
+      "txHash": "0xa7911c8ecb74c01b9e24db8cb657d2ee7d166f6445a8e74333d9f22069d4146d",
       "kind": "transparent"
     }
   ],
@@ -377,9 +377,9 @@
         }
       }
     },
-    "119738b8e7edf5a6be7a68f747cfd4edb462392a7cef6825d64f0d7d444cb33f": {
+    "51fc6302ed52a0695aafdbed6ca17b6acbb473bd4e593089d1c03fe89ad7a74c": {
       "address": "0x26B862f640357268Bd2d9E95bc81553a2Aa81D7E",
-      "txHash": "0x789f25a977c73e2766000cc19fbb1cbd135135036ea22d2f25ca6e3d38b9b05e",
+      "txHash": "0x40df6bdb093765d9c67c02b03949eb29afcb8c1bf03a659d24f8f4051af5e86d",
       "layout": {
         "solcVersion": "0.8.2",
         "storage": [
@@ -428,9 +428,9 @@
             "label": "_assetFactory",
             "offset": 0,
             "slot": "101",
-            "type": "t_contract(PropertyFactory)2141",
+            "type": "t_contract(PropertyFactory)2518",
             "contract": "UiProvider",
-            "src": "contracts/v3/UiProvider.sol:10"
+            "src": "contracts/v3/UiProvider.sol:11"
           },
           {
             "label": "_assetPriceManager",
@@ -438,7 +438,15 @@
             "slot": "102",
             "type": "t_contract(AssetPriceOracle)2035",
             "contract": "UiProvider",
-            "src": "contracts/v3/UiProvider.sol:11"
+            "src": "contracts/v3/UiProvider.sol:12"
+          },
+          {
+            "label": "_rewardsDistributor",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_contract(RewardsDistributor)3886",
+            "contract": "UiProvider",
+            "src": "contracts/v3/UiProvider.sol:13"
           }
         ],
         "types": {
@@ -462,8 +470,12 @@
             "label": "contract AssetPriceOracle",
             "numberOfBytes": "20"
           },
-          "t_contract(PropertyFactory)2141": {
+          "t_contract(PropertyFactory)2518": {
             "label": "contract PropertyFactory",
+            "numberOfBytes": "20"
+          },
+          "t_contract(RewardsDistributor)3886": {
+            "label": "contract RewardsDistributor",
             "numberOfBytes": "20"
           },
           "t_uint256": {

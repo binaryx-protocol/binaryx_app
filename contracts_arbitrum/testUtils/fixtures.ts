@@ -107,7 +107,7 @@ export const appFixture = async () => {
 
   // PropertyFactory
   const UiProvider = await hre.ethers.getContractFactory('UiProvider');
-  const uiProvider = await hre.upgrades.deployProxy(UiProvider, [propertyFactory.address, assetPriceOracle.address]);
+  const uiProvider = await hre.upgrades.deployProxy(UiProvider, [propertyFactory.address, assetPriceOracle.address, rewardDistributor.address]);
 
   // config app
   await addressesProvider.setAssetPriceOracle(assetPriceOracle.address);
@@ -123,7 +123,7 @@ export const appFixture = async () => {
 
 export const createManyAssets = async ({ propertyFactory, addressesProvider, usdtToken, count }) => {
   for(let i = 0; i < count; i++) {
-    await propertyFactory.deployAsset(addressesProvider.address, `Asset #${i}`, `AST${i}`, 10000, usdtToken.address)
+    await propertyFactory.deployAsset(`Asset #${i}`, `AST${i}`, 10000, usdtToken.address)
   }
 };
 
@@ -134,7 +134,11 @@ export const investToAllAssets = async ({ propertyFactory, assetPriceOracle, rew
     const asset = await hre.ethers.getContractAt('Asset', assetAddress)
 
     // tmp - remove from the test once we have core manager
-    await rewardDistributor.addPool(asset.address, 18, 10_000);
+    try {
+      await rewardDistributor.addPool(asset.address, 18, 10_000);
+    } catch (e) {
+      console.log('Skipping addPool in test purpose')
+    }
     // tmp
 
     await assetPriceOracle.setAssetPrice(assetAddress, 50)
