@@ -25,12 +25,22 @@
 }
 .pageMenu{
   flex-shrink: 0;
-  width: 240px;
+  width: 20vw;
   margin-top: 8px;
+}
+.content{
+  width: 80vw;
 }
 
 @media (max-width: 480px) {
-  .pageMenu,.header{
+  .pageMenu{
     display: none;
+  }
+  .content{
+    width: 100vw;
+  }
+
+  .header{
+    width: 100%;
   }
 }

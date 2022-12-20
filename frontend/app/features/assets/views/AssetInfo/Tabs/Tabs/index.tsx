@@ -34,7 +34,7 @@ export const Tabs = (props: Props) => {
               <p>2 Bath</p>
             </IconWrapper>
             <IconWrapper classname={s.detailsIconElem}>
-              <Image src={'/feature/assets/square.svg'} alt={'squareIcon'} width={25} height={25}/>
+              <Image src={'/feature/assets/square.svg'} alt={'squareIcon'} width={24} height={24}/>
               <p>1726 sqft</p>
             </IconWrapper>
             <IconWrapper classname={s.detailsIconElem}>
@@ -56,6 +56,7 @@ export const Tabs = (props: Props) => {
             completed in the past few months and include adding a 4th bedroom to
             each unit, a brand new bathroom, one fully new kitchen with butcher
             block countertops and a breakfast bar, and much more.
+
           </p>
           <Location location={location}/>
         </TabContent>

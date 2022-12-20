@@ -1,0 +1,54 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
+  p {
+    margin: 0;
+  }
+}
+.ellipseOutside{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 106px;
+  height: 106px;
+  background: linear-gradient(135deg, #DCE5ED 0%, #FBFBFB 100%);
+  border-radius: 50%;
+}
+
+.ellipseInside{
+  width: 92px;
+  height: 92px;
+  background: linear-gradient(135deg, #E1E7ED 0%, #FFFFFF 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.success {
+  font-size: 16px;
+  font-weight: 700;
+  padding: 24px 0 4px;
+}
+
+.propertyText{
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding-bottom: 24px;
+}
+.continueButton{
+  display: flex;
+  align-items: center;
+  background-color: #6F4DC4;
+}
+.arrowIcon{
+  transform: rotate(270deg);
+  margin-left: 14px;
+  path{
+    stroke: var(--color--primary-bg);
+  }
+}

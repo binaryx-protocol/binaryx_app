@@ -1,0 +1,55 @@
+.root{
+  height: 305px;
+  width: 20vw;
+  border: 1px solid var(--color--border);
+  padding: 24px;
+  border-radius: 24px;
+}
+.statusElem{
+  display: flex;
+}
+.statusElemContent{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.description{
+  align-self: start;
+  padding-top: 10px;
+  margin-left: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+.line{
+  width: 1px;
+  height: 24px;
+  background-color: var(--color--border);
+  margin: 4px 0;
+}
+.statusNumber{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: var(--color-text-secondary);font-size: 14px;
+  font-weight: 700;
+  background-color: var(--color--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.activeNumber{
+  background-color: var(--color-main);
+  color: var(--color--primary-bg);
+}
+.successNumber{
+  background-color: #16C784;
+  color: var(--color--primary-bg);
+}
+.activeDescription{
+  color: var(--color-main);
+}
+.successDescription{
+  color: #16C784;
+}

@@ -4,10 +4,8 @@ import detailsIcon from '../../../../../public/svg/details.svg'
 import {ProgressBarText} from "../ProgressBar/ProgressBarText";
 import {Button} from "../../../../shared/ui/views/Button";
 import {InvestInput} from "../InvestInput";
-import {paths} from "../../../../../pkg/paths";
-import {useRouter} from "next/router";
-import {UiAssetInvestForm, UiNewAssetForm} from "../../types";
-import {UiForm} from "../../../../../pkg/formType";
+import {UiAssetInvestForm} from "../../types";
+import clsx from "clsx";
 
 type InvestBlockProps = {
   tokensLeft: number,
@@ -51,14 +49,18 @@ export const AssetInvest = ({
         <div className={s.infoBlockElem}>
           <div className={s.detailsElem}>
             <p className={s.detailsElem_text}>Projected IRR</p>
-            <Image src={detailsIcon} alt={'detailsIcon'} className={s.detailsIcon}/>
+            <div className={clsx(s.detailsIcon, s.tooltipIrr)}>
+              <span className={s.tooltipIrrText}>The expected return on investment for the property.</span>
+            </div>
           </div>
           <p className={s.detailsPercent}>{irr}%</p>
         </div>
         <div className={s.infoBlockElem}>
           <div className={s.detailsElem}>
             <p className={s.detailsElem_text}>Cash On Cash</p>
-            <Image src={detailsIcon} alt={'detailsIcon'} className={s.detailsIcon}/>
+            <div className={clsx(s.detailsIcon, s.tooltipCoc)}>
+              <span className={s.tooltipCocText}>The expected return on capital for the property.</span>
+            </div>
           </div>
           <p className={s.detailsPercent}>{coc}%</p>
         </div>

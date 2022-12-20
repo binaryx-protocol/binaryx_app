@@ -1,0 +1,27 @@
+.mainView {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 16px 12px;
+  min-width: 320px;
+}
+.dateContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.datePicker {
+  &:first-child {
+    margin-right: 8px;
+  }
+  max-width: 150px;
+}
+.textField {
+  margin-top: 16px !important;
+}
+
+.button {
+  margin-top: 24px;
+}

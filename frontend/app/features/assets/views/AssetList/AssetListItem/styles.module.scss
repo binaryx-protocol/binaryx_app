@@ -1,8 +1,21 @@
+
+.rootListView {
+  display: flex;
+  padding: 8px;
+  border: 1px solid var(--color--border);
+  border-radius: 16px;
+  min-height: 100px;
+  font-family: var(--font-family--primary);
+  p{
+    margin: 0;
+  }
+}
+
 .assetListItem {
   background: #FFF;
   border: 1px solid var(--color--border);
   padding: 16px;
-  border-radius: 12px;
+  border-radius: 16px;
   font-family: var(--font-family--primary);
 }
 
@@ -19,6 +32,11 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  border-radius: 12px;
+}
+
+.imageListView {
+  width: 100px;
   border-radius: 12px;
 }
 
@@ -46,10 +64,6 @@
   background-color: #E4E8ED;
 }
 
-.info {
-
-}
-
 .generalInfo {
   border-bottom: 1px solid #EFF2F5;
   margin-bottom: 12px;
@@ -59,6 +73,12 @@
 
 .titles {
   max-width: 75%;
+}
+.titlesListView{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 12px;
 }
 
 .title {
@@ -99,36 +119,9 @@
   margin-bottom: 4px;
 }
 
-.irrValue {
-  color: var(--color-text-primary);
+.irrValue, .cocValue {
   font-weight: 700;
+  color: #00B4CC;
+  padding-left: 4px;
 }
 
-
-.cocValue {
-  color: var(--color-text-primary);
-  font-weight: 700;
-}
-
-.tokenInfo {
-  font-size: 12px;
-  color: var(--color-text-secondary)
-}
-
-.tokenAmount {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-}
-
-.tokensLeft {
-
-}
-
-.tokensTotal {
-
-}
-
-.progressBarWrap {
-  margin-bottom: 10px;
-}

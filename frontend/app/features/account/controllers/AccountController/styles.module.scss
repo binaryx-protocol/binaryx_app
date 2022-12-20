@@ -1,31 +1,38 @@
-.root{
+.root {
   display: flex;
 }
-.arrowIcon{
-  path{
-    stroke: #6F4DC4;
+
+.arrowIcon {
+  path {
+    stroke: var(--color-main);
   }
 }
+
 .property {
   font-size: 18px;
   font-weight: 700;
   margin: 10px 18px 24px;
 }
-.totalPropertyInfo{
+
+.totalPropertyInfo {
   display: flex;
 }
-.navigationHome{
+
+.navigationHome {
   color: var(--color-text-secondary);
   font-weight: 700;
 }
-.navigationAsset{
+
+.navigationAsset {
   font-weight: 700;
 }
-.totalPropertyInfoWrapper{
+
+.totalPropertyInfoWrapper {
   margin-left: 34px;
   margin-top: 24px;
 }
-.totalRentInfo{
+
+.totalRentInfo {
   background-color: var(--color--primary-bg);
   border: 1px solid var(--color--secondary-bg);
   width: 30vw;
@@ -36,31 +43,37 @@
   padding: 24px;
   text-align: center;
 }
-.totalRentInfo_text{
+
+.totalRentInfo_text {
   font-size: 18px;
   font-weight: 700;
   margin: 5px;
 }
-.pageMenu{
+
+.pageMenu {
   flex-shrink: 0;
   width: 240px;
 }
-.navigation{
+
+.navigation {
   font-size: 12px;
 }
-.assetOverview_Text{
+
+.assetOverview_Text {
   font-size: 24px;
   font-weight: 700;
   padding-bottom: 24px;
 }
-.claimAllButton{
+
+.claimAllButton {
   width: 100%;
-  background-color: #6F4DC4;
+  background-color: var(--color-main);
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.arrowWrapper{
+
+.arrowWrapper {
   width: 15px;
   height: 15px;
   display: flex;
@@ -71,21 +84,51 @@
   border-radius: 50%;
   margin-right: 8px;
 }
-.totalRentBalance_text{
+
+.totalRentBalance_text {
   font-size: 36px;
   font-weight: 700;
   margin: 0;
 }
-.rentBalanceClaim{
+
+.rentBalanceClaim {
   text-align: center;
 }
-.accountDetailWrapper{
+
+.accountDetailWrapper {
   display: flex;
   justify-content: space-between;
   border-top: 1px dashed var(--color--border);
   padding-top: 16px;
   margin-bottom: 24px;
 }
-.accountDetail{
+
+.accountDetail {
   display: flex;
 }
+
+@media (max-width: 480px) {
+  .navigation{
+    display: none;
+  }
+  .totalPropertyInfo {
+    flex-direction: column;
+  }
+  .totalPropertyInfoWrapper {
+    margin-left: 0;
+    width: 90vw;
+ }
+  .totalRentInfo {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+  }
+  .rentBalanceClaim{
+    width: 90%;
+  }
+}
+

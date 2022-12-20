@@ -5,37 +5,56 @@ import {Button} from "./Button";
 import arrowIcon from '../../../../public/svg/arrow.svg'
 import clsx from "clsx";
 import {useState} from "react";
-import {UiAccountInfo, UIReward} from "../../../features/account/models/accountModel";
+import {UIReward} from "../../../features/account/models/accountModel";
+import {useWindowSize} from "../../../hooks/useWindowSize";
 
 type Props = {
-  property:UIReward;
+  property: UIReward;
 }
 
 export const PropertyCard = (props: Props) => {
   const {property} = props
   // TODO: replace in controller after MVP
   const [isActive, setIsActive] = useState<boolean>(false)
+  const {xs} = useWindowSize()
   return (
     <>
-      <div className={clsx(s.propertyCard, isActive ? s.purpleBorder: s.grayBorder)}>
+      <div className={clsx(s.propertyCard, isActive ? s.purpleBorder : s.grayBorder)}>
         <div className={s.mainInfo}>
-          <img src={property.asset.propertyInfo_images} alt={'propertyImage'} className={s.propertyImage} width={123} height={92}/>
-          <div>
+          <img src={property.asset.propertyInfo_images} alt={'image'} className={s.propertyImage} width={123}
+                 height={92}/>
+          <div className={s.propertyNameAddr}>
             <p className={clsx(s.propertyName, s.upperText)}>{property.asset.name}</p>
             <p className={s.greyText}>{property.asset.name}</p>
           </div>
-          <div>
-            <p className={clsx(s.greyText, s.upperText)}>CoC</p>
-            <p className={s.purpleText}>{property.asset.tokenInfo_apr}%</p>
-          </div>
-          <div>
-            <p className={clsx(s.greyText, s.upperText)}>Total</p>
-            <p className={s.purpleText}>$2.236</p>
-          </div>
-          <div>
-            <p className={clsx(s.greyText, s.upperText)}>Current Rent Balance</p>
-            <p className={s.purpleText}>${property.rewardAmountDe6}</p>
-          </div>
+          {xs ? <div className={s.propertyInfo}>
+              <div>
+                <p className={clsx(s.greyText, s.upperText)}>CoC</p>
+                <p className={s.purpleText}>{property.asset.tokenInfo_apr}%</p>
+              </div>
+              <div>
+                <p className={clsx(s.greyText, s.upperText)}>Total</p>
+                <p className={s.purpleText}>$2.236</p>
+              </div>
+              <div>
+                <p className={clsx(s.greyText, s.upperText)}>Current Rent Balance</p>
+                <p className={s.purpleText}>${property.rewardAmountDe6}</p>
+              </div>
+            </div> :
+            <>
+              <div>
+                <p className={clsx(s.greyText, s.upperText)}>CoC</p>
+                <p className={s.purpleText}>{property.asset.tokenInfo_apr}%</p>
+              </div>
+              <div>
+                <p className={clsx(s.greyText, s.upperText)}>Total</p>
+                <p className={s.purpleText}>$2.236</p>
+              </div>
+              <div>
+                <p className={clsx(s.greyText, s.upperText)}>Current Rent Balance</p>
+                <p className={s.purpleText}>${property.rewardAmountDe6}</p>
+              </div>
+            </>}
           {/*<Button className={s.claimButton}>*/}
           {/*  Claim*/}
           {/*</Button>*/}

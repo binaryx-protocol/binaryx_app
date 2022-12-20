@@ -1,9 +1,8 @@
 import s from './styles.module.scss';
 import Link from 'next/link'
-import ProgressBar from '../../ProgressBar';
 import classNames from 'classnames';
 import {paths} from "../../../../../../pkg/paths";
-
+import {ProgressBarText} from "../../ProgressBar/ProgressBarText";
 
 type Props = {
   id: number
@@ -17,35 +16,34 @@ type Props = {
   coc: number;
   tokensLeft: number;
   tokensTotal: number;
-  collected: number;
 };
 
 const imagePlaceholder =
   'https://binaryxestate.s3.eu-central-1.amazonaws.com/images/marketplace/icons/image-placeholder.svg';
 
-const AssetListItem = ({
-   id,
-   status,
-   image,
-   title,
-   subTitle,
-   irr,
-   coc,
-   tokensLeft,
-   tokensTotal,
-   collected,
- }: Props) => {
+const AssetListItemBoxView = ({
+                                id,
+                                status,
+                                image,
+                                title,
+                                subTitle,
+                                irr,
+                                coc,
+                                tokensLeft,
+                                tokensTotal,
+                              }: Props) => {
+
   return (
     <div className={s.assetListItem}>
-      <Link href={paths.showAsset({ id })}>
+      <Link href={paths.showAsset({id})}>
         <div className={s.imageWrap}>
           <div className={classNames(s.status,
-            { [s.status__active]: status?.toLowerCase() === "active" },
-            { [s.status__upcoming]: status?.toLowerCase() === "upcoming" }
+            {[s.status__active]: status?.toLowerCase() === "active"},
+            {[s.status__upcoming]: status?.toLowerCase() === "upcoming"}
           )}>{status}</div>
           <div
-            className={classNames(s.image, { [s.imagePlaceholder]: !image.src?.length })}
-            style={{ backgroundImage: `url(${image.src || imagePlaceholder})` }}
+            className={classNames(s.image, {[s.imagePlaceholder]: !image.src?.length})}
+            style={{backgroundImage: `url(${image.src || imagePlaceholder})`}}
           />
         </div>
       </Link>
@@ -64,21 +62,45 @@ const AssetListItem = ({
             </div>
           </div>
         </div>
-        <div className={s.tokenInfo}>
-          <div className={s.tokenAmount}>
-            <div className={s.tokensLeft}>Tokens Left: {tokensLeft}</div>
-            <div className={s.tokensTotal}>Total: {tokensTotal} Tokens</div>
-          </div>
-          <div className={s.progressBarWrap}>
-            <ProgressBar progress={collected} />
-          </div>
-          <div className={s.collected}>
-            Collected: {collected}%
-          </div>
-        </div>
+        <ProgressBarText tokensLeft={tokensLeft} tokensTotal={tokensTotal}/>
       </div>
     </div>
   );
 };
 
+// TODO: finish after MVP
+// const AssetListItemListView = ({
+//                                  id,
+//                                  status,
+//                                  image,
+//                                  title,
+//                                  subTitle,
+//                                  irr,
+//                                  coc,
+//                                  tokensLeft,
+//                                  tokensTotal,
+//                                }: Props) => {
+//
+//   return (
+//     <div className={s.rootListView}>
+//       <img src={image.src} onError={({currentTarget}) => {
+//         currentTarget.onerror = null;
+//         currentTarget.src = imagePlaceholder;
+//       }} alt={'imageProperty'}
+//            className={s.imageListView}/>
+//       <div className={s.titlesListView}>
+//         <p className={s.title}>{title}</p>
+//         <p className={s.subTitle}>{subTitle}</p>
+//       </div>
+//     </div>
+//   )
+// }
+
+const AssetListItem = (props: Props) => {
+  return (
+    <AssetListItemBoxView {...props}/>
+  );
+};
+
 export default AssetListItem;
+

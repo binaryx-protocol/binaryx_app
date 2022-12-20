@@ -6,17 +6,21 @@
   border-radius: 12px;
   max-height: 200px;
   margin-bottom: 8px;
+  font-family: "Manrope", sans-serif;
+
   p {
     margin: 0;
   }
 }
-.grayBorder{
+
+.grayBorder {
   border: 1px solid var(--color--secondary-bg);
 }
 
-.purpleBorder{
-  border: 1px solid #6F4DC4;
+.purpleBorder {
+  border: 1px solid var(--color-main);
 }
+
 .mainInfo {
   display: flex;
   align-items: center;
@@ -31,7 +35,6 @@
   font-weight: 700;
   font-size: 16px;
 }
-
 .greyText {
   font-weight: 400;
   font-size: 14px;
@@ -41,7 +44,7 @@
 .purpleText {
   font-weight: 700;
   font-size: 16px;
-  color: #6F4DC4;
+  color: var(--color-main);
 }
 
 .upperText {
@@ -63,7 +66,7 @@
 }
 
 .claimButton {
-  background-color: #6F4DC4;
+  background-color: var(--color-main);
   width: 62px;
   height: 32px;
   display: flex;
@@ -104,10 +107,39 @@
   font-size: 14px;
   display: flex;
   align-items: center;
-  color: #6F4DC4;
+  color: var(--color-main);
   background-color: rgba(111, 77, 196, 0.12);
 }
 
 .underlineText {
   text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .propertyCard {
+    width: 100%;
+    margin-top: 20px;
+    max-height: 100%;
+  }
+  .propertyImage {
+    width: 100%;
+    height: 135px;
+  }
+  .mainInfo {
+    flex-direction: column;
+  }
+  .propertyNameAddr {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 16px;
+    border-bottom: 1px dashed var(--color--border);
+  }
+  .propertyInfo{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 16px;
+  }
 }

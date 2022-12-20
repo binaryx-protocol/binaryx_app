@@ -15,6 +15,7 @@ export type ContractAddresses = {
   assetsTokenAddress: string;
   controllerAddress: string; // deprecated
   kycStoreAddress: string;
+  rewardsDistributorAddress: string;
 }
 
 export type ChainInfo = {
@@ -94,6 +95,7 @@ function deployedAddresses(deploys: any): ContractAddresses {
     assetsTokenAddress: deploys.AssetsManager,
     controllerAddress: deploys.Controller,
     kycStoreAddress: deploys.KycStore,
+    rewardsDistributorAddress: deploys.RewardsDistributor,
   }
 }
 
