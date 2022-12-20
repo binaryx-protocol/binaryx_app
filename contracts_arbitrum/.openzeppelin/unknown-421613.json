@@ -1,8 +1,8 @@
 {
   "manifestVersion": "3.2",
   "admin": {
-    "address": "0x84eA74d481Ee0A5332c457a4d796187F6Ba67fEB",
-    "txHash": "0x8585a56be0c72b2c1a46d158b78475c12d00e6e793c795b49d6ceb03a67e9ddf"
+    "address": "0xA56F946D6398Dd7d9D4D9B337Cf9E0F68982ca5B",
+    "txHash": "0x2bb45870d2be4bb4105ca64ee5f0fa09a8b3930e529fb28c7f951c7d79bde937"
   },
   "proxies": [
     {
@@ -17,6 +17,11 @@
     {
       "address": "0x9E545E3C0baAB3E08CdfD552C960A1050f373042",
       "txHash": "0x980cfd0427ebe23e9645e7e8bdf9e1db86f28e224abc1d6cc7647b042a267877",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x5D42EBdBBa61412295D7b0302d6F50aC449Ddb4F",
+      "txHash": "0xa7911c8ecb74c01b9e24db8cb657d2ee7d166f6445a8e74333d9f22069d4146d",
       "kind": "transparent"
     }
   ],
@@ -360,6 +365,118 @@
           "t_mapping(t_address,t_uint256)": {
             "label": "mapping(address => uint256)",
             "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "51fc6302ed52a0695aafdbed6ca17b6acbb473bd4e593089d1c03fe89ad7a74c": {
+      "address": "0x26B862f640357268Bd2d9E95bc81553a2Aa81D7E",
+      "txHash": "0x40df6bdb093765d9c67c02b03949eb29afcb8c1bf03a659d24f8f4051af5e86d",
+      "layout": {
+        "solcVersion": "0.8.2",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "_owner",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_address",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:22"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)49_storage",
+            "contract": "OwnableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:94"
+          },
+          {
+            "label": "_assetFactory",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_contract(PropertyFactory)2518",
+            "contract": "UiProvider",
+            "src": "contracts/v3/UiProvider.sol:11"
+          },
+          {
+            "label": "_assetPriceManager",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_contract(AssetPriceOracle)2035",
+            "contract": "UiProvider",
+            "src": "contracts/v3/UiProvider.sol:12"
+          },
+          {
+            "label": "_rewardsDistributor",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_contract(RewardsDistributor)3886",
+            "contract": "UiProvider",
+            "src": "contracts/v3/UiProvider.sol:13"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]",
+            "numberOfBytes": "1568"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_contract(AssetPriceOracle)2035": {
+            "label": "contract AssetPriceOracle",
+            "numberOfBytes": "20"
+          },
+          "t_contract(PropertyFactory)2518": {
+            "label": "contract PropertyFactory",
+            "numberOfBytes": "20"
+          },
+          "t_contract(RewardsDistributor)3886": {
+            "label": "contract RewardsDistributor",
+            "numberOfBytes": "20"
           },
           "t_uint256": {
             "label": "uint256",

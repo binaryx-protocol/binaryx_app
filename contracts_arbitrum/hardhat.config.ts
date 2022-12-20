@@ -16,21 +16,27 @@ const accounts =
   process.env['PRIVATE_KEY']
     ? [process.env['PRIVATE_KEY']] : { mnemonic: process.env['MNEMONIC'] };
 
+const hardhatNetwork = process.env.NO_FORK ?
+  {
+    deploy: ['deploy/dev']
+  }:
+  {
+    chainId: 421613,
+    forking: {
+      url: 'https://arb-goerli.g.alchemy.com/v2/i7XMrv80YbBZuJBt6u0I7zaAmY9gzERx',
+    },
+    accounts: {
+      mnemonic: process.env['MNEMONIC'] || DEFAULT_MNEMONIC,
+      count: 10,
+    },
+    deploy: [ 'deploy/dev' ],
+    tags: ["test", "local"]
+  }
+
 const config: HardhatUserConfig = {
   ...hardhatConfig,
   networks: {
-    hardhat: {
-      chainId: 421613,
-      forking: {
-        url: 'https://arb-goerli.g.alchemy.com/v2/i7XMrv80YbBZuJBt6u0I7zaAmY9gzERx',
-      },
-      accounts: {
-        mnemonic: process.env['MNEMONIC'] || DEFAULT_MNEMONIC,
-        count: 10,
-      },
-      deploy: [ 'deploy/dev' ],
-      tags: ["test", "local"]
-    },
+    hardhat: hardhatNetwork,
     localhost: {
       url: 'http://127.0.0.1:8545',
       saveDeployments: true,

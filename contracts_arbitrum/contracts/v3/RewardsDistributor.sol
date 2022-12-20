@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/interfaces/IERC20.sol";
 import "./interfaces/IRewardsDistributor.sol";
 import "./interfaces/IAddressesProvider.sol";
+import "hardhat/console.sol";
 
 contract RewardsDistributor is IRewardsDistributor {
 
@@ -32,6 +33,9 @@ contract RewardsDistributor is IRewardsDistributor {
 
   // user => receiver
   mapping(address => address) public claimReceiver;
+
+  // user => assets
+  mapping(address => address[]) public userToRewards;
 
   constructor(IERC20 _rewardToken, IAddressesProvider _addressesProvider) {
     require(address(_addressesProvider) != address(0), "RewardsDistributor: addresses provider is the zero address");
@@ -102,7 +106,7 @@ contract RewardsDistributor is IRewardsDistributor {
   }
 
   function addPool(address _token, uint256 decimals, uint256 _totalSupply) external override onlyOwner {
-    require(poolInfo[_token].lastRewardTime == 0);
+    require(poolInfo[_token].lastRewardTime == 0, "Pool already exists");
     registeredAssets.push(_token);
     poolInfo[_token] = PoolInfo({
     totalSupply : _totalSupply,
@@ -180,8 +184,9 @@ contract RewardsDistributor is IRewardsDistributor {
   }
 
   function onUserBalanceChanged(address _user, uint256 _balance) external override {
+    // note: msg.sender here is token's address
     PoolInfo storage pool = poolInfo[msg.sender];
-    require(pool.lastRewardTime > 0);
+    require(pool.lastRewardTime > 0, "Pool not found");
     _updatePool(msg.sender);
     UserInfo storage user = userInfo[msg.sender][_user];
     if (user.amount > 0) {
@@ -192,6 +197,10 @@ contract RewardsDistributor is IRewardsDistributor {
     }
     user.amount = _balance;
     user.rewardDebt = _balance * pool.accRewardPerShare / 1e12;
+    // for my account: rewards list
+    if (userInfo[msg.sender][_user].lastEmissionPoint == 0) {
+      userToRewards[_user].push(msg.sender);
+    }
 
     emit UserBalanceUpdated(msg.sender, _user, _balance);
   }
@@ -240,5 +249,9 @@ contract RewardsDistributor is IRewardsDistributor {
     emit PaidRent(msg.sender, token, amount, startTime, endTime);
     emit CompanyPaid(token, companyPart);
     emit AssetReservePaid(token, assetReservePart);
+  }
+
+  function getUserRewards(address _user) external view returns (address[] memory) {
+    return userToRewards[_user];
   }
 }
