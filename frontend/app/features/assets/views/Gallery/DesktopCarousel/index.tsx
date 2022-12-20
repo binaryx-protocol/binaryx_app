@@ -1,5 +1,5 @@
 import s from './styles.module.scss';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import CloseIcon from '@mui/icons-material/Close';
@@ -12,8 +12,6 @@ import {
   Image as CarouselImage,
 } from 'pure-react-carousel';
 import 'pure-react-carousel/dist/react-carousel.es.css';
-import clsx from "clsx";
-import Image from "next/image";
 
 type Props = {
   isFullWidth: boolean;
@@ -48,7 +46,6 @@ export const DesktopCarousel = (props: Props) => {
   if (!images) {
     return null;
   }
-  const img = 'https://ns.clubmed.com/dream/RESORTS_3T___4T/Asie_et_Ocean_indien/Bali/169573-1lng9n8nnf-swhr.jpg'
   return (
     <>
       {isFullWidth ? (
@@ -104,25 +101,19 @@ export const DesktopCarousel = (props: Props) => {
         ''
       )}
       <div className={s.galleryRoot}>
-        <div className={s.currentSlide}>
-          <CarouselProvider naturalSlideWidth={67} naturalSlideHeight={43} totalSlides={images?.length}
-                            infinite={true} currentSlide={currentSlide} orientation={'vertical'}>
-            <Slider>
-              {images.map((image, index) => (
-                <Slide index={index} key={index}>
-                  <CarouselImage hasMasterSpinner={false} src={image.src} className={s.imageMain}
-                                 onClick={() => {
-                                   toggleFullWidth(), toggleCurrentSlide(index);
-                                 }}/>
-                </Slide>
-              ))}
-            </Slider>
-          </CarouselProvider>
+        <div className={s.currentSlideWrapper}>
+          <img src={images[0].src} alt={'First Property Image'} className={s.currentSlide} onClick={() => {
+            toggleFullWidth()
+            toggleCurrentSlide(0)
+          }}/>
         </div>
         <div className={s.listOfSlides}>
           {images.slice(0, 4).map((image, index) => (
-            <img src={image.src} alt={'image'} className={clsx(s.image)} key={index}
-                 onClick={() => setCurrentSlide(index)}/>
+            <img src={image.src} alt={'image'} className={s.image} key={index}
+                 onClick={() => {
+                   toggleFullWidth()
+                   toggleCurrentSlide(index)
+                 }}/>
           ))}
         </div>
       </div>

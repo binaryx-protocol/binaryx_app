@@ -14,17 +14,19 @@ export const HeaderController = () => {
   const [isOpenWalletWait, setIsOpenWalletWait] = useState(false);
   const [connectError, setConnectError] = useState(false);
   const [connector, setConnector] = useAtom($connectorAtom);
+  const [burgerOpen, setBurgerOpen] = useState(false);
+
   const account = useAtom($connectedAccount)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-    window.localStorage.getItem('admin') === 'true' && setShowAdminBar(true)
+      window.localStorage.getItem('admin') === 'true' && setShowAdminBar(true)
     }
   }, []);
 
   return (
     <>
-      {showAdminBar && isConnected && <AdminBar/>}
+      { showAdminBar && isConnected && <AdminBar/> }
       <DesktopBar isConnected={ isConnected } account={ account[0] }
                   onWalletInfoClick={ setIsOpenWalletInfo }
                   isOpenWalletInfo={ isOpenWalletInfo } connector={ connector }
@@ -33,7 +35,8 @@ export const HeaderController = () => {
                   connectError={ connectError }
                   isOpenWalletWait={ isOpenWalletWait } setConnectError={ setConnectError }
                   onCurrentWalletClick={ setIsOpenWalletWait } switchNetwork={ switchNetwork }
-                  disconnect={ disconnect }/>
+                  disconnect={ disconnect }
+                  onClickBurgerOpen={ setBurgerOpen } burgerOpen={ burgerOpen }/>
     </>
   )
 }

@@ -1,7 +1,6 @@
 .root{
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
   max-height: 72px;
   width: 100%;
@@ -17,6 +16,7 @@
     max-height: 44px;
     min-width: 40vw;
     flex-direction: row;
+    justify-content: center;
   }
 }
 
