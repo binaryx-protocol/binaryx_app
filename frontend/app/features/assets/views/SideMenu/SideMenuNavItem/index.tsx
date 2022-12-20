@@ -1,21 +1,21 @@
 import s from "./styles.module.scss";
-import { ReactNode } from 'react';
+import {ReactNode} from 'react';
 import Link from "next/link";
 
 type Props = {
   icon: ReactNode;
   title: string;
   url: string;
-  onClick?: any;
+  onClick: () => void;
 };
 
 
 const SideMenuNavItem = ({
-  icon,
-  title,
-  url,
-  onClick,
-}: Props) => {
+                           icon,
+                           title,
+                           url,
+                           onClick,
+                         }: Props) => {
   return (
     <li className={s.sideMenuNavItem} onClick={onClick}>
       <Link href={url}>
